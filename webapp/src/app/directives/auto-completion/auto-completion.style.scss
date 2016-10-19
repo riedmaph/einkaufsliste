@@ -1,0 +1,40 @@
+:host, .ac-list-wrapper {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 100;
+  background-color: #fff;
+
+  ul {
+    border: thin solid #ddd;
+    display: block;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  li {
+    padding: .5em;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.selected {
+      color: #fff;
+      background: #0147A7;
+    }
+  }
+}
+
+.empty {
+  color: #ddd;
+  text-align: center;
+  font-size: 80%;
+  line-height: 1.25;
+}
