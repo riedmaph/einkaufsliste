@@ -3,7 +3,7 @@
 class config:
 	start = 1
 	rows = 25
-	markt = 6280889
+	store = 6280889
 
 
 import json
@@ -12,7 +12,7 @@ params = urllib.urlencode({
 	'type': 'json', 
 	'start': config.start, 
 	'rows': config.rows,
-	'marktid': config.markt,
+	'marktid': config.store,
 	'schienetyp': 'E',
 	'warengruppeid': '',
 	'kriterienid': ''
