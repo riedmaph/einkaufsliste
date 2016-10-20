@@ -1,50 +1,32 @@
 {
-	"grouped": {
-		"artikelbezeichnung_tlc": {
-			"matches": 87, 
-			"groups": [
-				{
-					"doclist": {
-						"start": 0, 
-						"numFound": 4, 
-						"docs": [{
-							"artikelbezeichnung_tlc": "Tomaten ganz, gesch\xe4lt", 
-							"markenname_tlc": "GUT&G\xdcNSTIG"
-						}]
-					}, 
-					"groupValue": "tomaten ganz, gesch\xe4lt"
-				}, 
-				{
-					"doclist": {
-						"start": 0, 
-						"numFound": 1, 
-						"docs": [{
-							"artikelbezeichnung_tlc": "Heringsfilets in Tomatencreme", 
-							"markenname_tlc": "GUT&G\xdcNSTIG"
-						}]
-					}, 
-					"groupValue": "heringsfilets in tomatencreme"
-				}, 
-				{
-					"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Tomatencremesuppe", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "tomatencremesuppe"}, {"doclist": {"start": 0, "numFound": 3, "docs": [{"artikelbezeichnung_tlc": "Tomatensaft", "markenname_tlc": "EDEKA Bio"}]}, "groupValue": "tomatensaft"}, {"doclist": {"start": 0, "numFound": 2, "docs": [{"artikelbezeichnung_tlc": "Tomatenketchup", "markenname_tlc": "EDEKA Bio"}]}, "groupValue": "tomatenketchup"}, {"doclist": {"start": 0, "numFound": 4, "docs": [{"artikelbezeichnung_tlc": "Tomatenmark", "markenname_tlc": "EDEKA Italia"}]}, "groupValue": "tomatenmark"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Tomaten, gehackt", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "tomaten, gehackt"}, {"doclist": {"start": 0, "numFound": 2, "docs": [{"artikelbezeichnung_tlc": "Tomaten, passiert", "markenname_tlc": "EDEKA Italia"}]}, "groupValue": "tomaten, passiert"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Tomatensauce Klassik", "markenname_tlc": "EDEKA Bio"}]}, "groupValue": "tomatensauce klassik"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Tomatensauce Arrabbiata", "markenname_tlc": "EDEKA Bio"}]}, "groupValue": "tomatensauce arrabbiata"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Kirschtomaten, ungesch\xe4lt", "markenname_tlc": "EDEKA Italia"}]}, "groupValue": "kirschtomaten, ungesch\xe4lt"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Passierte Tomaten", "markenname_tlc": "EDEKA Bio"}]}, "groupValue": "passierte tomaten"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Tomaten in St\xfccken", "markenname_tlc": "EDEKA Bio"}]}, "groupValue": "tomaten in st\xfccken"}, {"doclist": {"start": 0, "numFound": 2, "docs": [{"artikelbezeichnung_tlc": "Getrocknete Tomaten", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "getrocknete tomaten"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Tomaten in St\xfccken, classic", "markenname_tlc": "EDEKA Italia"}]}, "groupValue": "tomaten in st\xfccken, classic"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "M\xf6hren-Tomatentopf", "markenname_tlc": "EDEKA"}]}, "groupValue": "m\xf6hren-tomatentopf"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Gourmetaufstrich Paprika-Tomate-Zucchini", "markenname_tlc": "EDEKA Bio + Vegan"}]}, "groupValue": "gourmetaufstrich paprika-tomate-zucchini"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Streichcreme Tomate-Kr\xe4uter", "markenname_tlc": "EDEKA Bio + Vegan"}]}, "groupValue": "streichcreme tomate-kr\xe4uter"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Spaghetti mit Tomatensauce", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "spaghetti mit tomatensauce"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Ravioli in Tomatensauce", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "ravioli in tomatensauce"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Italienischer Nudeltopf", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "italienischer nudeltopf"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Fettuccine", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "fettuccine"}, {"doclist": {"start": 0, "numFound": 2, "docs": [{"artikelbezeichnung_tlc": "Lasagne Bolognese", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "lasagne bolognese"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Heringsfilets in Tomatensauce", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "heringsfilets in tomatensauce"}, {"doclist": {"start": 0, "numFound": 1, "docs": [{"artikelbezeichnung_tlc": "Caff\xe8 Espresso, ganze Bohnen", "markenname_tlc": "GUT&G\xdcNSTIG"}]}, "groupValue": "caff\xe8 espresso, ganze bohnen"
-				}
-			]
+	"responseHeader":{
+		"status":0,
+		"QTime":72,
+		"params":{
+			"fl":"artikelbezeichnung_tlc,markenname_tlc",
+			"indent":"off",
+			"q":"indexName:b2cProdukteIndexNew AND ((artikelbezeichnung_tlc:*tomate* OR artikelbezeichnung_normalized_tlc:*tomate* OR werbetext_tlc:*tomate* OR features-ZTVZ-Grunddaten_tlc:*tomate* OR features-VAHW-Grunddaten_tlc:*tomate* OR auslobungen_tlcm:*tomate* OR auslobungen_normalized_tlcm:*tomate* OR markenname_tlc:*tomate*)) AND -internetkategorien-id1_tlcm:\"1410523467062\" AND -internetkategorien-id2_tlcm:\"1410523467062\" AND -internetkategorien-id3_tlcm:\"1410523467062\" AND -produktkategorie-id1_tlc:\"1410523467062\" AND -produktkategorie-id2_tlc:\"1410523467062\" AND -internetkategorien-id1_tlcm:\"1423046754061\" AND -internetkategorien-id2_tlcm:\"1423046754061\" AND -internetkategorien-id3_tlcm:\"1423046754061\" AND -produktkategorie-id1_tlc:\"1423046754061\" AND -produktkategorie-id2_tlc:\"1423046754061\" AND -internetkategorien-id1_tlcm:\"1423488445199\" AND -internetkategorien-id2_tlcm:\"1423488445199\" AND -internetkategorien-id3_tlcm:\"1423488445199\" AND -produktkategorie-id1_tlc:\"1423488445199\" AND -produktkategorie-id2_tlc:\"1423488445199\" AND -internetkategorien-id1_tlcm:\"1424337150897\" AND -internetkategorien-id2_tlcm:\"1424337150897\" AND -internetkategorien-id3_tlcm:\"1424337150897\" AND -produktkategorie-id1_tlc:\"1424337150897\" AND -produktkategorie-id2_tlc:\"1424337150897\" AND -internetkategorien-id1_tlcm:\"1424337150896\" AND -internetkategorien-id2_tlcm:\"1424337150896\" AND -internetkategorien-id3_tlcm:\"1424337150896\" AND -produktkategorie-id1_tlc:\"1424337150896\" AND -produktkategorie-id2_tlc:\"1424337150896\"",
+			"wt":"json",
+			"qt":"",
+			"hl":"false",
+			"fq":"",
+			"rows":"25"
 		}
-	}, 
-	"responseHeader": {
-		"status": 0, 
-		"QTime": 112, 
-		"params": {
-			"fq": "", 
-			"rows": "25", 
-			"indent": "off", 
-			"qt": "", 
-			"q": "indexName:b2cProdukteIndexNew AND ((artikelbezeichnung_tlc:*tomate* OR artikelbezeichnung_normalized_tlc:*tomate* OR werbetext_tlc:*tomate* OR features-ZTVZ-Grunddaten_tlc:*tomate* OR features-VAHW-Grunddaten_tlc:*tomate* OR auslobungen_tlcm:*tomate* OR auslobungen_normalized_tlcm:*tomate* OR markenname_tlc:*tomate*)) AND -internetkategorien-id1_tlcm:""1410523467062"" AND -internetkategorien-id2_tlcm:""1410523467062"" AND -internetkategorien-id3_tlcm:""1410523467062"" AND -produktkategorie-id1_tlc:""1410523467062"" AND -produktkategorie-id2_tlc:""1410523467062"" AND -internetkategorien-id1_tlcm:""1423046754061"" AND -internetkategorien-id2_tlcm:""1423046754061"" AND -internetkategorien-id3_tlcm:""1423046754061"" AND -produktkategorie-id1_tlc:""1423046754061"" AND -produktkategorie-id2_tlc:""1423046754061"" AND -internetkategorien-id1_tlcm:""1423488445199"" AND -internetkategorien-id2_tlcm:""1423488445199"" AND -internetkategorien-id3_tlcm:""1423488445199"" AND -produktkategorie-id1_tlc:""1423488445199"" AND -produktkategorie-id2_tlc:""1423488445199"" AND -internetkategorien-id1_tlcm:""1424337150897"" AND -internetkategorien-id2_tlcm:""1424337150897"" AND -internetkategorien-id3_tlcm:""1424337150897"" AND -produktkategorie-id1_tlc:""1424337150897"" AND -produktkategorie-id2_tlc:""1424337150897"" AND -internetkategorien-id1_tlcm:""1424337150896"" AND -internetkategorien-id2_tlcm:""1424337150896"" AND -internetkategorien-id3_tlcm:""1424337150896"" AND -produktkategorie-id1_tlc:""1424337150896"" AND -produktkategorie-id2_tlc:""1424337150896""",
-			"wt": "json", 
-			"hl": "false", 
-			"group.field": "artikelbezeichnung_tlc", 
-			"group": "true", 
-			"fl": "artikelbezeichnung_tlc,markenname_tlc"
-		}
-	}
-}
+	},
+	"response":{
+		"numFound":87,
+		"start":0,
+		"docs":[
+			{
+				"artikelbezeichnung_tlc":"Tomaten ganz, geschält",
+				"markenname_tlc":"GUT&GÜNSTIG"
+			},{
+				"artikelbezeichnung_tlc":"Tomaten ganz, geschält",
+				"markenname_tlc":"GUT&GÜNSTIG"
+			},{
+				"artikelbezeichnung_tlc":"Tomatencremesuppe",
+				"markenname_tlc":"GUT&GÜNSTIG"
+			},{
+				"artikelbezeichnung_tlc":"Tomatensaft",
+				"markenname_tlc":"EDEKA Bio"
+			},{"artikelbezeichnung_tlc":"Tomatenketchup","markenname_tlc":"EDEKA Bio"},{"artikelbezeichnung_tlc":"Tomatenmark","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Tomatenmark","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Tomaten ganz, geschält","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Tomaten ganz, geschält","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Tomaten, gehackt","markenname_tlc":"GUT&GÜNSTIG"},{"artikelbezeichnung_tlc":"Tomaten, passiert","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Tomatensauce Klassik","markenname_tlc":"EDEKA Bio"},{"artikelbezeichnung_tlc":"Tomatensauce Arrabbiata","markenname_tlc":"EDEKA Bio"},{"artikelbezeichnung_tlc":"Tomatenketchup","markenname_tlc":"GUT&GÜNSTIG"},{"artikelbezeichnung_tlc":"Kirschtomaten, ungeschält","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Passierte Tomaten","markenname_tlc":"EDEKA Bio"},{"artikelbezeichnung_tlc":"Tomaten in Stücken","markenname_tlc":"EDEKA Bio"},{"artikelbezeichnung_tlc":"Getrocknete Tomaten","markenname_tlc":"GUT&GÜNSTIG"},{"artikelbezeichnung_tlc":"Tomaten in Stücken, classic","markenname_tlc":"EDEKA Italia"},{"artikelbezeichnung_tlc":"Tomatenmark","markenname_tlc":"EDEKA Bio"},{"artikelbezeichnung_tlc":"Möhren-Tomatentopf","markenname_tlc":"EDEKA"},{"artikelbezeichnung_tlc":"Gourmetaufstrich Paprika-Tomate-Zucchini","markenname_tlc":"EDEKA Bio + Vegan"},{"artikelbezeichnung_tlc":"Streichcreme Tomate-Kräuter","markenname_tlc":"EDEKA Bio + Vegan"},{"artikelbezeichnung_tlc":"Heringsfilets in Tomatencreme","markenname_tlc":"GUT&GÜNSTIG"},{"artikelbezeichnung_tlc":"Spaghetti mit Tomatensauce","markenname_tlc":"GUT&GÜNSTIG"}]}}

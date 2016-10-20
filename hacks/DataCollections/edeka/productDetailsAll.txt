@@ -1,0 +1,134 @@
+addGtin_tlc: 4311596474387
+approvalApp_tlc: N
+approvalEmapp_tlc: Y
+approvalOnline_tlc: Y
+approval_tlc: N
+artikelbezeichnung_normalized_tlc: American-Dressing
+artikelbezeichnung_tat: American-Dressing
+artikelbezeichnung_tlc: American-Dressing
+artikeltyp_tlc: EINZELARTIKEL
+auslobungen_normalized_tlcm: [u'fruchtig und frisch', u'mit Tomatennote', u'ohne Zusatz von Konservierungsstoffen']
+auslobungen_tlcm: [u'fruchtig und frisch', u'mit Tomatennote', u'ohne Zusatz von Konservierungsstoffen']
+bestelleinheit_tlc: PCE
+changeDate_tlc: 26.07.2016 13:04
+creationDate_tlc: 12.10.2011 01:46
+edm_tlc: 1427154000
+features-AHIN-Produktspezifikation2_tlc: Bei max. +7°C mindestens haltbar bis
+features-BZLM-Produktspezifikation2_tlc: Salat-Dressing mit Tomatenmark 2-fach konzentriert und Kräutern
+features-DLG_GOLD_2016-02Gütesiegel-media-internalpath_tlcm: [u'http://EZSZOS3U.ez.edeka.net/d110001/medias/images/61', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/1/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/10/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/11/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/8/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/9/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/12/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/13/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/14/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/15/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/3/002/637', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/16/002/637']
+features-DLG_GOLD_2016-02Gütesiegel-media-mediatype_tlcm: [u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo']
+features-DLG_GOLD_2016-02Gütesiegel-media-name_tlcm: [u'LOG_DLG-GOLD-2016.tif', u'DV001_LOG_DLG-GOLD-2016.jpg', u'DV010_LOG_DLG-GOLD-2016.jpg', u'DV011_LOG_DLG-GOLD-2016.jpg', u'DV008_LOG_DLG-GOLD-2016.png', u'DV009_LOG_DLG-GOLD-2016.png', u'DV012_LOG_DLG-GOLD-2016.png', u'DV013_LOG_DLG-GOLD-2016.png', u'DV014_LOG_DLG-GOLD-2016.png', u'DV015_LOG_DLG-GOLD-2016.png', u'DV003_LOG_DLG-GOLD-2016.tif', u'DV018_LOG_DLG-GOLD-2016.tif']
+features-DLG_GOLD_2016-02Gütesiegel-media-quality_tlcm: [u'originalimage', u'DV001_jpg_sRGB_72dpi', u'DV010_jpg_sRGB_72dpi', u'DV011_jpg_sRGB_72dpi', u'DV008_png_sRGB_72dpi', u'DV009_png_sRGB_72dpi', u'DV012_png_sRGB_72dpi', u'DV013_png_sRGB_72dpi', u'DV014_png_sRGB_72dpi', u'DV015_png_sRGB_72dpi', u'DV003_tif_sRGB_300dpi', u'DV018_tif_CMYK_300dpi']
+features-DLG_GOLD_2016-02Gütesiegel-media-type_tlcm: [u'Tagged Image File Format', u'jpg', u'jpg', u'jpg', u'png', u'png', u'png', u'png', u'png', u'png', u'tif', u'tif']
+features-DLG_GOLD_2016-02Gütesiegel_tlc: Ja
+features-GUT_UND_GUENSTIG-01EDEKAEigenmarkenLogos-media-internalpath_tlcm: [u'http://EZSZOS3U.ez.edeka.net/d110001/medias/images/39', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/1/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/5/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/10/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/11/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/4/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/2/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/6/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/7/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/8/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/9/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/12/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/13/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/14/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/15/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/3/002/351', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/16/002/351']
+features-GUT_UND_GUENSTIG-01EDEKAEigenmarkenLogos-media-mediatype_tlcm: [u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo', u'Logo']
+features-GUT_UND_GUENSTIG-01EDEKAEigenmarkenLogos-media-name_tlcm: [u'LOG_GG-ECKE.tif', u'DV001_LOG_GG-ECKE.jpg', u'DV005_LOG_GG-ECKE.jpg', u'DV010_LOG_GG-ECKE.jpg', u'DV011_LOG_GG-ECKE.jpg', u'DV004_LOG_GG-ECKE.pdf', u'DV002_LOG_GG-ECKE.png', u'DV006_LOG_GG-ECKE.png', u'DV007_LOG_GG-ECKE.png', u'DV008_LOG_GG-ECKE.png', u'DV009_LOG_GG-ECKE.png', u'DV012_LOG_GG-ECKE.png', u'DV013_LOG_GG-ECKE.png', u'DV014_LOG_GG-ECKE.png', u'DV015_LOG_GG-ECKE.png', u'DV003_LOG_GG-ECKE.tif', u'DV018_LOG_GG-ECKE.tif']
+features-GUT_UND_GUENSTIG-01EDEKAEigenmarkenLogos-media-quality_tlcm: [u'originalimage', u'DV001_jpg_sRGB_72dpi', u'DV005_jpg_sRGB_72dpi', u'DV010_jpg_sRGB_72dpi', u'DV011_jpg_sRGB_72dpi', u'DV004_pdf_sRGB_300dpi', u'DV002_png_sRGB_72dpi', u'DV006_png_sRGB_72dpi', u'DV007_png_sRGB_72dpi', u'DV008_png_sRGB_72dpi', u'DV009_png_sRGB_72dpi', u'DV012_png_sRGB_72dpi', u'DV013_png_sRGB_72dpi', u'DV014_png_sRGB_72dpi', u'DV015_png_sRGB_72dpi', u'DV003_tif_sRGB_300dpi', u'DV018_tif_CMYK_300dpi']
+features-GUT_UND_GUENSTIG-01EDEKAEigenmarkenLogos-media-type_tlcm: [u'Tagged Image File Format', u'jpg', u'jpg', u'jpg', u'jpg', u'pdf', u'png', u'png', u'png', u'png', u'png', u'png', u'png', u'png', u'png', u'tif', u'tif']
+features-GUT_UND_GUENSTIG-01EDEKAEigenmarkenLogos_tlc: Ja
+features-INHALT-Inhalt_tlc: 250 ml
+features-MINREMLIFE-Stammdaten_tlc: 30
+features-NAEHRST_BEZGR_0001-Nährstoffe/Eiweißing_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0002-Nährstoffe/Kohlenhydrateing_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0003-Nährstoffe/Kohlenhydrate,davonZuckering_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0006-Nährstoffe/Fetting_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0007-Nährstoffe/Fett,davongesättigteFettsäurening_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0013-Nährstoffe/Salzing_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0098-Nährstoffe/Brennwertinkcal_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_BEZGR_0099-Nährstoffe/BrennwertinkJ_tlcm: [u'je 100 ml (unzubereitet)']
+features-NAEHRST_GEHALT_0001-Nährstoffe/Eiweißing_tlc: Eiweiß in g
+features-NAEHRST_GEHALT_0002-Nährstoffe/Kohlenhydrateing_tlc: Kohlenhydrate in g
+features-NAEHRST_GEHALT_0003-Nährstoffe/Kohlenhydrate,davonZuckering_tlc: Kohlenhydrate, davon Zucker in g
+features-NAEHRST_GEHALT_0006-Nährstoffe/Fetting_tlc: Fett in g
+features-NAEHRST_GEHALT_0007-Nährstoffe/Fett,davongesättigteFettsäurening_tlc: Fett, davon gesättigte Fettsäuren in g
+features-NAEHRST_GEHALT_0013-Nährstoffe/Salzing_tlc: Salz in g
+features-NAEHRST_GEHALT_0098-Nährstoffe/Brennwertinkcal_tlc: Brennwert in kcal
+features-NAEHRST_GEHALT_0099-Nährstoffe/BrennwertinkJ_tlc: Brennwert in kJ
+features-NAEHRST_MENGE_0001-Nährstoffe/Eiweißing-je100ml(unzubereitet)_tlcm: [u'1.00000']
+features-NAEHRST_MENGE_0002-Nährstoffe/Kohlenhydrateing-je100ml(unzubereitet)_tlcm: [u'12.50000']
+features-NAEHRST_MENGE_0003-Nährstoffe/Kohlenhydrate,davonZuckering-je100ml(unzubereitet)_tlcm: [u'10.10000']
+features-NAEHRST_MENGE_0006-Nährstoffe/Fetting-je100ml(unzubereitet)_tlcm: [u'19.30000']
+features-NAEHRST_MENGE_0007-Nährstoffe/Fett,davongesättigteFettsäurening-je100ml(unzubereitet)_tlcm: [u'1.50000']
+features-NAEHRST_MENGE_0013-Nährstoffe/Salzing-je100ml(unzubereitet)_tlcm: [u'1.70000']
+features-NAEHRST_MENGE_0098-Nährstoffe/Brennwertinkcal-je100ml(unzubereitet)_tlcm: [u'229.00000']
+features-NAEHRST_MENGE_0099-Nährstoffe/BrennwertinkJ-je100ml(unzubereitet)_tlcm: [u'948.00000']
+features-NAEHRST_POSITION_0001-Nährstoffe/Eiweißing-je100ml(unzubereitet)_tlcm: [u'120']
+features-NAEHRST_POSITION_0002-Nährstoffe/Kohlenhydrateing-je100ml(unzubereitet)_tlcm: [u'70']
+features-NAEHRST_POSITION_0003-Nährstoffe/Kohlenhydrate,davonZuckering-je100ml(unzubereitet)_tlcm: [u'80']
+features-NAEHRST_POSITION_0006-Nährstoffe/Fetting-je100ml(unzubereitet)_tlcm: [u'30']
+features-NAEHRST_POSITION_0007-Nährstoffe/Fett,davongesättigteFettsäurening-je100ml(unzubereitet)_tlcm: [u'40']
+features-NAEHRST_POSITION_0013-Nährstoffe/Salzing-je100ml(unzubereitet)_tlcm: [u'130']
+features-NAEHRST_POSITION_0098-Nährstoffe/Brennwertinkcal-je100ml(unzubereitet)_tlcm: [u'20']
+features-NAEHRST_POSITION_0099-Nährstoffe/BrennwertinkJ-je100ml(unzubereitet)_tlcm: [u'10']
+features-NAEHRST_PROZ_GDA_0001-Nährstoffe/Eiweißing-je100ml(unzubereitet)_tlcm: [u'2']
+features-NAEHRST_PROZ_GDA_0002-Nährstoffe/Kohlenhydrateing-je100ml(unzubereitet)_tlcm: [u'5']
+features-NAEHRST_PROZ_GDA_0003-Nährstoffe/Kohlenhydrate,davonZuckering-je100ml(unzubereitet)_tlcm: [u'11']
+features-NAEHRST_PROZ_GDA_0006-Nährstoffe/Fetting-je100ml(unzubereitet)_tlcm: [u'28']
+features-NAEHRST_PROZ_GDA_0007-Nährstoffe/Fett,davongesättigteFettsäurening-je100ml(unzubereitet)_tlcm: [u'8']
+features-NAEHRST_PROZ_GDA_0013-Nährstoffe/Salzing-je100ml(unzubereitet)_tlcm: [u'28']
+features-NAEHRST_PROZ_GDA_0098-Nährstoffe/Brennwertinkcal-je100ml(unzubereitet)_tlcm: [u'11']
+features-NAEHRST_PROZ_GDA_0099-Nährstoffe/BrennwertinkJ-je100ml(unzubereitet)_tlcm: [u'11']
+features-TEMPB-Stammdaten_tlc: bis 7 °C
+features-VAHW-Verarbeitungshinweis_tlc: Vor Genuss gut schütteln.
+features-VERFUEGBAR_IN_HR-VerfügbarkeitRegionen_tlc: Ja
+features-VERFUEGBAR_IN_MH-VerfügbarkeitRegionen_tlc: Ja
+features-VERFUEGBAR_IN_NB-VerfügbarkeitRegionen_tlc: Ja
+features-VERFUEGBAR_IN_NO-VerfügbarkeitRegionen_tlc: Ja
+features-VERFUEGBAR_IN_RR-VerfügbarkeitRegionen_tlc: Ja
+features-VERFUEGBAR_IN_SB-VerfügbarkeitRegionen_tlc: Ja
+features-VERFUEGBAR_IN_SW-VerfügbarkeitRegionen_tlc: Ja
+features-ZTVZ-Stammdaten_tlc: Zutaten: Wasser, Rapsöl, JOGHURT, Zucker, Branntweinessig, 2,9% Tomatenmark 2-fach konzentriert, HÜHNEREIGELB, Speisesalz, Invertzuckersirup, modifizierte Stärke, Dextrose, SENFSAAT, Verdickungsmittel: Xanthan, Johannisbrotkernmehl; Kräuter, Maltodextrin, Gewürze, Aroma. Das Produkt kann Spuren von SOJA und SELLERIE enthalten.
+features-ZZALKGEHALT-Produktspezifikation_tlc: 0.00
+features-ZZALLERGENE-Produktspezifikation_tlcm: [u'Eier und daraus hergestellte Erzeugnisse', u'Milch und daraus hergestellte Erzeugnisse (einschlie\xdflich Laktose)', u'Senf und daraus hergestellte Erzeugnisse']
+features-ZZBROTEIN-Produktspezifikation_tlc: 2014.01
+features-ZZEKONR-Stammdaten_tlc: 0000000
+features-ZZKONFORM-Produktspezifikation2_tlc: LMIV sichtgeprüft
+features-ZZKONTAKTE_01-Produktspezifikation2_tlcm: [u'D-22291 Hamburg', u'EDEKA ZENTRALE AG & Co. KG']
+features-ZZKUEHLPFLICHT-Produktspezifikation_tlc: ja
+features-ZZLMIV_REL-Produktspezifikation2_tlc: LMIV relevant
+features-ZZNAEHRST_T_DOSIS-Produktspezifikation2_tlc: Referenzmenge für einen durchschnittlichen Erwachsenen (8400 kJ/2000 kcal)
+features-ZZNETTFUELL-Stammdaten_tlc: 250.000
+features-ZZNETTFUELL_ME-Stammdaten_tlc: Milliliter
+features-ZZPACKA-Stammdaten_tlc: Flasche
+features-ZZSPUREN-Produktspezifikation_tlcm: [u'Sojabohnen und daraus hergestellte Erzeugnisse', u'Sellerie und daraus hergestellte Erzeugnisse']
+gewichtbrutto_tlc: 0.2750
+gewichtnetto_tlc: 0.2500
+gtin_tlc: 4311596474387
+heigth_tlc: 17
+id: b2cProdukteIndexNew_EZ_000000001427154000
+id_tlc: EZ_000000001427154000
+indexDate: 2016-10-20T07:00:00.367Z
+indexName: b2cProdukteIndexNew
+inhaltsme_tlc: MLT
+internetkategorien-active_tlcm: [u'JA']
+internetkategorien-id1_tlcm: [u'GutundGuenstig']
+internetkategorien-id2_tlcm: [u'GutundGuenstig_GEKUEHLTE_FEINKOST']
+internetkategorien-id3_tlcm: [u'GutundGuenstig_GEKUEHLTE_FEINKOST_Dressing']
+internetkategorien-name1_tlcm: [u'GUT&G\xdcNSTIG']
+internetkategorien-name2_tlcm: [u'gek\xfchlte Feinkost, Fischerzeugnisse & verzehrfertige Gerichte']
+internetkategorien-name3_tlcm: [u'Dressings']
+kurzbeschreibung_tlc: G&G Dressing American 250ml
+langbeschreibung_tlc: GUT&GÜNSTIG Dressing American 250ml
+length_tlc: 6
+markenname_tlc: GUT&GÜNSTIG
+markentyp_tlc: Eigenmarke
+media-internalpath_tlcm: [u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/1/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/3/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/8/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/9/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/10/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/11/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/12/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/13/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/14/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/15/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/derivates/16/002/450/$v3', u'http://EZSZOS3U.ez.edeka.net/d110001/medias/images/2/$v3']
+media-mediatype_tlcm: [u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch', u'Artikelbild perspektivisch']
+media-name_tlcm: [u'DV001_4311596474387_PER.jpg', u'DV003_4311596474387_PER.tif', u'DV008_4311596474387_PER.png', u'DV009_4311596474387_PER.png', u'DV010_4311596474387_PER.jpg', u'DV011_4311596474387_PER.jpg', u'DV012_4311596474387_PER.png', u'DV013_4311596474387_PER.png', u'DV014_4311596474387_PER.png', u'DV015_4311596474387_PER.png', u'DV018_4311596474387_PER.tif', u'4311596474387_PER.tif']
+media-quality_tlcm: [u'DV001_jpg_sRGB_72dpi', u'DV003_tif_sRGB_300dpi', u'DV008_png_sRGB_72dpi', u'DV009_png_sRGB_72dpi', u'DV010_jpg_sRGB_72dpi', u'DV011_jpg_sRGB_72dpi', u'DV012_png_sRGB_72dpi', u'DV013_png_sRGB_72dpi', u'DV014_png_sRGB_72dpi', u'DV015_png_sRGB_72dpi', u'DV018_tif_CMYK_300dpi', u'originalimage']
+media-type_tlcm: [u'jpg', u'tif', u'png', u'png', u'jpg', u'jpg', u'png', u'png', u'png', u'png', u'tif', u'Tagged Image File Format']
+mindestbestellmenge_tlc: 1.0000
+nettoinhalt_tlc: 250.0000
+produktkategorie-active_tlc: JA
+produktkategorie-id1_tlc: GEKUEHLTE_FEINKOST
+produktkategorie-id2_tlc: GEKUEHLTE_FEINKOST_Dressing
+produktkategorie-name1_tlc: gekühlte Feinkost, Fischerzeugnisse & verzehrfertige Gerichte
+produktkategorie-name2_tlc: Dressings
+rating: 0
+references-id_tlcm: [u'000000000704293005', u'000000001275407002', u'000000001427144003', u'000000001427151001', u'000000001427156006', u'000000001427162001', u'000000001478342003']
+references-type_tlcm: [u'Cross-Selling', u'Cross-Selling', u'\xc4hnlicher Artikel', u'\xc4hnlicher Artikel', u'\xc4hnlicher Artikel', u'Up-Selling', u'Cross-Selling']
+region_tlc: EZ
+seoLabel_tlc: gut-guenstig-dressing-american-250ml
+verpackungsmenge_tlc: 1
+width_tlc: 6

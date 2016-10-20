@@ -2,6 +2,7 @@
 
 class searchConfig:
 	searchStr = "tomate"
+	offset = 0
 	maxRows = 25
 
 
@@ -44,26 +45,36 @@ query = "indexName:b2cProdukteIndexNew AND ("+qrySearch+") AND "+qryBlock
 
 # Specify result set fields:
 
+fields = "*"
+"""
 fields = ",".join((\
+	"id_tlc",
 	"artikelbezeichnung_tlc", \
 	"markenname_tlc", \
 	"werbetext_tlc", "auslobungen_tlcm", \
-	"features-ZTVZ-Grunddaten_tlc", "features-VAHW-Grunddaten_tlc" ))
-
+	"features-ZTVZ-Grunddaten_tlc", "features-VAHW-Grunddaten_tlc", \
+	"produktkategorie-id1_tlc", "produktkategorie-id2_tlc", \
+	"internetkategorien-id1_tlcm", "internetkategorien-id2_tlcm" ))
+"""
 
 # HTTP request:
 
 params = urllib.urlencode({
-	'indent': 'off',
-	'hl': 'false', 
+	'start':searchConfig.offset,
 	'rows': searchConfig.maxRows,
+	'omitHeader': 'true',
+	'indent': 'on',
+	'hl': 'false',
+	'wt': 'json', 
 	'q': query,
-	'fl': fields
+	'fl': fields,
+	'sort': 'artikelbezeichnung_tlc asc'
+#	'form':	'isSentProduct%3Dtrue%26actRegion%3DSB%26actMarke%3D%26actCategory1%3D%26actCategory2%3D%26actCategoryCountIndex%3D%26actCategoryCountChildIndex%3D%26textsearch%3Dtoma%26paging.ActHitsPerPage%3D25%26paging.startPage%3D1%26paging.start%3D0%26paging.getActSort%3Dartikelbezeichnung_tlc%2520asc'
 })
 headers = {"Content-type": "application/x-www-form-urlencoded",
             "Accept": "application/json"}
 conn = httplib.HTTPSConnection("www.edeka.de")
-conn.request("POST", "/search.xml", params, headers)
+conn.request("POST", "/ts/rezepte/rcl.jsp", params, headers)
 response = conn.getresponse()
 
 if response.status != 200 :
@@ -75,6 +86,9 @@ data = response.read()
 conn.close()
 
 jdata = json.loads(data)
+
+print data
+quit()
 
 # Print result
 
@@ -94,4 +108,4 @@ print "----------------------"
 
 products = jresp["docs"]
 for product in products:
-	print product["artikelbezeichnung_tlc"], product["markenname_tlc"]
+	print product["id_tlc"], product["artikelbezeichnung_tlc"], product["markenname_tlc"]

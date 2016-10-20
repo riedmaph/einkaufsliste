@@ -46,9 +46,7 @@ query = "indexName:b2cProdukteIndexNew AND ("+qrySearch+") AND "+qryBlock
 
 fields = ",".join((\
 	"artikelbezeichnung_tlc", \
-	"markenname_tlc", \
-	"werbetext_tlc", "auslobungen_tlcm", \
-	"features-ZTVZ-Grunddaten_tlc", "features-VAHW-Grunddaten_tlc" ))
+	"markenname_tlc" ))
 
 
 # HTTP request:
@@ -58,7 +56,9 @@ params = urllib.urlencode({
 	'hl': 'false', 
 	'rows': searchConfig.maxRows,
 	'q': query,
-	'fl': fields
+	'fl': fields,
+	'group.field': 'artikelbezeichnung_tlc',
+	'group' : 'true'
 })
 headers = {"Content-type": "application/x-www-form-urlencoded",
             "Accept": "application/json"}
@@ -78,20 +78,21 @@ jdata = json.loads(data)
 
 # Print result
 
-if not ('response' in jdata):
+if not ('grouped' in jdata):
 	if 'error' in jdata:
 		print "Error:", jdata["error"]
 	else:
 		print "Error:", "No Response" 
 	quit()
 
-jresp = jdata["response"]
+jresp = jdata["grouped"]["artikelbezeichnung_tlc"]
 
-print "anzahl gesamt:", jresp["numFound"]
+print "anzahl gesamt:", jresp["matches"]
 print "----------------------"
 print "Produkte:"
 print "----------------------"
 
-products = jresp["docs"]
+products = jresp["groups"]
 for product in products:
-	print product["artikelbezeichnung_tlc"], product["markenname_tlc"]
+	val = product["doclist"]["docs"][0]
+	print val["artikelbezeichnung_tlc"], val["markenname_tlc"]
