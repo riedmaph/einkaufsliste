@@ -1,0 +1,2 @@
+-the current user has to be set up as a role in postgres (to use the default user: "sudo su postgres")
+-run run_scripts.sh to run all scripts (run_scripts.bat for windows, not tested)
