@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS Category (
 CREATE TABLE IF NOT EXISTS Article (
     arid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    source VARCHAR(255) NOT NULL,
     caid INT NOT NULL REFERENCES Category(caid)
 );
 
