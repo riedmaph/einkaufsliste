@@ -1,6 +1,6 @@
 Requirements
 -------------
-Python 2.7
+**Python 2.7**
 
 Packages: psycopg2 (postgres driver), BeautifulSoup 4 (HTML parsers)
 ```
@@ -12,7 +12,7 @@ Run
 ------
 ```
 $ python <script.py>
-``
+```
 e.g.
 ```
 $ python edeka24.py
