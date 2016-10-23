@@ -1,18 +1,26 @@
+DROP TABLE IF EXISTS Shop;
 DROP TABLE IF EXISTS Attribute;
 DROP TABLE IF EXISTS Article;
 DROP TABLE IF EXISTS Category;
 
+CREATE TABLE IF NOT EXISTS Shop (
+    sid SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    url VARCHAR(255)
+);
+
 CREATE TABLE IF NOT EXISTS Category (
     caid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    source VARCHAR(255),
+    url VARCHAR(255),
+    sid INT REFERENCES Shop(sid),
     pcaid INT REFERENCES Category(caid)
 );
 
 CREATE TABLE IF NOT EXISTS Article (
     arid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    source VARCHAR(255),
+    url VARCHAR(255),
     caid INT NOT NULL REFERENCES Category(caid)
 );
 
