@@ -46,12 +46,6 @@ def readArticles(catId, catUrl):
 	catData = catResponse.read()
 	catDom = bs(catData, "lxml")
 
-	#divCount = catDom.find("ul", id="jqList")
-	#count = divCount.text.strip()
-	#count = int(count.split(' ')[0])
-	#pageSize = 99
-	#offset = 0
-
 	while True:
 		items = catDom.find_all("div", class_="product-details")
 		for item in items:
@@ -88,16 +82,21 @@ def readArticles(catId, catUrl):
 			db.execute('INSERT INTO Attribute (name, content, arid) VALUES (%s, %s, %s)', 
 				("basePrice", basePrice, artId))
 
-		break
-"""
-		offset += pageSize
-		if offset >= count:
+		pager = catDom.find("div", id="itemsPagerbottom")
+		if pager == None:
+			# only one page -> done
 			break
-		# load next page
-		catResponse = urllib.urlopen(catUrl+"?aoff="+str(offset))
-		catData = catResponse.read()
-		catDom = bs(catData, "lxml")
-"""
+		next = pager.find("a", class_="next")
+		if next == None:
+			# last page reached -> done
+			break
+		else:
+			# load next page
+			nextUrl = next["href"]
+			catResponse = urllib.urlopen(nextUrl)
+			catData = catResponse.read()
+			catDom = bs(catData, "lxml")
+
 	
 def readCategories(parentDiv, parentId=None, parentUrl=url, level=0):
 	# first list contains categories
