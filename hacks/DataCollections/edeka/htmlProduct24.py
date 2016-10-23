@@ -56,7 +56,7 @@ def readArticles(catId, catUrl):
 		for item in items:
 			artLink = item.find("a")
 			artName = artLink.text.strip()
-			artUrl = url + artLink['href']
+			artUrl = artLink['href']
 
 			cont = item.find("p").text.strip()
 			#cont = item.find("p").text.strip().split(' ')
