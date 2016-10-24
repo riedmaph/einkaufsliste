@@ -20,13 +20,13 @@ END
 $$;
 
 CREATE TABLE rewerawinsertshoptmp AS
-Select nextval('shop_sid_seq'::regclass) sid, base.* FROM (Select distinct 'REWE' as name, source as url from rewerawdata) base;
+Select nextval('shop_sid_seq'::regclass) sid, base.* FROM (Select distinct 'REWE' as name, 'https://shop.rewe.de/' as url from rewerawdata) base;
 
 CREATE TABLE rewerawinsertcategorytmp AS 
-Select nextval('category_caid_seq'::regclass) as caid,base.* FROM (Select distinct value as name,NULL::INTEGER as pcaid,sid,source  as url from rewerawdata r join rewerawinsertshoptmp s on r.source=s.url where key='Category') base;
+Select nextval('category_caid_seq'::regclass) as caid,base.* FROM (Select distinct value as name,NULL::INTEGER as pcaid,sid,NULL::TEXT  as url from rewerawdata r cross join (Select * FROM rewerawinsertshoptmp where name='REWE' LIMIT 1) s where key='Category') base;
 
 CREATE TABLE rewerawinsertarticletmp AS
-Select r1.rowid,nextval('article_arid_seq'::regclass) arid,r1.value as name,r1.source as url,c.caid as caid from rewerawdata r1 join rewerawdata r2 on r1.title=r2.title and r1.source=r2.source and r1.rowid=r2.rowid join rewerawinsertcategorytmp c on c.name=r2.value and c.url=r2.source WHERE r1.key='Article' and r2.key='Category';
+Select r1.rowid,nextval('article_arid_seq'::regclass) arid,r1.value as name,r1.source as url,c.caid as caid from rewerawdata r1 join rewerawdata r2 on r1.title=r2.title and r1.source=r2.source and r1.rowid=r2.rowid join rewerawinsertcategorytmp c on c.name=r2.value WHERE r1.key='Article' and r2.key='Category';
 
 CREATE TABLE rewerawinsertattributmp AS
 Select nextval('attribute_atid_seq'::regclass) as atid,r.key as name, r.value as content,at.arid from rewerawdata r join rewerawinsertarticletmp at on r.rowid=at.rowid;
