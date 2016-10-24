@@ -5,7 +5,7 @@ Psql
 Postgres db
 
 # Execute
-
+Inside the direcctory crawler/REWE
 for a complete build execute 
 chmod u+x loadData.sh
 ./loadData.sh

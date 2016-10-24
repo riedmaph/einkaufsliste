@@ -2,7 +2,9 @@
 
 chmod u+x build.sh
 chmod u+x downloadRewe.sh
+chmod u+x databaseSettings.sh
 chmod u+x loadDatabase.sh
+chmod u+x loadToSchema.sh
 
 ./build.sh
 ./downloadRewe.sh
@@ -11,3 +13,4 @@ mvn package
 java -jar target/rewecrawler1-0.0.1-SNAPSHOT.jar
 
 ./loadDatabase.sh
+./loadToSchema.sh

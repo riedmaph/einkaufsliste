@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class REWECrawler {
 	private final static int itemsperpage=80;
 	public static void main(String[] args) throws IOException {
 		PrintWriter writer = new PrintWriter(new FileOutputStream("articles.csv", false));
-
+		AtomicInteger id = new AtomicInteger(82000000);
 		for (int i = 1, limit=131; i<=limit;++i) {
 			File  f = new File("vendor/rewe"+i+".html");
 			Document doc = Jsoup.parse(f, "UTF8");
@@ -27,12 +28,12 @@ public class REWECrawler {
 				System.err.println("On page: "+i+" only "+articles.size()+" article");
 			}
 			final int j = i;
-			String result = articles.parallelStream().map(e->ProductItem(e.clone(),j)).collect(Collectors.joining(""));
+			String result = articles.parallelStream().map(e->ProductItem(e.clone(),j,id)).collect(Collectors.joining(""));
 			writer.print(result);		
 		} 
 		writer.close();
 	}
-	static String ProductItem(Element itemDom,int i){
+	static String ProductItem(Element itemDom,int i,AtomicInteger id){
 		Elements detailLinks = itemDom.select("a.rs-qa-product-details-link.rs-js-key-navigation");
 		if (detailLinks.size()!=1) {
 			System.err.println("On page: "+i+" only "+detailLinks.size()+" detail links");
@@ -77,18 +78,18 @@ public class REWECrawler {
 			return "ERROR";
 		}
 		price+= decs.get(0).html();
-		
+		int id2=id.incrementAndGet();
 		String ret = "";
-		ret += buildCSVLine(title,"Article",title,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
-		ret += buildCSVLine(title,"Category",firstCategory,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
-		ret += buildCSVLine(title,"Category2",secondCategory,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
-		ret += buildCSVLine(title,"Linktitle",linkDescription,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
-		ret += buildCSVLine(title,"Description",description,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");		
-		ret += buildCSVLine(title,"Price",price,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
+		ret += buildCSVLine(id2,title,"Article",title,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
+		ret += buildCSVLine(id2,title,"Category",firstCategory,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
+		ret += buildCSVLine(id2,title,"Category2",secondCategory,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
+		ret += buildCSVLine(id2,title,"Linktitle",linkDescription,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
+		ret += buildCSVLine(id2,title,"Description",description,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");		
+		ret += buildCSVLine(id2,title,"Price",price,"https://shop.rewe.de/productList?search=&sorting=RELEVANCE&startPage="+i+"&selectedFacets=");
 		return ret;
 	}
 	
-	static String buildCSVLine(String title,String tag,String value,String from) {
-		return	"\""+title+"\""+";"+"\""+tag+"\""+";"+"\""+value+"\""+";"+"\""+from+"\""+"\n";
+	static String buildCSVLine(int id2,String title,String tag,String value,String from) {
+		return	id2+";"+"\""+title+"\""+";"+"\""+tag+"\""+";"+"\""+value+"\""+";"+"\""+from+"\""+"\n";
 	}
 }
