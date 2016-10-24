@@ -1,12 +1,6 @@
 Temporary Database 
 ====================
-
-Host: localhost  
-Port: 5432  
-Name: articledb  
-User: postgres  
-Pwd:  elite_se
-
+Parameters are stored in config.json
 
 Install PostgreSQL
 ------------------
@@ -24,11 +18,11 @@ Start postgres terminal
 ```
 $ psql 
 ```
-Change password of postgres to elite_se
+Change password of postgres
 ```
 =# \password postgres
 ```
-Enter new password...  
+Enter new password as specified in config.json/dbpass
 
 finally press ctrl+D twice to exit psql and logout
 

@@ -3,16 +3,16 @@
 shop = "edeka-lebensmittel.de"
 url =  "https://www.edeka-lebensmittel.de"
 
-dbhost = "127.0.0.1"
-dbport = 5432
-dbname = "articledb"
-dbuser = "postgres"
-dbpass = "elite_se"
+# read database configuration file
+import json
+dbcpath = "../../database/config.json"
+dbcfile = open(dbcpath).read()
+dbconfig = json.loads(dbcfile)
 
 import psycopg2
 
 # connect to db
-conn = psycopg2.connect(database=dbname, user=dbuser, password=dbpass) #, host=dbhost, port=dbport)
+conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbuser"], password=dbconfig["dbpass"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
 db = conn.cursor()
 
 # obtain shop id (create shop if it does not exist yet)
@@ -23,7 +23,6 @@ if shopId==None:
 	shopId = db.fetchone()[0]
 else: 
 	shopId = shopId[0]
-
 
 # delete old attributes
 db.execute('DELETE FROM attribute WHERE arid IN (SELECT a.arid from article a inner join category c on a.caid=c.caid WHERE c.sid=%s)', (shopId,))
