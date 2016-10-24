@@ -22,7 +22,7 @@ Change password of postgres
 ```
 =# \password postgres
 ```
-Enter new password as specified in config.json/dbpass
+Enter new password for postgres admin account
 
 finally press ctrl+D twice to exit psql and logout
 

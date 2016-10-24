@@ -1,1 +1,2 @@
-drop database if exists articledb;
+drop database if exists :dbname;
+drop user if exists :dbuser;

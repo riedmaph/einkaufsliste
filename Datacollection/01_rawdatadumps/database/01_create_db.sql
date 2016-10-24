@@ -1,5 +1,8 @@
-CREATE DATABASE articledb
-   WITH OWNER postgres
+
+CREATE USER :dbuser WITH PASSWORD :'dbpass';
+
+CREATE DATABASE :dbname
+   WITH OWNER :dbuser
    TEMPLATE template0
    ENCODING 'UTF8'
    TABLESPACE  pg_default
