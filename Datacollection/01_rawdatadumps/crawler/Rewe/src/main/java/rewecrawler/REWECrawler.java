@@ -13,11 +13,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class REWECrawler {
-	private final static int itemsperpage=80;
+	private final static int itemsperpage=250;
 	public static void main(String[] args) throws IOException {
 		PrintWriter writer = new PrintWriter(new FileOutputStream("articles.csv", false));
 		AtomicInteger id = new AtomicInteger(82000000);
-		for (int i = 1, limit=131; i<=limit;++i) {
+		for (int i = 1, limit=109; i<=limit;++i) {
 			File  f = new File("vendor/rewe"+i+".html");
 			Document doc = Jsoup.parse(f, "UTF8");
 			Elements articles = doc.select(".rs-js-product-item");
