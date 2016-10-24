@@ -56,7 +56,11 @@ export class ListComponent {
     return '#' + col;
   }
 
-  public toggleEditable (event: MouseEvent | KeyboardEvent, elem: HTMLInputElement, index: number) {
+  public toggleEditable (
+    event: MouseEvent | KeyboardEvent,
+    elem: HTMLInputElement,
+    index: number
+  ) {
     if (elem.contentEditable !== 'true') {
       elem.contentEditable = 'true';
       elem.focus();
