@@ -3,34 +3,10 @@
 shop = "edeka-lebensmittel.de"
 url =  "https://www.edeka-lebensmittel.de"
 
-# read database configuration file
-import json
-dbcpath = "../../database/config.json"
-dbcfile = open(dbcpath).read()
-dbconfig = json.loads(dbcfile)
-
-import psycopg2
-
-# connect to db
-conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbuser"], password=dbconfig["dbpass"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
-db = conn.cursor()
-
-# obtain shop id (create shop if it does not exist yet)
-db.execute('SELECT sid FROM shop WHERE name=%s', (shop,))
-shopId = db.fetchone()
-if shopId==None:
-	db.execute('INSERT INTO shop (name, url) VALUES (%s, %s) RETURNING sid', (shop,url))
-	shopId = db.fetchone()[0]
-else: 
-	shopId = shopId[0]
-
-# delete old attributes
-db.execute('DELETE FROM attribute WHERE arid IN (SELECT a.arid from article a inner join category c on a.caid=c.caid WHERE c.sid=%s)', (shopId,))
-# delete old articles
-db.execute('DELETE FROM article WHERE caid IN (SELECT caid from category WHERE sid=%s)', (shopId,))
-# delete old categories
-db.execute('DELETE FROM category WHERE sid=%s', (shopId,))
-
+from src.database import ElisaDB
+db = ElisaDB()
+shopId = db.getOrCreateShop(shop, url)
+db.deleteShopContent(shopId)
 
 
 import urllib
@@ -70,17 +46,7 @@ def readArticles(catId, catUrl):
 			price = Decimal(price[:-2].replace('.','').replace(',','.'))
 
 			# write article to db
-			db.execute('INSERT INTO Article (name, url, caid) VALUES (%s, %s, %s) RETURNING arid', 
-				(artName, artUrl, catId))
-			artId = db.fetchone()[0]
-
-			# write attributes to db
-			db.execute('INSERT INTO Attribute (name, content, arid) VALUES (%s, %s, %s)', 
-				("artno", artNo, artId))
-			db.execute('INSERT INTO Attribute (name, content, arid) VALUES (%s, %s, %s)', 
-				("price", price, artId))
-			db.execute('INSERT INTO Attribute (name, content, arid) VALUES (%s, %s, %s)', 
-				("basePrice", basePrice, artId))
+			db.insertArticle(artName, artUrl, catId, artno=artNo, price=price, basePrice=basePrice)
 
 		offset += pageSize
 		if offset >= count:
@@ -104,9 +70,7 @@ def readCategories(parentDiv, parentId=None, parentUrl=url, level=0):
 			catUrl = catLink['href']
 
 			# write category to db
-			db.execute('INSERT INTO Category (name, url, sid, pcaid) VALUES (%s, %s, %s, %s) RETURNING caid', 
-				(catName, catUrl, shopId, parentId))
-			catId = db.fetchone()[0]
+			catId = db.insertCategory(catName, catUrl, shopId, parentId)
 			print (4*level*' '), catName, catUrl
 
 			# process next level
@@ -121,7 +85,6 @@ def readCategories(parentDiv, parentId=None, parentUrl=url, level=0):
 # read categories
 response = urllib.urlopen(url)
 data = response.read()
-
 dom = bs(data, "lxml")
 
 # top-level categories are in div with class mainNavigation
@@ -131,7 +94,6 @@ readCategories(nav)
 
 
 # Make the changes to the database persistent
-conn.commit()
+db.commit()
 # Close communication with the database
 db.close()
-conn.close()

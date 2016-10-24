@@ -8,8 +8,8 @@ Install PostgreSQL
 $ sudo apt-get install postgresql
 ```
 
-Set admin password and create database
---------------------------------------
+Set admin password
+------------------
 Impersionate postgres user:
 ```
 $ sudo -u postgres -i
@@ -25,6 +25,7 @@ Change password of postgres
 Enter new password for postgres admin account
 
 finally press ctrl+D twice to exit psql and logout
+
 
 Create db and schema 
 --------------------
