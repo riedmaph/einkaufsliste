@@ -15,10 +15,16 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
+// Services
+import { ApiService } from './api';
+
+// Components
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import { NavigationComponent } from './navigation';
 import { ListComponent } from './list';
+
+// Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
 
 // Application wide providers
@@ -54,11 +60,12 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: false }),
+    RouterModule.forRoot(ROUTES, { useHash: true }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
+    ApiService,
   ],
 })
 export class AppModule {
