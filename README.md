@@ -36,8 +36,8 @@ A simple shopping list app with addtional convenience features to improve the sh
 ## Code-Style
 ### Git-Workflow
 - No commits to `master`
-- A user story has its own branch named `story-sl-#` where `#` is the number of the story
-- Sub-tasks have their own branch named `task-sl-X-Y-##` where `X` is the number of the story, `Y` the number of the task and `##` are the initals of the responsible developer
+- A user story has its own branch named `story-X` where `X` is the number of the story
+- Sub-tasks have their own branch named `task-X-Y-AB` where `X` is the number of the story, `Y` the number of the task and `AB` are the initals of the responsible developer
 - Branches may have a brief description at the end of their name, e.g. `task-sl-12-tw-Login-styling`
 - [On the subject of commit-messages](http://chris.beams.io/posts/git-commit/)
 
