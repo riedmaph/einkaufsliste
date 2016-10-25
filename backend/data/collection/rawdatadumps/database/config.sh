@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Shell wraper for database configuration
-# Parameter values are stored on config.json
+# Parameter values are stored in config.json
 
 config="config.json"
 
