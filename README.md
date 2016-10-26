@@ -1,4 +1,4 @@
-# Shopping List
+# ELISA
 A simple shopping list app with addtional convenience features to improve the shopping experience.
 
 ## Features
