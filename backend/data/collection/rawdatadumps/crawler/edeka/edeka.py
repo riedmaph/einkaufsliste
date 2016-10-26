@@ -8,12 +8,6 @@ db = ElisaDB()
 shopId = db.getOrCreateShop(shop, url)
 db.deleteShopContent(shopId)
 
-
-class searchConfig:
-	offset = 0
-	maxRows = 2000
-
-
 fields = [
 	("name",				"artikelbezeichnung_tlc"),
 	("type", 				"artikeltyp_tlc"),
@@ -72,76 +66,92 @@ where = "indexName:b2cProdukteIndexNew"
 
 # HTTP request:
 
-params = urllib.urlencode({
-	'start':searchConfig.offset,
-	'rows': searchConfig.maxRows,
-	'omitHeader': 'true',
-	'indent': 'on',
-	'hl': 'false',
-	'wt': 'json', 
-	'q': where,
-	'fl': select
-})
-headers = {"Content-type": "application/x-www-form-urlencoded",
-            "Accept": "application/json"}
-conn = httplib.HTTPSConnection("www.edeka.de")
-conn.request("POST", "/ts/rezepte/rcl.jsp", params, headers)
-response = conn.getresponse()
-
-if response.status != 200 :
-	print response.status, response.reason
-	conn.close()
-	quit()
-
-data = response.read()
-conn.close()
-
-jdata = json.loads(data)
-
-# process result
-
-if not ('response' in jdata):
-	if 'error' in jdata:
-		print "Error:", jdata["error"]
-	else:
-		print "Error:", "No Response" 
-	quit()
-
-jresp = jdata["response"]
-products = jresp["docs"]
-
 rootCat = {}
-for product in products:
-	# obtain / store category
-	id = None
-	cats = rootCat
-	for fld in ("internetkategorien-name1_tlcm", "internetkategorien-name2_tlcm", "internetkategorien-name3_tlcm"):
-		if fld in product:
-			for prodCat in product[fld]:
-				if prodCat in cats:
-					# existing category -> lookup id
-					id,children = cats[prodCat]
-				else:
-					# new category
-					id = db.insertCategory(prodCat, None, shopId, id)
-					cats[prodCat] = (id,{})
-					_,children = cats[prodCat]
-				cats = children
+offset = 0
+blockSize = 1000
 
-	# store article and attributes
-	artName = product["artikelbezeichnung_tlc"]
-	if id==None:
-		print "Error:", "Article", artName, "has no category! Skipped."
-	else:
-		artNo = product["id_tlc"]
-		artUrl = "https://www.edeka.de/de/produkte/"+artNo
+while True:
+	print "Processing rows", offset+1, "to", offset+blockSize, "..."
 
-		artId = db.insertArticle(artName, artUrl, id)
-		for attr,fld in fields:
+	params = urllib.urlencode({
+		'start':offset,
+		'rows': blockSize,
+		'omitHeader': 'true',
+		'indent': 'on',
+		'hl': 'false',
+		'wt': 'json', 
+		'q': where,
+		'fl': select
+	})
+	headers = {"Content-type": "application/x-www-form-urlencoded",
+	            "Accept": "application/json"}
+	conn = httplib.HTTPSConnection("www.edeka.de")
+	conn.request("POST", "/ts/rezepte/rcl.jsp", params, headers)
+	response = conn.getresponse()
+
+	if response.status != 200 :
+		print response.status, response.reason
+		conn.close()
+		quit()
+
+	data = response.read()
+	conn.close()
+
+	jdata = json.loads(data)
+
+	# process result
+
+	if not ('response' in jdata):
+		if 'error' in jdata:
+			print "Error:", jdata["error"]
+		else:
+			print "Error:", "No Response" 
+		quit()
+
+	jresp = jdata["response"]
+	products = jresp["docs"]
+
+	for product in products:
+		# obtain / store category
+		id = None
+		cats = rootCat
+		for fld in ("internetkategorien-name1_tlcm", "internetkategorien-name2_tlcm", "internetkategorien-name3_tlcm"):
 			if fld in product:
-				db.insertAttribute(attr, product[fld], artId)
+				for prodCat in product[fld]:
+					if prodCat in cats:
+						# existing category -> lookup id
+						id,children = cats[prodCat]
+					else:
+						# new category
+						id = db.insertCategory(prodCat, None, shopId, id)
+						cats[prodCat] = (id,{})
+						_,children = cats[prodCat]
+					cats = children
+
+		# store article and attributes
+		artName = product["artikelbezeichnung_tlc"]
+		if id==None:
+			print "Error:", "Article", artName, "has no category! Skipped."
+		else:
+			artNo = product["id_tlc"]
+			artUrl = "https://www.edeka.de/de/produkte/"+artNo
+
+			artId = db.insertArticle(artName, artUrl, id)
+			for attr,fld in fields:
+				if fld in product:
+					db.insertAttribute(attr, product[fld], artId)
+
+	# load next page...
+	offset += blockSize
+	cnt = jresp["numFound"]
+	if offset >= cnt:
+		break;
+	
 
 # print stored categories
+print 
+print "Stored Categories:"
+print
 def printCat(cats, level=0):
 	for key in cats.iterkeys():
 		id,children=cats[key]
