@@ -84,9 +84,6 @@ conn.close()
 
 jdata = json.loads(data)
 
-print data
-quit()
-
 # Print result
 
 if not ('response' in jdata):
