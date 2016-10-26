@@ -1,3 +1,11 @@
+Edeka Article Crawlers
+======================
+
+ - **edeka.py**: all own brands, many attributes, no prices
+ - **edeka24.py**: articles from onlineshop edeka24.de, including online-prices
+ - **edeka-lebensmittel.py**: articles from onlineshop edeka-lebensmittel.de, including online-prices
+
+
 Requirements
 -------------
 **Python 2.7**
