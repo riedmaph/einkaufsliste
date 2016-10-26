@@ -13,20 +13,20 @@ CREATE TABLE IF NOT EXISTS Category (
     caid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     url VARCHAR(255),
-    sid INT REFERENCES Shop(sid),
-    pcaid INT REFERENCES Category(caid)
+    sid INT REFERENCES Shop(sid) ON DELETE CASCADE,
+    pcaid INT REFERENCES Category(caid) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Article (
     arid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     url VARCHAR(255),
-    caid INT NOT NULL REFERENCES Category(caid)
+    caid INT NOT NULL REFERENCES Category(caid) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Attribute (
     atid SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    content VARCHAR(255),
-    arid INT NOT NULL REFERENCES Article(arid)
+    content TEXT,
+    arid INT NOT NULL REFERENCES Article(arid) ON DELETE CASCADE
 );
