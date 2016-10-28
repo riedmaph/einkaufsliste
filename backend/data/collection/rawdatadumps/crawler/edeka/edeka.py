@@ -51,7 +51,9 @@ fields = [
 	("brandType", 			"markentyp_tlc"),
 	("amountNet2", 			"nettoinhalt_tlc"),
 	("region", 				"region_tlc"),
-	("amountPackage", 		"verpackungsmenge_tlc")
+	("amountPackage", 		"verpackungsmenge_tlc"),
+	("gtin", 				"gtin_tlc"),
+	("addGtin",				"addGtin_tlc")
 ]
 
 
