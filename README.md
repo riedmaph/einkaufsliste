@@ -2,14 +2,14 @@
 A simple shopping list app with addtional convenience features to improve the shopping experience.
 
 ## Features
-- [ ] [Core shopping list functionality](https://github.com/riedmaph/einkaufsliste/milestone/1)
-- [ ] [Multi-user editing](https://github.com/riedmaph/einkaufsliste/milestone/2)
-- [ ] [Data Mining of Super market information](https://github.com/riedmaph/einkaufsliste/milestone/3)
-- [ ] [Special offer notifications](https://github.com/riedmaph/einkaufsliste/milestone/4)
-- [ ] [List optimization](https://github.com/riedmaph/einkaufsliste/milestone/5)
-- [ ] [Multi-list support](https://github.com/riedmaph/einkaufsliste/milestone/7)
-- [ ] [Habit-learning](https://github.com/riedmaph/einkaufsliste/milestone/6)
-- [ ] [Recipe-database integration](https://github.com/riedmaph/einkaufsliste/milestone/8)
+- [ ] [Core shopping list functionality](https://github.com/riedmaph/elisa/milestone/1)
+- [ ] [Multi-user editing](https://github.com/riedmaph/elisa/milestone/2)
+- [ ] [Data Mining of Super market information](https://github.com/riedmaph/elisa/milestone/3)
+- [ ] [Special offer notifications](https://github.com/riedmaph/elisa/milestone/4)
+- [ ] [List optimization](https://github.com/riedmaph/elisa/milestone/5)
+- [ ] [Multi-list support](https://github.com/riedmaph/elisa/milestone/7)
+- [ ] [Habit-learning](https://github.com/riedmaph/elisa/milestone/6)
+- [ ] [Recipe-database integration](https://github.com/riedmaph/elisa/milestone/8)
 
 
 ## Tech-Stack
@@ -38,7 +38,8 @@ A simple shopping list app with addtional convenience features to improve the sh
 - No commits to `master`
 - A user story has its own branch named `story-X` where `X` is the number of the story
 - Sub-tasks have their own branch named `task-X-Y-AB` where `X` is the number of the story, `Y` the number of the task and `AB` are the initals of the responsible developer
-- Branches may have a brief description at the end of their name, e.g. `task-sl-12-tw-Login-styling`
+- If a task is not associated with a story the story number can be omitted
+- Branches may have a brief description at the end of their name, e.g. `task-12-37-tw-Login-styling`
 - [On the subject of commit-messages](http://chris.beams.io/posts/git-commit/)
 
 - Coding happens in the task-branches
