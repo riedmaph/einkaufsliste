@@ -12,7 +12,7 @@ export class ApiService {
   ) {}
 
   public getEntries (): Observable<any> { // TODO model
-    return Observable.of([ 'TEST_ENTRY_1', 'TEST_ENTRY_2' ]);
+    return Observable.of(JSON.parse(localStorage.getItem('entries') || '[]'));
     // return this.http
       // .get(API_ROUTES.entries)
       // .map(response => response.json());

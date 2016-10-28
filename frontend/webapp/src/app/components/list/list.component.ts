@@ -1,4 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { 
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: 'sl-list',
@@ -13,6 +18,12 @@ export class ListComponent {
   @Input()
   public baseColor: string = '#0147A7';
 
+  @Output()
+  public onRemove: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public onEdit: EventEmitter<any> = new EventEmitter<any>();
+
   /**
    * Removes an item from the items list
    * 
@@ -21,6 +32,7 @@ export class ListComponent {
    */
   public removeItem (index: number): void {
     this.items.splice(index, 1);
+    this.onRemove.emit({});
   }
 
   /**
@@ -74,6 +86,7 @@ export class ListComponent {
     if (elem.textContent) {
       this.items[index] = elem.textContent.replace(/[\r\n\t]/g, '');
       elem.textContent = this.items[index];
+      this.onEdit.emit({});
     } else {
       this.removeItem(index);
     }
