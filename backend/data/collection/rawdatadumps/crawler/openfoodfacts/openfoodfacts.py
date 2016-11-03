@@ -72,9 +72,8 @@ for row in reader:
 		artName = row['product_name']
 
 		artId = db.insertArticle(artName, None, caid)
-		for attr,fld in fields:
-			if k in row.keys():
-				db.insertAttribute(k, row[k], artId)
+		if k in row.keys():
+			db.insertAttribute(k, row[k], artId)
 
 
 		print row['product_name']#, row['generic_name']
