@@ -1,3 +1,17 @@
+# -*- coding: utf-8 -*-
+
+shop = "openfoodfacts.org"
+url =  "http://world.openfoodfacts.org"
+
+import sys
+sys.path.append('../edeka/') # database module is maintained there....
+from src.database import ElisaDB
+db = ElisaDB()
+shopId = db.getOrCreateShop(shop, url)
+db.deleteShopContent(shopId)
+
+
+
 
 from pymongo import MongoClient
 client = MongoClient()
@@ -50,9 +64,19 @@ reader = csv.DictReader(csvfile, delimiter='\t')
 
 # data = hdr
 
+caid = db.insertCategory("dummy", None, shopId, None)
+
 x=0
 for row in reader:
 	if row['countries_en'] == "Germany" and row['product_name'] != '':
+		artName = row['product_name']
+
+		artId = db.insertArticle(artName, None, caid)
+		for attr,fld in fields:
+			if k in row.keys():
+				db.insertAttribute(k, row[k], artId)
+
+
 		print row['product_name']#, row['generic_name']
 		x=x+1
 		if x>50:
