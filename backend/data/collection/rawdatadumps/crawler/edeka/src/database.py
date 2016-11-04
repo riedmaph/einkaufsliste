@@ -27,9 +27,9 @@ class ElisaDB:
 
 	def deleteShopContent(self, shopId):
 		# delete old attributes
-		self.db.execute('DELETE FROM attribute WHERE arid IN (SELECT a.arid from article a inner join category c on a.caid=c.caid WHERE c.sid=%s)', (shopId,))
+		#self.db.execute('DELETE FROM attribute WHERE arid IN (SELECT a.arid from article a inner join category c on a.caid=c.caid WHERE c.sid=%s)', (shopId,))
 		# delete old articles
-		self.db.execute('DELETE FROM article WHERE caid IN (SELECT caid from category WHERE sid=%s)', (shopId,))
+		#self.db.execute('DELETE FROM article WHERE caid IN (SELECT caid from category WHERE sid=%s)', (shopId,))
 		# delete old categories
 		self.db.execute('DELETE FROM category WHERE sid=%s', (shopId,))
 
