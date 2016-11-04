@@ -64,7 +64,7 @@ def readArticles(catId, catUrl):
 			catData = catResponse.read()
 			catDom = bs(catData, "lxml")
 
-	
+
 def readCategories(parentDiv, parentId=None, parentUrl=url, level=0):
 	# first list contains categories
 	ul = parentDiv.find("ul")
