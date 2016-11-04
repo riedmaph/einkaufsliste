@@ -7,6 +7,7 @@ CREATE SCHEMA Transformed;
 
 CREATE TABLE IF NOT EXISTS Transformed.Article (
     id SERIAL PRIMARY KEY,
+    title VARCHAR(255),
     name VARCHAR(255),
     brand VARCHAR(255),
     price NUMERIC(10,2),
