@@ -11,7 +11,7 @@ brew install mongodb
 Setup data directory
 ```
 sudo mkdir -p /data/db
-sudo chmod $USER /data/db
+sudo chown $USER /data/db
 ```
 Start daemon
 ```
