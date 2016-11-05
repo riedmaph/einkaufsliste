@@ -26,11 +26,7 @@ class ElisaDB:
 		return shopId
 
 	def deleteShopContent(self, shopId):
-		# delete old attributes
-		#self.db.execute('DELETE FROM attribute WHERE arid IN (SELECT a.arid from article a inner join category c on a.caid=c.caid WHERE c.sid=%s)', (shopId,))
-		# delete old articles
-		#self.db.execute('DELETE FROM article WHERE caid IN (SELECT caid from category WHERE sid=%s)', (shopId,))
-		# delete old categories
+		# delete old categories. contained articles and attributes are also deleted due to CASCADE configuration
 		self.db.execute('DELETE FROM Crawled.category WHERE shop=%s', (shopId,))
 
 
