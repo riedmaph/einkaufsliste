@@ -10,37 +10,37 @@ CREATE SCHEMA Crawled;
 
 CREATE TABLE IF NOT EXISTS Crawled.Shop (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    url VARCHAR(255)
+    name TEXT NOT NULL,
+    url TEXT
 );
 
 CREATE TABLE IF NOT EXISTS Crawled.Category (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    url VARCHAR(255),
+    name TEXT NOT NULL,
+    url TEXT,
     shop INT REFERENCES Crawled.Shop(id) ON DELETE CASCADE,
     category INT REFERENCES Crawled.Category(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crawled.Article (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+    title TEXT NOT NULL,
     price NUMERIC(10,2),
-    unit VARCHAR(255),
-    amount NUMERIC(10,2),
-    url VARCHAR(255),
+    unit TEXT,
+    amount FLOAT,
+    url TEXT,
     category INT NOT NULL REFERENCES Crawled.Category(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crawled.Attribute (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name TEXT NOT NULL,
     content TEXT,
     article INT NOT NULL REFERENCES Crawled.Article(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crawled.Brand (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name TEXT NOT NULL,
     shop INT REFERENCES Crawled.Shop(id) ON DELETE CASCADE
 );
