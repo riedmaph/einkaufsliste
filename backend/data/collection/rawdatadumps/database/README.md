@@ -27,12 +27,14 @@ Enter new password for postgres admin account
 finally press ctrl+D twice to exit psql and logout
 
 
-Create db and schema 
+Create db and users for crawling and transformation
 --------------------
 ```
-$ ./run_scripts.sh
+$ ./rebuildDatabase.sh
 ```
-or on windows
+
+Create schema crawled
+--------------------
 ```
-> run_scripts.bat
+$ ./rebuildSchema.sh
 ```

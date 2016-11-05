@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Transformed.ArticleTag;
 DROP TABLE IF EXISTS Transformed.Tag;
 DROP TABLE IF EXISTS Transformed.Article;
 
@@ -7,18 +8,18 @@ CREATE SCHEMA Transformed;
 
 CREATE TABLE IF NOT EXISTS Transformed.Article (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(255),
-    name VARCHAR(255),
-    brand VARCHAR(255),
+    title TEXT,
+    name TEXT,
+    brand TEXT,
     price NUMERIC(10,2),
-    unit VARCHAR(255),
-    amount NUMERIC(10,2),
-    url VARCHAR(255)    
+    unit TEXT,
+    amount REAL,
+    url TEXT    
 );
 
 CREATE TABLE IF NOT EXISTS Transformed.Tag (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (

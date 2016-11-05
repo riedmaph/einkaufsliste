@@ -1,8 +1,10 @@
 
-CREATE USER :dbuser WITH PASSWORD :'dbpass';
+CREATE USER :dbusercrawler WITH PASSWORD :'dbpasscrawler';
+
+CREATE USER :dbusertransformer WITH PASSWORD :'dbpasstransformer';
 
 CREATE DATABASE :dbname
-   WITH OWNER :dbuser
+   WITH OWNER :dbusercrawler
    TEMPLATE template0
    ENCODING 'UTF8'
    TABLESPACE  pg_default
