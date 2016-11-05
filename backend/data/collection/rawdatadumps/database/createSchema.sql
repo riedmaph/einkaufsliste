@@ -19,15 +19,15 @@ CREATE TABLE IF NOT EXISTS Crawled.Category (
     name TEXT NOT NULL,
     url TEXT,
     shop INT REFERENCES Crawled.Shop(id) ON DELETE CASCADE,
-    category INT REFERENCES Crawled.Category(id) ON DELETE CASCADE
+    parent INT REFERENCES Crawled.Category(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crawled.Article (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     price NUMERIC(10,2),
-    unit TEXT,
     amount REAL,
+    unit TEXT,
     url TEXT,
     category INT NOT NULL REFERENCES Crawled.Category(id) ON DELETE CASCADE
 );

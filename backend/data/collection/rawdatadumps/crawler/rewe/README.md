@@ -1,16 +1,22 @@
-# Requirements
-Maven
-Java
-Psql
-Postgres db
+REWE Article Crawler
+=====================
 
-# Execute
-Inside the direcctory crawler/REWE
-For a complete build execute 
-chmod u+x loadData.sh
-./loadData.sh
+Requirements
+-------------
+**Python 2.7**
+```
+sudo apt-get install python
+```
 
-If any but the last downloaded file prints a log message, rerun the downloadscript with those reported files by changing the for loop to those values. E.g. if Files 1 and 4 were not complete change it to:for i in 1 4
-Then execute all steps listed in loadData.sh manually
- 
-Or execute the individual steps as listed in loadData.sh
+Packages: psycopg2 (postgres driver), BeautifulSoup 4 and lxml (HTML parsers)
+```
+$ pip install psycopg2
+$ pip install lxml
+$ pip install beautifulsoup
+```
+
+Run
+------
+```
+$ python rewe.py
+```
