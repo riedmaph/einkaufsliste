@@ -10,7 +10,7 @@ import psycopg2
 class ElisaDB:
 	def __init__(self):
 		# connect to db
-		self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbusercrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
+		self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbpasscrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
 		self.db = self.conn.cursor()
 
 
