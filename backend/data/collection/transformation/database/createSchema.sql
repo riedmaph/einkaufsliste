@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Transformed.Article (
     brand TEXT,
     price NUMERIC(10,2),
     unit TEXT,
-    amount FLOAT,
+    amount REAL,
     url TEXT    
 );
 

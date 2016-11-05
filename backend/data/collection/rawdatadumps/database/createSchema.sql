@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Crawled.Article (
     title TEXT NOT NULL,
     price NUMERIC(10,2),
     unit TEXT,
-    amount FLOAT,
+    amount REAL,
     url TEXT,
     category INT NOT NULL REFERENCES Crawled.Category(id) ON DELETE CASCADE
 );
