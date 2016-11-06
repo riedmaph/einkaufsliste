@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS Crawled.Brand;
-DROP TABLE IF EXISTS Crawled.Attribute;
-DROP TABLE IF EXISTS Crawled.Article;
-DROP TABLE IF EXISTS Crawled.Category;
-DROP TABLE IF EXISTS Crawled.Shop;
+DROP TABLE IF EXISTS Crawled.Brand CASCADE;
+DROP TABLE IF EXISTS Crawled.Attribute CASCADE;
+DROP TABLE IF EXISTS Crawled.Article CASCADE;
+DROP TABLE IF EXISTS Crawled.Category CASCADE;
+DROP TABLE IF EXISTS Crawled.Shop CASCADE;
 
 DROP SCHEMA IF EXISTS Crawled;
 
@@ -44,3 +44,9 @@ CREATE TABLE IF NOT EXISTS Crawled.Brand (
     name TEXT NOT NULL,
     shop INT REFERENCES Crawled.Shop(id) ON DELETE CASCADE
 );
+
+create index idx_category_shop on crawled.category(shop);
+create index idx_category_parent on crawled.category(parent);
+create index idx_article_category on crawled.article(category);
+create index idx_attribute_article on crawled.attribute(article);
+create index idx_brand_shop on crawled.brand(shop);
