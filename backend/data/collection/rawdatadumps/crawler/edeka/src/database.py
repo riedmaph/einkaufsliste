@@ -29,6 +29,9 @@ class ElisaDB:
 		# delete old categories. contained articles and attributes are also deleted due to CASCADE configuration
 		self.db.execute('DELETE FROM Crawled.category WHERE shop=%s', (shopId,))
 
+	def deleteShopBrands(self, shopId):
+		self.db.execute('DELETE FROM Crawled.brand WHERE shop=%s', (shopId,))
+
 
 	def insertCategory(self, catName, catUrl, shopId, parentId):
 		self.db.execute('INSERT INTO Crawled.Category (name, url, shop, parent) VALUES (%s, %s, %s, %s) RETURNING id', 
@@ -52,6 +55,10 @@ class ElisaDB:
 	def insertAttribute(self, attrName, attrValue, artId):
 		self.db.execute('INSERT INTO Crawled.Attribute (name, content, article) VALUES (%s, %s, %s)', 
 			(attrName, attrValue, artId))
+
+	def insertBrand(self, brandName, shopId):
+		self.db.execute('INSERT INTO Crawled.Brand (name, shop) VALUES (%s, %s)', 
+			(brandName, shopId))
 
 	# Make the changes to the database persistent
 	def commit(self):
