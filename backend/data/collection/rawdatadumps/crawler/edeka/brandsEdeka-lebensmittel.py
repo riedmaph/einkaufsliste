@@ -4,8 +4,6 @@ shop = "edeka-lebensmittel.de"
 url =  "https://www.edeka-lebensmittel.de/?ActionCall=WebActionArticleSearch&Params%5BSearchParam%5D="
 host = "https://www.edeka-lebensmittel.de"
 
-import sys
-sys.path.append('../edeka/') # database module is maintained there....
 from src.database import ElisaDB
 db = ElisaDB()
 shopId = db.getOrCreateShop(shop, host)

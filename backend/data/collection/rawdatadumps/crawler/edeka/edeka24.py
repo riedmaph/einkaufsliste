@@ -14,9 +14,6 @@ from bs4 import BeautifulSoup as bs
 from decimal import *
 
 
-#def readArticleDetails(artId, artUrl):
-	#desc = dom.find('div', id='description')
-
 def readArticles(catId, catUrl):
 	catResponse = urllib.urlopen(catUrl)
 	catData = catResponse.read()
@@ -46,7 +43,7 @@ def readArticles(catId, catUrl):
 			price = Decimal(price[:-2].replace('.','').replace(',','.'))
 
 			# write article to db
-			db.insertArticle(artName, artUrl, catId, price=price, amountUnit=cont, basePrice=basePrice)
+			db.insertArticle(artName, artUrl, catId, artPrice=price, amountUnit=cont, basePrice=basePrice)
 
 		pager = catDom.find("div", id="itemsPagerbottom")
 		if pager == None:
@@ -90,7 +87,7 @@ def readCategories(parentDiv, parentId=None, parentUrl=url, level=0):
 	else:
 		# no subcategories -> read articles in leaf category
 		readArticles(parentId, parentUrl)
-		#conn.commit()
+		#db.commit()
 
 
 # read categories

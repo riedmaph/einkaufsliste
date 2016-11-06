@@ -13,7 +13,7 @@ db.deleteShopContent(shopId)
 
 import urllib
 from bs4 import BeautifulSoup as bs
-
+from decimal import *
 
 def readArticles(catId, catUrl):
 
@@ -38,8 +38,11 @@ def readArticles(catId, catUrl):
 
 			artNo = artUrl.split("/")[-1]
 
-			price = item.find("mark", class_="rs-price").text.strip()
-			
+			markPrice = item.find("mark", class_="rs-price")
+			preSep = markPrice.find("span", class_="rs-price__predecimal").text.strip()
+			postSep= markPrice.find("span", class_="rs-price__decimal").text.strip()
+			price = Decimal(preSep+"."+postSep)
+
 			pBasePrice = item.find("mark", class_="rs-price--base")
 			if pBasePrice:
 				basePrice = pBasePrice.text.strip()
@@ -47,7 +50,7 @@ def readArticles(catId, catUrl):
 				basePrice = None
 			
 			# write article to db
-			db.insertArticle(artName, artUrl, catId, price=price, basePrice=basePrice, artno=artNo)
+			db.insertArticle(artName, artUrl, catId, artPrice=price, basePrice=basePrice, artno=artNo)
 
 		#pager = catDom.find("div", id="rs-pagination")
 		#if pager == None:
