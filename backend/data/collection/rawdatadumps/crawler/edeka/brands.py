@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-shop = "rewe"
-url =  "https://shop.rewe.de/productList"
-host = "https://shop.rewe.de"
+shop = "edeka-lebensmittel.de"
+url =  "https://www.edeka-lebensmittel.de/?ActionCall=WebActionArticleSearch&Params%5BSearchParam%5D="
+host = "https://www.edeka-lebensmittel.de"
 
 import sys
 sys.path.append('../edeka/') # database module is maintained there....
@@ -20,14 +20,15 @@ response = urllib.urlopen(url)
 data = response.read()
 dom = bs(data, "lxml")
 
-# find brand list
-ul = dom.find("ul", class_="rs-qa-facetlist-brand")
+# find brand container
+div = dom.find("div", id="fl-wizard-question-vendor")
 
 # iterate over all list elements
 cnt=0
-elems = ul.find_all("span", class_="rs-facetspanel__facetname")
+elems = div.find_all("li", class_="flFilter")
 for elem in elems:
-	brand = elem.text.strip()
+	link = elem.find("a")
+	brand = link.text.strip()
 	db.insertBrand(brand, shopId)
 	cnt=cnt+1
 
