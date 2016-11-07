@@ -43,7 +43,7 @@ def readArticles(catId, catUrl):
 			price = Decimal(price[:-2].replace('.','').replace(',','.'))
 
 			# write article to db
-			db.insertArticle(artName, artUrl, catId, artPrice=price, amountUnit=cont, basePrice=basePrice)
+			db.insertArticle(artName, artUrl, catId, artPrice=price, artSize=cont, basePrice=basePrice)
 
 		pager = catDom.find("div", id="itemsPagerbottom")
 		if pager == None:
