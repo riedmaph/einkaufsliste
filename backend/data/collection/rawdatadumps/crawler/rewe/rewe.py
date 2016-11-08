@@ -46,11 +46,26 @@ def readArticles(catId, catUrl):
 			pBasePrice = item.find("mark", class_="rs-price--base")
 			if pBasePrice:
 				basePrice = pBasePrice.text.strip()
+				# usual format: size ( basePrice )
+				bpStart = basePrice.find("(")
+				bpEnd = basePrice.find(")")
+				if bpStart > 0 and bpEnd > bpStart and bpEnd == len(basePrice)-1:
+					artSize   = basePrice[0:bpStart-1].strip()
+					basePrice = basePrice[bpStart:bpEnd-1].strip()
+				elif bpStart < 0 and bpEnd < 0:
+					# basePrice is missing, only size
+					artSize = basePrice
+					basePrice = None
+				else:
+					# parsing error
+					artSize = None
+
 			else:
+				artSize = None
 				basePrice = None
 			
 			# write article to db
-			db.insertArticle(artName, artUrl, catId, artPrice=price, basePrice=basePrice, artno=artNo)
+			db.insertArticle(artName, artUrl, catId, artPrice=price, artSize=artSize, basePrice=basePrice, artno=artNo)
 
 		#pager = catDom.find("div", id="rs-pagination")
 		#if pager == None:
@@ -103,7 +118,7 @@ response = urllib.urlopen(url)
 data = response.read()
 dom = bs(data, "lxml")
 
-# top-level categories are in nav with class nav-site-primary
+# top-level categories are in nav with id nav-site-primary
 nav = dom.find("nav", id="nav-site-primary")
 readCategories(nav)
 

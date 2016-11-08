@@ -38,7 +38,9 @@ class ElisaDB:
 			(catName, catUrl, shopId, parentId))
 		return self.db.fetchone()[0]
 
-	def insertArticle(self, artTitle, artUrl, catId, artPrice=None, artAmount=None, artUnit=None, **kvargs):
+	def insertArticle(self, artTitle, artUrl, catId, 
+			artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None, 
+			**kvargs):
 		"""!
 	    Stores an article and corresponding attributes in the database
 
@@ -46,14 +48,18 @@ class ElisaDB:
 	    @param artUrl (String): link to the article page
 	    @param catId (int): id of the corresponding category
 	    @param artPrice (Decimal): article price
+	    @param artSize (String): amount, unit and package size as they appear on the website
+	    @param artPackage (float): number of items per package
 	    @param artAmount (float): amount (in unit)
 	    @param artUnit (String): unit (of amount)
+	    @param artName (String): article name
+	    @param artBrand (String): brand
 	    @param **kvargs: further attribues. keys and values are stored as strings in the attribute table
 
 	    @return Id of insterted article
 	    """
-		self.db.execute('INSERT INTO Crawled.Article (title, price, amount, unit, url, category) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id', 
-			(artTitle, artPrice, artAmount, artUnit, artUrl, catId))
+		self.db.execute('INSERT INTO Crawled.Article (title, name, brand, price, size, packagesize, amount, unit, url, category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id', 
+			(artTitle, artName, artBrand, artPrice, artSize, artPackage, artAmount, artUnit, artUrl, catId))
 		# insert attributes
 		artId = self.db.fetchone()[0]
 		for k,v in kvargs.iteritems():

@@ -25,7 +25,11 @@ CREATE TABLE IF NOT EXISTS Crawled.Category (
 CREATE TABLE IF NOT EXISTS Crawled.Article (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
+    name TEXT,
+    brand TEXT,
     price NUMERIC(10,2),
+    size TEXT,
+    packagesize INT,
     amount REAL,
     unit TEXT,
     url TEXT,

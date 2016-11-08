@@ -12,8 +12,10 @@ CREATE TABLE IF NOT EXISTS Transformed.Article (
     name TEXT,
     brand TEXT,
     price NUMERIC(10,2),
-    unit TEXT,
+    size TEXT,
+    packagesize INT,
     amount REAL,
+    unit TEXT,
     url TEXT    
 );
 

@@ -57,6 +57,7 @@ fields = [
 ]
 
 
+fn = {key: value for (key, value) in fields}
 
 import json
 import httplib, urllib
@@ -117,7 +118,7 @@ while True:
 		# obtain / store category
 		id = None
 		cats = rootCat
-		for fld in ("internetkategorien-name1_tlcm", "internetkategorien-name2_tlcm", "internetkategorien-name3_tlcm"):
+		for fld in (fn["cat1"], fn["cat2"], fn["cat3"]):
 			if fld in product:
 				for prodCat in product[fld]:
 					if prodCat in cats:
@@ -131,14 +132,26 @@ while True:
 					cats = children
 
 		# store article and attributes
-		artName = product["artikelbezeichnung_tlc"]
+		artName = product[fn["name"]]
 		if id==None:
 			print "Error:", "Article", artName, "has no category! Skipped."
 		else:
-			artNo = product["id_tlc"]
+			def getVal(attr):
+				fld = fn[attr]
+				if fld in product:
+					return product[fld]
+				else:
+					return None
+
+			artNo = getVal("artno")
 			artUrl = "https://www.edeka.de/de/produkte/"+artNo
 
-			artId = db.insertArticle(artName, artUrl, id)
+			artBrand = getVal("brand")
+			artSize = getVal("amountUnit")
+			artAmount = getVal("amountNet")
+			artUnit = getVal("unitNet")
+
+			artId = db.insertArticle(artName, artUrl, id, artSize=artSize, artAmount=artAmount, artUnit=artUnit, artName=artName, artBrand=artBrand)
 			for attr,fld in fields:
 				if fld in product:
 					db.insertAttribute(attr, product[fld], artId)
