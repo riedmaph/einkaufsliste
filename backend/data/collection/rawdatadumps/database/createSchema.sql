@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Crawled.Article (
     brand TEXT,
     price NUMERIC(10,2),
     size TEXT,
-    packagesize REAL,
+    packagesize INT,
     amount REAL,
     unit TEXT,
     url TEXT,
