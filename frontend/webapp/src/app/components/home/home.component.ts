@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '../api';
+import { ApiService } from '../../services/api';
+import { ListComponent } from '../list';
 
 @Component({
   selector: 'sl-home',
@@ -15,12 +16,18 @@ export class HomeComponent implements OnInit {
    */
   public items: string[] = [ ];
 
+  public showSplit: boolean = true;
+
+  @ViewChild(ListComponent)
+  public listComponent: ListComponent;
+
   constructor (
     private apiService: ApiService
   ) {}
 
   /**
    * Temporary auto-completion provider
+   * TODO replace with api call
    */
   public acList: (_: string) => Observable<string[]> =
     (s: string) => Observable.of(
@@ -35,6 +42,14 @@ export class HomeComponent implements OnInit {
    */
   public ngOnInit () {
     this.apiService.getEntries().subscribe((entries) => this.items = entries);
+    if (this.listComponent) {
+      this.listComponent.onEdit.subscribe(() => {
+        localStorage.setItem('entries', JSON.stringify(this.items));
+      });
+      this.listComponent.onRemove.subscribe(() => {
+        localStorage.setItem('entries', JSON.stringify(this.items));
+      });
+    }
   }
 
   /**
@@ -49,6 +64,24 @@ export class HomeComponent implements OnInit {
     if (entry.value) {
       this.items.push(entry.value);
       entry.value = '';
+
+      localStorage.setItem('entries', JSON.stringify(this.items));
     }
+  }
+
+  public toggleSplit () {
+    this.showSplit = !this.showSplit;
+  }
+
+  public get splitItems (): string[][] {
+    let asObj: Object = {};
+    this.items.forEach(item => {
+      if (asObj.hasOwnProperty(item[0])) {
+        asObj[item[0]].push(item);
+      } else {
+        asObj[item[0]] = [ item ];
+      }
+    });
+    return Object.keys(asObj).map(k => asObj[k]);
   }
 }

@@ -16,13 +16,13 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
 // Services
-import { ApiService } from './api';
+import { ApiService } from './services/api';
 
 // Components
-import { HomeComponent } from './home';
-import { NoContentComponent } from './no-content';
-import { NavigationComponent } from './navigation';
-import { ListComponent } from './list';
+import { HomeComponent } from './components/home';
+import { NoContentComponent } from './components/no-content';
+import { NavigationComponent } from './components/navigation';
+import { ListComponent } from './components/list';
 
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
