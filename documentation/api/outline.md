@@ -5,8 +5,10 @@ The following are __suggestions__ how API endpoints might look.
 ## List
 
 ### Request
+Get a list by id
+
 #### Method
-GET 
+GET
 #### URL
 /list/:listId
 
@@ -14,13 +16,15 @@ GET
 _empty_
 
 ### Response
+All items on the list
+
 #### Response Body
-__Type:__ 
+__Type:__
 ```TypeScript
 Array<{
   name: string,
-  unit: string,
-  amount: number
+  unit?: string,
+  amount?: number
 }>
 ```
 
@@ -29,8 +33,11 @@ __Example:__
 [
   {
     "name": "Milch",
-    "unit": "L",
+    "unit": "l",
     "amount": 3  
   },
+  {
+    "name": "Zucker"
+  }
 ]
 ```
