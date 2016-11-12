@@ -1,0 +1,23 @@
+<form>
+  <input 
+    [autoCompletion]="acList"
+    (onSelect)="add($event, entry)"
+    type="text" 
+    placeholder="Add a new entry..." 
+    #entry
+  >
+  <button (click)="add($event, entry)"><i class="fa fa-plus"></i></button>
+</form>
+<sl-list *ngIf="!showSplit" [items]="items"></sl-list>
+<div *ngIf="showSplit" class="split-view">
+  <ul class="sublist">
+    <li *ngFor="let sublist of splitItems">
+      <ul>
+        <li *ngFor="let entry of sublist">
+          {{ entry }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<button (click)="toggleSplit()" style="position: fixed; right: 1em; bottom: 1em;">SplitView</button>
