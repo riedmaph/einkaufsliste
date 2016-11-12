@@ -57,14 +57,17 @@ fields = [
 ]
 
 
+# dict: attribute name -> external field name
 fn = {key: value for (key, value) in fields}
+# dict: external field name -> attribut name
+fn_rev = {key: value for (value, key) in fields}
 
 import json
 import httplib, urllib
 
 # Build Apache Lucene query:
 
-select = ",".join(map(lambda (k,v): v, fields))
+select = "*" #",".join(map(lambda (k,v): v, fields))
 where = "indexName:b2cProdukteIndexNew"
 
 # HTTP request:
@@ -152,9 +155,19 @@ while True:
 			artUnit = getVal("unitNet")
 
 			artId = db.insertArticle(artName, artUrl, id, artSize=artSize, artAmount=artAmount, artUnit=artUnit, artName=artName, artBrand=artBrand)
-			for attr,fld in fields:
-				if fld in product:
-					db.insertAttribute(attr, product[fld], artId)
+			
+			for fld in product:
+				if fld in fn_rev:
+					attr=fn_rev[fld]
+				else:
+					attr='_'+fld
+
+				db.insertAttribute(attr, product[fld], artId)
+
+			#for attr,fld in fields:
+			#	if fld in product:
+			#		db.insertAttribute(attr, product[fld], artId)
+		#db.commit()
 
 	# load next page...
 	offset += blockSize
