@@ -33,7 +33,10 @@ button {
   background: transparent;
   border: none;
   color: #fff;
-  cursor: pointer;
+
+  &.success {
+    color: #019440;
+  }
 
   &.remove {
     color: #c00;
