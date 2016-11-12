@@ -14,6 +14,7 @@ fields = [
 	("productClaims", 		"auslobungen_tlcm"),
 	("orderUnit", 			"bestelleinheit_tlc"),
 	("amountUnit", 			"features-INHALT-Inhalt_tlc"),
+	("grammatur", 			"features-GRAMMATUR-Inhalt_tlc"),
 	("minRemShelfLife",		"features-MINREMLIFE-Stammdaten_tlc"),
 	("nutritionRelProtein", "features-NAEHRST_MENGE_0001-Nährstoffe/Eiweißing-je100ml(unzubereitet)_tlcm"),
 	("nutritionRelCarb",	"features-NAEHRST_MENGE_0002-Nährstoffe/Kohlenhydrateing-je100ml(unzubereitet)_tlcm"),
@@ -148,6 +149,8 @@ while True:
 
 			artBrand = getVal("brand")
 			artSize = getVal("amountUnit")
+			if artSize==None: 
+				artSize = getVal("grammatur")
 			artAmount = getVal("amountNet")
 			artUnit = getVal("unitNet")
 
