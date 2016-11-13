@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
-import { API_ROUTES } from './routes';
+// import { API_ROUTES } from './routes'; // TODO Currently unused import
 
 @Injectable()
 export class ApiService {
