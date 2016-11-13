@@ -59,7 +59,7 @@ def readArticles(catId, catQry, cnt):
 		artUnit = prod["quantityType"]
 
 		brand = prod["brand"]
-		artNo = prod["articleId"]
+		artNo = prod["productId"]
 
 		# write article to db
 		artId = db.insertArticle(artTitle, artUrl, catId, artPrice=price, artAmount=artAmount, artUnit=artUnit, artBrand=brand, artno=artNo)
