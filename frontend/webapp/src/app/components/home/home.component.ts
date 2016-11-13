@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { ApiService } from '../../services/api';
 import { ListComponent } from '../list';
 import { CompletedComponent } from '../completed';
+import { ListItem } from '../../models/list-item.model';
 
 @Component({
   selector: 'sl-home',
@@ -15,11 +15,12 @@ export class HomeComponent implements OnInit {
   /**
    * Items of the list
    */
-  public items: string[] = [ ];
-  public completedItems: string[] = [ ];
+  public items: ListItem[] = [ ];
+  public completedItems: ListItem[] = [ ];
 
   public showCompletedSection: boolean = false;
   public showSplit: boolean = true;
+
 
   @ViewChild(ListComponent)
   public listComponent: ListComponent;
@@ -30,17 +31,6 @@ export class HomeComponent implements OnInit {
   constructor (
     private apiService: ApiService
   ) {}
-
-  /**
-   * Temporary auto-completion provider
-   * TODO replace with api call
-   */
-  public acList: (_: string) => Observable<string[]> =
-    (s: string) => Observable.of(
-      [ 'Milk', 'Sugar', 'Chilies', 'Chocolate', 'Chicken', 'Eggs' ].filter(
-        (entry) => entry.toLowerCase().startsWith(s.toLowerCase())
-      )
-    );
 
   /**
    * Load previous entries from the API
@@ -75,7 +65,11 @@ export class HomeComponent implements OnInit {
     event.preventDefault();
 
     if (entry.value) {
-      this.items.push(entry.value);
+      this.items.push(<ListItem> {
+        name: entry.value,
+        unit: 'stk',
+        amount: 1,
+      });
       entry.value = '';
 
       localStorage.setItem('entries', JSON.stringify(this.items));
@@ -85,10 +79,10 @@ export class HomeComponent implements OnInit {
   /**
    * Completes an item on the list
    * 
-   * @param {string} item The item to complete
+   * @param {ListItem} item The item to complete
    * @return {void}
    */
-  public complete (item: string): void {
+  public complete (item: ListItem): void {
     this.completedItems.push(item);
 
     localStorage.setItem('entries', JSON.stringify(this.items));
@@ -98,10 +92,10 @@ export class HomeComponent implements OnInit {
   /**
    * Marks an already completed item as incomplete
    * 
-   * @param {string} item The item to mark as incomplete
+   * @param {ListItem} item The item to mark as incomplete
    * @return {void} 
    */
-  public incomplete (item: string): void {
+  public incomplete (item: ListItem): void {
     this.items.push(item);
 
     localStorage.setItem('entries', JSON.stringify(this.items));

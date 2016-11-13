@@ -5,6 +5,10 @@ import {
   EventEmitter,
 } from '@angular/core';
 
+import {
+  ListItem,
+} from '../../models/list-item.model.ts';
+
 @Component({
   selector: 'sl-list',
   templateUrl: './list.template.html',
@@ -13,7 +17,7 @@ import {
 export class ListComponent {
 
   @Input()
-  public items: string[] = [ ];
+  public items: ListItem[] = [ ];
 
   @Input()
   public baseColor: string = '#0147A7';
@@ -25,7 +29,7 @@ export class ListComponent {
   public onEdit: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
-  public onComplete: EventEmitter<string> = new EventEmitter<string>();
+  public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   /**
    * Removes an item from the items list
@@ -98,8 +102,8 @@ export class ListComponent {
 
   public commitEdit (elem: HTMLElement, index: number) {
     if (elem.textContent) {
-      this.items[index] = elem.textContent.replace(/[\r\n\t]/g, '');
-      elem.textContent = this.items[index];
+      this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
+      elem.textContent = this.items[index].name;
       this.onEdit.emit({});
     } else {
       this.removeItem(index);

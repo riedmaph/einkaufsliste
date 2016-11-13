@@ -4,7 +4,9 @@
       <i class="fa fa-square-o"></i>
     </button>
 
-    <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">{{ item }}</span>
+    <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
+      {{ item.amount }} {{ item.unit }} {{ item.name }}
+    </span>
 
     <button (click)="toggleEditable($event, textfield, i)">
       <i
