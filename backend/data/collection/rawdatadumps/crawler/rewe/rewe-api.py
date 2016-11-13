@@ -57,12 +57,13 @@ def readArticles(catId, catQry, cnt):
 		if artAmount==None:
 			artAmount = prod["baseQuantity"]
 		artUnit = prod["quantityType"]
+		artPackage = prod["multi1"]
 
 		brand = prod["brand"]
 		artNo = prod["productId"]
 
 		# write article to db
-		artId = db.insertArticle(artTitle, artUrl, catId, artPrice=price, artAmount=artAmount, artUnit=artUnit, artBrand=brand, artno=artNo)
+		artId = db.insertArticle(artTitle, artUrl, catId, artPrice=price, artPackage=artPackage, artAmount=artAmount, artUnit=artUnit, artBrand=brand, artno=artNo)
 		for fld in prod:
 			db.insertAttribute(fld, prod[fld], artId)
 		
