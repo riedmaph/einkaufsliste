@@ -53,12 +53,16 @@ def readArticles(catId, catQry, cnt):
 		artTitle = prod["title"]
 		artUrl = prod["productUrl"]
 		price = Decimal(prod["price"])/100
+		artAmount = prod["drippedOffWeight"]
+		if artAmount==None:
+			artAmount = prod["baseQuantity"]
+		artUnit = prod["quantityType"]
 
 		brand = prod["brand"]
 		artNo = prod["articleId"]
 
 		# write article to db
-		artId = db.insertArticle(artTitle, artUrl, catId, artPrice=price, artBrand=brand, artno=artNo)
+		artId = db.insertArticle(artTitle, artUrl, catId, artPrice=price, artAmount=artAmount, artUnit=artUnit, artBrand=brand, artno=artNo)
 		for fld in prod:
 			db.insertAttribute(fld, prod[fld], artId)
 		
