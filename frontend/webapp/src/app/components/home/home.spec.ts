@@ -5,7 +5,7 @@ import {
 import { HttpModule } from '@angular/http';
 
 import { HomeComponent } from './home.component';
-import { ApiService } from '../api';
+import { ApiService } from '../../services/api';
 
 describe('HomeComponent', () => {
 
