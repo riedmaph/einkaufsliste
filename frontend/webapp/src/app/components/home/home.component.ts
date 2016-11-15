@@ -78,11 +78,11 @@ export class HomeComponent implements OnInit {
   /**
    * Completes an item on the list
    * 
-   * @param {string} item The item to complete
+   * @param {string} item The item to complete
    * @return {void}
    */
   public complete (item: string) {
-    this.completedItems.push(item)
+    this.completedItems.push(item);
 
     localStorage.setItem('entries', JSON.stringify(this.items));
     localStorage.setItem('completed', JSON.stringify(this.completedItems));
@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
   /**
    * Marks an already completed item as incomplete
    * 
-   * @param {string} item The item to mark as incomplete
+   * @param {string} item The item to mark as incomplete
    * @return {void} 
    */
   public incomplete (item: string) {
