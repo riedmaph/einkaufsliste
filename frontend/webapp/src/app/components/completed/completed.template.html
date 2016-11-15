@@ -1,0 +1,14 @@
+<ul *ngIf="completedItems">
+  <h3>Completed Items</h3>
+  <li *ngFor="let completedItem of completedItems; let i = index">
+    <button class="unchecked" (click)="incompleteItem(i)">
+      <i class="fa fa-check-square-o"></i>
+    </button>
+
+    <span>{{ completedItem }}</span>
+
+    <button class="remove" (click)="removeItem(i)">
+      <i class="fa fa-trash"></i>
+    </button>
+  </li>
+</ul>

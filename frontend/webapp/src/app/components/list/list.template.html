@@ -20,15 +20,3 @@
 
   </li>
 </ul>
-
-<ul *ngIf="completedItems.length > 0">
-  <h3>Completed Items</h3>
-  <li *ngFor="let completedItem of completedItems; let i = index">
-    <button class="checked" (click)="incompleteItem(i)">
-      <i class="fa fa-check-square-o"></i>
-    </button>
-    <span>{{ completedItem }}</span>
-  </li>
-</ul>
-
-<div *ngIf="items.length < 1 && completedItems.length < 1" class="empty"><span>No entries</span></div>

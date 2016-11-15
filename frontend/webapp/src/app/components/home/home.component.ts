@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { ApiService } from '../../services/api';
 import { ListComponent } from '../list';
+import { CompletedComponent } from '../completed';
 
 @Component({
   selector: 'sl-home',
@@ -15,11 +16,16 @@ export class HomeComponent implements OnInit {
    * Items of the list
    */
   public items: string[] = [ ];
+  public completedItems: string[] = [ ];
 
+  public showCompletedSection: boolean = false;
   public showSplit: boolean = true;
 
   @ViewChild(ListComponent)
   public listComponent: ListComponent;
+
+  @ViewChild(CompletedComponent)
+  public completedComponent: CompletedComponent;
 
   constructor (
     private apiService: ApiService
@@ -67,6 +73,36 @@ export class HomeComponent implements OnInit {
 
       localStorage.setItem('entries', JSON.stringify(this.items));
     }
+  }
+
+  /**
+   * Completes an item on the list
+   * 
+   * @param {string} item The item to complete
+   * @return {void}
+   */
+  public complete (item: string) {
+    this.completedItems.push(item)
+
+    localStorage.setItem('entries', JSON.stringify(this.items));
+    localStorage.setItem('completed', JSON.stringify(this.completedItems));
+  }
+
+  /**
+   * Marks an already completed item as incomplete
+   * 
+   * @param {string} item The item to mark as incomplete
+   * @return {void} 
+   */
+  public incomplete (item: string) {
+    this.items.push(item);
+
+    localStorage.setItem('entries', JSON.stringify(this.items));
+    localStorage.setItem('completed', JSON.stringify(this.completedItems));
+  }
+
+  public toggleShowCompletedSection () {
+    this.showCompletedSection = !this.showCompletedSection;
   }
 
   public toggleSplit () {

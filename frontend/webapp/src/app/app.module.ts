@@ -23,6 +23,7 @@ import { HomeComponent } from './components/home';
 import { NoContentComponent } from './components/no-content';
 import { NavigationComponent } from './components/navigation';
 import { ListComponent } from './components/list';
+import { CompletedComponent } from './components/completed';
 
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
@@ -50,6 +51,7 @@ type StoreType = {
     NoContentComponent,
     NavigationComponent,
     ListComponent,
+    CompletedComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
   ],

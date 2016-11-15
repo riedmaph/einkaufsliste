@@ -16,9 +16,6 @@ export class ListComponent {
   public items: string[] = [ ];
 
   @Input()
-  public completedItems: string[] = [ ];
-
-  @Input()
   public baseColor: string = '#0147A7';
 
   @Output()
@@ -28,10 +25,7 @@ export class ListComponent {
   public onEdit: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
-  public onComplete: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output()
-  public onIncomplete: EventEmitter<any> = new EventEmitter<any>();
+  public onComplete: EventEmitter<string> = new EventEmitter<string>();
 
   /**
    * Removes an item from the items list
@@ -47,19 +41,13 @@ export class ListComponent {
   /**
    * Moves an item from the items to the completed items list
    * 
-   * @param {number} index Index of the element to move to the completed section
+   * @param {number} index Index of the element to move to the 
+   *                       completed items section
    * @return {void} 
    */
   public completeItem (index: number): void {
-    this.completedItems.push(this.items[index]);
-    this.items.splice(index, 1);
-    this.onComplete.emit({});
-  }
-
-  public incompleteItem (index: number): void {
-    this.items.push(this.completedItems[index]);
-    this.completedItems.splice(index, 1);
-    this.onIncomplete.emit({});
+    let completedItem = this.items.splice(index, 1);
+    this.onComplete.emit(completedItem[0]);
   }
 
   /**
