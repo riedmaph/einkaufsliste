@@ -1,15 +1,15 @@
-import { 
-    Component, 
-    Input, 
-    Output, 
-    EventEmitter 
-} from '@angular/core'
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+} from '@angular/core';
 
 @Component({
     moduleId: module.id,
     selector: 'sl-completed',
     templateUrl: 'completed.template.html',
-    styleUrls: ['completed.style.scss']
+    styleUrls: [ 'completed.style.scss' ],
 })
 export class CompletedComponent {
 
@@ -17,11 +17,11 @@ export class CompletedComponent {
   completedItems: string[] = [ ];
 
   @Output()
-	public onRemove: EventEmitter<any> = new EventEmitter<any>();
+  public onRemove: EventEmitter<any> = new EventEmitter<any>();
 
-	@Output()
-	public onIncomplete: EventEmitter<string> = new EventEmitter<string>();
-    
+  @Output()
+  public onIncomplete: EventEmitter<string> = new EventEmitter<string>();
+
   /**
    * Removes an item from the completed items list
    * 
@@ -41,7 +41,7 @@ export class CompletedComponent {
 	 */
   public incompleteItem ( index: number): void {
     let completedItem: string[] = this.completedItems.splice(index, 1);
-		this.onIncomplete.emit(completedItem[0]);
+    this.onIncomplete.emit(completedItem[0]);
   }
 
 }
