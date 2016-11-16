@@ -97,7 +97,6 @@
     "http-server": "^0.9.0",
     "ie-shim": "^0.1.0",
     "rxjs": "5.0.0-beta.12",
-    "webpack": "^2.1.0-beta.26",
     "zone.js": "~0.6.17"
   },
   "devDependencies": {
@@ -150,7 +149,7 @@
     "typedoc": "^0.4.5",
     "typescript": "2.0.3",
     "url-loader": "^0.5.7",
-    "webpack": "2.1.0-beta.22",
+    "webpack": "^2.1.0-beta.26",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "2.1.0-beta.10",
     "webpack-md5-hash": "^0.0.5",
