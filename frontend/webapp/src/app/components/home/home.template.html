@@ -1,4 +1,6 @@
 
+<header>  Elisa | Einkaufsliste </header>
+
 <sl-list *ngIf="!showSplit" [items]="items"></sl-list>
 <div *ngIf="showSplit" class="split-view">
   <ul class="sublist">
@@ -11,7 +13,7 @@
     </li>
   </ul>
 </div>
-<button (click)="toggleSplit()" style="position: fixed; right: 1em; top: 1em;">SplitView</button>
+<button (click)="toggleSplit()" style="position: fixed; right: 1.5em; top: 0.5em;">SplitView</button>
 <form>
   <input 
     [autoCompletion]="acList"

@@ -4,6 +4,25 @@
   box-sizing: border-box;
 }
 
+header {
+    background: #0147A7;
+    color: #fff;
+    font-family: Segoe UI Light, Segoe UI, sans-serif;
+    font-weight: 100;
+    font-size: 2em;
+    padding: 5;
+    width: 100%; 
+    height: 1.5em;
+    position: fixed;
+    left:0;
+    top: 0;
+    border-bottom:1px solid #666;
+    border-top:1px solid #666;
+    text-align: left;
+    white-space: pre;
+}
+
+
 form {
   width: 100%;
   display: flex;
