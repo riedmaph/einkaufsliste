@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   public items: string[] = [ ];
 
   public showSplit: boolean = true;
+  public showLengthWarning: boolean = false;
 
   @ViewChild(ListComponent)
   public listComponent: ListComponent;
@@ -61,11 +62,14 @@ export class HomeComponent implements OnInit {
   public add (event: MouseEvent | KeyboardEvent, entry: HTMLInputElement) {
     event.preventDefault();
 
-    if (entry.value) {
+    if (entry.value.length < 140) {
       this.items.push(entry.value);
       entry.value = '';
 
       localStorage.setItem('entries', JSON.stringify(this.items));
+      this.showLengthWarning = false;
+    } else {
+      this.showLengthWarning = true;
     }
   }
 
