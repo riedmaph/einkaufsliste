@@ -14,7 +14,8 @@ export class HomeComponent implements OnInit {
   /**
    * Items of the list
    */
-  public items: Array <[ string | number ]> = [ [ '' , 0 ] ]; // string[] = [ ];
+  public items: Array <[ string , number ]> = [  ];
+  public itemsNoTuple: string []= [];
 
   public showSplit: boolean = true;
   public showLengthWarning: boolean = false;
@@ -44,6 +45,8 @@ export class HomeComponent implements OnInit {
   public ngOnInit () {
     // get previously stored items and add to  this.items
     this.apiService.getEntries().subscribe((entries) => this.items = this.items.concat(entries));
+    this.itemsNoTuple = this.items.map( (tuple) => tuple[0] );
+
     if (this.listComponent) {
       this.listComponent.onEdit.subscribe(() => {
         localStorage.setItem('entries', JSON.stringify(this.items));
@@ -65,6 +68,7 @@ export class HomeComponent implements OnInit {
 
     if (entry.value.length < 140) {
       this.items.push([ entry.value, this.items.length ] );
+      this.itemsNoTuple.push(entry.value);
       entry.value = '';
 
       localStorage.setItem('entries', JSON.stringify(this.items));
