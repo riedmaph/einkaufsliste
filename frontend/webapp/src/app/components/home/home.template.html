@@ -2,17 +2,19 @@
 <header>  Elisa | Einkaufsliste </header>
 
 <sl-list *ngIf="!showSplit" [items]="items"></sl-list>
-<div *ngIf="showSplit" class="split-view">
-  <ul class="sublist">
+<div  *ngIf="showSplit" class="split-view">
+  <ul  class="sublist">
     <li *ngFor="let sublist of splitItems">
       <ul>
         <li *ngFor="let entry of sublist">
-          {{ entry }}
-        </li>
+          {{ entry[0] }}
+        </li>    
       </ul>
     </li>
-  </ul>
+    </ul>
 </div>
+
+
 <button (click)="toggleSplit()" style="position: fixed; right: 1.5em; top: 0.5em;">SplitView</button>
 <button *ngIf="showLengthWarning" (click)="showLengthWarning = false;" style="position: fixed; bottom: 3.5em; width: 50%;" > 
   Please limit new entries to 140 characters.
@@ -27,3 +29,7 @@
   >
   <button (click)="add($event, entry)"><i class="fa fa-plus"></i></button>
 </form>
+
+
+<footer> some empty space </footer>
+<footer id='bottom'> </footer>

@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   /**
    * Items of the list
    */
-  public items: string[] = [ ];
+  public items: Array <[ string | number ]> = [ [ '' , 0 ] ]; // string[] = [ ];
 
   public showSplit: boolean = true;
   public showLengthWarning: boolean = false;
@@ -42,7 +42,8 @@ export class HomeComponent implements OnInit {
    * @memberOf OnInit
    */
   public ngOnInit () {
-    this.apiService.getEntries().subscribe((entries) => this.items = entries);
+    // get previously stored items and add to  this.items
+    this.apiService.getEntries().subscribe((entries) => this.items = this.items.concat(entries));
     if (this.listComponent) {
       this.listComponent.onEdit.subscribe(() => {
         localStorage.setItem('entries', JSON.stringify(this.items));
@@ -63,7 +64,7 @@ export class HomeComponent implements OnInit {
     event.preventDefault();
 
     if (entry.value.length < 140) {
-      this.items.push(entry.value);
+      this.items.push([ entry.value, this.items.length ] );
       entry.value = '';
 
       localStorage.setItem('entries', JSON.stringify(this.items));
@@ -71,6 +72,7 @@ export class HomeComponent implements OnInit {
     } else {
       this.showLengthWarning = true;
     }
+    document.getElementById('bottom').scrollIntoView();
   }
 
   public toggleSplit () {
@@ -88,4 +90,4 @@ export class HomeComponent implements OnInit {
     });
     return Object.keys(asObj).map(k => asObj[k]);
   }
-}
+  }
