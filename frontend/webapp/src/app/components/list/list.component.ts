@@ -1,9 +1,13 @@
-import { 
+import {
   Component,
   Input,
   Output,
   EventEmitter,
 } from '@angular/core';
+
+import { ListItem } from '../../models/list-item.model.ts';
+import { MdDialog } from '@angular/material';
+import { ConfirmComponent } from '../confirm/confirm.component';
 
 @Component({
   selector: 'sl-list',
@@ -13,33 +17,57 @@ import {
 export class ListComponent {
 
   @Input()
-  public items: string[] = [ ];
+  public items: ListItem[] = [ ];
 
   @Input()
   public baseColor: string = '#0147A7';
 
   @Output()
-  public onRemove: EventEmitter<any> = new EventEmitter<any>();
+  public onRemove: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   @Output()
   public onEdit: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
+
+
+  constructor(private dialog: MdDialog) { }
+
   /**
-   * Removes an item from the items list
-   * 
+   * Removes an item from the items list, after confirmation was successful
+   *
    * @param {number} index Index of element to remove
    * @returns {void}
    */
-  public removeItem (index: number): void {
-    this.items.splice(index, 1);
-    this.onRemove.emit({});
+  public removeItem(index: number): void {
+    let dialogRef = this.dialog.open(ConfirmComponent, {
+      disableClose: false,
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        let removedItems = this.items.splice(index, 1);
+        this.onRemove.emit(removedItems);
+      }
+    });
+  }
+
+  /**
+   * Moves an item from the items to the completed items list
+   *
+   * @param {number} index Index of the element to move to the completed items section
+   * @return {void}
+   */
+  public completeItem (index: number): void {
+    let completedItem = this.items.splice(index, 1);
+    this.onComplete.emit(completedItem[0]);
   }
 
   /**
    * Generates the color string for a gradient over the items
-   * 
+   *
    * @param {number} index Index of element
-   * @returns {string} Hex-color-string 
+   * @returns {string} Hex-color-string
    */
   public gradientColor (index: number): string {
     if (this.items.length < 1) {
@@ -84,8 +112,8 @@ export class ListComponent {
 
   public commitEdit (elem: HTMLElement, index: number) {
     if (elem.textContent) {
-      this.items[index] = elem.textContent.replace(/[\r\n\t]/g, '');
-      elem.textContent = this.items[index];
+      this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
+      elem.textContent = this.items[index].name;
       this.onEdit.emit({});
     } else {
       this.removeItem(index);

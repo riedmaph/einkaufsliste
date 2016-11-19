@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  HostBinding,
   Input,
   Output,
   EventEmitter,
@@ -22,16 +23,23 @@ import { AutoCompletionComponent } from './auto-completion.component';
 })
 export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
 
-  @Input('openDelay')
+  @Input()
+  @HostBinding('attr.openDelay')
   public openDelay: number = 100;
 
-  @Input('closeDelay')
+  @Input()
+  @HostBinding('attr.closeDelay')
   public closeDelay: number = 100;
 
-  @Input('minChars')
+  @Input()
+  @HostBinding('attr.minChars')
   public minChars: number = 2;
 
-  @Input('autoCompletion')
+  /**
+   * Origin of the suggestions
+   * @type { ((_: string) => Observable<string[]>) | string[]}
+   */
+  @Input()
   public autoCompletion: ((_: string) => Observable<string[]>) | string[] = null;
 
 
@@ -56,31 +64,51 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     private renderer: Renderer
   ) { }
 
-  public ngAfterContentInit () {
-
+  /**
+   * Generates the auto-completion list component, positions it at the host element
+   *
+   * @return {void}
+   */
+  public ngAfterContentInit (): void {
     const factory = this.resolver.resolveComponentFactory(AutoCompletionComponent);
     this.autoCompletionComponent = this.viewContainerRef.createComponent(factory);
 
-    const inputBB = this.element.nativeElement.getBoundingClientRect();
-
-    this.autoCompletionComponent.location.nativeElement.style.top = inputBB.bottom + 'px';
-    this.autoCompletionComponent.location.nativeElement.style.width = inputBB.width + 'px';
+    window.addEventListener('resize', this.resizeAutoCompletion(this.autoCompletionComponent));
+    this.resizeAutoCompletion(this.autoCompletionComponent)();
 
     this.autoCompletionComponent.instance.onSelect.subscribe((event: { value: string }) => {
       this.element.nativeElement.value = event.value;
       this.autoCompletionComponent.instance.close();
     });
 
-    this.autoCompletionComponent.instance.onClose.subscribe(() => {
-      this.onClose.emit();
+    this.autoCompletionComponent.instance.onClose.subscribe((e: any) => {
+      this.onClose.emit(e);
     });
 
-    this.autoCompletionComponent.instance.onOpen.subscribe(() => {
-      this.onOpen.emit();
+    this.autoCompletionComponent.instance.onOpen.subscribe((e: any) => {
+      this.onOpen.emit(e);
     });
   }
 
-  public ngOnDestroy () {
+  /**
+   * @return {() => void} Event handler function that resizes the auto-completion list
+   */
+  public resizeAutoCompletion (component): () => void {
+    return () => {
+      if (component) {
+        const inputBB = this.element.nativeElement.getBoundingClientRect();
+        component.location.nativeElement.style.bottom = inputBB.height + 'px';
+        component.location.nativeElement.style.width = inputBB.width + 'px';
+      }
+    };
+  }
+
+  /**
+   * Remove timeouts and destroy component
+   *
+   * @return {void}
+   */
+  public ngOnDestroy (): void {
     if (this.openTimeout) {
       window.clearTimeout(this.openTimeout);
     }
@@ -92,8 +120,19 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     this.autoCompletionComponent.destroy();
   }
 
+  /**
+   * Handles keyboard events:
+   * - Tab enters the selected auto-completion value into the input
+   * - Enter does the same as tab but also emits the onSelect Event
+   * - Up and down select next and prev entries in the auto-completion list respectively
+   * - All other keys trigger auto-completion to look for new suggestions
+   *
+   * @param {KeyboardEvent} event triggering keyboard event
+   * @param {number} keyCode pressed key
+   * @return {void}
+   */
   @HostListener('keydown', [ '$event', '$event.keyCode' ])
-  public onKeyUp (event: any, keyCode: number) {
+  public onKeyUp (event: KeyboardEvent, keyCode: number): void {
     switch (keyCode) {
       case 9:
         // Tab
@@ -104,13 +143,13 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
         }
         break;
       case 13:
+        // Enter
         if (this.autoCompletionComponent.instance.value) {
           event.preventDefault();
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();
           this.onSelect.emit(event);
         }
-        // Enter
         break;
       case 38:
         // Up
@@ -122,12 +161,14 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
         this.autoCompletionComponent.instance.selectNext();
         break;
       default:
-        if (this.element.nativeElement.value.length >= this.minChars - 1) {
+        if (this.element.nativeElement.value.length >= this.minChars) {
           window.clearTimeout(this.closeTimeout);
           this.openTimeout = window.setTimeout(() => {
             if (this.autoCompletion != null && typeof this.autoCompletion === 'function') {
+              this.autoCompletionComponent.instance.loading = true;
               this.autoCompletion(this.element.nativeElement.value)
                 .subscribe((suggestions: string[]) => {
+                  this.autoCompletionComponent.instance.loading = false;
                   if (
                     Array.isArray(suggestions) &&
                     suggestions != null &&
@@ -141,7 +182,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
             } else if (
               Array.isArray(this.autoCompletion) &&
               this.autoCompletion != null &&
-              this.autoCompletion
+              this.autoCompletion.length
             ) {
               // TODO improve similarity search
               const fittingSuggestions = this.autoCompletion.filter((s: string) =>
@@ -152,24 +193,35 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
               }
             }
           }, this.openDelay);
+        } else {
+          this.autoCompletionComponent.instance.close();
         }
     }
   }
 
-  @HostListener ('blur', [ '$event' ])
-  public onBlur (event: any) {
+  /**
+   * Resets the close timeout, closes the suggestion list after `closeDelay` ms
+   *
+   * @return {void}
+   */
+  @HostListener ('blur')
+  @HostListener('window:click')
+  public close (): void {
     window.clearTimeout(this.openTimeout);
     this.closeTimeout = window.setTimeout(() => {
       this.autoCompletionComponent.instance.close();
     }, this.closeDelay);
   }
 
-  @HostListener('window:click', [ '$event' ])
-  public close (event: any) {
-    window.clearTimeout(this.openTimeout);
-    this.closeTimeout = window.setTimeout(() => {
+  /**
+   * Closes the autoCompletionComponent without delay
+   * @return {void}
+   */
+  @HostListener('window:keyup', [ '$event', '$event.keyCode' ])
+  public closeImmediate (event: KeyboardEvent, keyCode?: number): void {
+    if (keyCode && keyCode === 27) {
       this.autoCompletionComponent.instance.close();
-    }, this.closeDelay);
+    }
   }
 
 }

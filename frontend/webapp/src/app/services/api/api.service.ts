@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
-import { API_ROUTES } from './routes';
+// import { API_ROUTES } from './routes'; // TODO Currently unused import
 
 @Injectable()
 export class ApiService {
@@ -16,6 +16,17 @@ export class ApiService {
     // return this.http
       // .get(API_ROUTES.entries)
       // .map(response => response.json());
+  }
+
+  public getCompleted (): Observable<any> {
+    return Observable.of(JSON.parse(localStorage.getItem('completed') || '[]'));
+  }
+
+  public getAutoCompletion (input: string): Observable<string[]> {
+    return Observable.of([ 'Apple', 'Orange', 'Banana', 'Pear', 'Peach', 'Pineapple' ]);
+    // return this.http
+      // .get(API_ROUTES.autoCompletion')
+      // .map(response => <string[]> response.json())
   }
 
 }

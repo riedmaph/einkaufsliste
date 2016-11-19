@@ -1,25 +1,20 @@
-
 <header>  Elisa | Einkaufsliste </header>
 
-<sl-list *ngIf="!showSplit" [items]="itemsNoTuple"></sl-list>
-<div  *ngIf="showSplit" class="split-view">
-  <ul  class="sublist">
-    <li *ngFor="let sublist of splitItems">
-      <ul>
-        <li *ngFor="let entry of sublist">
-          {{ entry[0] }}
-        </li>    
-      </ul>
-    </li>
-    </ul>
-</div>
-<button (click)="toggleSplit()" style="position: fixed; right: 1.5em; top: 0.5em;">SplitView</button>
+<sl-list [items]="items" (onComplete)="complete($event)"></sl-list>
+
+<sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" 
+  (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">
+</sl-completed>
+
+<div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
+
 <button *ngIf="showLengthWarning" (click)="showLengthWarning = false;" style="position: fixed; bottom: 3.5em; width: 50%;" > 
   Please limit new entries to 140 characters.
-  </button>
+</button>
+
 <form>
   <input 
-    [autoCompletion]="acList"
+    [autoCompletion]="apiService.getAutoCompletion"
     (onSelect)="add($event, entry)"
     type="text" 
     placeholder="Add a new entry..." 
@@ -28,6 +23,10 @@
   <button (click)="add($event, entry)"><i class="fa fa-plus"></i></button>
 </form>
 
+<button (click)="toggleShowCompletedSection()" class="toggleCompleted">
+  <span *ngIf="!showCompletedSection">Show Completed</span>
+  <span *ngIf="showCompletedSection">Hide Completed</span>
+</button>
 
 <footer> some empty space </footer>
 <footer id='bottom'> </footer>
