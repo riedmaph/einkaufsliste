@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@angular/material';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 /*
@@ -23,7 +24,8 @@ import { HomeComponent } from './components/home';
 import { NoContentComponent } from './components/no-content';
 import { NavigationComponent } from './components/navigation';
 import { ListComponent } from './components/list';
-import { CompletedComponent } from './components/completed';
+import { CompletedComponent } from './components/completed';
+import { ConfirmComponent } from './components/confirm';
 
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
@@ -54,15 +56,18 @@ type StoreType = {
     CompletedComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
+    ConfirmComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
+    MaterialModule.forRoot(),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
