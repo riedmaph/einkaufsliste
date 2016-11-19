@@ -168,7 +168,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
               this.autoCompletionComponent.instance.loading = true;
               this.autoCompletion(this.element.nativeElement.value)
                 .subscribe((suggestions: string[]) => {
-                  this.autoCompletionComponent.instance.loading = true;
+                  this.autoCompletionComponent.instance.loading = false;
                   if (
                     Array.isArray(suggestions) &&
                     suggestions != null &&
