@@ -148,7 +148,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
           event.preventDefault();
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();
-          this.onSelect.emit(this.autoCompletionComponent.instance.value);
+          this.onSelect.emit(event);
         }
         break;
       case 38:
@@ -165,8 +165,10 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
           window.clearTimeout(this.closeTimeout);
           this.openTimeout = window.setTimeout(() => {
             if (this.autoCompletion != null && typeof this.autoCompletion === 'function') {
+              this.autoCompletionComponent.instance.loading = true;
               this.autoCompletion(this.element.nativeElement.value)
                 .subscribe((suggestions: string[]) => {
+                  this.autoCompletionComponent.instance.loading = true;
                   if (
                     Array.isArray(suggestions) &&
                     suggestions != null &&
@@ -191,6 +193,8 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
               }
             }
           }, this.openDelay);
+        } else {
+          this.autoCompletionComponent.instance.close();
         }
     }
   }
@@ -198,16 +202,26 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   /**
    * Resets the close timeout, closes the suggestion list after `closeDelay` ms
    *
-   * @param {FocusEvent | MouseEvent} event
    * @return {void}
    */
-  @HostListener ('blur', [ '$event' ])
-  @HostListener('window:click', [ '$event' ])
-  public close (event: FocusEvent | MouseEvent) {
+  @HostListener ('blur')
+  @HostListener('window:click')
+  public close (): void {
     window.clearTimeout(this.openTimeout);
     this.closeTimeout = window.setTimeout(() => {
       this.autoCompletionComponent.instance.close();
     }, this.closeDelay);
+  }
+
+  /**
+   * Closes the autoCompletionComponent without delay
+   * @return {void}
+   */
+  @HostListener('window:keyup', [ '$event', '$event.keyCode' ])
+  public closeImmediate (event: KeyboardEvent, keyCode?: number): void {
+    if (keyCode && keyCode === 27) {
+      this.autoCompletionComponent.instance.close();
+    }
   }
 
 }
