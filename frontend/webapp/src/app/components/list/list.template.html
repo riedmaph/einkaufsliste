@@ -1,18 +1,12 @@
 <ul *ngIf="items">
   <li *ngFor="let item of items; let i = index" [style.background-color]="gradientColor(i)">
-    <button
-      class="unchecked"
-      (click)="removeItem(i)"
-    >
-
+    <button class="unchecked" (click)="completeItem(i)">
       <i class="fa fa-square-o"></i>
     </button>
 
     <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">{{ item }}</span>
 
-    <button
-      (click)="toggleEditable($event, textfield, i)"
-    >
+    <button (click)="toggleEditable($event, textfield, i)">
       <i
         class="fa"
         [class.fa-pencil]="textfield.contentEditable !== 'true'"
@@ -20,14 +14,9 @@
       ></i>
     </button>
 
-    <button
-      class="remove"
-      (click)="removeItem(i)">
-
+    <button class="remove" (click)="removeItem(i)">
       <i class="fa fa-trash"></i>
     </button>
 
   </li>
 </ul>
-
-<div *ngIf="items.length < 1" class="empty"><span>No entries</span></div>

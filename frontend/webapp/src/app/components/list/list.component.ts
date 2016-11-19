@@ -1,4 +1,4 @@
-import { 
+import {
   Component,
   Input,
   Output,
@@ -24,6 +24,9 @@ export class ListComponent {
   @Output()
   public onEdit: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  public onComplete: EventEmitter<string> = new EventEmitter<string>();
+
   /**
    * Removes an item from the items list
    * 
@@ -33,6 +36,17 @@ export class ListComponent {
   public removeItem (index: number): void {
     this.items.splice(index, 1);
     this.onRemove.emit({});
+  }
+
+  /**
+   * Moves an item from the items to the completed items list
+   * 
+   * @param {number} index Index of the element to move to the completed items section
+   * @return {void} 
+   */
+  public completeItem (index: number): void {
+    let completedItem = this.items.splice(index, 1);
+    this.onComplete.emit(completedItem[0]);
   }
 
   /**

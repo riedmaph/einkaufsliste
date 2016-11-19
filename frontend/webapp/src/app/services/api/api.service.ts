@@ -18,4 +18,8 @@ export class ApiService {
       // .map(response => response.json());
   }
 
+  public getCompleted (): Observable<any> {
+    return Observable.of(JSON.parse(localStorage.getItem('completed') || '[]'));
+  }
+
 }
