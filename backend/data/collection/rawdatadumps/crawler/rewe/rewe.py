@@ -37,6 +37,8 @@ def readArticles(catId, catUrl):
 			artUrl = artLink['href']
 
 			artNo = artUrl.split("/")[-1]
+			if artNo[:2]==u"PD":
+				artNo=artNo[2:]
 
 			markPrice = item.find("mark", class_="rs-price")
 			preSep = markPrice.find("span", class_="rs-price__predecimal").text.strip()
@@ -51,7 +53,7 @@ def readArticles(catId, catUrl):
 				bpEnd = basePrice.find(")")
 				if bpStart > 0 and bpEnd > bpStart and bpEnd == len(basePrice)-1:
 					artSize   = basePrice[0:bpStart-1].strip()
-					basePrice = basePrice[bpStart:bpEnd-1].strip()
+					basePrice = basePrice[bpStart+1:bpEnd].strip()
 				elif bpStart < 0 and bpEnd < 0:
 					# basePrice is missing, only size
 					artSize = basePrice
