@@ -1,6 +1,6 @@
 <form>
   <input 
-    [autoCompletion]="apiService.getEntries"
+    [autoCompletion]="apiService.getAutoCompletion"
     (onSelect)="add($event, entry)"
     type="text" 
     placeholder="Add a new entry..." 
