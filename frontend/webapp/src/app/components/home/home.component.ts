@@ -48,12 +48,19 @@ export class HomeComponent implements OnInit {
    */
   public ngOnInit () {
     this.apiService.getEntries().subscribe((entries) => this.items = entries);
+    this.apiService.getCompleted().subscribe((completed) => this.completedItems = completed);
+
     if (this.listComponent) {
       this.listComponent.onEdit.subscribe(() => {
         localStorage.setItem('entries', JSON.stringify(this.items));
       });
       this.listComponent.onRemove.subscribe(() => {
         localStorage.setItem('entries', JSON.stringify(this.items));
+      });
+    }
+    if (this.completedComponent) {
+      this.completedComponent.onRemove.subscribe(() => {
+        localStorage.setItem('completed', JSON.stringify(this.completedItems));
       });
     }
   }
@@ -97,6 +104,17 @@ export class HomeComponent implements OnInit {
   public incomplete (item: string): void {
     this.items.push(item);
 
+    localStorage.setItem('entries', JSON.stringify(this.items));
+    localStorage.setItem('completed', JSON.stringify(this.completedItems));
+  }
+
+  /**
+   * Removes items from both, the incomplete and completed section
+   * 
+   * @param {string[]} items The items to remove
+   * @return {void}
+   */
+  public remove (items: string[]): void {
     localStorage.setItem('entries', JSON.stringify(this.items));
     localStorage.setItem('completed', JSON.stringify(this.completedItems));
   }

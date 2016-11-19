@@ -1,5 +1,7 @@
 <ul *ngIf="completedItems">
-  <h3>Completed Items</h3>
+  <h3>Completed Items
+    <i class="fa fa-trash" (click)="removeAll()"></i>
+  </h3>
   <li *ngFor="let completedItem of completedItems; let i = index">
     <button class="unchecked" (click)="incompleteItem(i)">
       <i class="fa fa-check-square-o"></i>

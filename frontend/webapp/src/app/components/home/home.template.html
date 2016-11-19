@@ -26,6 +26,8 @@
   <span *ngIf="!showCompletedSection">Show Completed</span>
   <span *ngIf="showCompletedSection">Hide Completed</span>
 </button>
-<sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" (onIncomplete)="incomplete($event)"></sl-completed>
+<sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" 
+  (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">
+</sl-completed>
 
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
