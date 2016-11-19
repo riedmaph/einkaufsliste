@@ -62,6 +62,17 @@ describe('ListComponent', () => {
     }));
   });
 
+  describe('completing items', () => {
+    it('should remove them from the items list', inject([ ListComponent ], (list) => {
+      list.items = [ 'entry1', 'entry2' ];
+      list.completeItem(1);
+      expect(list.items).toEqual([ 'entry1' ]);
+      list.completeItem(0);
+      expect(list.items).toEqual([ ]);
+    }));
+  });
+
+
   describe('generated gradients', () => {
     it('throw when no entries exist', inject([ ListComponent ], (list: ListComponent) => {
       expect(() => list.gradientColor(0)).toThrow();

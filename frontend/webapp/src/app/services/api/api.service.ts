@@ -18,4 +18,15 @@ export class ApiService {
       // .map(response => response.json());
   }
 
+  public getCompleted (): Observable<any> {
+    return Observable.of(JSON.parse(localStorage.getItem('completed') || '[]'));
+  }
+
+  public getAutoCompletion (input: string): Observable<string[]> {
+    return Observable.of([ 'Apple', 'Orange', 'Banana', 'Pear', 'Peach', 'Pineapple' ]);
+    // return this.http
+      // .get(API_ROUTES.autoCompletion')
+      // .map(response => <string[]> response.json())
+  }
+
 }

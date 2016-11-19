@@ -1,6 +1,6 @@
 <form>
   <input 
-    [autoCompletion]="apiService.getEntries"
+    [autoCompletion]="apiService.getAutoCompletion"
     (onSelect)="add($event, entry)"
     type="text" 
     placeholder="Add a new entry..." 
@@ -8,4 +8,14 @@
   >
   <button (click)="add($event, entry)"><i class="fa fa-plus"></i></button>
 </form>
-<sl-list [items]="items"></sl-list>
+<sl-list [items]="items" (onComplete)="complete($event)"></sl-list>
+
+<button (click)="toggleShowCompletedSection()" class="toggleCompleted">
+  <span *ngIf="!showCompletedSection">Show Completed</span>
+  <span *ngIf="showCompletedSection">Hide Completed</span>
+</button>
+<sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" 
+  (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">
+</sl-completed>
+
+<div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
