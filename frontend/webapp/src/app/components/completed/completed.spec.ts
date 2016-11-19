@@ -16,16 +16,16 @@ describe('CompletedComponent', () => {
     }).compileComponents();
   });
 
-  it ('should be defined', inject([ CompletedComponent ], (component) => {
+  it('should be defined', inject([ CompletedComponent ], (component) => {
     expect(component instanceof CompletedComponent).toBe(true);
   }));
 
-  it ('should be initialized with no entries', inject([ CompletedComponent ], (component) => {
+  it('should be initialized with no entries', inject([ CompletedComponent ], (component) => {
     expect(component.completedItems).toEqual([ ]);
   }));
 
   describe('Removing completed items', () => {
-    it ('should remove the entry from the completed items list',
+    it('should remove the entry from the completed items list',
     inject([ CompletedComponent ], (component) => {
       component.completedItems = [ 'entry1', 'entry2' ];
       component.removeItem(1);
@@ -36,7 +36,7 @@ describe('CompletedComponent', () => {
   });
 
   describe('Marking items as incomplete', () => {
-    it ('should remove the incomplete item from the completed items list',
+    it('should remove the incomplete item from the completed items list',
     inject([ CompletedComponent ], (component) => {
       component.completedItems = [ 'entry1', 'entry2' ];
       component.incompleteItem(1);

@@ -22,10 +22,10 @@
 </div>
 <button (click)="toggleSplit()" style="position: fixed; right: 1em; bottom: 1em;">SplitView</button>
 
-<button (click)="toggleShowCompletedSection()" style="position: fixed; left: 1em; bottom: 1em;">
+<button (click)="toggleShowCompletedSection()" class="toggleCompleted">
   <span *ngIf="!showCompletedSection">Show Completed</span>
   <span *ngIf="showCompletedSection">Hide Completed</span>
 </button>
 <sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" (onIncomplete)="incomplete($event)"></sl-completed>
 
-<div *ngIf="items.length < 1 && completedItems.length < 1" class="empty"><span>No entries</span></div>
+<div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>

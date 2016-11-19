@@ -1,4 +1,4 @@
-import { 
+import {
   Component,
   Input,
   Output,
@@ -41,8 +41,7 @@ export class ListComponent {
   /**
    * Moves an item from the items to the completed items list
    * 
-   * @param {number} index Index of the element to move to the 
-   *                       completed items section
+   * @param {number} index Index of the element to move to the completed items section
    * @return {void} 
    */
   public completeItem (index: number): void {

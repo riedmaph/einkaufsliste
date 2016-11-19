@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'sl-completed',
     templateUrl: 'completed.template.html',
     styleUrls: [ 'completed.style.scss' ],
@@ -14,10 +13,10 @@ import {
 export class CompletedComponent {
 
   @Input()
-  completedItems: string[] = [ ];
+  public completedItems: string[] = [ ];
 
   @Output()
-  public onRemove: EventEmitter<any> = new EventEmitter<any>();
+  public onRemove: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
   public onIncomplete: EventEmitter<string> = new EventEmitter<string>();
@@ -29,8 +28,8 @@ export class CompletedComponent {
    * @returns {void}
    */
   public removeItem (index: number): void {
-    this.completedItems.splice(index, 1);
-    this.onRemove.emit({});
+    let removedItems = this.completedItems.splice(index, 1);
+    this.onRemove.emit(removedItems[0]);
   }
 
 	/**

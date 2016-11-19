@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
    * @param {string} item The item to complete
    * @return {void}
    */
-  public complete (item: string) {
+  public complete (item: string): void {
     this.completedItems.push(item);
 
     localStorage.setItem('entries', JSON.stringify(this.items));
@@ -94,18 +94,28 @@ export class HomeComponent implements OnInit {
    * @param {string} item The item to mark as incomplete
    * @return {void} 
    */
-  public incomplete (item: string) {
+  public incomplete (item: string): void {
     this.items.push(item);
 
     localStorage.setItem('entries', JSON.stringify(this.items));
     localStorage.setItem('completed', JSON.stringify(this.completedItems));
   }
 
-  public toggleShowCompletedSection () {
+  /**
+   * Toggles visibility of the completed items section
+   * 
+   * @return {void}
+   */
+  public toggleShowCompletedSection (): void {
     this.showCompletedSection = !this.showCompletedSection;
   }
 
-  public toggleSplit () {
+  /**
+   * Toggles visibility of the split view
+   * 
+   * @return {void}
+   */
+  public toggleSplit (): void {
     this.showSplit = !this.showSplit;
   }
 

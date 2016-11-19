@@ -37,6 +37,10 @@ button {
   border: none;
 }
 
+.toggleCompleted {
+  position: fixed; left: 1em; bottom: 1em;
+}
+
 
 .sublist {
   display: block;
