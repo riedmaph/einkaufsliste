@@ -7,5 +7,6 @@
   >
     {{ suggestion }}
   </li>
-  <li *ngIf="suggestions.length < 1" class="empty">No suggestions</li>
+  <li *ngIf="loading" class="empty">Loading...</li>
+  <li *ngIf="!suggestions.length && !loading" class="empty">No suggestions</li>
 </ul>
