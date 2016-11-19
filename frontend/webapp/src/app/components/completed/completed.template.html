@@ -7,7 +7,9 @@
       <i class="fa fa-check-square-o"></i>
     </button>
 
-    <span>{{ completedItem }}</span>
+    <span>
+      {{ completedItem.amount }} {{ completedItem.unit }} {{ completedItem.name }}
+    </span>
 
     <button class="remove" (click)="removeItem(i)">
       <i class="fa fa-trash"></i>

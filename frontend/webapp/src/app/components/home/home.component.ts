@@ -19,8 +19,6 @@ export class HomeComponent implements OnInit {
   public completedItems: ListItem[] = [ ];
 
   public showCompletedSection: boolean = false;
-  public showSplit: boolean = true;
-
 
   @ViewChild(ListComponent)
   public listComponent: ListComponent;
@@ -122,24 +120,4 @@ export class HomeComponent implements OnInit {
     this.showCompletedSection = !this.showCompletedSection;
   }
 
-  /**
-   * Toggles visibility of the split view
-   * 
-   * @return {void}
-   */
-  public toggleSplit (): void {
-    this.showSplit = !this.showSplit;
-  }
-
-  public get splitItems (): string[][] {
-    let asObj: Object = {};
-    this.items.forEach(item => {
-      if (asObj.hasOwnProperty(item[0])) {
-        asObj[item[0]].push(item);
-      } else {
-        asObj[item[0]] = [ item ];
-      }
-    });
-    return Object.keys(asObj).map(k => asObj[k]);
-  }
 }

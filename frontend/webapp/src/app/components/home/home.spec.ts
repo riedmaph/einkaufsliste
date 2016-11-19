@@ -52,13 +52,4 @@ describe('HomeComponent', () => {
     expect(home.showCompletedSection).toBe(false);
   }));
 
-  it('should toggle split view correctly',
-  inject([ HomeComponent ], (home) => {
-    home.showSplit = false;
-    home.toggleSplit();
-    expect(home.showSplit).toBe(true);
-    home.toggleSplit();
-    expect(home.showSplit).toBe(false);
-  }));
-
 });
