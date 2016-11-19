@@ -8,7 +8,7 @@
   >
   <button (click)="add($event, entry)"><i class="fa fa-plus"></i></button>
 </form>
-<sl-list *ngIf="!showSplit" [items]="items" (onComplete)="complete($event)"></sl-list>
+<sl-list *ngIf="!showSplit" [items]="items" (onComplete)="complete($event)" (onRemove)="remove($event)"></sl-list>
 <div *ngIf="showSplit" class="split-view">
   <ul class="sublist">
     <li *ngFor="let sublist of splitItems">
