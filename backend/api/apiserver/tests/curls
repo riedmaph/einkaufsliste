@@ -1,0 +1,11 @@
+//create List
+curl --data "name=Geburtstag" http://127.0.0.1:3000/api/lists
+
+//Update List
+curl --data "name=Test123" -X PUT http://127.0.0.1:3000/api/lists/3
+
+//create Item
+curl --data "list=1&name=Spagetthi&amount=250&unit=gramm" http://127.0.0.1:3000/api/items
+
+//Update Item
+curl --data "list=1&name=Spagetthi&amount=300.12&unit=gramm" -X PUT http://127.0.0.1:3000/api/items/5
