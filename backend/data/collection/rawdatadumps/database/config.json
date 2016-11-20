@@ -5,5 +5,7 @@
 	"dbusercrawler": "elisacrawler",
 	"dbpasscrawler": "elite_se10",
 	"dbusertransformer": "elisatransformer",
-	"dbpasstransformer": "elite_se10" 
+	"dbpasstransformer": "elite_se10",
+	"dbuserapi": "elisaapi",
+	"dbpassapi": "elite_se10" 
 }
