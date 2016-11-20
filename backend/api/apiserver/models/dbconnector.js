@@ -45,8 +45,7 @@ function getAllLists(req, res, next) {
       res.status(200)
         .json({
           status: 'success',
-          data: data,
-          message: 'Retrieved ALL lists'
+          data: data
         });
     })
     .catch(function (err) {
@@ -59,8 +58,7 @@ function createList(req, res, next) {
     .then(function () {
       res.status(200)
         .json({
-          status: 'success',
-          message: 'Inserted one list'
+          status: 'success'
         });
     })
     .catch(function (err) {
@@ -73,8 +71,7 @@ function updateList(req, res, next) {
     .then(function () {
       res.status(200)
         .json({
-          status: 'success',
-          message: 'Updated List'
+          status: 'success'
         });
     })
     .catch(function (err) {
@@ -84,14 +81,13 @@ function updateList(req, res, next) {
 
 /* --- Items ----*/
 function getListItems(req, res, next) {
-  var listId = parseInt(req.params.id);
+  var listId = parseInt(req.params.listid);
   db.any('SELECT * FROM UserData.Item WHERE list = $1', listId)
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
-          data: data,
-          message: 'Retrieved items for list'
+          data: data
         });
     })
     .catch(function (err) {
@@ -106,8 +102,7 @@ function createItem(req, res, next) {
     .then(function () {
       res.status(200)
         .json({
-          status: 'success',
-          message: 'Inserted one item'
+          status: 'success'
         });
     })
     .catch(function (err) {
@@ -121,8 +116,7 @@ function updateItem(req, res, next) {
     .then(function () {
       res.status(200)
         .json({
-          status: 'success',
-          message: 'Updated Item'
+          status: 'success'
         });
     })
     .catch(function (err) {

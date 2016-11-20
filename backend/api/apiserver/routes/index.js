@@ -12,7 +12,7 @@ router.get('/api/lists', dbconnector.getAllLists);
 router.post('/api/lists', dbconnector.createList);
 router.put('/api/lists/:id', dbconnector.updateList);
 
-router.get('/api/lists/:id', dbconnector.getListItems);
+router.get('/api/items/:listid', dbconnector.getListItems);
 router.post('/api/items', dbconnector.createItem);
 router.put('/api/items/:id', dbconnector.updateItem);
 
