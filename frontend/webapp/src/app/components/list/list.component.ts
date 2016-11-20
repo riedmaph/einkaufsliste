@@ -5,7 +5,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 
-import { ListItem } from '../../models/list-item.model.ts';
+import { ListItem } from '../../models/list-item.model';
 import { MdDialog } from '@angular/material';
 import { ConfirmComponent } from '../confirm/confirm.component';
 
@@ -23,7 +23,7 @@ export class ListComponent {
   public baseColor: string = '#0147A7';
 
   @Output()
-  public onRemove: EventEmitter<string[]> = new EventEmitter<string[]>();
+  public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
 
   @Output()
   public onEdit: EventEmitter<any> = new EventEmitter<any>();
