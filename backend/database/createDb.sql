@@ -1,13 +1,12 @@
 
 CREATE USER :dbusercrawler WITH PASSWORD :'dbpasscrawler';
+GRANT :dbusercrawler TO :dbadmin;
 
 CREATE USER :dbusertransformer WITH PASSWORD :'dbpasstransformer';
+GRANT :dbusertransformer TO :dbadmin;
 
 CREATE USER :dbuserapi WITH PASSWORD :'dbpassapi';
+GRANT :dbuserapi TO :dbadmin;
 
-CREATE DATABASE :dbname
-   WITH OWNER :dbusercrawler
-   TEMPLATE template0
-   ENCODING 'UTF8'
-   TABLESPACE  pg_default
-CONNECTION LIMIT -1;
+
+CREATE DATABASE :dbname WITH OWNER :dbusercrawler ENCODING 'UTF8';
