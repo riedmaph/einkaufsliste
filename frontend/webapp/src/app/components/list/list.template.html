@@ -1,4 +1,5 @@
 <ul *ngIf="items">
+ <div class='container' [dragula]='"equivalence-class_A"'>
   <li *ngFor="let item of items; let i = index" [style.background-color]="gradientColor(i)">
     <button class="unchecked" (click)="completeItem(i)">
       <i class="fa fa-square-o"></i>
@@ -19,6 +20,6 @@
     <button class="remove" (click)="removeItem(i)">
       <i class="fa fa-trash"></i>
     </button>
-    
   </li>
+  </div>
 </ul>
