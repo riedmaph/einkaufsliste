@@ -1,7 +1,0 @@
-{
-	"dbhost": "127.0.0.1",
-	"dbport": 5432,
-	"dbname": "articledb",
-	"dbuserapi": "elisaapi",
-	"dbpassapi": "elite_se10" 
-}
