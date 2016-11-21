@@ -1,8 +1,8 @@
 #!/bin/bash
 
+cd ../../rawdatadumps/database
 . config.sh
+cd ../../transformation/database
 
-read -s -p "Please enter postgres admin password: " pspw;
-
-PGPASSWORD=$pspw psql -h $dbhost -p $dbport -U postgres -a -f "grantPermissions.sql" -v dbname=$dbname -v dbusertransformer=$dbusertransformer -v dbpasstransformer=$dbpasstransformer;
+PGPASSWORD=$dbpasscrawler psql -h $dbhost -p $dbport -U $dbusercrawler -d $dbname -a -f "grantPermissions.sql" -v dbname=$dbname -v dbusertransformer=$dbusertransformer -v dbpasstransformer=$dbpasstransformer;
 PGPASSWORD=$dbpasstransformer psql -h $dbhost -p $dbport -U $dbusertransformer -d $dbname -a -f "createSchema.sql"; 
