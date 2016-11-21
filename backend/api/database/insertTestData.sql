@@ -1,3 +1,6 @@
+DELETE FROM UserData.List;
+DELETE FROM UserData.Item;
+
 INSERT INTO UserData.List (id, name) VALUES(1, 'WG');
 INSERT INTO UserData.List (id, name) VALUES(2, 'Party');
 

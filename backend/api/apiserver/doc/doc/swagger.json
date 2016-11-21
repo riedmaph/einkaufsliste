@@ -273,6 +273,7 @@
             "type": "object",
             "required": [
                 "name",
+                "checked",
                 "amount",
                 "unit"
             ],
@@ -284,6 +285,10 @@
                 "name": {
                     "type": "string",
                     "description": "Name of item."
+                },
+                "checked": {
+                    "type": "boolean",
+                    "description": "Defines if item is checked or not."
                 },
                 "amount": {
                     "type": "number",

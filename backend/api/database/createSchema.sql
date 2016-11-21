@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS UserData.List (
 CREATE TABLE IF NOT EXISTS UserData.Item (
     id SERIAL PRIMARY KEY,
     name TEXT,
+    checked BOOLEAN DEFAULT FALSE,
     amount REAL,
     unit TEXT,
     list INT NOT NULL REFERENCES UserData.List(id) ON DELETE CASCADE

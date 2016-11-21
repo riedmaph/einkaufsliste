@@ -130,7 +130,7 @@ function updateItem(req, res, next) {
   req.body.id = parseInt(req.body.id);
   req.body.amount = parseFloat(req.body.amount);
 
-  db.none('UPDATE UserData.Item set list=${list}, name=${name}, amount=${amount}, unit=${unit} where id=${id}', req.body)
+  db.none('UPDATE UserData.Item set list=${list}, name=${name}, checked=${checked}, amount=${amount}, unit=${unit} where id=${id}', req.body)
     .then(function () {
       res.status(200)
         .json({
