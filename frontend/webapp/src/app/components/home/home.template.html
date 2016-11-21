@@ -1,6 +1,6 @@
 <header>  Elisa | Einkaufsliste </header>
 
-<sl-list [items]="items" (onComplete)="complete($event)"></sl-list>
+<sl-list [items]="itemsNoTuple" (onComplete)="complete($event)"></sl-list>
 
 <sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" 
   (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">
@@ -8,8 +8,8 @@
 
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
-<button *ngIf="showLengthWarning" (click)="showLengthWarning = false;" style="position: fixed; bottom: 3.5em; width: 50%;" > 
-  Please limit new entries to 140 characters.
+<button *ngIf="showLengthWarning" (click)="showLengthWarning = false;" style="position: fixed; bottom: 3.5em; width: 100%;" > 
+  Please limit new entries to 1 - {{MAX_LENGTH}} characters.
 </button>
 
 <form>
@@ -28,5 +28,5 @@
   <span *ngIf="showCompletedSection">Hide Completed</span>
 </button>
 
-<footer> some empty space </footer>
-<footer id='bottom'> </footer>
+<div class="bottom"> some empty space </div>
+<div class="bottom" id="bottom"> </div>

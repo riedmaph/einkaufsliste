@@ -1,7 +1,7 @@
 :host {
-  display: block;
-  min-height: calc(100vh - 4em);
-  box-sizing: border-box;
+	display: block;
+	min-height: calc(100vh - 4em);
+	box-sizing: border-box;
 }
 
 header {
@@ -22,68 +22,68 @@ header {
     white-space: pre;
 }
 
-footer {
-  width: 100%;
-  display: flex;
-   height: 2em;
-  font-size: 2em;
-  background: rgba(#0147A7, 0.1);
-  color:rgba(#0147A7, 0.0)
+.bottom {
+    width: 100%;
+    display: flex;
+    height: 2em;
+    font-size: 2em;
+    background: rgba(#0147A7, 0.0);
+    color: rgba(#0147A7, 0.0)
 }
 
 form {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  position: fixed;
-  bottom: 1em;
-  left: 1 em;
-  background: #eee;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	position: fixed;
+	bottom: 1em;
+	left: 1em;
+	background: #eee;
 
 }
 
 input {
-  flex: 1;
-  font-size: 1.5em;
-  padding: 0 .5em;
-  font-weight: 300;
-  border: thin solid #ddd;
-  background: #eee;
+	flex: 1;
+	font-size: 1.5em;
+	padding: 0 .5em;
+	font-weight: 300;
+	border: thin solid #ddd;
+	background: #eee;
 
-  &:focus {
-    background: #fff;
-    outline: none;
-  }
+	&:focus {
+		background: #fff;
+		outline: none;
+	}
 }
 
 button {
-  background: #0147A7;
-  color: #fff;
-  font-size: 1em;
-  padding: 0;
-  min-width: 3em;
-  padding: 0 .5em;
-  text-align: center;
-  line-height: 2;
-  border: none;
+	background: #0147A7;
+	color: #fff;
+	font-size: 1em;
+	padding: 0;
+	min-width: 3em;
+	padding: 0 .5em;
+	text-align: center;
+	line-height: 2;
+	border: none;
 }
 
 .toggleCompleted {
-  position: fixed; left: 1em; bottom: 1em;
+	position: fixed; left: 1em; bottom: 1em;
 }
 
 
 .sublist {
-  display: block;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  background-color: #eee;
+	display: block;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background-color: #eee;
 
   ul {
     margin-bottom: 1em;
@@ -102,11 +102,11 @@ button {
 }
 
 .empty {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  min-height: 50vh;
-  text-align: center;
-  color: #8e8e8e;
-  padding: 1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	min-height: 50vh;
+	text-align: center;
+	color: #8e8e8e;
+	padding: 1em;
 }

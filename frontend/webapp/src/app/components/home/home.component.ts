@@ -15,8 +15,8 @@ export class HomeComponent implements OnInit {
   /**
    * Items of the list
    */
-  public items: Array <[ ListItem , number ]> = [  ];
-  public itemsNoTuple: ListItem []= [];
+  public items: [ ListItem, number ][] = [  ];
+  public itemsNoTuple: ListItem[]= [ ];
 
   public showSplit: boolean = true;
   public showLengthWarning: boolean = false;
@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   public completedItems: ListItem[] = [ ];
 
   public showCompletedSection: boolean = false;
+
+  public MAX_LENGTH: number = 140;
 
   @ViewChild(ListComponent)
   public listComponent: ListComponent;
@@ -41,8 +43,8 @@ export class HomeComponent implements OnInit {
    */
   public ngOnInit () {
     // get previously stored items and add to  this.items
-    this.apiService.getEntries().subscribe((entries) => this.items = this.items.concat(entries));
-    this.itemsNoTuple = this.items.map( (tuple) => tuple[0] );
+    this.apiService.getEntries().subscribe((entries) => this.items = this.items = entries);
+    this.itemsNoTuple = this.items .map( (tuple) => tuple[0] );
 
     this.apiService.getCompleted().subscribe((completed) => this.completedItems = completed);
 
@@ -70,14 +72,14 @@ export class HomeComponent implements OnInit {
   public add (event: MouseEvent | KeyboardEvent, entry: HTMLInputElement) {
     event.preventDefault();
 
-    if (entry.value.length < 140) {
+    if (entry.value && entry.value.length < this.MAX_LENGTH) {
       this.items.push([
         <ListItem> {
           name: entry.value,
           unit: 'stk',
           amount: 1,
         },
-        this.items.length
+        this.items.length,
       ]);
       this.itemsNoTuple.push(<ListItem> {
         name: entry.value,
@@ -140,5 +142,4 @@ export class HomeComponent implements OnInit {
   public toggleShowCompletedSection (): void {
     this.showCompletedSection = !this.showCompletedSection;
   }
-
 }
