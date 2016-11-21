@@ -18,8 +18,17 @@ var options = {
 
 var pgp = require("pg-promise")(options);
 
-// using an invalid connection string:
-var db = pgp('postgresql://elisaapi:elite_se10@127.0.0.1:5432/articledb');
+var dbsettings = require('../../database/config');
+
+var cn = {
+    host: dbsettings.dbhost,
+    port: dbsettings.dbport,
+    database: dbsettings.dbname,
+    user: dbsettings.dbuserapi,
+    password: dbsettings.dbpassapi
+};
+
+var db = pgp(cn);
 
 db.connect()
     .then(function (obj) {
