@@ -10,10 +10,13 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/lists', dbconnector.getAllLists);
 router.post('/api/lists', dbconnector.createList);
-router.put('/api/lists/:id', dbconnector.updateList);
+router.put('/api/lists', dbconnector.updateList);
+router.delete('/api/lists', dbconnector.deleteList);
 
 router.get('/api/items/:listid', dbconnector.getListItems);
 router.post('/api/items', dbconnector.createItem);
-router.put('/api/items/:id', dbconnector.updateItem);
+router.put('/api/items', dbconnector.updateItem);
+router.delete('/api/items', dbconnector.deleteItem);
+
 
 module.exports = router;

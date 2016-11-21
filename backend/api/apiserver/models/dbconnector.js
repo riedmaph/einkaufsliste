@@ -33,9 +33,11 @@ module.exports = {
 	getAllLists: getAllLists,
   createList: createList,
   updateList: updateList,
+  deleteList: deleteList,
   getListItems: getListItems,
   createItem: createItem,
-  updateItem: updateItem
+  updateItem: updateItem,
+  deleteItem: deleteItem
 };
 
 /* --- Lists ----*/
@@ -44,8 +46,7 @@ function getAllLists(req, res, next) {
     .then(function (data) {
       res.status(200)
         .json({
-          status: 'success',
-          data: data
+          lists: data
         });
     })
     .catch(function (err) {
@@ -67,7 +68,22 @@ function createList(req, res, next) {
 }
 
 function updateList(req, res, next) {
-  db.none('UPDATE UserData.List set name=$1 where id=$2', [req.body.name, parseInt(req.params.id)])
+  req.body.id = parseInt(req.body.id);
+  db.none('UPDATE UserData.List set name=${name} where id=${id}', req.body)
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function deleteList(req, res, next) {
+  req.body.id = parseInt(req.body.id);
+  db.none('DELETE from UserData.List where id=${id}', req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -86,8 +102,7 @@ function getListItems(req, res, next) {
     .then(function (data) {
       res.status(200)
         .json({
-          status: 'success',
-          data: data
+          items: data
         });
     })
     .catch(function (err) {
@@ -111,8 +126,25 @@ function createItem(req, res, next) {
 }
 
 function updateItem(req, res, next) {
-  db.none('UPDATE UserData.Item set list=$1, name=$2, amount=$3, unit=$4 where id=$5', 
-    [parseInt(req.body.list), req.body.name, parseFloat(req.body.amount), req.body.unit, parseInt(req.params.id)])
+  req.body.list = parseInt(req.body.list);
+  req.body.id = parseInt(req.body.id);
+  req.body.amount = parseFloat(req.body.amount);
+
+  db.none('UPDATE UserData.Item set list=${list}, name=${name}, amount=${amount}, unit=${unit} where id=${id}', req.body)
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function deleteItem(req, res, next) {
+  req.body.id = parseInt(req.body.id);
+  db.none('DELETE from UserData.Item where id=${id}', req.body)
     .then(function () {
       res.status(200)
         .json({
