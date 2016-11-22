@@ -15,6 +15,8 @@ A simple shopping list app with addtional convenience features to improve the sh
 ## Tech-Stack
 
 ### Frontend
+- [Docker](http://www.docker.com)
+- [nginx](http://nginx.org)
 - [node.js](https://nodejs.org/)
 - [TypeScript](https://www.typescriptlang.org)
 - [Angular2](https://angular.io)
@@ -26,7 +28,9 @@ A simple shopping list app with addtional convenience features to improve the sh
 
 ### Frontend
 - Install dependencies: `npm install`
-- Run dev server: `npm start`
+- Build: `npm run build:dev` or `npm run watch:dev`
+- Webserver Docker: `docker-compose up`
+- Simple dev server `npm start`
 - Run unit tests: `npm test` (Coverage reports are found in `/coverage`)
 - Run end to end tests: `npm run e2e`
 

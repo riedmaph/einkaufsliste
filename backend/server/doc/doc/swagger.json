@@ -1,0 +1,341 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "ELISA API",
+        "description": "Definition of the internal API for ELISA.",
+        "version": "1.0.0"
+    },
+    "host": "api.uber.com",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/lists": {
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Get all lists for the user.",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "lists": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/List"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Add a new List.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Name of the new list to be added.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Update an existing List.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Id and values of the list to be updated.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Delete an existing List.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Id of the list to be deleted.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    }
+                }
+            }
+        },
+        "/items/{listid}": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get all items of the specified list.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to load items from.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/UpdateItem"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/items": {
+            "post": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Add a new item to a list.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Id of the list and attributes of the new item.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Update an existing item.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Id and values of the item to be updated.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Delete an existing Item.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Id of the item to be deleted.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteItem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AddList": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of list."
+                }
+            }
+        },
+        "DeleteList": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifer of list."
+                }
+            }
+        },
+        "UpdateList": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/AddList"
+                },
+                {
+                    "$ref": "#/definitions/DeleteList"
+                }
+            ]
+        },
+        "List": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/UpdateList"
+                },
+                {
+                    "required": [
+                        "count"
+                    ],
+                    "properties": {
+                        "count": {
+                            "type": "integer",
+                            "description": "Number of items in list."
+                        }
+                    }
+                }
+            ]
+        },
+        "AddItem": {
+            "type": "object",
+            "required": [
+                "name",
+                "checked",
+                "amount",
+                "unit"
+            ],
+            "properties": {
+                "listid": {
+                    "type": "integer",
+                    "description": "ID of the list the item belongs to."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of item."
+                },
+                "checked": {
+                    "type": "boolean",
+                    "description": "Defines if item is checked or not."
+                },
+                "amount": {
+                    "type": "number",
+                    "description": "Amount of item."
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Unit of item."
+                }
+            }
+        },
+        "DeleteItem": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifer of item."
+                }
+            }
+        },
+        "UpdateItem": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/AddItem"
+                },
+                {
+                    "$ref": "#/definitions/DeleteItem"
+                }
+            ]
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
