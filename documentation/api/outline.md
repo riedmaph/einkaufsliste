@@ -82,3 +82,84 @@ __Example:__
   }
 ]
 ```
+
+
+## Add List-Item
+### Request
+#### Method
+`POST` or `PUT`?
+#### URL
+`/list/:listId/add`
+#### Request Body
+__Data:__
+- `item: ListItem`
+
+### Response
+Success or error message:
+#### Status Code
+- Success: `200`
+- Malformed Request: `405`
+- Unauthorized: `403`
+#### Response Body
+__Type:__
+```TypeScript
+{
+  success: boolean,
+  error?: string
+}
+```
+__Example:__
+```json
+{
+  "success": true 
+}
+```
+
+```json
+{
+  "success": false,
+  "error": "List not found"
+}
+```
+
+
+## Delete List-Entry
+### Request
+#### Method
+`DELETE`
+#### URL
+`/list/:listId/remove`
+### Request Body
+__Data:__
+TODO
+
+### Response
+Success or error message:
+#### Status Code
+- Success: `200`
+- Malformed Request: `405`
+- Unauthorized: `403`
+#### Response Body
+__Type:__
+```TypeScript
+{
+  success: boolean,
+  error?: string
+}
+```
+__Example:__
+```json
+{
+  "success": true 
+}
+```
+
+```json
+{
+  "success": false,
+  "error": "List not found"
+}
+```
+
+## Reorder List
+TODO
