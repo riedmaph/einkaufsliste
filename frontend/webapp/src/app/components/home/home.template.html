@@ -1,5 +1,6 @@
 <header>  Elisa | Einkaufsliste </header>
 
+<sl-list [items]="items" (onComplete)="complete($event)"></sl-list>
 
 <sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" 
   (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">

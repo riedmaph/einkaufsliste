@@ -15,8 +15,7 @@ export class HomeComponent implements OnInit {
   /**
    * Items of the list
    */
-  public items: [ ListItem, number ][] = [  ];
-  public itemsNoTuple: ListItem[]= [ ];
+  public items: ListItem[] = [ ];
 
   public showSplit: boolean = true;
   public showLengthWarning: boolean = false;
@@ -44,8 +43,6 @@ export class HomeComponent implements OnInit {
   public ngOnInit () {
     // get previously stored items and add to  this.items
     this.apiService.getEntries().subscribe((entries) => this.items = this.items = entries);
-    this.itemsNoTuple = this.items .map( (tuple) => tuple[0] );
-
     this.apiService.getCompleted().subscribe((completed) => this.completedItems = completed);
 
     if (this.listComponent) {
@@ -73,20 +70,12 @@ export class HomeComponent implements OnInit {
     event.preventDefault();
 
     if (entry.value && entry.value.length < this.MAX_LENGTH) {
-      this.items.push([
+      this.items.push(
         <ListItem> {
           name: entry.value,
           unit: 'stk',
           amount: 1,
-        },
-        this.items.length,
-      ]);
-      this.itemsNoTuple.push(<ListItem> {
-        name: entry.value,
-        unit: 'stk',
-        amount: 1,
-      });
-
+        });
       entry.value = '';
 
       localStorage.setItem('entries', JSON.stringify(this.items));
@@ -117,7 +106,7 @@ export class HomeComponent implements OnInit {
    * @return {void} 
    */
   public incomplete (item: ListItem): void {
-    this.items.push([ item, -1 ]);
+    this.items.push(item);
 
     localStorage.setItem('entries', JSON.stringify(this.items));
     localStorage.setItem('completed', JSON.stringify(this.completedItems));
