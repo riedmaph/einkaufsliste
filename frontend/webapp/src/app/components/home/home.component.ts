@@ -16,15 +16,9 @@ export class HomeComponent implements OnInit {
    * Items of the list
    */
   public items: ListItem[] = [ ];
-
-  public showSplit: boolean = true;
-  public showLengthWarning: boolean = false;
-
   public completedItems: ListItem[] = [ ];
 
   public showCompletedSection: boolean = false;
-
-  public MAX_LENGTH: number = 140;
 
   @ViewChild(ListComponent)
   public listComponent: ListComponent;
@@ -41,8 +35,7 @@ export class HomeComponent implements OnInit {
    * @memberOf OnInit
    */
   public ngOnInit () {
-    // get previously stored items and add to  this.items
-    this.apiService.getEntries().subscribe((entries) => this.items = this.items = entries);
+    this.apiService.getEntries().subscribe((entries) => this.items = entries);
     this.apiService.getCompleted().subscribe((completed) => this.completedItems = completed);
 
     if (this.listComponent) {
@@ -69,21 +62,16 @@ export class HomeComponent implements OnInit {
   public add (event: MouseEvent | KeyboardEvent, entry: HTMLInputElement) {
     event.preventDefault();
 
-    if (entry.value && entry.value.length < this.MAX_LENGTH) {
-      this.items.push(
-        <ListItem> {
-          name: entry.value,
-          unit: 'stk',
-          amount: 1,
-        });
+    if (entry.value) {
+      this.items.push(<ListItem> {
+        name: entry.value,
+        unit: 'stk',
+        amount: 1,
+      });
       entry.value = '';
 
       localStorage.setItem('entries', JSON.stringify(this.items));
-      this.showLengthWarning = false;
-    } else {
-      this.showLengthWarning = true;
     }
-    document.getElementById('bottom').scrollIntoView();
   }
 
   /**
@@ -131,4 +119,5 @@ export class HomeComponent implements OnInit {
   public toggleShowCompletedSection (): void {
     this.showCompletedSection = !this.showCompletedSection;
   }
+
 }
