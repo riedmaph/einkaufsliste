@@ -35,15 +35,6 @@ describe('CompletedComponent', () => {
     }));
   });
 
-  describe('Removing all completed items', () => {
-    it ('should clear the completed items list',
-    inject([ CompletedComponent ], (component) => {
-      component.completedItems = [ 'entry1', 'entry2', 'entry3' ];
-      component.removeAll();
-      expect(component.completedItems).toEqual([ ]);
-    }));
-  });
-
   describe('Marking items as incomplete', () => {
     it('should remove the incomplete item from the completed items list',
     inject([ CompletedComponent ], (component) => {

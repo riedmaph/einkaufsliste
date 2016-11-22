@@ -2,32 +2,32 @@
   <div class='container' [dragula]="'draggable-list'">
     <li
       *ngFor="let item of items; let i = index"
-      [style.background-color]="gradientColor(i)"
       [id]="i"
+    >
+      <md-card class="item-card" (dblclick)="toggleItemMenu($event, i)">
+        <md-checkbox color="primary" (click)="completeItem(i)"></md-checkbox>
+        <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
+          {{ item.amount }} {{ item.unit }} {{ item.name }}
+        </span>
+      </md-card>
+
+      <button *ngIf="itemMenuIndex === i" md-raised-button color="accent"
+        class="edit-button"
+        (click)="toggleEditable($event, textfield, i)"
       >
-
-      <button class="unchecked" (click)="completeItem(i)">
-        <i class="fa fa-square-o"></i>
+        <md-icon *ngIf="textfield.contentEditable !== 'true'"
+          class="material-icons">edit</md-icon
+        >
+        <md-icon *ngIf="textfield.contentEditable === 'true'"
+          class="material-icons">done</md-icon
+        >
       </button>
 
-      <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
-        {{ item.amount }} {{ item.unit }} {{ item.name }}
-      </span>
-
-      <a *ngIf="item.onSale" href="#">
-        <img class="on-sale" src="/assets/img/sale.svg" alt="on sale">
-      </a>
-
-      <button (click)="toggleEditable($event, textfield, i)">
-        <i
-          class="fa"
-          [class.fa-pencil]="textfield.contentEditable !== 'true'"
-          [class.fa-check]="textfield.contentEditable === 'true'"
-        ></i>
-      </button>
-
-      <button class="remove" (click)="removeItem(i)">
-        <i class="fa fa-trash"></i>
+      <button *ngIf="itemMenuIndex === i" md-raised-button color="warn"
+        class="delete-button"
+        (click)="removeItem(i)"
+      >
+        <md-icon class="material-icons">delete</md-icon>
       </button>
     </li>
   </div>

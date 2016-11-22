@@ -5,14 +5,13 @@ import {
     EventEmitter,
 } from '@angular/core';
 
-import { MdDialog } from '@angular/material';
-
-import { ConfirmComponent } from '../confirm/confirm.component';
-
 @Component({
     selector: 'sl-completed',
     templateUrl: 'completed.template.html',
-    styleUrls: [ 'completed.style.scss' ],
+    styleUrls: [
+      'completed.style.scss',
+      '../../../assets/sass/list-item.scss',
+    ],
 })
 export class CompletedComponent {
 
@@ -26,7 +25,16 @@ export class CompletedComponent {
   public onIncomplete: EventEmitter<string> = new EventEmitter<string>();
 
 
-  constructor(private dialog: MdDialog) { }
+  public itemMenuIndex: number = -1;
+
+
+  public toggleItemMenu (event: MouseEvent, index: number): void {
+    if (this.itemMenuIndex === index) {
+      this.itemMenuIndex = -1;
+    } else {
+      this.itemMenuIndex = index;
+    }
+  }
 
   /**
    * Removes an item from the completed items list, after confirmation was successful
@@ -35,32 +43,9 @@ export class CompletedComponent {
    * @returns {void}
    */
   public removeItem (index: number): void {
-    let dialogRef = this.dialog.open(ConfirmComponent, {
-      disableClose: false,
-    });
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        let removedItems = this.completedItems.splice(index, 1);
-        this.onRemove.emit(removedItems);
-      }
-    });
-  }
-
-  /**
-   * Removes all items from the completed items list, after confirmation was successful
-   *
-   * @return {void}
-   */
-  public removeAll(): void {
-    let dialogRef = this.dialog.open(ConfirmComponent, {
-      disableClose: false,
-    });
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        let removedItems = this.completedItems.splice(0, this.completedItems.length);
-        this.onRemove.emit(removedItems);
-      }
-    });
+    let removedItems = this.completedItems.splice(index, 1);
+    this.itemMenuIndex = -1;
+    this.onRemove.emit(removedItems);
   }
 
 	/**
@@ -71,6 +56,7 @@ export class CompletedComponent {
 	 */
   public incompleteItem ( index: number): void {
     let completedItem: string[] = this.completedItems.splice(index, 1);
+    this.itemMenuIndex = -1;
     this.onIncomplete.emit(completedItem[0]);
   }
 

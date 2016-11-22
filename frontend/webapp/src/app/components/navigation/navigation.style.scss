@@ -1,16 +1,37 @@
-:host {
-  display: block;
-  position: absolute;
+nav {
+  position: fixed;
   top: 0;
-  background-color: #0147A7;
-  color: #fff;
-  height: 4em;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 1em;
+  left: 0;
+  right: 0;
+  box-shadow: 0 .2em .4em rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
 
-  h1 {
-    font-size: 1.5em;
-    line-height: 2em;
-  }
+md-toolbar {
+  padding: 0 .5em;
+}
+
+.toolbar-button {
+  color: white;
+  box-shadow: none;
+  user-select: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  filter: none;
+  text-decoration: none;
+  font-weight: normal;
+  height: auto;
+  line-height: inherit;
+  margin: 0 1em;
+  min-width: 0;
+  padding: 0;
+}
+
+.toolbar-fill-remaining {
+  flex: 1 1 auto;
+}
+
+.toolbar-title {
+  padding: 0 .5em;
 }

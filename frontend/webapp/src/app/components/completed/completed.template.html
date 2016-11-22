@@ -1,15 +1,18 @@
-<ul *ngIf="completedItems">
-  <li *ngFor="let completedItem of completedItems; let i = index">
-    <button class="unchecked" (click)="incompleteItem(i)">
-      <i class="fa fa-check-square-o"></i>
-    </button>
+<ul *ngIf="completedItems.length > 0" class="completed-list">
+  <li *ngFor="let item of completedItems; let i = index">
 
-    <span>
-      {{ completedItem.amount }} {{ completedItem.unit }} {{ completedItem.name }}
-    </span>
+    <md-card class="item-card" (dblclick)="toggleItemMenu($event, i)">
+      <md-checkbox color="primary" [checked]="true" (click)="incompleteItem(i)"></md-checkbox>
+      <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
+        {{ item.amount }} {{ item.unit }} {{ item.name }}
+      </span>
+    </md-card>
 
-    <button class="remove" (click)="removeItem(i)">
-      <i class="fa fa-trash"></i>
+    <button *ngIf="itemMenuIndex === i" md-raised-button color="warn"
+      class="delete-button"
+      (click)="removeItem(i)"
+    >
+      <md-icon class="material-icons">delete</md-icon>
     </button>
   </li>
 </ul>
