@@ -1,5 +1,6 @@
 <ul *ngIf="items">
   <li *ngFor="let item of items; let i = index" [style.background-color]="gradientColor(i)">
+
     <button class="unchecked" (click)="completeItem(i)">
       <i class="fa fa-square-o"></i>
     </button>
@@ -7,6 +8,10 @@
     <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
       {{ item.amount }} {{ item.unit }} {{ item.name }}
     </span>
+
+    <a *ngIf="item.onSale" href="#">
+      <img class="on-sale" src="/assets/img/sale.svg" alt="on sale">
+    </a>
 
     <button (click)="toggleEditable($event, textfield, i)">
       <i

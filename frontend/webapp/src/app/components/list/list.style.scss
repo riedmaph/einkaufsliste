@@ -43,3 +43,18 @@ button {
     color: #c00;
   }
 }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 50vh;
+  text-align: center;
+  color: #8e8e8e;
+  padding: 1em;
+}
+
+.on-sale {
+  height: 1.25em;
+  width: 1.25em;
+}
