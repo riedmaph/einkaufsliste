@@ -1,6 +1,5 @@
 <header>  Elisa | Einkaufsliste </header>
 
-<sl-list [items]="itemsNoTuple" (onComplete)="complete($event)"></sl-list>
 
 <sl-completed *ngIf="showCompletedSection" [completedItems]="completedItems" 
   (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">
@@ -8,7 +7,7 @@
 
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
-<button *ngIf="showLengthWarning" (click)="showLengthWarning = false;" style="position: fixed; bottom: 3.5em; width: 100%;" > 
+<button class="warning" *ngIf="showLengthWarning" (click)="showLengthWarning = false;" > 
   Please limit new entries to 1 - {{MAX_LENGTH}} characters.
 </button>
 
@@ -28,5 +27,5 @@
   <span *ngIf="showCompletedSection">Hide Completed</span>
 </button>
 
-<div class="bottom"> some empty space </div>
-<div class="bottom" id="bottom"> </div>
+<div class="endOfPage"> <!-- some empty space to avoid that list item is hidden by input field--></div>
+<div class="endOfPage" id="bottom"> </div>
