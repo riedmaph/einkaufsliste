@@ -9,6 +9,10 @@
       {{ item.amount }} {{ item.unit }} {{ item.name }}
     </span>
 
+    <a *ngIf="item.onSale" href="#">
+      <img class="on-sale" src="/assets/img/sale.svg" alt="on sale">
+    </a>
+
     <button (click)="toggleEditable($event, textfield, i)">
       <i
         class="fa"
