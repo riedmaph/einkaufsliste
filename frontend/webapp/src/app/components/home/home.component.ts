@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
    */
   public ngOnInit () {
     // get previously stored items and add to  this.items
-    this.apiService.getEntries().subscribe((entries) => this.items = this.items = entries);
+    this.apiService.getEntries().subscribe((entries) => this.items = entries);
     this.apiService.getCompleted().subscribe((completed) => this.completedItems = completed);
 
     if (this.listComponent) {
