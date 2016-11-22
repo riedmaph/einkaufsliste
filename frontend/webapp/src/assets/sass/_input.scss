@@ -1,0 +1,18 @@
+label {
+    display: block;
+}
+
+input, md-input {
+    display: block;
+}
+
+
+.form-error {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: $color-error;
+    font-size: .8em;
+    padding-bottom: .5em;
+}

@@ -1,0 +1,25 @@
+body {
+    font-family: Segoe UI, sans-serif;
+    background: #fff;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    font-family: Segoe UI Light, Segoe UI, sans-serif;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin-top: 4em;
+}
+
+.container {
+    margin: 0 auto;
+    width: 100%;
+    padding: 1em;
+    @include box-sizing(border-box);
+}
