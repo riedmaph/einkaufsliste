@@ -42,9 +42,9 @@ export class RegisterComponent {
   /**
    * Form submission handler
    */
-  public onSubmit () {
+  public onSubmit (data: { email: string, password: string, passwordConfirmation: string }) {
     if (this.form.valid) {
-      this.authService.register(this.form.value);
+      this.authService.register(data);
     }
   }
 

@@ -1,9 +1,12 @@
-import { FormControl } from '@angular/forms';
+import {
+  FormControl,
+  ValidatorFn,
+} from '@angular/forms';
 
 export class FormValidators {
 
   /**
-   * Validations whether the value entered in a FormControl is a valid email address
+   * Validates whether the value entered in a FormControl is a valid email address
    *
    * @param {FormControl} formControl FormControl to validate
    * @return {Object} null when valid, { invalidEmail: true } when invalid
@@ -15,6 +18,29 @@ export class FormValidators {
     return regex.test(formControl.value) ? null : {
       invalidEmail: true,
     };
+  }
+
+  /**
+   * Validates whether a given FormControl has the same value as a given string
+   *
+   * @param {string | (() => string)} value Either a simple string to compare to
+   *                                        or a function that returns a string
+   * @return {ValidatorFn} Validation function
+   */
+  public static validateEquality (value: string | (() => string)): ValidatorFn {
+    if (typeof value === 'string') {
+      return (formControl: FormControl) =>
+        formControl.value === value ? null : {
+          notEqual: true,
+        };
+    } else if (typeof value === 'function') {
+      return (formControl: FormControl) =>
+        formControl.value === value() ? null : {
+          notEqual: true,
+        };
+    } else {
+      throw 'Invalid input in validateEquality function';
+    }
   }
 
 }

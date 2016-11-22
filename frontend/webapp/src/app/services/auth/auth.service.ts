@@ -8,8 +8,8 @@ import { tokenNotExpired, AuthHttp } from 'angular2-jwt';
 export class AuthService {
 
   constructor (
+    private http: Http,
     private authHttp: AuthHttp,
-    private http: Http
   ) {}
 
   /**
