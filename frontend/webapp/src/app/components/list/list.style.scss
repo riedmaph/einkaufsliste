@@ -43,21 +43,18 @@ button {
     color: #c00;
   }
 }
-  .container div,
-    .gu-mirror {
-      margin: 10px;
-      padding: 10px;
-      background-color: rgba(0, 0, 0, 0.2);
-      transition: opacity 0.4s ease-in-out;
-    }
-        .gu-mirror {
-      cursor: grabbing;
-      cursor: -moz-grabbing;
-      cursor: -webkit-grabbing;
-    }
-    .container div {
-      cursor: move;
-      cursor: grab;
-      cursor: -moz-grab;
-      cursor: -webkit-grab;
-    }
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 50vh;
+  text-align: center;
+  color: #8e8e8e;
+  padding: 1em;
+}
+
+.on-sale {
+  height: 1.25em;
+  width: 1.25em;
+}

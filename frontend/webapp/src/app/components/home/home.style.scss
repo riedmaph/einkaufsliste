@@ -1,57 +1,96 @@
 :host {
-  display: block;
-  min-height: calc(100vh - 4em);
-  box-sizing: border-box;
+    display: block;
+    min-height: calc(100vh - 4em);
+    box-sizing: border-box;
+}
+
+header {
+    background: #0147A7;
+    color: #fff;
+    font-family: Segoe UI Light, Segoe UI, sans-serif;
+    font-weight: 100;
+    font-size: 2em;
+    padding: 5;
+    width: 100%; 
+    height: 1.5em;
+    position: fixed;
+    left:0;
+    top: 0;
+    border-bottom: 1px solid #666;
+    border-top: 1px solid #666;
+    text-align: left;
+    white-space: pre;
+}
+
+.endOfPage {
+    width: 100%;
+    display: flex;
+    height: 2em;
+    font-size: 2em;
+    background: rgba(0,0,0, 0.0);
+    color: rgba(0,0,0, 0.0)
 }
 
 form {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+    background: #eee;
+
 }
 
 input {
-  flex: 1;
-  font-size: 1.5em;
-  padding: 0 .5em;
-  font-weight: 300;
-  border: thin solid #ddd;
-  background: #eee;
+    flex: 1;
+    font-size: 1.5em;
+    padding: 0 .5em;
+    font-weight: 300;
+    border: thin solid #ddd;
+    background: #eee;
 
-  &:focus {
-    background: #fff;
-    outline: none;
-  }
+	&:focus {
+        background: #fff;
+	    outline: none;
+	}
 }
 
 button {
-  background: #0147A7;
-  color: #fff;
-  font-size: 1.5em;
-  padding: 0;
-  min-width: 3em;
-  padding: 0 .5em;
-  text-align: center;
-  line-height: 2;
-  border: none;
+    background: #0147A7;
+    color: #fff;
+    font-size: 1em;
+    padding: 0;
+    min-width: 3em;
+    padding: 0 .5em;
+    text-align: center;
+    line-height: 2;
+    border: none;
 }
 
+.warning{
+    position: fixed; 
+    bottom: 3.5em; 
+    width: 100%;}
+
 .toggleCompleted {
-  position: fixed; left: 1em; bottom: 1em;
+    position: fixed; 
+    left: 1em;
+    bottom: 1em;
 }
 
 
 .sublist {
-  display: block;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  background-color: #eee;
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: #eee;
 
   ul {
     margin-bottom: 1em;
@@ -61,20 +100,20 @@ button {
     border-top: thin solid #bbb;
 
     li {
-      font-size: 1.25em;
-      line-height: 2;
-      padding: 0 .5em;
-      border-bottom: thin solid #bbb;
+        font-size: 1.25em;
+        line-height: 2;
+        padding: 0 .5em;
+        border-bottom: thin solid #bbb;
     }
   }
 }
 
 .empty {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  min-height: 50vh;
-  text-align: center;
-  color: #8e8e8e;
-  padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 50vh;
+    text-align: center;
+    color: #8e8e8e;
+    padding: 1em;
 }
