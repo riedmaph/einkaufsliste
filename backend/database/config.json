@@ -1,0 +1,11 @@
+{
+	"dbhost": "127.0.0.1",
+	"dbport": 5432,
+	"dbname": "articledb",
+	"dbusercrawler": "elisacrawler",
+	"dbpasscrawler": "elite_se10",
+	"dbusertransformer": "elisatransformer",
+	"dbpasstransformer": "elite_se10",
+	"dbuserapi": "elisaapi",
+	"dbpassapi": "elite_se10" 
+}
