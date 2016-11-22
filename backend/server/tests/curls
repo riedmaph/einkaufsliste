@@ -1,0 +1,20 @@
+//create List
+curl --data "name=Geburtstag" http://127.0.0.1:3001/api/lists
+
+//Update List
+curl --data "id=3&name=Test1234" -X PUT http://127.0.0.1:3001/api/lists
+
+//Delete List
+curl --data "id=5" -X DELETE http://127.0.0.1:3001/api/lists
+
+
+
+
+//create Item
+curl --data "list=1&name=Spagetthi&amount=250&unit=gramm" http://127.0.0.1:3001/api/items
+
+//Update Item
+curl --data "id=5&list=1&name=Spagetthi&checked=true&amount=300.12&unit=kilo" -X PUT http://127.0.0.1:3001/api/items
+
+//Delete Item
+curl --data "id=5" -X DELETE http://127.0.0.1:3001/api/items
