@@ -45,17 +45,20 @@ describe('ListComponent', () => {
           name: 'entry1',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
         {
           name: 'entry2',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         } ];
       list.removeItem(1);
       expect(list.items).toEqual([ {
         name: 'entry1',
         unit: 'stk',
         amount: 1,
+          onSale: false,
       } ]);
       list.removeItem(0);
       expect(list.items).toEqual([ ]);
@@ -86,6 +89,7 @@ describe('ListComponent', () => {
           name: 'entry1',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
       ];
       expect(() => list.gradientColor(-1)).toThrow();
@@ -98,6 +102,7 @@ describe('ListComponent', () => {
           name: 'entry1',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
       ];
       expect(list.gradientColor(0).toLowerCase).toBe(list.baseColor.toLowerCase);
@@ -106,16 +111,19 @@ describe('ListComponent', () => {
           name: 'entry1',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
         {
           name: 'entry2',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
         {
           name: 'entry3',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
       ];
       expect(list.gradientColor(0).toLowerCase).toBe(list.baseColor.toLowerCase);
@@ -127,16 +135,19 @@ describe('ListComponent', () => {
           name: 'entry1',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
         {
           name: 'entry2',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
         {
           name: 'entry3',
           unit: 'stk',
           amount: 1,
+          onSale: false,
         },
       ];
       const COLOR_0 = parseInt(list.gradientColor(0).substr(1, 6), 16);

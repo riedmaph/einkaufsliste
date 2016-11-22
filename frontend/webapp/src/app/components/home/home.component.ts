@@ -62,9 +62,9 @@ export class HomeComponent implements OnInit {
 
   /**
    * Adds an item to list
-   * 
+   *
    * @param {any} event Event that triggered this addition
-   * @param {HTMLInputElement} entry Input field 
+   * @param {HTMLInputElement} entry Input field
    */
   public add (event: MouseEvent | KeyboardEvent, entry: HTMLInputElement) {
     event.preventDefault();
@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
 
   /**
    * Completes an item on the list
-   * 
+   *
    * @param {ListItem} item The item to complete
    * @return {void}
    */
@@ -101,9 +101,9 @@ export class HomeComponent implements OnInit {
 
   /**
    * Marks an already completed item as incomplete
-   * 
+   *
    * @param {ListItem} item The item to mark as incomplete
-   * @return {void} 
+   * @return {void}
    */
   public incomplete (item: ListItem): void {
     this.items.push(item);
@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
 
   /**
    * Removes items from both, the incomplete and completed section
-   * 
+   *
    * @param {string[]} items The items to remove
    * @return {void}
    */
@@ -123,12 +123,4 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('completed', JSON.stringify(this.completedItems));
   }
 
-  /**
-   * Toggles visibility of the completed items section
-   * 
-   * @return {void}
-   */
-  public toggleShowCompletedSection (): void {
-    this.showCompletedSection = !this.showCompletedSection;
-  }
 }

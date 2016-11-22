@@ -43,13 +43,4 @@ describe('HomeComponent', () => {
     expect(home.items).toEqual([ 'entry1', 'entry2' ]);
   }));
 
-  it('should toggle the completed section visibility',
-  inject([ HomeComponent ], (home) => {
-    home.showCompletedSection = false;
-    home.toggleShowCompletedSection();
-    expect(home.showCompletedSection).toBe(true);
-    home.toggleShowCompletedSection();
-    expect(home.showCompletedSection).toBe(false);
-  }));
-
 });
