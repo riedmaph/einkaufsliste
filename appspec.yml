@@ -72,22 +72,22 @@ hooks:
       runas: root
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  BeforeInstall:
-#    - location: backend/deployment/2-beforeInstall.sh
-#      timeout: 100
-#      runas: root
-#    - location: frontend/deployment/2-beforeInstall.sh
-#      timeout: 100
-#      runas: root
+  BeforeInstall:
+    - location: backend/deployment/2-beforeInstall.sh
+      timeout: 100
+      runas: root
+    - location: frontend/deployment/2-beforeInstall.sh
+      timeout: 100
+      runas: root
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  AfterInstall:
-#    - location: backend/deployment/3-afterInstall.sh
-#      timeout: 500
-#      runas: root
-#    - location: frontend/deployment/3-afterInstall.sh
-#      timeout: 500
-#      runas: root
+  AfterInstall:
+    - location: backend/deployment/3-afterInstall.sh
+      timeout: 500
+      runas: root
+    - location: frontend/deployment/3-afterInstall.sh
+      timeout: 500
+      runas: root
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ApplicationStart:
@@ -99,10 +99,10 @@ hooks:
       runas: root
 # During the ValidateService deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  ValidateService:
-#    - location: backend/deployment/5-validateService.sh
-#      timeout: 500
-#      runas: root
-#    - location: frontend/deployment/5-validateService.sh
-#      timeout: 500
-#      runas: root
+  ValidateService:
+    - location: backend/deployment/5-validateService.sh
+      timeout: 500
+      runas: root
+    - location: frontend/deployment/5-validateService.sh
+      timeout: 500
+      runas: root
