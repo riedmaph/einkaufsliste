@@ -15,9 +15,9 @@ os: linux
 #   may cause associated deployments to fail.
 files:
   - source: backend/server
-    destination: /autodeploy/elisa/backend
+    destination: /autodeploy/backend
   - source: frontend/webapp
-    destination: /autodeploy/elisa/frontend
+    destination: /autodeploy/frontend
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
@@ -72,13 +72,13 @@ hooks:
       runas: root
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  BeforeInstall:
-#    - location: backend/deployment/2-beforeInstall.sh
-#      timeout: 100
-#      runas: root
-#    - location: frontend/deployment/2-beforeInstall.sh
-#      timeout: 100
-#      runas: root
+  BeforeInstall:
+    - location: backend/deployment/2-beforeInstall.sh
+      timeout: 100
+      runas: root
+    - location: frontend/deployment/2-beforeInstall.sh
+      timeout: 100
+      runas: root
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   AfterInstall:
