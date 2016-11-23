@@ -15,9 +15,9 @@ os: linux
 #   may cause associated deployments to fail.
 files:
   - source: backend/server
-    destination: /autodeploy/backend
+    destination: /autodeploy/backend/
   - source: frontend/webapp
-    destination: /autodeploy/frontend
+    destination: /autodeploy/frontend/
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
@@ -39,7 +39,7 @@ files:
 #      range:
 #    type:
 #      -
-hooks:
+#hooks:
 # For each deployment lifecycle event, specify multiple "location" entries 
 #   if you want to run multiple scripts during that event.
 # You can specify "timeout" as the number of seconds to wait until failing the deployment 
@@ -63,46 +63,46 @@ hooks:
 # During the ApplicationStop deployment lifecycle event, run the commands 
 #   in the script specified in "location" starting from the root of the 
 #   revision's file bundle.
-  ApplicationStop:
-    - location: backend/deployment/1-applicationStop.sh
-      timeout: 100
-      runas: root
-    - location: 100
-      timeout: frontend/deployment/1-applicationStop.sh
-      runas: root
+#  ApplicationStop:
+#    - location: backend/deployment/1-applicationStop.sh
+#      timeout: 100
+#      runas: root
+#    - location: 100
+#      timeout: frontend/deployment/1-applicationStop.sh
+#      runas: root
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  BeforeInstall:
-    - location: backend/deployment/2-beforeInstall.sh
-      timeout: 100
-      runas: root
-    - location: frontend/deployment/2-beforeInstall.sh
-      timeout: 100
-      runas: root
+#  BeforeInstall:
+#    - location: backend/deployment/2-beforeInstall.sh
+#      timeout: 100
+#      runas: root
+#    - location: frontend/deployment/2-beforeInstall.sh
+#      timeout: 100
+#      runas: root
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  AfterInstall:
-    - location: backend/deployment/3-afterInstall.sh
-      timeout: 500
-      runas: root
-    - location: frontend/deployment/3-afterInstall.sh
-      timeout: 500
-      runas: root
+#  AfterInstall:
+#    - location: backend/deployment/3-afterInstall.sh
+#      timeout: 500
+#      runas: root
+#    - location: frontend/deployment/3-afterInstall.sh
+#      timeout: 500
+#      runas: root
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  ApplicationStart:
-    - location: backend/deployment/4-applicationStart.sh
-      timeout: 500
-      runas: root
-    - location: frontend/deployment/4-applicationStart.sh
-      timeout: 500
-      runas: root
+#  ApplicationStart:
+#    - location: backend/deployment/4-applicationStart.sh
+#      timeout: 500
+#      runas: root
+#    - location: frontend/deployment/4-applicationStart.sh
+#      timeout: 500
+#      runas: root
 # During the ValidateService deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  ValidateService:
-    - location: backend/deployment/5-validateService.sh
-      timeout: 500
-      runas: root
-    - location: frontend/deployment/5-validateService.sh
-      timeout: 500
-      runas: root
+#  ValidateService:
+#    - location: backend/deployment/5-validateService.sh
+#      timeout: 500
+#      runas: root
+#    - location: frontend/deployment/5-validateService.sh
+#      timeout: 500
+#      runas: root
