@@ -67,8 +67,8 @@ hooks:
     - location: backend/deployment/1-applicationStop.sh
       timeout: 100
       runas: root
-    - location: 100
-      timeout: frontend/deployment/1-applicationStop.sh
+    - location: frontend/deployment/1-applicationStop.sh
+      timeout: 100
       runas: root
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
