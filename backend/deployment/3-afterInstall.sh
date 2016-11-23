@@ -2,7 +2,7 @@
 
 # All files are at their target location now
 
-API_PATH="/autodeploy/backend/"
+API_PATH="/autodeploy/backend"
 
 # install required node packages
 cd $API_PATH
