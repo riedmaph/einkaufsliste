@@ -35,6 +35,7 @@ export class RegisterComponent {
       ]) ],
       'passwordConfirmation': [ '', Validators.compose([
         Validators.required,
+        // @TODO Equal to password
       ]) ],
     });
   }
@@ -44,7 +45,13 @@ export class RegisterComponent {
    */
   public onSubmit (data: { email: string, password: string, passwordConfirmation: string }) {
     if (this.form.valid) {
-      this.authService.register(data);
+      this.authService.register(data).subscribe(success => {
+        if (success) {
+          // Show success
+        } else {
+          // Show error
+        }
+      })
     }
   }
 

@@ -55,9 +55,6 @@
       <li *ngIf="form.controls['passwordConfirmation'].errors.required">
         Password confirmation is required.
       </li>
-      <li *ngIf="form.controls['passwordConfirmation'].errors.matching">
-        Password and confirmation do not match.
-      </li>
     </ul>
   </label>
   <button md-raised-button class="btn btn-primary" type="submit">Register</button>

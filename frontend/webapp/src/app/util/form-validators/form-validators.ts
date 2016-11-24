@@ -36,7 +36,7 @@ export class FormValidators {
     } else if (typeof value === 'function') {
       return (formControl: FormControl) =>
         formControl.value === value() ? null : {
-          notEqual: true,
+          matching: false,
         };
     } else {
       throw 'Invalid input in validateEquality function';
