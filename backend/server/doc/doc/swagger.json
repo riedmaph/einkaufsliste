@@ -14,6 +14,83 @@
         "application/json"
     ],
     "paths": {
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register a new User.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Email-address and password for new user.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login as an existng User.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Email-address and password for new user.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token for the user.",
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong password.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "User does not exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/lists": {
             "get": {
                 "tags": [
@@ -21,7 +98,15 @@
                 ],
                 "summary": "Get all lists for the user.",
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation.",
@@ -47,6 +132,13 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
                         "description": "Name of the new list to be added.",
@@ -59,6 +151,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -69,6 +167,13 @@
                 "summary": "Update an existing List.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -82,6 +187,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -92,6 +203,13 @@
                 "summary": "Delete an existing List.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -105,6 +223,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             }
@@ -117,6 +241,13 @@
                 "summary": "Get all items of the specified list.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "listid",
@@ -140,6 +271,12 @@
                                 }
                             }
                         }
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -150,6 +287,13 @@
                 "summary": "Add a new item to a list.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "listid",
@@ -171,6 +315,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -181,6 +331,13 @@
                 "summary": "Update an existing item.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "listid",
@@ -202,6 +359,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -212,6 +375,13 @@
                 "summary": "Delete an existing Item.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "listid",
@@ -233,12 +403,47 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "default": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             }
         }
     },
     "definitions": {
+        "User": {
+            "type": "object",
+            "required": [
+                "mail",
+                "password"
+            ],
+            "properties": {
+                "mail": {
+                    "type": "string",
+                    "description": "Email-address of the user."
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password of the user."
+                }
+            }
+        },
+        "Token": {
+            "type": "object",
+            "required": [
+                "token"
+            ],
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "description": "The signed JWT."
+                }
+            }
+        },
         "AddList": {
             "type": "object",
             "required": [
@@ -347,14 +552,7 @@
         "Error": {
             "type": "object",
             "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "message": {
-                    "type": "string"
-                },
-                "fields": {
                     "type": "string"
                 }
             }
