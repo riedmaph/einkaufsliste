@@ -163,6 +163,7 @@ public reorderItems( movedItemIndex: number): void {
   this.items.splice(targetIndex - 1, 0, movedItem);
   //debug...
   this.items.forEach(x => console.log(x));
+  this.onEdit.emit({});
     }
 
 
