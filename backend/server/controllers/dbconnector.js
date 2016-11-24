@@ -1,5 +1,6 @@
 var uuid = require('uuid');
 var tokenhandler = require('./tokenhandler');
+var password = require('password-hash-and-salt');
 
 var options = {
   // Initialization Options
@@ -54,27 +55,51 @@ module.exports = {
   deleteItem
 };
 
+function validatePassword(password) {
+  return password.length >= 7;
+}
+
 /* ---- Users ---- */
 function register(req, res, next) {
-  db.oneOrNone('SELECT enduser.id as id, enduser.mail as mail, enduser.password as password FROM UserData.Enduser where mail = ${mail}', req.body)
+  db.oneOrNone('SELECT enduser.id as id, enduser.email as email, enduser.password as password FROM UserData.Enduser where email = ${email}', req.body)
     .then(function (user) {
-      if(!user) {
-        req.body.id = uuid.v1();
-        db.none('INSERT INTO UserData.Enduser(id, mail, password) VALUES(${id}, ${mail}, ${password})', req.body)
-          .then(function () {
-            res.status(200)
-              .json({
-                token: tokenhandler.createToken(req.body.id)
+      if(!user) {        
+
+        if(validatePassword(req.body.password)) {
+          //hash&salt password
+          password(req.body.password).hash(function(error, hash) {
+            if(error)
+                throw new Error('Error in hashing password!');
+         
+            req.body.hash = hash;
+            console.log(req.body.hash);          
+
+            //create new id for user
+            req.body.id = uuid.v1();
+
+            db.none('INSERT INTO UserData.Enduser(id, email, password) VALUES(${id}, ${email}, ${hash})', req.body)
+              .then(function () {
+                res.status(200)
+                  .json({
+                    token: tokenhandler.createToken(req.body.id)
+                  });
+              })
+              .catch(function (err) {
+                return next(err);
               });
-          })
-          .catch(function (err) {
-            return next(err);
           });
+        }
+        else {
+          res.status(400)
+          .json({
+            message: 'User already exists or password is invalid.'
+          });
+        }
       }
       else {
-        res.status(409)
+        res.status(400)
           .json({
-            message: 'User with this email-address already exists.'
+            message: 'User already exists or password is invalid.'
           });
       }
     })
@@ -84,27 +109,31 @@ function register(req, res, next) {
 }
 
 function login(req, res, next) {
-  db.oneOrNone('SELECT enduser.id as id, enduser.mail as mail, enduser.password as password FROM UserData.Enduser where mail = ${mail}', req.body)
+  db.oneOrNone('SELECT enduser.id as id, enduser.email as email, enduser.password as password FROM UserData.Enduser where email = ${email}', req.body)
     .then(function (user) {
       if(user) {
-        if(user.password == req.body.password) {
-          res.status(200)
-          .json({
-            token: tokenhandler.createToken(user.id)
-          });
-        }
-        else {
-          res.status(401)
-          .json({
-            message: 'Wrong password.'
-          });
-        }
+        password(req.body.password).verifyAgainst(user.password, function(error, verified) {
+          if(error)
+              throw new Error('Something went wrong!');
 
+          if(verified) {
+            res.status(200)
+            .json({
+              token: tokenhandler.createToken(user.id)
+            });
+          } 
+          else {
+              res.status(401)
+              .json({
+                message: 'Unknown user or bad password.'
+              });
+          }
+        });
       }
       else {
-        res.status(404)
+        res.status(401)
           .json({
-            message: 'User does not exist.'
+            message: 'Unknown user or bad password.'
           });
 
       }

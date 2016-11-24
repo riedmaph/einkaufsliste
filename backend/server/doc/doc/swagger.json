@@ -35,7 +35,13 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "400": {
+                        "description": "User already exists or password is invalid.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -45,7 +51,7 @@
             }
         },
         "/users/login": {
-            "put": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
@@ -70,18 +76,12 @@
                         }
                     },
                     "401": {
-                        "description": "Wrong password.",
+                        "description": "Unknown user or bad password.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
                     },
-                    "404": {
-                        "description": "User does not exist.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -151,7 +151,7 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -187,7 +187,7 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -223,7 +223,7 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -271,7 +271,7 @@
                             }
                         }
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -315,7 +315,7 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -359,7 +359,7 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -403,7 +403,7 @@
                     "200": {
                         "description": "Successful operation."
                     },
-                    "default": {
+                    "500": {
                         "description": "Unhandeled error.",
                         "schema": {
                             "$ref": "#/definitions/Error"
@@ -417,11 +417,11 @@
         "User": {
             "type": "object",
             "required": [
-                "mail",
+                "email",
                 "password"
             ],
             "properties": {
-                "mail": {
+                "email": {
                     "type": "string",
                     "description": "Email-address of the user."
                 },

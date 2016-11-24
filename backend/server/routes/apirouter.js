@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/users/register', dbconnector.register);
-router.put('/users/login', dbconnector.login);
+router.post('/users/login', dbconnector.login);
 
 // check if a valid token is provided
 router.use(tokenhandler.verifyToken);
