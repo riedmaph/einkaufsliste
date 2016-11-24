@@ -8,11 +8,13 @@ import {
 import { ListItem } from '../../models/list-item.model';
 import { MdDialog } from '@angular/material';
 import { ConfirmComponent } from '../confirm/confirm.component';
+import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
   selector: 'sl-list',
   templateUrl: './list.template.html',
   styleUrls: [ './list.style.scss' ],
+  viewProviders: [ DragulaService ],
 })
 export class ListComponent {
 
@@ -32,7 +34,9 @@ export class ListComponent {
   public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
 
-  constructor(private dialog: MdDialog) { }
+  constructor(
+    private dialog: MdDialog,
+    private dragulaServie: DragulaService ) { }
 
   /**
    * Removes an item from the items list, after confirmation was successful
@@ -131,5 +135,19 @@ export class ListComponent {
       this.commitEdit(elem, index);
     }
   }
+/********************delete marker before commit******************************** */
+/********************delete marker before commit******************************** */
+/********************delete marker before commit******************************** */
+
+
+
+
+
+
+
+
+
+
+
 
 }
