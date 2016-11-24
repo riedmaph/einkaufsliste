@@ -5,7 +5,7 @@
         "description": "Definition of the internal API for ELISA.",
         "version": "1.0.0"
     },
-    "host": "api.uber.com",
+    "host": "http://ec2-35-156-102-173.eu-central-1.compute.amazonaws.com:3001/api",
     "schemes": [
         "https"
     ],
