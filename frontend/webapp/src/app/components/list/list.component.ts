@@ -36,7 +36,13 @@ export class ListComponent {
 
   constructor(
     private dialog: MdDialog,
-    private dragulaServie: DragulaService ) { }
+    private dragulaService: DragulaService ) {
+      this.dragulaService.dragend.subscribe(
+             draggedElement => {
+                 let temp: any = document.getElementById(draggedElement[1].id).nextSibling;
+                 this.reorderItems(draggedElement[1].id);
+              });
+     }
 
   /**
    * Removes an item from the items list, after confirmation was successful
@@ -138,6 +144,26 @@ export class ListComponent {
 /********************delete marker before commit******************************** */
 /********************delete marker before commit******************************** */
 /********************delete marker before commit******************************** */
+
+public reorderItems( movedItemIndex: number): void {
+  //save moveItem
+  let movedItem = this.items[movedItemIndex];
+  let targetIndex: number = 0;
+  //delete the moved Item
+  this.items.splice(movedItemIndex,1);
+  //determine new position
+  let temp: any = document.getElementById('' + movedItemIndex).nextSibling;
+  if (!temp){
+      targetIndex = this.items.length + 1;
+  }else {
+    targetIndex = temp.id;
+  }
+
+  //insert the moved Item at new position
+  this.items.splice(targetIndex - 1, 0, movedItem);
+  //debug...
+  this.items.forEach(x => console.log(x));
+    }
 
 
 
