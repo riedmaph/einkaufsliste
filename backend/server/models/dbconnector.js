@@ -39,14 +39,14 @@ db.connect()
     });
 
 module.exports = {
-	getAllLists: getAllLists,
-  createList: createList,
-  updateList: updateList,
-  deleteList: deleteList,
-  getListItems: getListItems,
-  createItem: createItem,
-  updateItem: updateItem,
-  deleteItem: deleteItem
+	getAllLists,
+  createList,
+  updateList,
+  deleteList,
+  getListItems,
+  createItem,
+  updateItem,
+  deleteItem
 };
 
 /* --- Lists ----*/
@@ -120,9 +120,9 @@ function getListItems(req, res, next) {
 }
 
 function createItem(req, res, next) {
-  req.body.list = parseInt(req.body.list);
+  req.body.listid = parseInt(req.body.listid);
   req.body.amount = parseFloat(req.body.amount);
-  db.none('INSERT INTO UserData.Item(list, name, amount, unit) VALUES(${list}, ${name}, ${amount}, ${unit})', req.body)
+  db.none('INSERT INTO UserData.Item(list, name, amount, unit) VALUES(${listid}, ${name}, ${amount}, ${unit})', req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -135,11 +135,11 @@ function createItem(req, res, next) {
 }
 
 function updateItem(req, res, next) {
-  req.body.list = parseInt(req.body.list);
+  req.body.listid = parseInt(req.body.listid);
   req.body.id = parseInt(req.body.id);
   req.body.amount = parseFloat(req.body.amount);
 
-  db.none('UPDATE UserData.Item set list=${list}, name=${name}, checked=${checked}, amount=${amount}, unit=${unit} where id=${id}', req.body)
+  db.none('UPDATE UserData.Item set list=${listid}, name=${name}, checked=${checked}, amount=${amount}, unit=${unit} where id=${id}', req.body)
     .then(function () {
       res.status(200)
         .json({
