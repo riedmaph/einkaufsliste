@@ -139,26 +139,26 @@ export class ListComponent {
     }
   }
 
-/**
+  /**
    * Reorders the item array according to drag and drop actions
    *
    * @param {number} movedItemIndex Index of element that was dragged
    * @returns {void}
    */
   public reorderItems( movedItemIndex: number): void {
-    //save moveItem
+    // save moveItem
     let movedItem = this.items[movedItemIndex];
     let targetIndex: number = 0;
-    //delete the moved Item
-    this.items.splice(movedItemIndex,1);
-    //determine new position
+    // delete the moved Item
+    this.items.splice(movedItemIndex, 1);
+    // determine new position
     let temp: any = document.getElementById('' + movedItemIndex).nextSibling;
     if (!temp){
         targetIndex = this.items.length;
     } else {
         targetIndex = temp.id;
     }
-    //insert the moved Item at new position
+    // insert the moved Item at new position
     this.items.splice(targetIndex , 0, movedItem);
     this.onEdit.emit({});
     }
