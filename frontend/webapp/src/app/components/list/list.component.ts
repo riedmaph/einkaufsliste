@@ -8,7 +8,7 @@ import {
 import { ListItem } from '../../models/list-item.model';
 import { MdDialog } from '@angular/material';
 import { ConfirmComponent } from '../confirm/confirm.component';
-import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
   selector: 'sl-list',
@@ -37,11 +37,8 @@ export class ListComponent {
   constructor(
     private dialog: MdDialog,
     private dragulaService: DragulaService ) {
-      this.dragulaService.dragend.subscribe(
-             draggedElement => {
-                 let temp: any = document.getElementById(draggedElement[1].id).nextSibling;
-                 this.reorderItems(draggedElement[1].id);
-              });
+        this.dragulaService.dragend.subscribe(
+            draggedElement => this.reorderItems(draggedElement[1].id));
      }
 
   /**
@@ -141,40 +138,28 @@ export class ListComponent {
       this.commitEdit(elem, index);
     }
   }
-/********************delete marker before commit******************************** */
-/********************delete marker before commit******************************** */
-/********************delete marker before commit******************************** */
 
-public reorderItems( movedItemIndex: number): void {
-  //save moveItem
-  let movedItem = this.items[movedItemIndex];
-  let targetIndex: number = 0;
-  //delete the moved Item
-  this.items.splice(movedItemIndex,1);
-  //determine new position
-  let temp: any = document.getElementById('' + movedItemIndex).nextSibling;
-  if (!temp){
-      targetIndex = this.items.length + 1;
-  }else {
-    targetIndex = temp.id;
-  }
-
-  //insert the moved Item at new position
-  this.items.splice(targetIndex - 1, 0, movedItem);
-  //debug...
-  this.items.forEach(x => console.log(x));
-  this.onEdit.emit({});
+/**
+   * Reorders the item array according to drag and drop actions
+   *
+   * @param {number} movedItemIndex Index of element that was dragged
+   * @returns {void}
+   */
+  public reorderItems( movedItemIndex: number): void {
+    //save moveItem
+    let movedItem = this.items[movedItemIndex];
+    let targetIndex: number = 0;
+    //delete the moved Item
+    this.items.splice(movedItemIndex,1);
+    //determine new position
+    let temp: any = document.getElementById('' + movedItemIndex).nextSibling;
+    if (!temp){
+        targetIndex = this.items.length;
+    } else {
+        targetIndex = temp.id;
     }
-
-
-
-
-
-
-
-
-
-
-
-
+    //insert the moved Item at new position
+    this.items.splice(targetIndex , 0, movedItem);
+    this.onEdit.emit({});
+    }
 }
