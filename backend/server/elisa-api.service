@@ -10,7 +10,7 @@ Description=Elisa backend server
 
 [Service]
 # enter absolute node path and absolute path to main file here:
-ExecStart=/usr/bin/node /home/ubuntu/elisa/backend/server/webserver/www
+ExecStart=/usr/bin/nodejs /autodeploy/backend/webserver/www
 Restart=always
 #User=nobody
 #Group=nobody
@@ -19,7 +19,7 @@ Environment=PATH=/usr/bin:/usr/local/bin
 Environment=PORT=3001
 
 # absolute path to backend server directory:
-WorkingDirectory=/home/ubuntu/elisa/backend/server
+WorkingDirectory=/autodeploy/backend
 
 [Install]
 WantedBy=multi-user.target
