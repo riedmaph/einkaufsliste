@@ -15,7 +15,7 @@ class PostgresAdapter:
 		self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbpasscrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
 		self.cur = self.conn.cursor()
 	
-	def execute(self, stmt, data):
+	def execute(self, stmt, data=None):
 		self.cur.execute(stmt, data)
 
 	def fetchone(self):
@@ -88,27 +88,56 @@ class PostgresAdapter:
 		else:
 			return self.fetchall()
 
+class DbBuffRef:
+	def __init__(self, idx, isIdx=True):
+		self.idx=idx
+		self.isIdx = isIdx
+
+	def isIdx(self):
+		return self.isIdx
+
+	def getId(self):
+		if not self.isIdx:
+			raise Exception("Buffered element has not yet been stored in the database")
+		return self.idx
+
+	def assignId(self, ids):
+		if not self.isIdx:
+			# already an id
+			return self.idx
+
+		self.idx = ids[self.idx]
+		self.isIdx = False
+		return self.idx
+
 
 class AttributeBuffer:
-	def __init__(self, db, size=1000):
+	def __init__(self, db, size=1000, extFlush=None):
 		self.buff = []
 		self.limit=size
 		self.db = db
+		self.extFlush = extFlush
 
-	def insert(self, attr, genArtIds=None):
-		self.buff.append(attr)
+	def insert(self, attr):
+		"""!
+	    Inserts an attribute into the buffer
+	    @param attr: Tuple (attrName, attrValue, artRef) where artRef can either be a DbBuffRef or a persistent artId (int)
+	    """
+		return self.insertMany([attr])
+
+	def insertMany(self, attrs):
+		self.buff.extend(attrs)
 		if len(self.buff)>self.limit:
-			if not genArtIds is None:
-				artIds = genArtIds()
-				mapIds(artIds)
-			self.flush()
+			if self.extFlush is None:
+				self.flush()
+			else:
+				artIds = self.extFlush()
 
 	def mapIds(self, artIds):
-		self.buffer = list(map(lambda attrName, attrValue, artIdx: (attrName, attrValue, artIds[artIdx]), self.buff))
+		self.buff = list(map(lambda (attrName, attrValue, artRef): (attrName, attrValue, artRef.assignId(artIds)), self.buff))
 
 	def flush(self):
 		ids = self.db.insertMany("Crawled.Attribute (name, content, article)", self.buff, "id")
-		#attrs ?
 		self.buff = []
 
 class ArticleBuffer:
@@ -116,25 +145,46 @@ class ArticleBuffer:
 		self.buff = []
 		self.limit=size
 		self.db = db
+		self.attrs = AttributeBuffer(db, size, self.flush)
 
 	def insert(self, art, attrs):
 		self.buff.append(art)
-		#attrs?
+		artRef = DbBuffRef(len(self.buff)-1)
+		attrs = list(map(lambda attr: attr + (artRef,), attrs))
+		self.attrs.insertMany(attrs)
+		if len(self.buff)>self.limit:
+			self.flush()
+		return artRef
+
+	def insertAttr(self, attr):
+		self.attrs.insert(attr)
+
+	def flush(self):
+		ids = self.db.insertMany("Crawled.Article (title, name, brand, price, size, packagesize, amount, unit, url, category)", self.buff, "id")
+		self.attrs.mapIds(ids)
+		self.attrs.flush()
+		self.buff = []
+
+
+class BrandBuffer:
+	def __init__(self, db, size=1000):
+		self.buff = []
+		self.limit=size
+		self.db = db
+
+	def insert(self, brand):
+		self.buff.append(brand)
 		if len(self.buff)>self.limit:
 			self.flush()
 
 	def flush(self):
-		ids = self.db.insertMany("Crawled.Article (title, name, brand, price, size, packagesize, amount, unit, url, category)", self.buff, "id")
-		#attrs ?
+		self.db.insertMany("Crawled.Brand (name, shop)", self.buff)
 		self.buff = []
 
-
-class ElisaDB:
+# Basic implementation of ElisaDB
+# All operations interact immediately with the DB
+class ElisaDbBase:
 	def __init__(self):
-		# connect to db
-		#self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbpasscrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
-		#self.db = self.conn.cursor()
-
 		self.db = PostgresAdapter()
 
 	# obtain shop id  (create shop if it does not exist yet)
@@ -156,9 +206,10 @@ class ElisaDB:
 
 
 	def insertCategory(self, catName, catUrl, shopId, parentId):
-		self.db.execute('INSERT INTO Crawled.Category (name, url, shop, parent) VALUES (%s, %s, %s, %s) RETURNING id', 
-			(catName, catUrl, shopId, parentId))
-		return self.db.fetchone()[0]
+		tbl = "Crawled.Category (name, url, shop, parent)"
+		row = (catName, catUrl, shopId, parentId)
+		return self.db.insertSingle(tbl, row, "id")
+	    
 
 	def insertArticle(self, artTitle, artUrl, catId, 
 			artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None, 
@@ -180,22 +231,23 @@ class ElisaDB:
 
 	    @return Id of insterted article
 	    """
-		self.db.execute('INSERT INTO Crawled.Article (title, name, brand, price, size, packagesize, amount, unit, url, category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id', 
-			(artTitle, artName, artBrand, artPrice, artSize, artPackage, artAmount, artUnit, artUrl, catId))
+
+		tbl = "Crawled.Article (title, name, brand, price, size, packagesize, amount, unit, url, category)"
+		row = (artTitle, artName, artBrand, artPrice, artSize, artPackage, artAmount, artUnit, artUrl, catId)
+		artId = self.db.insertSingle(tbl, row, "id")
 		# insert attributes
-		artId = self.db.fetchone()[0]
 		for k,v in kvargs.iteritems():
 			self.insertAttribute(k, v, artId)
 
 		return artId
 
 	def insertAttribute(self, attrName, attrValue, artId):
-		self.db.execute('INSERT INTO Crawled.Attribute (name, content, article) VALUES (%s, %s, %s)', 
-			(attrName, attrValue, artId))
+		tbl = "Crawled.Attribute (name, content, article)"
+		row = (attrName, attrValue, artId)
+		self.db.insertSingle(tbl, row)
 
 	def insertBrand(self, brandName, shopId):
-		self.db.execute('INSERT INTO Crawled.Brand (name, shop) VALUES (%s, %s)', 
-			(brandName, shopId))
+		self.db.insertSingle("Crawled.Brand (name, shop)", (brandName, shopId))
 
 	def commit(self):
 		self.db.commit()
@@ -203,4 +255,34 @@ class ElisaDB:
 	def close(self):
 		self.db.close()
 
-	
+# Optimized version of ElisaDbBase
+# Inserted rows are buffered and asynchronously pushed to the DB
+# Some operations return buffer refferences (DbBuffRef) instead of ids
+class ElisaDB(ElisaDbBase):
+	def __init__(self, buffSize=1000):
+		ElisaDbBase.__init__(self)
+		self.artBuff = ArticleBuffer(self.db, buffSize)
+		self.brandBuff = BrandBuffer(self.db, buffSize)
+
+	def insertArticle(self, artTitle, artUrl, catId, 
+		artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None, 
+		**kvargs):
+		"""!
+	    Asynchronously stores an article and corresponding attributes in the database
+
+	    @return (DbBuffRef): a buffer refference representing the article Id (may be passed to insertAttribute)
+	    """
+		art = (artTitle, artName, artBrand, artPrice, artSize, artPackage, artAmount, artUnit, artUrl, catId)
+		attrs = kvargs.items()
+		return self.artBuff.insert(art, attrs)	
+
+	def insertAttribute(self, attrName, attrValue, artRef):
+		self.artBuff.insertAttr((attrName, attrValue, artRef))
+
+	def insertBrand(self, brandName, shopId):
+		self.brandBuff.insert((brandName, shopId))
+
+	def commit(self):
+		self.artBuff.flush()	
+		self.brandBuff.flush()	
+		self.db.commit()
