@@ -98,7 +98,7 @@ def readCategories(parentDiv, parentId=None, parentUrl=url, level=0):
 			# obtain category name and url
 			catLink = li.find("a")
 			catName = catLink.contents[0].strip()
-			catUrl = catLink['href']
+			catUrl = url+catLink['href']
 
 			if parentId==None and catName in ["Meine Produkte","Angebote","Themenwelten"]: 
 				continue
