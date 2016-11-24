@@ -55,19 +55,17 @@ module.exports = {
   deleteItem
 };
 
+function validatePassword(password) {
+  return password.length >= 7;
+}
+
 /* ---- Users ---- */
 function register(req, res, next) {
   db.oneOrNone('SELECT enduser.id as id, enduser.email as email, enduser.password as password FROM UserData.Enduser where email = ${email}', req.body)
     .then(function (user) {
-      if(!user) {
+      if(!user) {        
 
-        var pwvalid=true;
-
-        if(req.body.password.length<7)
-          pwvalid = false;
-        
-
-        if(pwvalid) {
+        if(validatePassword(req.body.password)) {
           //hash&salt password
           password(req.body.password).hash(function(error, hash) {
             if(error)
