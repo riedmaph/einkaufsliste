@@ -109,7 +109,7 @@
                 }
             }
         },
-        "/items/{listid}": {
+        "/lists/{listid}/items": {
             "get": {
                 "tags": [
                     "Items"
@@ -142,9 +142,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/items": {
+            },
             "post": {
                 "tags": [
                     "Items"
@@ -152,6 +150,14 @@
                 "summary": "Add a new item to a list.",
                 "description": "",
                 "parameters": [
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to create item in.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -176,6 +182,14 @@
                 "description": "",
                 "parameters": [
                     {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to update item in.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
                         "description": "Id and values of the item to be updated.",
@@ -198,6 +212,14 @@
                 "summary": "Delete an existing Item.",
                 "description": "",
                 "parameters": [
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to update item in.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
                     {
                         "in": "body",
                         "name": "body",
