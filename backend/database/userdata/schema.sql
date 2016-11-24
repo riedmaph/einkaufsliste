@@ -8,7 +8,7 @@ CREATE SCHEMA UserData;
 
 CREATE TABLE IF NOT EXISTS UserData.Enduser (
     id UUID PRIMARY KEY,
-    mail TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
 
