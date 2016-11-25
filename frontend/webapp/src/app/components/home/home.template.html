@@ -1,5 +1,3 @@
-<header>  Elisa | Einkaufsliste </header>
-
 <sl-completed [completedItems]="completedItems"
   (onIncomplete)="incomplete($event)" (onRemove)="remove($event)">
 </sl-completed>
@@ -8,7 +6,7 @@
 
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
-<button class="warning" *ngIf="showLengthWarning" (click)="showLengthWarning = false;" > 
+<button class="warning" *ngIf="showLengthWarning" (click)="showLengthWarning = false;" >
   Please limit new entries to 1 - {{MAX_LENGTH}} characters.
 </button>
 

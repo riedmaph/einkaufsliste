@@ -6,8 +6,6 @@ import {
 } from '@angular/core';
 
 import { ListItem } from '../../models/list-item.model';
-import { MdDialog } from '@angular/material';
-import { ConfirmComponent } from '../confirm/confirm.component';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
@@ -20,9 +18,6 @@ export class ListComponent {
   @Input()
   public items: ListItem[] = [ ];
 
-  @Input()
-  public baseColor: string = '#0147A7';
-
   @Output()
   public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
 
@@ -32,9 +27,9 @@ export class ListComponent {
   @Output()
   public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
+  public itemMenuIndex: number = -1;
 
   constructor(
-    private dialog: MdDialog,
     private dragulaService: DragulaService,
   ) {
     this.dragulaService.dragend.subscribe(
@@ -49,15 +44,9 @@ export class ListComponent {
    * @returns {void}
    */
   public removeItem(index: number): void {
-    let dialogRef = this.dialog.open(ConfirmComponent, {
-      disableClose: false,
-    });
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        let removedItems = this.items.splice(index, 1);
-        this.onRemove.emit(removedItems);
-      }
-    });
+    let removedItems = this.items.splice(index, 1);
+    this.itemMenuIndex = -1;
+    this.onRemove.emit(removedItems);
   }
 
   /**
@@ -68,40 +57,16 @@ export class ListComponent {
    */
   public completeItem (index: number): void {
     let completedItem = this.items.splice(index, 1);
+    this.itemMenuIndex = -1;
     this.onComplete.emit(completedItem[0]);
   }
 
-  /**
-   * Generates the color string for a gradient over the items
-   *
-   * @param {number} index Index of element
-   * @returns {string} Hex-color-string
-   */
-  public gradientColor (index: number): string {
-    if (this.items.length < 1) {
-      throw 'No items';
+  public toggleItemMenu (event: MouseEvent, index: number): void {
+    if (this.itemMenuIndex === index) {
+      this.itemMenuIndex = -1;
+    } else {
+      this.itemMenuIndex = index;
     }
-    if (index < 0 || index >= this.items.length) {
-      throw 'Index of of bounds';
-    }
-
-    const maxR = parseInt(this.baseColor.substr(1, 2), 16);
-    const maxG = parseInt(this.baseColor.substr(3, 2), 16);
-    const maxB = parseInt(this.baseColor.substr(5, 2), 16);
-
-    const colorRatio = (this.items.length - index) / this.items.length;
-
-    const R = Math.floor(maxR * colorRatio) << 16;
-    const G = Math.floor(maxG * colorRatio) << 8;
-    const B = Math.floor(maxB * colorRatio) << 0;
-
-    let col: string = (R + G + B).toString(16);
-
-    while (col.length < 6) {
-      col = '0' + col;
-    }
-
-    return '#' + col;
   }
 
   public toggleEditable (

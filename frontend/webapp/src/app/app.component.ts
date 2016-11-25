@@ -11,8 +11,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'sl-app',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    '../assets/sass/main.scss',
     '../assets/sass/font-awesome.scss',
+    '../assets/sass/sl-theme.scss',
+    '../assets/sass/main.scss',
   ],
   templateUrl: 'app.template.html',
 })
