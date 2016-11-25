@@ -5,15 +5,91 @@
         "description": "Definition of the internal API for ELISA.",
         "version": "1.0.0"
     },
-    "host": "api.uber.com",
     "schemes": [
-        "https"
+        "http"
     ],
-    "basePath": "/v1",
+    "basePath": "/api",
     "produces": [
         "application/json"
     ],
     "paths": {
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Register a new User.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Email-address and password for new user.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "400": {
+                        "description": "User already exists or password is invalid.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login as an existng User.",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Email-address and password for new user.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token for the user.",
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
+                    },
+                    "401": {
+                        "description": "Unknown user or bad password.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/lists": {
             "get": {
                 "tags": [
@@ -21,7 +97,15 @@
                 ],
                 "summary": "Get all lists for the user.",
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation.",
@@ -47,6 +131,13 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
                         "description": "Name of the new list to be added.",
@@ -59,6 +150,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -69,6 +166,13 @@
                 "summary": "Update an existing List.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -82,6 +186,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -92,6 +202,13 @@
                 "summary": "Delete an existing List.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -105,11 +222,17 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             }
         },
-        "/items/{listid}": {
+        "/lists/{listid}/items": {
             "get": {
                 "tags": [
                     "Items"
@@ -117,6 +240,13 @@
                 "summary": "Get all items of the specified list.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "listid",
@@ -140,11 +270,15 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
-            }
-        },
-        "/items": {
+            },
             "post": {
                 "tags": [
                     "Items"
@@ -152,6 +286,21 @@
                 "summary": "Add a new item to a list.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to create item in.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -165,6 +314,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -175,6 +330,21 @@
                 "summary": "Update an existing item.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to update item in.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -188,6 +358,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -198,6 +374,21 @@
                 "summary": "Delete an existing Item.",
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to update item in.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -211,12 +402,47 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             }
         }
     },
     "definitions": {
+        "User": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "Email-address of the user."
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password of the user."
+                }
+            }
+        },
+        "Token": {
+            "type": "object",
+            "required": [
+                "token"
+            ],
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "description": "The signed JWT."
+                }
+            }
+        },
         "AddList": {
             "type": "object",
             "required": [
@@ -325,14 +551,7 @@
         "Error": {
             "type": "object",
             "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "message": {
-                    "type": "string"
-                },
-                "fields": {
                     "type": "string"
                 }
             }

@@ -1,14 +1,21 @@
 DROP TABLE IF EXISTS UserData.Item;
 DROP TABLE IF EXISTS UserData.List;
+DROP TABLE IF EXISTS UserData.Enduser;
 
 DROP SCHEMA IF EXISTS UserData;
 
 CREATE SCHEMA UserData;
 
+CREATE TABLE IF NOT EXISTS UserData.Enduser (
+    id UUID PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS UserData.List (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    id UUID PRIMARY KEY,
+    name TEXT NOT NULL,
+    enduser UUID NOT NULL REFERENCES UserData.Enduser(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS UserData.Item (
@@ -17,5 +24,5 @@ CREATE TABLE IF NOT EXISTS UserData.Item (
     checked BOOLEAN DEFAULT FALSE,
     amount REAL,
     unit TEXT,
-    list INT NOT NULL REFERENCES UserData.List(id) ON DELETE CASCADE
+    list UUID NOT NULL REFERENCES UserData.List(id) ON DELETE CASCADE
 );
