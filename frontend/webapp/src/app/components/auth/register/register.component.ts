@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+import { Response } from '@angular/http';
 
 import { FormValidators } from '../../../util';
 import { AuthService } from '../../../services';
@@ -45,13 +46,19 @@ export class RegisterComponent {
    */
   public onSubmit (data: { email: string, password: string, passwordConfirmation: string }) {
     if (this.form.valid) {
-      this.authService.register(data).subscribe(success => {
-        if (success) {
-          // Show success
-        } else {
-          // Show error
+      this.authService.register(data).subscribe(res => {
+        // Success
+        console.info('Registration successful');
+      }, (res: Response) => {
+        let body = res.json();
+        if (res.status === 400) {
+          // Bad Request, i.e. validation error
+          console.error(body.message);
+        } else if (res.status === 500) {
+          // Internal Server Error
+          console.error(body.message);
         }
-      })
+      });
     }
   }
 

@@ -22,6 +22,7 @@ import { AppState, InternalStateType } from './app.service';
 import {
   ApiService,
   AuthService,
+  ApiMapperService,
 } from './services';
 
 // Components
@@ -84,6 +85,7 @@ type StoreType = {
     AUTH_PROVIDERS,
     ApiService,
     AuthService,
+    ApiMapperService,
   ],
 })
 export class AppModule {

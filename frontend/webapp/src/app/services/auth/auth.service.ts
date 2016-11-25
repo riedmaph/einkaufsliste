@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import { API_ROUTES } from '../api/routes';
 import { tokenNotExpired, AuthHttp } from 'angular2-jwt';
+import { ApiMapperService } from '../api/api-mapper.service';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +11,7 @@ export class AuthService {
   constructor (
     private http: Http,
     private authHttp: AuthHttp,
+    private apiMapper: ApiMapperService,
   ) {}
 
   /**
@@ -29,8 +31,10 @@ export class AuthService {
   public register (
     registerData: { email: string, password: string, passwordConfirmation: string }
   ): Observable<any> {
-    return this.http.post(API_ROUTES.register, registerData)
-      .map(res => res.json());
+    return this.http.post(
+      API_ROUTES.register,
+      this.apiMapper.registerDataLocalToApi(registerData)
+    );
   }
 
 }
