@@ -14,7 +14,6 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
   selector: 'sl-list',
   templateUrl: './list.template.html',
   styleUrls: [ './list.style.scss' ],
-  viewProviders: [ DragulaService ],
 })
 export class ListComponent {
 
@@ -36,9 +35,10 @@ export class ListComponent {
 
   constructor(
     private dialog: MdDialog,
-    private dragulaService: DragulaService ) {
-        this.dragulaService.dragend.subscribe(
-            draggedElement => this.reorderItems(draggedElement[1].id));
+    private dragulaService: DragulaService,
+     ) {
+      this.dragulaService.dragend.subscribe(
+        draggedElement => this.reorderItems(draggedElement[1]));
      }
 
   /**
@@ -142,21 +142,25 @@ export class ListComponent {
   /**
    * Reorders the item array according to drag and drop actions
    *
-   * @param {number} movedItemIndex Index of element that was dragged
+   * @param {HTMLElement} movedItem element that was dragged by the user.
    * @returns {void}
    */
-  public reorderItems( movedItemIndex: number): void {
-    // save moveItem
+  public reorderItems( movedElem: HTMLElement): void {
+    let movedItemIndex = Number(movedElem.id);
     let movedItem = this.items[movedItemIndex];
     let targetIndex: number = 0;
     // delete the moved Item
     this.items.splice(movedItemIndex, 1);
     // determine new position
-    let temp: any = document.getElementById('' + movedItemIndex).nextSibling;
-    if (!temp){
+    let nextElement: any = movedElem.nextSibling;
+    if (!nextElement){
         targetIndex = this.items.length;
     } else {
-        targetIndex = temp.id;
+        if ( targetIndex < movedItemIndex ){
+            targetIndex = nextElement.id;
+      } else {
+            targetIndex = nextElement.id - 1;
+      }
     }
     // insert the moved Item at new position
     this.items.splice(targetIndex , 0, movedItem);
