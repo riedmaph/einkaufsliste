@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
-
+import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -34,6 +34,7 @@ import { AutoCompletionComponent, AutoCompletionDirective } from './directives/a
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
+  DragulaService,
 ];
 
 type StoreType = {
@@ -68,6 +69,7 @@ type StoreType = {
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true }),
     MaterialModule.forRoot(),
+    DragulaModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
