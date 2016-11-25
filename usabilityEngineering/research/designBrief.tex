@@ -1,0 +1,97 @@
+\documentclass{scrartcl}
+\usepackage{hyperref}
+
+\title{ELiSA}
+\subtitle{Design Brief}
+\date{\today}
+\author{Philipp Riedmann, Markus Schnappinger, Thomas Weber}
+
+\begin{document}
+
+\begin{titlepage}
+   \vspace*{\stretch{1.0}}
+   \begin{center}
+      \LARGE\textbf{ELiSA}\\
+      \vspace{0.5cm}
+      \large\textbf{Design Brief}
+   \end{center}
+   \vspace*{\stretch{2.0}}
+\end{titlepage}
+
+\section{Introduction}
+This document outlines the design decision for the ELiSA project.
+It evaluates the current situation with respect to peoples shopping behavior and use of shopping lists analog or digial and existing technological solutions.
+The \hyperref[sec:research]{first section} describes methodology and results of this research. \\
+
+In the \hyperref[sec:problem]{second section} we then extract existing issues and shortcomings in the shopping process from those findings.\\
+
+We then formulate a set of \hyperref[sec:goal]{goals} and improvements we aim to achieve with the ELiSA application.\\
+
+This application will be build and evaluated using the process described in the \hyperref[sec:process]{last section}.
+
+\section{Pre-design research}
+\label{sec:research}
+  \subsection{Methodology}
+    The method used during this project generally follows the Double Diamond Process \cite{TODO}. I.e. the first part of the project is dedicated to evaluation the real-world problems people encounter while buying groceries and the like. After exploring a diverse problem space the findings are then condensed to a clear problem definition.\\
+    Based on this a variety of potential design solutions are then generated and evaluated. Using the results of the evaluation, a single prototype or product is crystallized from the diverse design proposals.\\
+
+    \subsubsection{Evaluation of the problem space}
+      For the inital phase of problem exploration we focus primarily on the methods outlined in the IDEO methods cards \cite{TODO}.\\
+      We aim to cover their full spectrum, classified into \textit{Learn}, \textit{Look}, \textit{Ask} and \textit{Try}.
+
+      % TODO
+
+    \subsubsection{Exploration of the design space}
+      We see creating prototypes of different levels of fidelity and resolution in conjunction with tried and proved evaluation methods as the preferred way to approach the design challenge. For more details, see the \nameref{sec:process} section.
+
+  \subsection{Execution and Results}
+    The following sections list the methods we used and their results.
+
+    \subsubsection{Fly on the Wall}
+      We spent three sessions of between half and one hour observing peoples shopping behaviour in inner city super markets without direct interaction.\\
+      The first was in two supermarkets near an inner city office building during early weekday afternoon.
+      The second was in the early weekday evening, the third on saturday during midday.\\
+
+      During our first observation session we focused on finding special behavior and getting an idea of the general use of shopping lists.\\
+
+      We made the following observations:
+      \begin{itemize}
+        \item Very little use of shopping lists, either analog or digital: Out of the about 80 people directly observed we saw three paper shopping lists and six smartphones in use. Due the method we could however not determine whether the smartphones were used as shopping list.
+        \item People look on their shopping list only briefly and then get multiple items before looking at it again.
+        \item Highest activity of looking at their shopping list is just after entering a store.
+        \item Especially woman with handbags find bimanual interaction (one for the groceries, one for the list or smartphone) challenging.
+        \item If they leave their handbags in their shopping cart, they also leave their phone.
+      \end{itemize}
+
+      Due to the low activity during early afternoon we continued the observations in the evening where the number of customers was significantly higher.
+      \begin{itemize}
+        \item Slightly higher use of shopping lists and smartphones: In one market of 47 observed people, 12 used smartphones and four used paper shopping lists. Again the exect use of the smartphone cannot be determined.
+        \item People with shopping lists check them briefly before queueing at the checkout.
+        \item More woman have shopping lists than men.
+        \item People with shopping lists spend either much more or much less time inspecting product labels.
+        \item Very few men read package labels compared to women. Whether the the number of lists and number of package inspection for woman and men is causation or correlation cannot be said so far.
+        \item Some shoppers follow a fairly straight path through the store, whereas others walk to and fro. This does not seem to correlate with whether they have a list or not.
+        \item For people with lists, going back in the supermarket often comes after a look on the list. This may be because they noticed they forgot something on their list.
+        \item Some people spend their time waiting at the checkout already picking the correct amount of money to make payment faster.
+        \item Men seem to have a less specific idea as to what products they want to buy (e.g. general description vs. specific brand).
+      \end{itemize}
+
+    \subsubsection{Try it yourself}
+      % some products lend themselves to specific description while other to more general terms
+      % often choose two similar items and pick one spontaneously
+      % One checks items of the list even though one bought onyl a similar product
+      % 'this item is often located near' feature
+      % Lists that are not shared do not require specific descriptions since I know what I like
+      % knowing the purpose of an item allows to substitue if out of stock
+
+\section{Problem Description}
+\label{sec:problem}
+
+\section{Goals}
+\label{sec:goal}
+
+\section{Further process}
+\label{sec:process}
+
+
+\end{document}
