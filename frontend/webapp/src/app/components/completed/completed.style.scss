@@ -1,11 +1,13 @@
 :host {
-  display: block;
+    display: block;
 }
 
-.completed-list {
-  padding-bottom: 1em;
+md-list {
+  padding: 0;
+}
 
-  .item-card {
-    color: #bbb;
-  }
+md-list-item {
+    background-color: #ddd;
+    color: #888;
+    border-color: #bbb;
 }

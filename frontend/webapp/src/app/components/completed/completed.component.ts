@@ -8,10 +8,7 @@ import {
 @Component({
     selector: 'sl-completed',
     templateUrl: 'completed.template.html',
-    styleUrls: [
-      'completed.style.scss',
-      '../../../assets/sass/list-item.scss',
-    ],
+    styleUrls: [ 'completed.style.scss' ],
 })
 export class CompletedComponent {
 

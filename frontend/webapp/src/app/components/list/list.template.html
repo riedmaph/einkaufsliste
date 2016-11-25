@@ -1,17 +1,21 @@
-<ul *ngIf="items">
-  <div class='container' [dragula]="'draggable-list'">
-    <li
-      *ngFor="let item of items; let i = index"
-      [id]="i"
-    >
-      <md-card class="item-card" (dblclick)="toggleItemMenu($event, i)">
-        <md-checkbox color="primary" (click)="completeItem(i)"></md-checkbox>
-        <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
-          {{ item.amount }} {{ item.unit }} {{ item.name }}
-        </span>
-      </md-card>
+<md-list
+  *ngIf="items"
+  class="container"
+  dragula="draggable-list"
+>
+  <md-list-item
+    *ngFor="let item of items; let i = index"
+    [id]="i"
+    (dblclick)="toggleItemMenu($event, i)"
 
-      <button *ngIf="itemMenuIndex === i" md-raised-button color="accent"
+  >
+    <md-checkbox color="primary" (click)="completeItem(i)"></md-checkbox>
+    <span class="item-text" #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
+      {{ item.amount }} {{ item.unit }} {{ item.name }}
+    </span>
+
+    <div class="item-button-wrapper" [class.show]="itemMenuIndex === i">
+      <button color="accent"
         class="edit-button"
         (click)="toggleEditable($event, textfield, i)"
       >
@@ -23,12 +27,12 @@
         >
       </button>
 
-      <button *ngIf="itemMenuIndex === i" md-raised-button color="warn"
+      <button color="warn"
         class="delete-button"
         (click)="removeItem(i)"
       >
         <md-icon class="material-icons">delete</md-icon>
       </button>
-    </li>
-  </div>
-</ul>
+    </div>
+  </md-list-item>
+</md-list>

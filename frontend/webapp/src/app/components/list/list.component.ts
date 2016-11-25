@@ -6,16 +6,12 @@ import {
 } from '@angular/core';
 
 import { ListItem } from '../../models/list-item.model';
-import { MdDialog } from '@angular/material';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
   selector: 'sl-list',
   templateUrl: './list.template.html',
-  styleUrls: [
-    './list.style.scss',
-    '../../../assets/sass/list-item.scss',
-  ],
+  styleUrls: [ './list.style.scss' ],
 })
 export class ListComponent {
 
@@ -34,7 +30,6 @@ export class ListComponent {
   public itemMenuIndex: number = -1;
 
   constructor(
-    private dialog: MdDialog,
     private dragulaService: DragulaService,
   ) {
     this.dragulaService.dragend.subscribe(

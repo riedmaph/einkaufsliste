@@ -4,6 +4,7 @@ import {
 } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
+import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
 
 describe('ListComponent', () => {
 
@@ -11,6 +12,10 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         ListComponent,
+        DragulaService,
+      ],
+      imports: [
+        DragulaModule,
       ],
     }).compileComponents();
   });
