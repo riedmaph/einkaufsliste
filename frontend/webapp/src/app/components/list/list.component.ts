@@ -36,10 +36,11 @@ export class ListComponent {
   constructor(
     private dialog: MdDialog,
     private dragulaService: DragulaService,
-     ) {
-      this.dragulaService.dragend.subscribe(
-        draggedElement => this.reorderItems(draggedElement[1]));
-     }
+  ) {
+    this.dragulaService.dragend.subscribe(
+      draggedElement => this.reorderItems(draggedElement[1])
+    );
+  }
 
   /**
    * Removes an item from the items list, after confirmation was successful
@@ -165,5 +166,5 @@ export class ListComponent {
     // insert the moved Item at new position
     this.items.splice(targetIndex , 0, movedItem);
     this.onEdit.emit({});
-    }
+  }
 }
