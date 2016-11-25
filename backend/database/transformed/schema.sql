@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS Transformed.Article (
 
 CREATE TABLE IF NOT EXISTS Transformed.Tag (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    preference INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
