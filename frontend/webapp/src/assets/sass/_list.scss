@@ -1,0 +1,52 @@
+md-list {
+    background: #fff;
+    padding-top: 0;
+    margin-top: 8px;
+}
+
+md-list-item {
+    position: relative;
+    z-index: 1;
+}
+
+.md-list-item {
+    overflow: visible;
+    width: 100%;
+
+    border-bottom: thin solid #eee;
+
+    .item-text {
+        flex: 1;
+    }
+}
+
+.item-button-wrapper {
+    position: relative;
+    left: 16px;
+    font-size: 0;
+    width: 0;
+    overflow: hidden;
+    transition: width .25s ease-in;
+    white-space: nowrap;
+    text-align: right;
+
+    &.show {
+        width: 12rem;
+    }
+
+    button {
+        display: inline-block;
+        height: 48px;
+        width: 6rem;
+        color: #fff;
+        border: none;
+
+        &[color="warn"] {
+            background-color: #F44336;
+        }
+
+        &[color="accent"] {
+            background-color: #536DFE;
+        }
+    }
+}

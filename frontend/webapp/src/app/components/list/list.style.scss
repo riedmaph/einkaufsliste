@@ -2,48 +2,6 @@
   display: block;
 }
 
-h3 {
-  padding: 0 0 0 1em;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  font-size: 1.5em;
-  color: #fff;
-  padding: .5em;
-
-  span {
-    flex: 1;
-    text-overflow: ellipsis;
-    max-width: calc(100vw - 4em);
-    overflow: hidden;
-    white-space: nowrap;
-  }
-}
-
-button {
-  flex: 0;
-  padding: 0 .5em;
-  font-size: 1em;
-  background: transparent;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-
-  &.remove {
-    color: #c00;
-  }
-}
-
 .empty {
   display: flex;
   flex-direction: column;
