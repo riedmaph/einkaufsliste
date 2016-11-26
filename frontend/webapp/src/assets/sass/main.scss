@@ -1,7 +1,5 @@
-@import 'variables';
+@import 'variables/index';
 @import 'mixins';
 @import 'layout';
 @import 'font';
-@import 'button';
-@import 'input';
-@import 'list';
+@import 'components/index';

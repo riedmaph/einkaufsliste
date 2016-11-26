@@ -6,7 +6,6 @@ input, md-input {
     display: block;
 }
 
-
 .form-error {
     display: block;
     list-style-type: none;
@@ -15,4 +14,8 @@ input, md-input {
     color: $color-error;
     font-size: .8em;
     padding-bottom: .5em;
+}
+
+md-card .md-input-underline {
+    position: relative;
 }

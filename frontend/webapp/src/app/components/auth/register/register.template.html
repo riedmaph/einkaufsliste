@@ -1,61 +1,75 @@
-<form [formGroup]="form" class="register-form container" (submit)="onSubmit(form.value)">
-  <label>
-    <md-input
-      type="email"
-      placeholder="E-mail address"
-      formControlName="email"
-      [class.invalid]="form.controls['email'].dirty && form.controls['email'].invalid"
-    ></md-input>
-    <ul
-      *ngIf="form.controls['email'].dirty && form.controls['email'].errors"
-      class="form-error"
-    >
-      <li *ngIf="form.controls['email'].errors.invalidEmail">
-        Please enter a valid e-mail address.
-      </li>
-    </ul>
-  </label>
+<div class="container-wrapper">
+  <md-card class="container">
+    <form [formGroup]="form" class="register-form" (submit)="onSubmit(form.value)">
+      <label class="columns">
+        <md-input
+          type="email"
+          placeholder="E-mail address"
+          formControlName="email"
+          class="column col-12"
+          [class.invalid]="form.controls['email'].dirty && form.controls['email'].invalid"
+        ></md-input>
+        <ul
+          *ngIf="form.controls['email'].dirty && form.controls['email'].errors"
+          class="form-error"
+        >
+          <li *ngIf="form.controls['email'].errors.invalidEmail">
+            Please enter a valid e-mail address.
+          </li>
+        </ul>
+      </label>
 
-  <label>
-    <md-input
-      type="password"
-      placeholder="Password"
-      formControlName="password"
-      [class.invalid]="form.controls['password'].dirty && form.controls['password'].invalid"
-    ></md-input>
-    <ul
-      *ngIf="form.controls['password'].dirty && form.controls['password'].errors"
-      class="form-error"
-    >
-      <li *ngIf="form.controls['password'].errors.required">
-        Password is required.
-      </li>
-      <li *ngIf="form.controls['password'].errors.minlength">
-        Password must be at least
-        {{ form.controls['password'].errors.minlength.requiredLength }} characters long.
-      </li>
-      <li *ngIf="form.controls['password'].errors.maxlength">
-        Password must be shorter than
-        {{ form.controls['password'].errors.maxlength.requiredLength }} characters.
-      </li>
-    </ul>
-  </label>
+      <label class="columns">
+        <md-input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          class="column col-12"
+          [class.invalid]="form.controls['password'].dirty && form.controls['password'].invalid"
+        ></md-input>
+        <ul
+          *ngIf="form.controls['password'].dirty && form.controls['password'].errors"
+          class="form-error"
+        >
+          <li *ngIf="form.controls['password'].errors.required">
+            Password is required.
+          </li>
+          <li *ngIf="form.controls['password'].errors.minlength">
+            Password must be at least
+            {{ form.controls['password'].errors.minlength.requiredLength }} characters long.
+          </li>
+          <li *ngIf="form.controls['password'].errors.maxlength">
+            Password must be shorter than
+            {{ form.controls['password'].errors.maxlength.requiredLength }} characters.
+          </li>
+        </ul>
+      </label>
 
-  <label>
-    <md-input
-      type="password"
-      placeholder="Confirm Password"
-      formControlName="passwordConfirmation"
-      [class.invalid]="form.controls['passwordConfirmation'].dirty && form.controls['passwordConfirmation'].invalid"
-    ></md-input>
-    <ul
-      *ngIf="form.controls['passwordConfirmation'].dirty && form.controls['passwordConfirmation'].errors"
-      class="form-error"
-    >
-      <li *ngIf="form.controls['passwordConfirmation'].errors.required">
-        Password confirmation is required.
-      </li>
-    </ul>
-  </label>
-  <button md-raised-button class="btn btn-primary" type="submit">Register</button>
-</form>
+      <label class="columns">
+        <md-input
+          type="password"
+          placeholder="Confirm Password"
+          formControlName="passwordConfirmation"
+          class="column col-12"
+          [class.invalid]="form.controls['passwordConfirmation'].dirty && form.controls['passwordConfirmation'].invalid"
+        ></md-input>
+        <ul
+          *ngIf="form.controls['passwordConfirmation'].dirty && form.controls['passwordConfirmation'].errors"
+          class="form-error"
+        >
+          <li *ngIf="form.controls['passwordConfirmation'].errors.required">
+            Password confirmation is required.
+          </li>
+        </ul>
+      </label>
+      <div class="columns">
+        <button
+          class="col col-12 col-portrait-6 col-portrait-push-6"
+          md-raised-button
+          color="accent"
+          type="submit"
+        >Register</button>
+      </div>
+    </form>
+  </md-card>
+</div>
