@@ -54,8 +54,7 @@ main {
     padding: 2em 0;
     @include clearfix();
 
-    // CI Version 1.0 | Last revised: March 2016 | Page 21
-    width: calc(100% - 40px);
+    width: 100%;
     @include breakpoint(portrait) { width: 100%; }
     @include breakpoint(landscape) { max-width: 80em; }
 }
