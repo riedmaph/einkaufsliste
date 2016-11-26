@@ -31,7 +31,7 @@ export class FormValidators {
     if (typeof value === 'string') {
       return (formControl: FormControl) =>
         formControl.value === value ? null : {
-          notEqual: true,
+          matching: false,
         };
     } else if (typeof value === 'function') {
       return (formControl: FormControl) =>

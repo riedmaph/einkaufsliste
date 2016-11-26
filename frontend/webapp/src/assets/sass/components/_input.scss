@@ -23,3 +23,17 @@ input, md-input {
 md-card .md-input-underline {
     position: relative;
 }
+
+md-input.invalid {
+    .md-input-placeholder {
+        color: $color-error;
+    }
+
+    .md-input-underline {
+        border-color: $color-error;
+
+        .md-input-ripple {
+            background-color: $color-error;
+        }
+    }
+}

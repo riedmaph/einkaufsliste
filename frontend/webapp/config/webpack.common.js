@@ -156,12 +156,12 @@ module.exports = function(options) {
          */
         {
           test: /\.css$/,
-          loaders: ['to-string-loader', 'css-loader', 'postcss-loader']
+          loaders: ['to-string-loader', 'css-loader', 'postcss-loader'],
         },
 
         {
           test: /\.(scss|sass)$/,
-          loaders: [ 'to-string-loader', 'css-loader', 'sass-loader', 'postcss-loader' ]
+          loaders: [ 'to-string-loader', 'css-loader', 'sass-loader', 'postcss-loader' ],
         },
 
         /* Raw loader support for *.html
