@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Response } from '@angular/http';
+import { Router } from '@angular/router';
 
 import { FormValidators } from '../../../util';
 import { AuthService } from '../../../services';
@@ -20,9 +21,12 @@ export class RegisterComponent {
 
   public form: FormGroup = null;
 
+  public globalErrors: { message: string }[] = [ ];
+
   constructor (
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private router: Router,
   ) {
     this.form = this.formBuilder.group({
       'email': [ '', Validators.compose([
@@ -42,22 +46,38 @@ export class RegisterComponent {
   }
 
   /**
-   * Form submission handler
+   * Form submission handler.
+   * Navigates to home with ?registerSuccess=true on succes @TODO
+   * Shows error on failure.
+   *
+   * @param {{ email: string, password: string, passwordConfirmation: string }} data Form data
+   * @return {void}
    */
-  public onSubmit (data: { email: string, password: string, passwordConfirmation: string }) {
+  public onSubmit (data: { email: string, password: string, passwordConfirmation: string }): void {
     if (this.form.valid) {
       this.authService.register(data).subscribe(res => {
-        // Success
-        console.info('Registration successful');
+        this.router.navigate([ '' ], { queryParams: { registerSuccess: true } });
       }, (res: Response) => {
         let body = res.json();
         if (res.status === 400) {
-          // Bad Request, i.e. validation error
-          console.error(body.message);
+          this.globalErrors.push({
+            message: 'An error occured. Please make sure all fields are filled out correctly.',
+          });
+          if (ENV === 'development') {
+            console.error(body.message);
+          }
         } else if (res.status === 500) {
-          // Internal Server Error
-          console.error(body.message);
+          this.globalErrors.push({
+            message: 'An error occured. Please try again at a later time.',
+          });
+          if (ENV === 'development') {
+            console.error(body.message);
+          }
         }
+      });
+    } else {
+      this.globalErrors.push({
+        message: 'An error occured. Please make sure all fields are filled out correctly.',
       });
     }
   }
