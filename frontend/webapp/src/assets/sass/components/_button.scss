@@ -4,3 +4,7 @@
         color: $color-text--heading;
     }
 }
+
+button[md-ripple] {
+    position: relative;
+}

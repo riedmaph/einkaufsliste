@@ -62,12 +62,23 @@
           </li>
         </ul>
       </label>
+
+      <ul
+        *ngIf="globalErrors.length"
+        class="columns form-error"
+      >
+        <li *ngFor="let error of globalErrors">
+          {{ error.message }}
+        </li>
+      </ul>
+
       <div class="columns">
         <button
           class="col col-12 col-portrait-6 col-portrait-push-6"
           md-raised-button
           color="accent"
           type="submit"
+          [disabled]="form.invalid"
         >Register</button>
       </div>
     </form>

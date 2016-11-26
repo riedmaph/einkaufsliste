@@ -27,6 +27,11 @@ $column-gap-v: 1em;
     }
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 main {
     margin-top: 64px;
 }
@@ -56,6 +61,7 @@ main {
 }
 
 md-card.container {
+    box-sizing: border-box;
     padding: 2em;
 }
 
