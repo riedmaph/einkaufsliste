@@ -14,7 +14,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 const HtmlElementsPlugin = require('./html-elements-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
-const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin'); 
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
+
+const autoprefixer = require('autoprefixer');
 
 /*
  * Webpack Constants
@@ -154,12 +156,12 @@ module.exports = function(options) {
          */
         {
           test: /\.css$/,
-          loaders: ['to-string-loader', 'css-loader']
+          loaders: ['to-string-loader', 'css-loader', 'postcss-loader']
         },
 
         {
           test: /\.(scss|sass)$/,
-          loaders: [ 'to-string-loader', 'css-loader', 'sass-loader' ]
+          loaders: [ 'to-string-loader', 'css-loader', 'sass-loader', 'postcss-loader' ]
         },
 
         /* Raw loader support for *.html
@@ -193,6 +195,8 @@ module.exports = function(options) {
         }
       ]
     },
+
+    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
 
     /*
      * Add additional plugins to the compiler.
@@ -228,7 +232,7 @@ module.exports = function(options) {
       /**
        * Plugin: ContextReplacementPlugin
        * Description: Provides context to Angular's use of System.import
-       * 
+       *
        * See: https://webpack.github.io/docs/list-of-plugins.html#contextreplacementplugin
        * See: https://github.com/angular/angular/issues/11580
        */
@@ -255,10 +259,10 @@ module.exports = function(options) {
           'robots.txt'
         ]
       }),
-      new CopyWebpackPlugin([{ 
+      new CopyWebpackPlugin([{
         from: 'src/assets/robots.txt'
-      }, { 
-        from: 'src/assets/humans.txt' 
+      }, {
+        from: 'src/assets/humans.txt'
       }]),
 
       /*
