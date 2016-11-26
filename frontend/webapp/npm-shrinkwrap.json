@@ -485,6 +485,7 @@
     },
     "caniuse-db": {
       "version": "1.0.30000584",
+      "from": "caniuse-db@https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000584.tgz",
       "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000584.tgz"
     },
     "caseless": {
@@ -706,6 +707,16 @@
     "corser": {
       "version": "2.0.1",
       "resolved": "https://registry.npmjs.org/corser/-/corser-2.0.1.tgz"
+    },
+    "cosmiconfig": {
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-2.1.0.tgz",
+      "dependencies": {
+        "graceful-fs": {
+          "version": "4.1.11",
+          "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.11.tgz"
+        }
+      }
     },
     "create-ecdh": {
       "version": "4.0.0",
@@ -1385,6 +1396,10 @@
     "gulplog": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/gulplog/-/gulplog-1.0.0.tgz"
+    },
+    "hammerjs": {
+      "version": "2.0.8",
+      "resolved": "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
     },
     "handle-thing": {
       "version": "1.2.5",
@@ -2689,6 +2704,22 @@
       "version": "2.0.2",
       "resolved": "https://registry.npmjs.org/postcss-filter-plugins/-/postcss-filter-plugins-2.0.2.tgz"
     },
+    "postcss-load-config": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/postcss-load-config/-/postcss-load-config-1.0.0.tgz"
+    },
+    "postcss-load-options": {
+      "version": "1.0.2",
+      "resolved": "https://registry.npmjs.org/postcss-load-options/-/postcss-load-options-1.0.2.tgz"
+    },
+    "postcss-load-plugins": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/postcss-load-plugins/-/postcss-load-plugins-2.0.0.tgz"
+    },
+    "postcss-loader": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/postcss-loader/-/postcss-loader-1.1.1.tgz"
+    },
     "postcss-merge-idents": {
       "version": "2.1.7",
       "resolved": "https://registry.npmjs.org/postcss-merge-idents/-/postcss-merge-idents-2.1.7.tgz"
@@ -3046,6 +3077,10 @@
     "require-directory": {
       "version": "2.1.1",
       "resolved": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz"
+    },
+    "require-from-string": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-1.2.1.tgz"
     },
     "require-main-filename": {
       "version": "1.0.1",
