@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Router, UrlTree, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
-import { API_ROUTES } from '../api/routes';
 import { tokenNotExpired, AuthHttp, AuthConfigConsts, JwtHelper } from 'angular2-jwt';
+
+import { API_ROUTES } from '../api/routes';
 import { ApiMapperService } from '../api/api-mapper.service';
 
 @Injectable()
@@ -75,4 +76,23 @@ export class AuthService {
       this.apiMapper.registerDataLocalToApi(registerData)
     );
   }
+
+  /**
+   * Makes API call to log a user in.
+   * Stores JWT in localStorage[DEFAULT_TOKEN_NAME].
+   *
+   * @param {{ email: string, password: string }} loginData User credentials
+   * @return {Observable<any>}
+   */
+  public login (loginData: { email: string, password: string }): Observable<any> {
+    return this.http.post(API_ROUTES.login, loginData)
+      .map(res => {
+        const json = res.json();
+        if (json.token) {
+          localStorage.setItem(AuthConfigConsts.DEFAULT_TOKEN_NAME, json.token);
+        }
+        return res;
+      });
+  }
+
 }

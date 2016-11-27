@@ -34,6 +34,7 @@ import {
   ListComponent,
   CompletedComponent,
   RegisterComponent,
+  LoginComponent,
 } from './components';
 
 // Directives
@@ -67,6 +68,7 @@ type StoreType = {
     AutoCompletionComponent,
     AutoCompletionDirective,
     RegisterComponent,
+    LoginComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
