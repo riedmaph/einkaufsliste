@@ -12,9 +12,11 @@
     </span>
 
     <div class="item-button-wrapper" [class.show]="itemMenuIndex === i">
-      <button *ngIf="itemMenuIndex === i" md-raised-button color="warn"
+      <button
+        color="warn"
         class="delete-button"
         (click)="removeItem(i)"
+        md-ripple
       >
         <md-icon class="material-icons">delete</md-icon>
       </button>
