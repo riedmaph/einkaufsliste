@@ -6,9 +6,21 @@
 
     <span class="toolbar-title toolbar-fill-remaining">Einkaufsliste</span>
 
-    <button class="toolbar-button">
+    <span *ngIf="!authService.loggedIn">
+      <a routerLink="/register" routerLinkActive="active">
+        Register
+      </a>
+      <a routerLink="/login" routerLinkActive="active">
+        Login
+      </a>
+    </span>
+
+    <button *ngIf="authService.loggednIn" md-icon-button [md-menu-trigger-for]="menu">
       <i class="material-icons">more_vert</i>
     </button>
 
+    <md-menu *ngIf="authService.loggednIn" x-position="before" #menu="mdMenu">
+        <button md-menu-item (click)="authService.logout()"> Sign Out </button>
+    </md-menu>
   </md-toolbar>
 </nav>

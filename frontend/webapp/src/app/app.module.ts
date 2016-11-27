@@ -22,6 +22,7 @@ import { AppState, InternalStateType } from './app.service';
 import {
   ApiService,
   AuthService,
+  AuthGuard,
   ApiMapperService,
 } from './services';
 
@@ -86,6 +87,7 @@ type StoreType = {
     ApiService,
     AuthService,
     ApiMapperService,
+    AuthGuard,
   ],
 })
 export class AppModule {
