@@ -22,6 +22,7 @@ import { AppState, InternalStateType } from './app.service';
 import {
   ApiService,
   AuthService,
+  AuthGuard,
   ApiMapperService,
 } from './services';
 
@@ -33,6 +34,7 @@ import {
   ListComponent,
   CompletedComponent,
   RegisterComponent,
+  LoginComponent,
 } from './components';
 
 // Directives
@@ -66,6 +68,7 @@ type StoreType = {
     AutoCompletionComponent,
     AutoCompletionDirective,
     RegisterComponent,
+    LoginComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
@@ -86,6 +89,7 @@ type StoreType = {
     ApiService,
     AuthService,
     ApiMapperService,
+    AuthGuard,
   ],
 })
 export class AppModule {
