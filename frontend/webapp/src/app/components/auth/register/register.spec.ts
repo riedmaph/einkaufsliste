@@ -67,7 +67,7 @@ describe('RegisterComponent', () => {
           //   passwordConfirmation: 'validPassword',
           // });
           expect(mockRouter.navigate).toHaveBeenCalledWith(
-            [ '' ],
+            [ 'login' ],
             { queryParams: Object({ registerSuccess: true }) },
           );
           expect(register.globalErrors).toEqual([ ]);

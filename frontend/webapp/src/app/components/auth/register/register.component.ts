@@ -56,22 +56,27 @@ export class RegisterComponent {
   public onSubmit (data: { email: string, password: string, passwordConfirmation: string }): void {
     if (this.form.valid) {
       this.authService.register(data).subscribe(res => {
-        this.router.navigate([ '' ], { queryParams: { registerSuccess: true } });
+        this.router.navigate([ 'login' ], { queryParams: { registerSuccess: true } });
       }, (res: Response) => {
-        let body = res.json();
         if (res.status === 400) {
+          // 400 Bad Request
           this.globalErrors.push({
             message: 'An error occured. Please make sure all fields are filled out correctly.',
           });
           if (ENV === 'development') {
-            console.error(body.message);
+            console.error(res);
           }
-        } else if (res.status === 500) {
+        } else if (res.status === 404) {
+          // 404 Not found
+          this.globalErrors.push({
+            message: 'Registration is temporarily not available. Please try again at a later time.',
+          });
+        } else {
           this.globalErrors.push({
             message: 'An error occured. Please try again at a later time.',
           });
           if (ENV === 'development') {
-            console.error(body.message);
+            console.error(res.status, res);
           }
         }
       });
