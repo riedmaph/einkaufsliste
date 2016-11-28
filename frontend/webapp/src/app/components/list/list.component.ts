@@ -16,7 +16,7 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 export class ListComponent {
 
   @Input()
-  public items: ListItem[] = [];
+  public items: ListItem[] = [ ];
 
   @Output()
   public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
@@ -43,7 +43,7 @@ export class ListComponent {
    * @param {number} index Index of element to remove
    * @returns {void}
    */
-  public removeItem(index: number): void {
+  public removeItem (index: number): void {
     let removedItems = this.items.splice(index, 1);
     this.itemMenuIndex = -1;
     this.onRemove.emit(removedItems);
@@ -55,13 +55,13 @@ export class ListComponent {
    * @param {number} index Index of the element to move to the completed items section
    * @return {void}
    */
-  public completeItem(index: number): void {
+  public completeItem (index: number): void {
     let completedItem = this.items.splice(index, 1);
     this.itemMenuIndex = -1;
     this.onComplete.emit(completedItem[0]);
   }
 
-  public toggleItemMenu(event: MouseEvent, index: number): void {
+  public toggleItemMenu (event: MouseEvent, index: number): void {
     if (this.itemMenuIndex === index) {
       this.itemMenuIndex = -1;
     } else {
@@ -69,7 +69,7 @@ export class ListComponent {
     }
   }
 
-  public toggleEditable(
+  public toggleEditable (
     event: MouseEvent | KeyboardEvent,
     elem: HTMLInputElement,
     index: number
@@ -83,7 +83,7 @@ export class ListComponent {
     }
   }
 
-  public commitEdit(elem: HTMLElement, index: number) {
+  public commitEdit (elem: HTMLElement, index: number) {
     if (elem.textContent) {
       this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
       elem.textContent = this.items[index].name;
@@ -93,7 +93,7 @@ export class ListComponent {
     }
   }
 
-  public onEditHandler(
+  public onEditHandler (
     event: KeyboardEvent,
     keyCode: number,
     elem: HTMLElement,
@@ -111,7 +111,7 @@ export class ListComponent {
    * @param {HTMLElement} movedItem element that was dragged by the user.
    * @returns {void}
    */
-  public reorderItems(movedElem: HTMLElement): void {
+  public reorderItems (movedElem: HTMLElement): void {
     let nextElement: any = movedElem.nextSibling;
     if (nextElement && nextElement.id) {
       let movedItemIndex = Number(movedElem.id);
