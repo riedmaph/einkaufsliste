@@ -16,7 +16,7 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 export class ListComponent {
 
   @Input()
-  public items: ListItem[] = [ ];
+  public items: ListItem[] = [];
 
   @Output()
   public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
@@ -55,13 +55,13 @@ export class ListComponent {
    * @param {number} index Index of the element to move to the completed items section
    * @return {void}
    */
-  public completeItem (index: number): void {
+  public completeItem(index: number): void {
     let completedItem = this.items.splice(index, 1);
     this.itemMenuIndex = -1;
     this.onComplete.emit(completedItem[0]);
   }
 
-  public toggleItemMenu (event: MouseEvent, index: number): void {
+  public toggleItemMenu(event: MouseEvent, index: number): void {
     if (this.itemMenuIndex === index) {
       this.itemMenuIndex = -1;
     } else {
@@ -69,7 +69,7 @@ export class ListComponent {
     }
   }
 
-  public toggleEditable (
+  public toggleEditable(
     event: MouseEvent | KeyboardEvent,
     elem: HTMLInputElement,
     index: number
@@ -83,7 +83,7 @@ export class ListComponent {
     }
   }
 
-  public commitEdit (elem: HTMLElement, index: number) {
+  public commitEdit(elem: HTMLElement, index: number) {
     if (elem.textContent) {
       this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
       elem.textContent = this.items[index].name;
@@ -93,7 +93,7 @@ export class ListComponent {
     }
   }
 
-  public onEditHandler (
+  public onEditHandler(
     event: KeyboardEvent,
     keyCode: number,
     elem: HTMLElement,
@@ -111,24 +111,24 @@ export class ListComponent {
    * @param {HTMLElement} movedItem element that was dragged by the user.
    * @returns {void}
    */
-  public reorderItems( movedElem: HTMLElement): void {
+  public reorderItems(movedElem: HTMLElement): void {
     let nextElement: any = movedElem.nextSibling;
-    if ( nextElement  && nextElement.id ){
+    if (nextElement && nextElement.id) {
       let movedItemIndex = Number(movedElem.id);
       let movedItem = this.items[movedItemIndex];
       // delete the moved Item
       this.items.splice(movedItemIndex, 1);
       // determine new position
-      let nextElementID = nextElement.id;
+      const nextElementID = nextElement.id;
       let targetIndex: number = 0;
-      if ( nextElementID < movedItemIndex ){
+      if (nextElementID < movedItemIndex) {
         targetIndex = nextElementID;
       } else {
         targetIndex = nextElementID - 1;
       }
       // insert the moved Item at new position
-      this.items.splice(targetIndex , 0, movedItem);
-      this.onEdit.emit({});
+      this.items.splice(targetIndex, 0, movedItem);
+      this.onEdit.emit({ });
     }
   }
 }
