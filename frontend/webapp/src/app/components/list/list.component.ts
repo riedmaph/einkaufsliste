@@ -112,24 +112,23 @@ export class ListComponent {
    * @returns {void}
    */
   public reorderItems( movedElem: HTMLElement): void {
-    let movedItemIndex = Number(movedElem.id);
-    let movedItem = this.items[movedItemIndex];
-    let targetIndex: number = 0;
-    // delete the moved Item
-    this.items.splice(movedItemIndex, 1);
-    // determine new position
     let nextElement: any = movedElem.nextSibling;
-    if (!nextElement){
-        targetIndex = this.items.length;
-    } else {
-        if ( targetIndex < movedItemIndex ){
-            targetIndex = nextElement.id;
+    if ( nextElement  && nextElement.id ){
+      let movedItemIndex = Number(movedElem.id);
+      let movedItem = this.items[movedItemIndex];
+      // delete the moved Item
+      this.items.splice(movedItemIndex, 1);
+      // determine new position
+      let nextElementID = nextElement.id;
+      let targetIndex: number = 0;
+      if ( nextElementID < movedItemIndex ){
+        targetIndex = nextElementID;
       } else {
-            targetIndex = nextElement.id - 1;
+        targetIndex = nextElementID - 1;
       }
+      // insert the moved Item at new position
+      this.items.splice(targetIndex , 0, movedItem);
+      this.onEdit.emit({});
     }
-    // insert the moved Item at new position
-    this.items.splice(targetIndex , 0, movedItem);
-    this.onEdit.emit({});
   }
 }
