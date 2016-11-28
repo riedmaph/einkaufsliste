@@ -46,6 +46,7 @@ export class LoginComponent {
       },
       (res: Response) => {
         if (res.status === 401) {
+          // 401 Unauthorized
           this.globalErrors.push({
             message: 'Username and/or password are incorrect.',
           });
@@ -53,6 +54,7 @@ export class LoginComponent {
             console.error(401, res);
           }
         } else if (res.status === 404) {
+          // 404 Not Found
           this.globalErrors.push({
             message: 'Login is temporarily not available. Please try again at a later time.',
           });

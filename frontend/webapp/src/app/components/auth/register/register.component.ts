@@ -59,6 +59,7 @@ export class RegisterComponent {
         this.router.navigate([ 'login' ], { queryParams: { registerSuccess: true } });
       }, (res: Response) => {
         if (res.status === 400) {
+          // 400 Bad Request
           this.globalErrors.push({
             message: 'An error occured. Please make sure all fields are filled out correctly.',
           });
@@ -66,6 +67,7 @@ export class RegisterComponent {
             console.error(res);
           }
         } else if (res.status === 404) {
+          // 404 Not found
           this.globalErrors.push({
             message: 'Registration is temporarily not available. Please try again at a later time.',
           });
