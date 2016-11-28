@@ -88,9 +88,9 @@ hooks:
     - location: frontend/deployment/3a-afterInstall-root.sh
       timeout: 500
       runas: root
-#    - location: frontend/deployment/3b-afterInstall-user.sh
-#      timeout: 500
-#      runas: ubuntu
+    - location: frontend/deployment/3b-afterInstall-user.sh
+      timeout: 500
+      runas: ubuntu
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   ApplicationStart:
