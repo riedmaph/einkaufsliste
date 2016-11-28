@@ -4,6 +4,6 @@
 
 APP_PATH="/autodeploy/frontend"
 
-# start nginx container
+# start nginx container in detached mode
 cd $APP_PATH
-docker-compose up &
+docker-compose up -d
