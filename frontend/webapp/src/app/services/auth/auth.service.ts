@@ -1,17 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
+import { Router, UrlTree, NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { API_ROUTES } from '../api/routes';
-import { tokenNotExpired, AuthHttp } from 'angular2-jwt';
+import { tokenNotExpired, AuthHttp, AuthConfigConsts, JwtHelper } from 'angular2-jwt';
 import { ApiMapperService } from '../api/api-mapper.service';
 
 @Injectable()
 export class AuthService {
 
+  /**
+   * Checks a given response for a new token and updates.
+   *
+   * @param {Response} res Response
+   * @return {Response} unchanged response
+   */
+  public static refreshToken (res: Response): Response {
+    try {
+      const json = res.json();
+      if (json.token && (new JwtHelper()).isTokenExpired(json.token)) {
+        localStorage.setItem(AuthConfigConsts.DEFAULT_TOKEN_NAME, json.token);
+      }
+    } catch (err) {
+      if (ENV === 'development') {
+        console.error(err);
+      }
+    } finally {
+      return res;
+    }
+  }
+
   constructor (
     private http: Http,
     private authHttp: AuthHttp,
     private apiMapper: ApiMapperService,
+    private router: Router,
   ) {}
 
   /**
@@ -20,6 +43,22 @@ export class AuthService {
    */
   public get loggedIn () {
     return tokenNotExpired();
+  }
+
+  /**
+   * Logs the user out and navigates to a given page
+   *
+   * @see Router.navigateByUrl
+   *  (https://angular.io/docs/ts/latest/api/router/index/Router-class.html#!#navigateByUrl-anchor)
+   * @param {string | UrlTree} url Target to redirect to after logout. default: 'login'
+   * @param {NavigationExtras} extras
+   * @return {Promise<boolean>} result of navigateByUrl call
+   */
+  public logout (url: string | UrlTree = 'login', extras?: NavigationExtras): Promise<boolean> {
+    localStorage.removeItem(AuthConfigConsts.DEFAULT_TOKEN_NAME);
+    localStorage.clear();
+    sessionStorage.clear();
+    return this.router.navigateByUrl(url, extras);
   }
 
   /**
@@ -36,5 +75,4 @@ export class AuthService {
       this.apiMapper.registerDataLocalToApi(registerData)
     );
   }
-
 }
