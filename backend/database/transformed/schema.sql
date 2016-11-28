@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS Transformed.Article (
 
 CREATE TABLE IF NOT EXISTS Transformed.Tag (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    preference INT NOT NULL
+    name TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
     article INT NOT NULL REFERENCES Transformed.Article(id) ON DELETE CASCADE,
-    tag INT NOT NULL REFERENCES Transformed.Tag(id) ON DELETE CASCADE
+    tag INT NOT NULL REFERENCES Transformed.Tag(id) ON DELETE CASCADE,
+    preference INT NOT NULL
 );
