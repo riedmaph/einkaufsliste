@@ -1,3 +1,4 @@
+DROP TABLE transformed.sizeTransforming;
 CREATE TABLE transformed.sizeTransforming AS
 SELECT id, size, packagesize, coalesce(sizeAmount::REAL,amount) AS amount, coalesce(wpa.unit,SizeUnit,withPack.unit) AS unit, url FROM
    (SELECT id, name, brand, size, coalesce(packagesize::TEXT,
@@ -23,3 +24,10 @@ SELECT id,SIZE,packagesize,amount,coalesce(u.name,ut.unit) AS unit,url
    WHERE id not IN (SELECT id FROM sizeTransforming)) t
 LEFT OUTER JOIN transformed.unit_translation ut ON t.unit = ut.alias
 LEFT OUTER JOIN transformed.unit u ON t.unit = u.name;
+
+SELECT distinct unit FROM  transformed.sizetransforming;
+
+
+
+
+

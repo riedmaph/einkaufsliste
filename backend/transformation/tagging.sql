@@ -5,6 +5,7 @@
  * a) for each name from rewe if all entries with this name have the same tag, we infer that every item in the database gets this tag
  * b) same for brand 
  */
+DELETE FROM transformed.tag;
 
 DROP TABLE tagging;
 --Flatten

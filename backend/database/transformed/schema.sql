@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS Transformed.Article (
     packagesize INT,
     amount REAL,
     unit TEXT,
-    url TEXT    
+    url TEXT,
+    shop INT    
 );
 
 CREATE TABLE IF NOT EXISTS Transformed.Tag (
