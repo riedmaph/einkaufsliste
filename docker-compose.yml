@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  backend:
+    container_name: node_backend
+    build:
+      context: .docker-images/backend/
+    environment:
+      PORT: "3000"
+      ENV: "dev"
+    expose:
+      - 3000
+    volumes:
+      - ./backend/server:/usr/src/app
+      - ./backend/config:/usr/src/config
+    command: [ "npm", "install" ]
+    command: [ "npm", "start" ]
+    restart: alyways
+
+  webserver:
+    container_name: nginx_frontend
+    build:
+      context: .docker-images/webserver/
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/webapp/dist:/usr/share/nginx/html
+    restart: always
+    links:
+      - backend
+    depends_on:
+      - backend

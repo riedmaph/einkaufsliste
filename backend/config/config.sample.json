@@ -1,0 +1,11 @@
+{
+    "dbhost": "",
+    "dbport": 0,
+    "dbname": "",
+    "dbusercrawler": "",
+    "dbpasscrawler": "",
+    "dbusertransformer": "",
+    "dbpasstransformer": "",
+    "dbuserapi": "",
+    "dbpassapi": ""
+}

@@ -2,7 +2,7 @@
 import os
 import json
 script_dir = os.path.dirname(__file__)
-dbcpath = os.path.join(script_dir, "../../database/config.json")
+dbcpath = os.path.join(script_dir, "../../config/config.json")
 dbcfile = open(dbcpath).read()
 dbconfig = json.loads(dbcfile)
 
@@ -14,7 +14,7 @@ class PostgresAdapter:
 		# connect to db
 		self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbpasscrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
 		self.cur = self.conn.cursor()
-	
+
 	def execute(self, stmt, data=None):
 		self.cur.execute(stmt, data)
 
@@ -60,7 +60,7 @@ class PostgresAdapter:
 				return ret[0]
 			else:
 				return ret
-		
+
 
 	def insertMany(self, tbl, rows, returning=None):
 		"""!
@@ -193,7 +193,7 @@ class ElisaDbBase:
 		shopId = self.db.fetchone()
 		if shopId==None:
 			shopId = self.db.insertSingle("Crawled.shop (name, url)", (name, url), "id")
-		else: 
+		else:
 			shopId = shopId[0]
 		return shopId
 
@@ -209,10 +209,10 @@ class ElisaDbBase:
 		tbl = "Crawled.Category (name, url, shop, parent)"
 		row = (catName, catUrl, shopId, parentId)
 		return self.db.insertSingle(tbl, row, "id")
-	    
 
-	def insertArticle(self, artTitle, artUrl, catId, 
-			artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None, 
+
+	def insertArticle(self, artTitle, artUrl, catId,
+			artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None,
 			**kvargs):
 		"""!
 	    Stores an article and corresponding attributes in the database
@@ -264,8 +264,8 @@ class ElisaDB(ElisaDbBase):
 		self.artBuff = ArticleBuffer(self.db, buffSize)
 		self.brandBuff = BrandBuffer(self.db, buffSize)
 
-	def insertArticle(self, artTitle, artUrl, catId, 
-		artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None, 
+	def insertArticle(self, artTitle, artUrl, catId,
+		artPrice=None, artSize=None, artPackage=None, artAmount=None, artUnit=None, artName=None, artBrand=None,
 		**kvargs):
 		"""!
 	    Asynchronously stores an article and corresponding attributes in the database
@@ -274,7 +274,7 @@ class ElisaDB(ElisaDbBase):
 	    """
 		art = (artTitle, artName, artBrand, artPrice, artSize, artPackage, artAmount, artUnit, artUrl, catId)
 		attrs = kvargs.items()
-		return self.artBuff.insert(art, attrs)	
+		return self.artBuff.insert(art, attrs)
 
 	def insertAttribute(self, attrName, attrValue, artRef):
 		self.artBuff.insertAttr((attrName, attrValue, artRef))
@@ -283,6 +283,6 @@ class ElisaDB(ElisaDbBase):
 		self.brandBuff.insert((brandName, shopId))
 
 	def commit(self):
-		self.artBuff.flush()	
-		self.brandBuff.flush()	
+		self.artBuff.flush()
+		self.brandBuff.flush()
 		self.db.commit()

@@ -13,10 +13,10 @@ A simple shopping list app with addtional convenience features to improve the sh
 
 
 ## Tech-Stack
-
-### Frontend
 - [Docker](http://www.docker.com)
 - [nginx](http://nginx.org)
+
+### Frontend
 - [node.js](https://nodejs.org/)
 - [TypeScript](https://www.typescriptlang.org)
 - [Angular2](https://angular.io)
@@ -27,18 +27,26 @@ A simple shopping list app with addtional convenience features to improve the sh
 - [swagger](http://swagger.io/)
 
 ## Setup
+Use `docker-compose up` to start the docker containers. Includes:
+- node (API backend)
+- nginx (static file server)
 
 ### Frontend
-- Install dependencies: `npm install`
-- Build: `npm run build:dev` or `npm run watch:dev`
-- Webserver Docker: `docker-compose up`
-- Simple dev server `npm start`
+The nginx container serves the files in `frontend/webapp/dist`.
+Build the frontend with the following commands (from `frontend/webapp` dir)
+- `npm install` installs dependencies
+- `npm run build:dev` to build or `npm run watch:dev` to build and watch (re-build on file change)
 - Run unit tests: `npm test` (Coverage reports are found in `/coverage`)
 - Run end to end tests: `npm run e2e`
 
 ### Backend API
-- Install dependencies: `npm install`
-- Simple dev server `npm start`
+The node container mounts the `backend/server` directory.
+Use `docker restart node_backend` to restart the server.
+
+_Note:_ The backend server runs on port `3000` as configures in the `docker-compose.yml`.
+The frontend nginx redirects requests made to the `/api` route to this container.
+
+_Note:_ The backend expects to find a `config.json` in `/backend/config`. See `/backend/config/config.sample.json` for the format.
 
 ## Code-Style
 ### Git-Workflow
