@@ -12,7 +12,7 @@
    \vspace*{\stretch{1.0}}
    \begin{center}
       \LARGE\textbf{ELiSA}\\
-      \vspace{0.5cm}
+      \vspace{0.75cm}
       \large\textbf{Design Brief}
    \end{center}
    \vspace*{\stretch{2.0}}
@@ -39,7 +39,7 @@ This application will be build and evaluated using the process described in the 
       For the inital phase of problem exploration we focus primarily on the methods outlined in the IDEO methods cards \cite{TODO}.\\
       We aim to cover their full spectrum, classified into \textit{Learn}, \textit{Look}, \textit{Ask} and \textit{Try}.
 
-      % TODO
+      TODO
 
     \subsubsection{Exploration of the design space}
       We see creating prototypes of different levels of fidelity and resolution in conjunction with tried and proved evaluation methods as the preferred way to approach the design challenge. For more details, see the \nameref{sec:process} section.
@@ -63,49 +63,106 @@ This application will be build and evaluated using the process described in the 
         \item If they leave their handbags in their shopping cart, they also leave their phone.
       \end{itemize}
 
-      Due to the low activity during early afternoon we continued the observations in the evening where the number of customers was significantly higher.
+      Due to the low activity during early afternoon we continued the observations in the evening and on a saturday where the number of customers was significantly higher.
       \begin{itemize}
         \item Slightly higher use of shopping lists and smartphones: In one market of 47 observed people, 12 used smartphones and four used paper shopping lists. Again the exect use of the smartphone cannot be determined.
         \item People with shopping lists check them briefly before queueing at the checkout.
         \item More woman have shopping lists than men.
         \item People with shopping lists spend either much more or much less time inspecting product labels.
-        \item Very few men read package labels compared to women. Whether the the number of lists and number of package inspection for woman and men is causation or correlation cannot be said so far.
         \item Some shoppers follow a fairly straight path through the store, whereas others walk to and fro. This does not seem to correlate with whether they have a list or not.
         \item For people with lists, going back in the supermarket often comes after a look on the list. This may be because they noticed they forgot something on their list.
         \item Some people spend their time waiting at the checkout already picking the correct amount of money to make payment faster.
         \item Men seem to have a less specific idea as to what products they want to buy (e.g. general description vs. specific brand).
+        \item Some of the people observed, all women, spend more time on individual products, reading the labels and comparing similar items.
+        \item Men on the other hand are less likely to have a complete idea of what thex want exactly. 
+          We observed several making phone calls or asking their female co-shoppers for more details on items on the list. 
+      \end{itemize}
+
+      By observing single individuals during their \textit{journey} we also did a macro Activity Analysis for the shopping process.
+      \begin{itemize}
+        \item As described above, the process begins, for shopping list users, by a initial look on their list after he enters the store. 
+        \item The user then starts picking up a subset, ususally no less than three, items from his list. During this, she no longer looks on the list.
+        \item The user might also pick up items that are not on his list. Having a list however suggests a greater degree of planning and might mean less impulsive shopping behaviour.
+        \item As descirbed above the user may read package labels or call another person for additionaly information.
+        \item This process is repeated until a sufficient amount of items have been collected. 
+          This must not necessarily mean all items from the list. A reason for this can e.g. be that the amount the user can carry is exhausted.
+        \item The user then proceeds to the checkout. When the market is not too crowded she checks once more whether all important items are in the cart.
+        \item The user then pays and leaves the store.
       \end{itemize}
 
     \subsubsection{Try it yourself}
-      % some products lend themselves to specific description while other to more general terms
-      % often choose two similar items and pick one spontaneously
-      % One checks items of the list even though one bought onyl a similar product
-      % 'this item is often located near' feature
-      % Lists that are not shared do not require specific descriptions since I know what I like
-      % knowing the purpose of an item allows to substitue if out of stock
+      We also spend part of our initial visit to the super market for the Fly on the Wall research on a Try it yourself experiment.
+
+      For this we created a list of items to buy for a given scenario, creating chocolates. 
+      During this we found several challenges:
+
+      \begin{itemize}
+        \item Our list was very general, describing more the product category than the actual product (e.g. ``Flour'' rather than ``ja! Wheat Flour''). 
+          This works fairly well for some items, whereas it proves an issue for others.
+        \item Especially for these unspecified items but also for specific descriptions, we tend to pick up two similar items and choose one spontaneously.
+        \item A possible reason for choosing alternativ products can be that items are out of stock.
+        \item Picking up an alternative item still results in the original item being checked on the list.
+        \item While the items on our list were very closely related in the sense that they are from a similar domain (baking ingredients) knowing their categorization or items they are usually located close to would have been helpful to find them faster.
+        \item Also knowing the purpose of an items can be helpful in that respect. It also allows better judgement when picking alternatives.
+        \item This is knowledge that the writer of the list usually has. This person must however not be the one who goes buy the items on the list.
+          This applies for general product descriptions as well: The writer may not need a specific product name, a general description may suffice. 
+          Another person might however need this.
+      \end{itemize}
 
 \section{Problem Description}
 \label{sec:problem}
+Based on the results discussed above we identified a list of core problems for designing a shopping list application.
+Some of these may find broader application in either general list apps or mobile applications as a whole, we choose however to focus on our target application.
+
 \begin{itemize}
-\item Alternativen finden.\\
-\item visuelle Aufteilung/ Sortierung sinnvolle => leute schaunen nur kurz drauf und merken sich mehrere Item. \\
-\item schreiber und einkäufer haben unterschiedliche Informationen. Annotation sinnvoll, da viele nachfragen. Felder mit z.b. Größe und stückzahl mandatory. \\
-\item Handy ist in der Tasche, daher kurzer Ablauf rausholen -> app öffnen -> abhaken -> neues lesen
-\item Leute schauen vor dem Verlassen nochmal auf die Liste um zu sehen ob noch etwas fehlt. => einfaches Erkennen von nicht-abgehakten Items durch Sortierung.\\
+  \item The macro activity flow (the overall shopping process) we found to be multi-phased. 
+    After the inital phase of getting a single larger chunk of information from the list upon entering the shop there follows a phase of impule-esque information lookup and item searching.
+    At last when more or less all items are collected, there is a last verificating check whether all relevant items were found.
+  \item For the brief, impluse-esque interaction with the shopping list, a visual arrangement is necessary that supports it. 
+    Traditional paper based, and also many digital shopping lists are usually ordered by insertion which effectively is unordered. 
+    Thus checked and unchecked items end up mixed togehter which decreases readability and the speed at which one can get an overview.
+    When improving on this sorting one must also consider the limited capacity of the working memory for such an ordering as well as semantic and spatial information or the products.
+  \item Similarly an appropriate display of the items can benefit the final check. 
+    On an unordered list it is not always easy to identify which items are checked and which are not.
 
+  \item In general the activity flow in the small (when using a mobile device) for activities relevant to us can be rather cumbersome or disproportionally high.
+    Fidgeting with ones phone, unlocking it, possibly switching apps etc. just to check one or a few items may be perceived as too much.
+  \item This is even worse when the user does not carry the device with her at all times, e.g. when it is in a bag in the shopping cart. 
+
+  \item As found during the Try it Yourself study we found a potential information mismatch between writer and reader/shopper of a list. 
+    By providing both default information and encouraging adding additional information this might be alleviated.
 \end{itemize}
-
 
 
 \section{Goals}
 \label{sec:goal}
-dasch problemzeusch lösen, nö?
+The have a product with great usability the above challenges need to be adressed of course.
 
+Many of these are challenges for the UI design:
+\begin{itemize}
+  \item Items should be presented in a way that makes it easy to remember them blockwise. This is to accomodate the impulse-esque lookup.
+  \item It should be easy to distinguish checked items from unchecked items and quickly get a gasp of how many are checked and which are unchecked.
+  \item Both specific and general product descriptions should be possible and equally simple to enter. 
+    The application should also provide a way to quickly and easily enter additionaly, more detailed information to accomodate the information mismatch described above.
+    If the user chooses not to he should be made aware of this choice and/or sane defaults be in place.
+  \item While there is a discrepancy of shopping list usage between the genders, justifying a design for either, we choose to be gender neutral in our design. 
+  \item TODO
+\end{itemize}
+
+Aside from these there are some issues that required greater effort to address:
+\begin{itemize}
+  \item The problem of many small actions just to check a list item could be adressed by either making changes to the devices operating system to circumvent these steps or by using additional hardware for easier input.
+    A possible form for such harware are wearables. They are more accessible than the phone and thus allow faster interaction. 
+    They do come with their own challenges for application, interface and interaction design though.
+  \item TODO 
+\end{itemize}
+
+We plan to focus on the more UI focused challenges using a prototyping and evaluation approach.
 
 \section{Further process}
 \label{sec:process}
-prototypen bauen -> evaluieren mit <List of Methods> -> Für dieses Problem eignet sich diese Methode und für dieses Problem ne andere.\\
-bananas bananas... \\
-evtl ein zwei methoden noch neu in Plan (und Methodology section) mit aufnehmen.\\
+TODO
+% prototypen bauen -> evaluieren mit <List of Methods> -> Für dieses Problem eignet sich diese Methode und für dieses Problem ne andere.\\
+% evtl ein zwei methoden noch neu in Plan (und Methodology section) mit aufnehmen.\\
 
 \end{document}
