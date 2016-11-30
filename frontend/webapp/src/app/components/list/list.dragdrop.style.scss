@@ -1,9 +1,11 @@
 
+.gu-mirror {
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 0.8;
   cursor: -webkit-grab;
+  transform: rotate(-1deg);
   border-style: dashed dashed solid dashed;
   border-color: #4caf50; 
   width: 80% !important;

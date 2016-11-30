@@ -132,8 +132,8 @@ export class ListComponent {
       // insert the moved Item at new position
       this.items.splice(targetIndex, 0, movedItem);
       this.onEdit.emit({ });
-      this.blink(movedElem);
     }
+    this.blink(movedElem);
   }
 
   private blink (elem: HTMLElement): void {
