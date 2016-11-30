@@ -1,0 +1,25 @@
+# Copy this file to /etc/systemd/system/
+
+# Tell systemd about the new service: systemctl daemon-reload
+# Start service:                      systemctl start elisa-api
+# Enable service to run on boot:      systemctl enable elisa-api
+# See logs:                           journalctl -u elisa-api
+
+[Unit]
+Description=Elisa backend server
+
+[Service]
+# enter absolute node path and absolute path to main file here:
+ExecStart=/usr/bin/nodejs /autodeploy/backend/webserver/www
+Restart=always
+#User=nobody
+#Group=nobody
+Environment=PATH=/usr/bin:/usr/local/bin
+#Environment=NODE_ENV=production
+Environment=PORT=3001
+
+# absolute path to backend server directory:
+WorkingDirectory=/autodeploy/backend
+
+[Install]
+WantedBy=multi-user.target

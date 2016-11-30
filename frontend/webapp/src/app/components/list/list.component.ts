@@ -1,9 +1,12 @@
-import { 
+import {
   Component,
   Input,
   Output,
   EventEmitter,
 } from '@angular/core';
+
+import { ListItem } from '../../models/list-item.model';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
   selector: 'sl-list',
@@ -13,59 +16,57 @@ import {
 export class ListComponent {
 
   @Input()
-  public items: string[] = [ ];
-
-  @Input()
-  public baseColor: string = '#0147A7';
+  public items: ListItem[] = [ ];
 
   @Output()
-  public onRemove: EventEmitter<any> = new EventEmitter<any>();
+  public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
 
   @Output()
   public onEdit: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
+
+  public itemMenuIndex: number = -1;
+
+  constructor(
+    private dragulaService: DragulaService,
+  ) {
+    this.dragulaService.dragend.subscribe(
+      draggedElement => this.reorderItems(draggedElement[1])
+    );
+  }
+
   /**
-   * Removes an item from the items list
-   * 
+   * Removes an item from the items list, after confirmation was successful
+   *
    * @param {number} index Index of element to remove
    * @returns {void}
    */
   public removeItem (index: number): void {
-    this.items.splice(index, 1);
-    this.onRemove.emit({});
+    let removedItems = this.items.splice(index, 1);
+    this.itemMenuIndex = -1;
+    this.onRemove.emit(removedItems);
   }
 
   /**
-   * Generates the color string for a gradient over the items
-   * 
-   * @param {number} index Index of element
-   * @returns {string} Hex-color-string 
+   * Moves an item from the items to the completed items list
+   *
+   * @param {number} index Index of the element to move to the completed items section
+   * @return {void}
    */
-  public gradientColor (index: number): string {
-    if (this.items.length < 1) {
-      throw 'No items';
+  public completeItem (index: number): void {
+    let completedItem = this.items.splice(index, 1);
+    this.itemMenuIndex = -1;
+    this.onComplete.emit(completedItem[0]);
+  }
+
+  public toggleItemMenu (event: MouseEvent, index: number): void {
+    if (this.itemMenuIndex === index) {
+      this.itemMenuIndex = -1;
+    } else {
+      this.itemMenuIndex = index;
     }
-    if (index < 0 || index >= this.items.length) {
-      throw 'Index of of bounds';
-    }
-
-    const maxR = parseInt(this.baseColor.substr(1, 2), 16);
-    const maxG = parseInt(this.baseColor.substr(3, 2), 16);
-    const maxB = parseInt(this.baseColor.substr(5, 2), 16);
-
-    const colorRatio = (this.items.length - index) / this.items.length;
-
-    const R = Math.floor(maxR * colorRatio) << 16;
-    const G = Math.floor(maxG * colorRatio) << 8;
-    const B = Math.floor(maxB * colorRatio) << 0;
-
-    let col: string = (R + G + B).toString(16);
-
-    while (col.length < 6) {
-      col = '0' + col;
-    }
-
-    return '#' + col;
   }
 
   public toggleEditable (
@@ -84,8 +85,8 @@ export class ListComponent {
 
   public commitEdit (elem: HTMLElement, index: number) {
     if (elem.textContent) {
-      this.items[index] = elem.textContent.replace(/[\r\n\t]/g, '');
-      elem.textContent = this.items[index];
+      this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
+      elem.textContent = this.items[index].name;
       this.onEdit.emit({});
     } else {
       this.removeItem(index);
@@ -104,4 +105,30 @@ export class ListComponent {
     }
   }
 
+  /**
+   * Reorders the item array according to drag and drop actions
+   *
+   * @param {HTMLElement} movedItem element that was dragged by the user.
+   * @returns {void}
+   */
+  public reorderItems (movedElem: HTMLElement): void {
+    let nextElement: any = movedElem.nextSibling;
+    if (nextElement && nextElement.id) {
+      let movedItemIndex = Number(movedElem.id);
+      let movedItem = this.items[movedItemIndex];
+      // delete the moved Item
+      this.items.splice(movedItemIndex, 1);
+      // determine new position
+      const nextElementID = nextElement.id;
+      let targetIndex: number = 0;
+      if (nextElementID < movedItemIndex) {
+        targetIndex = nextElementID;
+      } else {
+        targetIndex = nextElementID - 1;
+      }
+      // insert the moved Item at new position
+      this.items.splice(targetIndex, 0, movedItem);
+      this.onEdit.emit({ });
+    }
+  }
 }

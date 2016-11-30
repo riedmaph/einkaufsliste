@@ -1,0 +1,39 @@
+label {
+    display: block;
+}
+
+input, md-input {
+    display: block;
+}
+
+.form-error {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: $color-error;
+    font-size: .8em;
+    padding-bottom: .5em;
+
+    &.columns {
+        margin-bottom: 1.5em;
+    }
+}
+
+md-card .md-input-underline {
+    position: relative;
+}
+
+md-input.invalid {
+    .md-input-placeholder {
+        color: $color-error;
+    }
+
+    .md-input-underline {
+        border-color: $color-error;
+
+        .md-input-ripple {
+            background-color: $color-error;
+        }
+    }
+}

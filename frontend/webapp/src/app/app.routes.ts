@@ -1,9 +1,15 @@
 import { Routes } from '@angular/router';
 
-import { HOME_ROUTES } from './components/home';
-import { NoContentComponent } from './components/no-content';
+import {
+  NoContentComponent,
+  HOME_ROUTES,
+  REGISTER_ROUTES,
+  LOGIN_ROUTES,
+} from './components';
 
 export const ROUTES: Routes = [
   ...HOME_ROUTES,
+  ...REGISTER_ROUTES,
+  ...LOGIN_ROUTES,
   { path: '**',    component: NoContentComponent },
 ];

@@ -1,33 +1,39 @@
-<ul *ngIf="items">
-  <li *ngFor="let item of items; let i = index" [style.background-color]="gradientColor(i)">
-    <span #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">{{ item }}</span>
+<md-list
+  *ngIf="items"
+  dragula="draggable-list"
+>
+  <md-list-item
+    *ngFor="let item of items; let i = index"
+    [id]="i"
+    (dblclick)="toggleItemMenu($event, i)"
 
-    <button 
-      *ngIf="textfield.contentEditable !== 'true'"
-      class="success" 
-      (click)="removeItem(i)"
-    >
-      <i class="fa fa-check"></i>
-    </button>
+  >
+    <md-checkbox color="primary" (click)="completeItem(i)"></md-checkbox>
+    <span class="item-text" #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
+      {{ item.amount }} {{ item.unit }} {{ item.name }}
+    </span>
 
-    <button 
-      *ngIf="textfield.contentEditable !== 'true'" 
-      class="remove" 
-      (click)="removeItem(i)"
-    >
-      <i class="fa fa-times"></i>
-    </button>
+    <div class="item-button-wrapper" [class.show]="itemMenuIndex === i">
+      <button color="accent"
+        class="edit-button"
+        (click)="toggleEditable($event, textfield, i)"
+        md-ripple
+      >
+        <md-icon *ngIf="textfield.contentEditable !== 'true'"
+          class="material-icons">edit</md-icon
+        >
+        <md-icon *ngIf="textfield.contentEditable === 'true'"
+          class="material-icons">done</md-icon
+        >
+      </button>
 
-    <button
-      (click)="toggleEditable($event, textfield, i)"
-    >
-      <i 
-        class="fa" 
-        [class.fa-pencil]="textfield.contentEditable !== 'true'"
-        [class.fa-check]="textfield.contentEditable === 'true'"
-      ></i>
-    </button>
-  </li>
-</ul>
-
-<div *ngIf="items.length < 1" class="empty"><span>No entries</span></div>
+      <button color="warn"
+        class="delete-button"
+        (click)="removeItem(i)"
+        md-ripple
+      >
+        <md-icon class="material-icons">delete</md-icon>
+      </button>
+    </div>
+  </md-list-item>
+</md-list>

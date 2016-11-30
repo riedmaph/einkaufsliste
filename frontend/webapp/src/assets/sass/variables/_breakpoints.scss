@@ -1,0 +1,32 @@
+$size-sm: 48em;
+$size-lg: 64em;
+$size-xl: 80em;
+
+$default-breakpoint: root;
+$current-breakpoint: $default-breakpoint;
+
+$breakpoints: (
+  mobile        : 'max-width: #{$size-sm - 1}',
+  portrait      : 'min-width: #{$size-sm}',
+  portrait-only : 'min-width: #{$size-sm}) and (max-width: #{$size-lg - 1}',
+  landscape     : 'min-width: #{$size-lg}',
+  desktop       : 'min-width: #{$size-xl}',
+);
+
+@mixin breakpoint($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value != null {
+    $current-breakpoint: $breakpoint !global;
+
+    @media ($value) {
+      @content;
+    }
+
+    $current-breakpoint: $default-breakpoint !global;
+  }
+
+  @else {
+    @warn "Invalid breakpoint `#{$breakpoint}`.";
+  }
+}

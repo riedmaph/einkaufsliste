@@ -24,11 +24,17 @@ export class AutoCompletionComponent {
   @Output()
   public onSelect: EventEmitter<any> = new EventEmitter<any>();
 
-  public isOpen: boolean = false;
+  public loading: boolean = false;
+
+  private isOpenFlag: boolean = false;
 
   private suggestionList: string[] = [ ];
 
   private selectedIndex: number = -1;
+
+  public get isOpen (): boolean {
+    return this.isOpenFlag;
+  }
 
   public get suggestions (): string[] {
     return this.suggestionList;
@@ -68,12 +74,12 @@ export class AutoCompletionComponent {
   }
 
   public open (): void {
-    this.isOpen = true;
+    this.isOpenFlag = true;
     this.onOpen.emit();
   }
 
   public close (): void {
-    this.isOpen = false;
+    this.isOpenFlag = false;
     this.onClose.emit();
   }
 

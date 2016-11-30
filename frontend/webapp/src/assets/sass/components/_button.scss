@@ -1,0 +1,10 @@
+.btn {
+    .btn-primary {
+        background: $color-primary;
+        color: $color-text--heading;
+    }
+}
+
+button[md-ripple] {
+    position: relative;
+}

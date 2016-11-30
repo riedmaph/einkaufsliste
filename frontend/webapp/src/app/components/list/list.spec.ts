@@ -4,6 +4,7 @@ import {
 } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
+import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
 
 describe('ListComponent', () => {
 
@@ -11,6 +12,10 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         ListComponent,
+        DragulaService,
+      ],
+      imports: [
+        DragulaModule,
       ],
     }).compileComponents();
   });
@@ -40,42 +45,38 @@ describe('ListComponent', () => {
     }));
 
     it('should remove the entry from the list', inject([ ListComponent ], (list: ListComponent) => {
-      list.items = [ 'entry1', 'entry2' ];
+      list.items = [
+        {
+          name: 'entry1',
+          unit: 'stk',
+          amount: 1,
+          onSale: false,
+        },
+        {
+          name: 'entry2',
+          unit: 'stk',
+          amount: 1,
+          onSale: false,
+        } ];
       list.removeItem(1);
-      expect(list.items).toEqual([ 'entry1' ]);
+      expect(list.items).toEqual([ {
+        name: 'entry1',
+        unit: 'stk',
+        amount: 1,
+          onSale: false,
+      } ]);
       list.removeItem(0);
       expect(list.items).toEqual([ ]);
     }));
   });
 
-  describe('generated gradients', () => {
-    it('throw when no entries exist', inject([ ListComponent ], (list: ListComponent) => {
-      expect(() => list.gradientColor(0)).toThrow();
-      expect(() => list.gradientColor(-1)).toThrow();
-      expect(() => list.gradientColor(12)).toThrow();
-    }));
-
-    it('throw when index is out of bounds', inject([ ListComponent ], (list: ListComponent) => {
-      list.items = [ 'entry1' ];
-      expect(() => list.gradientColor(-1)).toThrow();
-      expect(() => list.gradientColor(12)).toThrow();
-    }));
-
-    it('use the base color for index 0', inject([ ListComponent ], (list: ListComponent) => {
-      list.items = [ 'entry1' ];
-      expect(list.gradientColor(0).toLowerCase).toBe(list.baseColor.toLowerCase);
-      list.items = [ 'entry1', 'entry2', 'entry3' ];
-      expect(list.gradientColor(0).toLowerCase).toBe(list.baseColor.toLowerCase);
-    }));
-
-    it('should be a gradient', inject([ ListComponent ], (list: ListComponent) => {
-      list.items = [ 'entry1', 'entry2', 'entry3' ];
-      const COLOR_0 = parseInt(list.gradientColor(0).substr(1, 6), 16);
-      const COLOR_1 = parseInt(list.gradientColor(1).substr(1, 6), 16);
-      const COLOR_2 = parseInt(list.gradientColor(2).substr(1, 6), 16);
-
-      expect(COLOR_0).toBeGreaterThan(COLOR_1);
-      expect(COLOR_1).toBeGreaterThan(COLOR_2);
+  describe('completing items', () => {
+    it('should remove them from the items list', inject([ ListComponent ], (list) => {
+      list.items = [ 'entry1', 'entry2' ];
+      list.completeItem(1);
+      expect(list.items).toEqual([ 'entry1' ]);
+      list.completeItem(0);
+      expect(list.items).toEqual([ ]);
     }));
   });
 

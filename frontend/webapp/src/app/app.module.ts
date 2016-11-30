@@ -1,9 +1,12 @@
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@angular/material';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
+import { AUTH_PROVIDERS } from 'angular2-jwt';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -16,13 +19,23 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 
 // Services
-import { ApiService } from './services/api';
+import {
+  ApiService,
+  AuthService,
+  AuthGuard,
+  ApiMapperService,
+} from './services';
 
 // Components
-import { HomeComponent } from './components/home';
-import { NoContentComponent } from './components/no-content';
-import { NavigationComponent } from './components/navigation';
-import { ListComponent } from './components/list';
+import {
+  HomeComponent,
+  NoContentComponent,
+  NavigationComponent,
+  ListComponent,
+  CompletedComponent,
+  RegisterComponent,
+  LoginComponent,
+} from './components';
 
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
@@ -31,6 +44,7 @@ import { AutoCompletionComponent, AutoCompletionDirective } from './directives/a
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
+  DragulaService,
 ];
 
 type StoreType = {
@@ -50,8 +64,11 @@ type StoreType = {
     NoContentComponent,
     NavigationComponent,
     ListComponent,
+    CompletedComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
+    RegisterComponent,
+    LoginComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
@@ -59,13 +76,20 @@ type StoreType = {
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true }),
+    RouterModule.forRoot(ROUTES, { useHash: false }),
+    MaterialModule.forRoot(),
+    DragulaModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
+    AUTH_PROVIDERS,
     ApiService,
+    AuthService,
+    ApiMapperService,
+    AuthGuard,
   ],
 })
 export class AppModule {

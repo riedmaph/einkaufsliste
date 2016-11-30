@@ -14,6 +14,8 @@ import '@angular/forms';
 import '@angular/http';
 import '@angular/router';
 
+import 'angular2-jwt';
+
 // AngularClass
 import '@angularclass/hmr';
 

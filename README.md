@@ -15,23 +15,30 @@ A simple shopping list app with addtional convenience features to improve the sh
 ## Tech-Stack
 
 ### Frontend
+- [Docker](http://www.docker.com)
+- [nginx](http://nginx.org)
 - [node.js](https://nodejs.org/)
 - [TypeScript](https://www.typescriptlang.org)
 - [Angular2](https://angular.io)
 
-### Backend
-
+### Backend API
+- [node.js](https://nodejs.org/)
+- [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+- [swagger](http://swagger.io/)
 
 ## Setup
 
 ### Frontend
 - Install dependencies: `npm install`
-- Run dev server: `npm start`
+- Build: `npm run build:dev` or `npm run watch:dev`
+- Webserver Docker: `docker-compose up`
+- Simple dev server `npm start`
 - Run unit tests: `npm test` (Coverage reports are found in `/coverage`)
 - Run end to end tests: `npm run e2e`
 
-### Backend
-
+### Backend API
+- Install dependencies: `npm install`
+- Simple dev server `npm start`
 
 ## Code-Style
 ### Git-Workflow
