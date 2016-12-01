@@ -2,7 +2,9 @@
 
 # All files are at their target location now
 
-. config.sh
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+. $DIR/config.sh
 
 # backend
 #=========
