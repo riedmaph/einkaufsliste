@@ -2,7 +2,9 @@
 
 # Here is the place to start the application
 
-. ./config.sh
+ELISA_PATH="/autodeploy"
+API_PATH=$ELISA_PATH/backend
+APP_PATH=$ELISA_PATH/frontend
 
 # start docker containers
 cd $ELISA_PATH
