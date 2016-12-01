@@ -2,8 +2,8 @@
 
 # This is the first lifecyle event, nothing is deployed yet
 
-APP_PATH="/autodeploy/frontend"
+. config.sh
 
-# stop nginx
-cd $APP_PATH
+# Stop docker containers
+cd $ELISA_PATH
 docker-compose stop
