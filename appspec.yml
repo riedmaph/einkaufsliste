@@ -43,7 +43,7 @@ files:
 #      range:
 #    type:
 #      -
-hooks:
+#hooks:
 # For each deployment lifecycle event, specify multiple "location" entries 
 #   if you want to run multiple scripts during that event.
 # You can specify "timeout" as the number of seconds to wait until failing the deployment 
@@ -73,25 +73,25 @@ hooks:
 #      runas: root
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  BeforeInstall:
-    - location: deployment/2-beforeInstall.sh
-      timeout: 100
-      runas: root
+#  BeforeInstall:
+#    - location: deployment/2-beforeInstall.sh
+#      timeout: 100
+#      runas: root
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  AfterInstall:
-    - location: deployment/3-afterInstall.sh
-      timeout: 500
-      runas: root
+#  AfterInstall:
+#    - location: deployment/3-afterInstall.sh
+#      timeout: 500
+#      runas: root
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  ApplicationStart:
-    - location: deployment/4-applicationStart.sh
-      timeout: 500
-      runas: root
+#  ApplicationStart:
+#    - location: deployment/4-applicationStart.sh
+#      timeout: 500
+#      runas: root
 # During the ValidateService deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-  ValidateService:
-    - location: deployment/5-validateService.sh
-      timeout: 500
-      runas: root
+#  ValidateService:
+#    - location: deployment/5-validateService.sh
+#      timeout: 500
+#      runas: root
