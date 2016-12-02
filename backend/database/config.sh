@@ -6,7 +6,7 @@
 DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 
-config="$DIR/config.json"
+config="$DIR/../config/config.json"
 
 dbhost=`cat $config | python -c "import sys, json; print json.load(sys.stdin)['dbhost']"`
 dbport=`cat $config | python -c "import sys, json; print json.load(sys.stdin)['dbport']"`
