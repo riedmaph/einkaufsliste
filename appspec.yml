@@ -15,9 +15,13 @@ os: linux
 #   may cause associated deployments to fail.
 files:
   - source: backend/server
-    destination: /autodeploy/backend/
+    destination: /autodeploy/backend/server/
   - source: frontend/webapp
-    destination: /autodeploy/frontend/
+    destination: /autodeploy/frontend/webapp/
+  - source: .docker-images
+    destination: /autodeploy/.docker-images/
+  - source: docker-compose.yml
+    destination: /autodeploy/docker-compose.yml
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
