@@ -21,7 +21,7 @@ files:
   - source: .docker-images
     destination: /autodeploy/.docker-images/
   - source: docker-compose.yml
-    destination: /autodeploy/docker-compose.yml
+    destination: /autodeploy/
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
