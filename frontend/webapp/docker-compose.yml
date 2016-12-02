@@ -1,8 +1,0 @@
-webserver:
-  container_name: nginx_frontend
-  build: .docker-images/webserver/
-  ports:
-    - "80:80"
-  volumes:
-    - ./dist:/usr/share/nginx/html
-  restart: always

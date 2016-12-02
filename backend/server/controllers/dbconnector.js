@@ -1,6 +1,7 @@
 var uuid = require('uuid');
 var tokenhandler = require('./tokenhandler');
 var password = require('password-hash-and-salt');
+var path = require('path');
 
 var options = {
   // Initialization Options
@@ -22,7 +23,7 @@ var options = {
 
 var pgp = require("pg-promise")(options);
 
-var dbsettings = require('../../database/config');
+var dbsettings = require(path.join('..', '..', 'config', 'config'));
 
 var cn = {
     host: dbsettings.dbhost,
@@ -63,16 +64,16 @@ function validatePassword(password) {
 function register(req, res, next) {
   db.oneOrNone('SELECT enduser.id as id, enduser.email as email, enduser.password as password FROM UserData.Enduser where email = ${email}', req.body)
     .then(function (user) {
-      if(!user) {        
+      if(!user) {
 
         if(validatePassword(req.body.password)) {
           //hash&salt password
           password(req.body.password).hash(function(error, hash) {
             if(error)
                 throw new Error('Error in hashing password!');
-         
+
             req.body.hash = hash;
-            console.log(req.body.hash);          
+            console.log(req.body.hash);
 
             //create new id for user
             req.body.id = uuid.v1();
@@ -121,7 +122,7 @@ function login(req, res, next) {
             .json({
               token: tokenhandler.createToken(user.id)
             });
-          } 
+          }
           else {
               res.status(401)
               .json({
