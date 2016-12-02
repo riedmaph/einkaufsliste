@@ -2,6 +2,8 @@
 	"dbhost": "127.0.0.1",
 	"dbport": 5432,
 	"dbname": "articledb",
+	"dbschemanameuserdata": "userdata",
+	"dbschemanameuserdatatest": "userdata_test",
 	"dbusercrawler": "elisacrawler",
 	"dbpasscrawler": "elite_se10",
 	"dbusertransformer": "elisatransformer",

@@ -32,6 +32,20 @@ var cn = {
     password: dbsettings.dbpassapi
 };
 
+//set settings to load sql-scripts according to ENV
+var loadSqlSettings;
+
+if(process.env.NODE_ENV == 'test') {
+  loadSqlSettings = {
+      schemaname: dbsettings.dbschemanameuserdatatest
+  }
+}
+else {
+  loadSqlSettings = {
+      schemaname: dbsettings.dbschemanameuserdata
+  }
+}
+
 var db = pgp(cn);
 
 db.connect()
@@ -42,26 +56,22 @@ db.connect()
         console.log("ERROR:", error.message || error);
     });
 
-module.exports = {
-  register,
-  login,
-	getAllLists,
-  createList,
-  updateList,
-  deleteList,
-  getListItems,
-  createItem,
-  updateItem,
-  deleteItem
-};
+// Helper for linking to external query files: 
+function loadSql(file) {
+    // consider using here: path.join(__dirname, file)
+    return new pgp.QueryFile(file, {minify: true, params:loadSqlSettings});
+}
 
 function validatePassword(password) {
   return password.length >= 7;
 }
 
 /* ---- Users ---- */
+var sqlRegisterCheckUser = loadSql('./controllers/sql/registerCheckUser.sql');
+var sqlRegisterInsertUser = loadSql('./controllers/sql/registerInsertUser.sql');
+
 function register(req, res, next) {
-  db.oneOrNone('SELECT enduser.id as id, enduser.email as email, enduser.password as password FROM UserData.Enduser where email = ${email}', req.body)
+  db.oneOrNone(sqlRegisterCheckUser, req.body)
     .then(function (user) {
       if(!user) {        
 
@@ -77,7 +87,7 @@ function register(req, res, next) {
             //create new id for user
             req.body.id = uuid.v1();
 
-            db.none('INSERT INTO UserData.Enduser(id, email, password) VALUES(${id}, ${email}, ${hash})', req.body)
+            db.none(sqlRegisterInsertUser, req.body)
               .then(function () {
                 res.status(200)
                   .json({
@@ -109,7 +119,7 @@ function register(req, res, next) {
 }
 
 function login(req, res, next) {
-  db.oneOrNone('SELECT enduser.id as id, enduser.email as email, enduser.password as password FROM UserData.Enduser where email = ${email}', req.body)
+  db.oneOrNone(sqlRegisterCheckUser, req.body)
     .then(function (user) {
       if(user) {
         password(req.body.password).verifyAgainst(user.password, function(error, verified) {
@@ -245,3 +255,17 @@ function deleteItem(req, res, next) {
       return next(err);
     });
 }
+
+
+module.exports = {
+  register,
+  login,
+  getAllLists,
+  createList,
+  updateList,
+  deleteList,
+  getListItems,
+  createItem,
+  updateItem,
+  deleteItem
+};
