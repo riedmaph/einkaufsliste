@@ -6,9 +6,9 @@ var users = require('../controllers/users/users');
 var lists = require('../controllers/lists/lists');
 var items = require('../controllers/items/items');
 
-/* GET home page. */
+// redirect root to doc
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'test' });
+  res.redirect('/doc');
 });
 
 /* Users */
