@@ -1,0 +1,1 @@
+DELETE from ${schemaname:raw}.List where id=${id}

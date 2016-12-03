@@ -21,6 +21,6 @@
   },
   "scripts": {
     "start": "NODE_ENV=dev node ./webserver/www",
-    "test": "SET NODE_ENV=test && mocha --timeout 10000"
+    "test": "NODE_ENV=test mocha --timeout 10000"
   }
 }
