@@ -120,6 +120,12 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     }
                 }
             },
@@ -149,7 +155,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation."
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteList"
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
                         "description": "Unhandeled error.",
@@ -187,6 +202,12 @@
                     "200": {
                         "description": "Successful operation."
                     },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
                     "500": {
                         "description": "Unhandeled error.",
                         "schema": {
@@ -222,6 +243,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
                         "description": "Unhandeled error.",
@@ -271,6 +298,12 @@
                             }
                         }
                     },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
                     "500": {
                         "description": "Unhandeled error.",
                         "schema": {
@@ -313,7 +346,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation."
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteItem"
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
                         "description": "Unhandeled error.",
@@ -359,6 +401,12 @@
                     "200": {
                         "description": "Successful operation."
                     },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
                     "500": {
                         "description": "Unhandeled error.",
                         "schema": {
@@ -402,6 +450,12 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
                     },
                     "500": {
                         "description": "Unhandeled error.",
