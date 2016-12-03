@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS Transformed.Article (
     packagesize INT,
     amount REAL,
     unit TEXT,
-    url TEXT    
+    url TEXT,
+    shop INT    
 );
 
 CREATE TABLE IF NOT EXISTS Transformed.Tag (
@@ -26,5 +27,6 @@ CREATE TABLE IF NOT EXISTS Transformed.Tag (
 
 CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
     article INT NOT NULL REFERENCES Transformed.Article(id) ON DELETE CASCADE,
-    tag INT NOT NULL REFERENCES Transformed.Tag(id) ON DELETE CASCADE
+    tag INT NOT NULL REFERENCES Transformed.Tag(id) ON DELETE CASCADE,
+    preference INT NOT NULL
 );
