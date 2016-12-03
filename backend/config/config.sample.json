@@ -2,6 +2,8 @@
     "dbhost": "",
     "dbport": 0,
     "dbname": "",
+    "dbschemanameuserdata": "",
+    "dbschemanameuserdatatest": "",
     "dbusercrawler": "",
     "dbpasscrawler": "",
     "dbusertransformer": "",
