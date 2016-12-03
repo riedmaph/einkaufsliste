@@ -33,7 +33,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation."
+                        "description": "Token for the user.",
+                        "schema": {
+                            "$ref": "#/definitions/Token"
+                        }
                     },
                     "400": {
                         "description": "User already exists or password is invalid.",
