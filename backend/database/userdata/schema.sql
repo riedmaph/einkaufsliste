@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS UserData.List (
 
 CREATE TABLE IF NOT EXISTS UserData.Item (
     id SERIAL PRIMARY KEY,
+    position INTEGER,
     name TEXT,
     checked BOOLEAN DEFAULT FALSE,
     amount REAL,
