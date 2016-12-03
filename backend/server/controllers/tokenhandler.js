@@ -25,10 +25,13 @@ function verifyToken(req, res, next) {
     // verifies secret and checks exp
     jwt.verify(token, config.tokensecrete, function(err, decoded) {      
       if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+        res.status(403)
+          .json({
+            message: 'Failed to authenticate token.'
+          });
       } else {
         // if everything is good, save to request for use in other routes
-        req.decoded = decoded;    
+        req.body.userid = decoded.userid;    
         next();
       }
     });
@@ -39,7 +42,7 @@ function verifyToken(req, res, next) {
     // return an error
     return res.status(403).send({ 
         success: false, 
-        message: 'No token provided.' 
+        message: 'Failed to authenticate token.' 
     });
     
   }
