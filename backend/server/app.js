@@ -25,6 +25,11 @@ app.use('/doc', express.static(path.join(__dirname, 'doc')));
 //set router
 app.use('/api', apirouter);
 
+//redirect root to doc
+app.get('/', function(req, res) {
+    res.redirect('/doc');
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

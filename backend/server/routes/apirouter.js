@@ -4,9 +4,9 @@ var tokenhandler = require('../controllers/tokenhandler');
 
 var dbconnector = require('../controllers/dbconnector');
 
-/* GET home page. */
+// redirect root to doc
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'test' });
+  res.redirect('/doc');
 });
 
 router.post('/users/register', dbconnector.register);
