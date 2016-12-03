@@ -2,30 +2,38 @@ var express = require('express');
 var router = express.Router();
 var tokenhandler = require('../controllers/tokenhandler');
 
-var dbconnector = require('../controllers/dbconnector');
+var users = require('../controllers/users/users');
+var lists = require('../controllers/lists/lists');
+var items = require('../controllers/items/items');
 
-/* GET home page. */
+// redirect root to doc
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'test' });
+  res.redirect('/doc');
 });
 
-router.post('/users/register', dbconnector.register);
-router.post('/users/login', dbconnector.login);
+/* Users */
+router.route('/users/register')
+	.post(users.register);
+router.route('/users/login')
+	.post(users.login);
 
 // check if a valid token is provided
 router.use(tokenhandler.verifyToken);
 
 /* ----- protected Routes ----- */
+/* Lists */
+router.route('/lists')
+		.get(lists.getAllLists)
+		.post(lists.createList)
+		.put(lists.updateList)
+		.delete(lists.deleteList);
 
-router.get('/lists', dbconnector.getAllLists);
-router.post('/lists', dbconnector.createList);
-router.put('/lists', dbconnector.updateList);
-router.delete('/lists', dbconnector.deleteList);
-
-router.get('/lists/:listid/items', dbconnector.getListItems);
-router.post('/lists/:listid/items', dbconnector.createItem);
-router.put('/lists/:listid/items', dbconnector.updateItem);
-router.delete('/lists/:listid/items', dbconnector.deleteItem);
+/* items */
+router.route('/lists/:listid/items')
+		.get(items.getListItems)
+		.post(items.createItem)
+		.put(items.updateItem)
+		.delete(items.deleteItem);
 
 // error handler
 router.use(function(err, req, res, next) {

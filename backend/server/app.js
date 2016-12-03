@@ -11,10 +11,11 @@ var app = express();
 // set the view engine to jade
 app.set('view engine', 'jade');
 
-// TODO: set config file according to ENV variable
-app.set('test', 'geht');
+if(process.env.NODE_ENV != 'test') {
+		app.use(logger('combined'));
+}
 
-app.use(logger('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -24,6 +25,11 @@ app.use('/doc', express.static(path.join(__dirname, 'doc')));
 
 //set router
 app.use('/api', apirouter);
+
+//redirect root to doc
+app.get('/', function(req, res) {
+    res.redirect('/doc');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
