@@ -8,6 +8,9 @@ var sqlCreateList = db.loadSql(path.join('controllers', 'lists', 'createList.sql
 var sqlUpdateList = db.loadSql(path.join('controllers', 'lists', 'updateList.sql'));
 var sqlDeleteList = db.loadSql(path.join('controllers', 'lists', 'deleteList.sql'));
 
+var sqlReadList = db.loadSql(path.join('controllers', 'lists', 'readList.sql'));
+var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
+
 function getAllLists(req, res, next) {
   db.conn.any(sqlReadLists, req.body)
     .then(function (data) {
@@ -17,6 +20,36 @@ function getAllLists(req, res, next) {
         });
     })
     .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getListWithItems(req, res, next) {
+  req.body.id = req.params.listid;
+  db.conn.oneOrNone(sqlReadList, req.body)
+    .then(function (list) {
+      if(list) {
+        req.body.listid = req.params.listid;
+        db.conn.any(sqlReadItems, req.body)
+          .then(function (data) {
+            list.items=data;
+            res.status(200)
+              .json(list);
+          })
+          .catch(function (err) {
+            console.log(err);
+            return next(err);
+          });
+      }
+      else {
+        res.status(404)
+          .json({
+            message: 'A list with the requested ID does not exists.'
+          });
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
       return next(err);
     });
 }
@@ -57,6 +90,7 @@ function deleteList(req, res, next) {
 
 module.exports = {
   getAllLists,
+  getListWithItems,
   createList,
   updateList,
   deleteList
