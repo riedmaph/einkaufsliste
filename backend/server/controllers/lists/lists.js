@@ -8,6 +8,8 @@ var sqlCreateList = db.loadSql(path.join('controllers', 'lists', 'createList.sql
 var sqlUpdateList = db.loadSql(path.join('controllers', 'lists', 'updateList.sql'));
 var sqlDeleteList = db.loadSql(path.join('controllers', 'lists', 'deleteList.sql'));
 
+var sqlMoveItemUp = db.loadSql(path.join('controllers', 'lists', 'moveItemUp.sql'));
+
 function getAllLists(req, res, next) {
   db.conn.any(sqlReadLists, req.body)
     .then(function (data) {
@@ -53,6 +55,22 @@ function deleteList(req, res, next) {
     .catch(function (err) {
       return next(err);
     });
+}
+
+function moveItems(req, res, next) {
+  
+  if(req.body.from < req.body.to) {         //move up
+    db.conn.none(sqlMoveItemUp, req.body)
+      .then(function () {
+        res.sendStatus(200);
+      })
+      .catch(function (err) {
+        return next(err);
+      });
+  }
+  else {                                    //move down
+
+  }
 }
 
 module.exports = {
