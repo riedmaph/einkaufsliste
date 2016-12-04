@@ -1,3 +1,5 @@
+/* Beginn Transaction to secure atomic execution*/
+BEGIN;
 /* free position of from object */
 UPDATE ${schemaname:raw}.Item 
 SET position=-1
@@ -12,3 +14,6 @@ WHERE list=${listid} AND position >= ${to} AND position < ${from};
 UPDATE ${schemaname:raw}.Item 
 SET position=${to}
 WHERE list=${listid} AND position = -1;
+
+/*End Transaction*/
+COMMIT;
