@@ -65,8 +65,9 @@ function login(req, res, next) {
     .then(function (user) {
       if(user) {
         password(req.body.password).verifyAgainst(user.password, function(error, verified) {
-          if(error)
-              throw new Error('Something went wrong!');
+          if(error) {
+            return next(error);
+          }
 
           if(verified) {
             res.status(200)

@@ -28,6 +28,9 @@ router.route('/lists')
 		.put(lists.updateList)
 		.delete(lists.deleteList);
 
+router.route('/lists/:listid')
+	.get(lists.getListWithItems)
+
 /* items */
 router.route('/lists/:listid/items')
 		.get(items.getListItems)

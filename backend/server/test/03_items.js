@@ -193,6 +193,24 @@ describe('Items', () => {
             done();
           });
     });
+
+    it('it should return 3 items and listdetails from GET /api/lists/{listID}', (done) => {
+      chai.request(app)
+          .get('/api/lists/'+listid)
+          .set('x-access-token', token)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('items');
+              res.body.should.have.property('name');
+              res.body.name.should.be.eql('newlist1');
+              res.body.should.have.property('count');
+              res.body.count.should.be.eql(3);
+              res.body.items.should.be.a('array');
+              res.body.items.length.should.be.eql(3);
+            done();
+          });
+    });
   });
 
   describe('/PUT', () => {

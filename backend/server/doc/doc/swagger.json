@@ -160,7 +160,7 @@
                     "200": {
                         "description": "Successful operation.",
                         "schema": {
-                            "$ref": "#/definitions/DeleteList"
+                            "$ref": "#/definitions/ListID"
                         }
                     },
                     "403": {
@@ -239,7 +239,7 @@
                         "description": "Id of the list to be deleted.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/DeleteList"
+                            "$ref": "#/definitions/ListID"
                         }
                     }
                 ],
@@ -251,6 +251,46 @@
                         "description": "Failed to authenticate token.",
                         "schema": {
                             "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/lists/{listid}": {
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Get details and all items of the specified list.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "List id to load details and items from.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/ListWithItems"
                         }
                     },
                     "500": {
@@ -351,7 +391,7 @@
                     "200": {
                         "description": "Successful operation.",
                         "schema": {
-                            "$ref": "#/definitions/DeleteItem"
+                            "$ref": "#/definitions/ItemID"
                         }
                     },
                     "403": {
@@ -446,7 +486,7 @@
                         "description": "Id of the item to be deleted.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/DeleteItem"
+                            "$ref": "#/definitions/ItemID"
                         }
                     }
                 ],
@@ -496,7 +536,7 @@
             "properties": {
                 "token": {
                     "type": "string",
-                    "description": "The signed JWT."
+                    "description": "The signed JWT. (Contains the UUID for the user.)"
                 }
             }
         },
@@ -512,14 +552,15 @@
                 }
             }
         },
-        "DeleteList": {
+        "ListID": {
             "type": "object",
             "required": [
                 "id"
             ],
             "properties": {
                 "id": {
-                    "type": "integer",
+                    "type": "string",
+                    "format": "uuid",
                     "description": "Unique identifer of list."
                 }
             }
@@ -530,7 +571,7 @@
                     "$ref": "#/definitions/AddList"
                 },
                 {
-                    "$ref": "#/definitions/DeleteList"
+                    "$ref": "#/definitions/ListID"
                 }
             ]
         },
@@ -547,6 +588,29 @@
                         "count": {
                             "type": "integer",
                             "description": "Number of items in list."
+                        }
+                    }
+                }
+            ]
+        },
+        "UpdateItemList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/UpdateItem"
+            }
+        },
+        "ListWithItems": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/List"
+                },
+                {
+                    "required": [
+                        "items"
+                    ],
+                    "properties": {
+                        "items": {
+                            "$ref": "#/definitions/UpdateItemList"
                         }
                     }
                 }
@@ -583,7 +647,7 @@
                 }
             }
         },
-        "DeleteItem": {
+        "ItemID": {
             "type": "object",
             "required": [
                 "id"
@@ -601,7 +665,7 @@
                     "$ref": "#/definitions/AddItem"
                 },
                 {
-                    "$ref": "#/definitions/DeleteItem"
+                    "$ref": "#/definitions/ItemID"
                 }
             ]
         },
