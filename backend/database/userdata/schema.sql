@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.List (
 );
 
 CREATE TABLE IF NOT EXISTS :schemaname.Item (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     position INTEGER,
     name TEXT,
     checked BOOLEAN DEFAULT FALSE,
