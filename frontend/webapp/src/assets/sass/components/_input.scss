@@ -2,8 +2,18 @@ label {
     display: block;
 }
 
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
 input, md-input {
     display: block;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .form-error {

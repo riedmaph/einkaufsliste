@@ -1,0 +1,44 @@
+:host {
+    display: block;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.new-entry-form {
+    display: block;
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 3rem;
+    height: 3rem;
+    background-color: #fff;
+    box-shadow: 0 .2rem 0.4rem rgba(0, 0, 0, 0.3);
+
+    .form-error {
+        position: fixed;
+        bottom: 4rem;
+        left: 1rem;
+    }
+
+    input {
+        box-sizing: border-box;
+        font-size: 1.5rem;
+        padding: 0 2rem 0 .5rem;
+        width: 100%;
+        display: block;
+        border: none;
+        line-height: 3rem;
+    }
+
+    button {
+        position: fixed;
+        bottom: .5rem;
+        right: .5rem;
+        width: 4rem;
+        height: 4rem;
+
+        [disabled] {
+            background: #bbb;
+        }
+    }
+}

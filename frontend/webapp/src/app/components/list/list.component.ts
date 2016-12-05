@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  HostBinding,
 } from '@angular/core';
 
 import { ListItem } from '../../models/list-item.model';
@@ -22,15 +23,19 @@ export class ListComponent {
   public items: ListItem[] = [ ];
 
   @Output()
-  public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
+  public onRemove: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   @Output()
-  public onEdit: EventEmitter<any> = new EventEmitter<any>();
+  public onEdit: EventEmitter<[ ListItem, ListItem ]> = new EventEmitter<[ ListItem, ListItem ]>();
 
   @Output()
-  public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
+  public onReorder: EventEmitter<any> = new EventEmitter<any>();
 
   public itemMenuIndex: number = -1;
+
+  private editableFlag: boolean = false;
+  private deleteableFlag: boolean = false;
+  private sortableFlag: boolean = false;
 
   constructor(
     private dragulaService: DragulaService,
@@ -40,28 +45,45 @@ export class ListComponent {
     );
   }
 
+  @Input()
+  @HostBinding('attr.editable')
+  public set editable (value: boolean) {
+    this.editableFlag = (value != null && `${value}` !== 'false');
+  }
+  public get editable (): boolean {
+    return this.editableFlag;
+  }
+
+  @Input()
+  @HostBinding('attr.deleteable')
+  public set deleteable (value: boolean) {
+    this.deleteableFlag = (value != null && `${value}` !== 'false');
+  }
+  public get deleteable (): boolean {
+    return this.deleteableFlag;
+  }
+
+  @Input()
+  @HostBinding('attr.sortable')
+  public set sortable (value: boolean) {
+    this.sortableFlag = (value != null && `${value}` !== 'false');
+  }
+  public get sortable (): boolean {
+    return this.sortableFlag;
+  }
+
   /**
    * Removes an item from the items list, after confirmation was successful
    *
    * @param {number} index Index of element to remove
    * @returns {void}
    */
-  public removeItem (index: number): void {
-    let removedItems = this.items.splice(index, 1);
-    this.itemMenuIndex = -1;
-    this.onRemove.emit(removedItems);
-  }
-
-  /**
-   * Moves an item from the items to the completed items list
-   *
-   * @param {number} index Index of the element to move to the completed items section
-   * @return {void}
-   */
-  public completeItem (index: number): void {
-    let completedItem = this.items.splice(index, 1);
-    this.itemMenuIndex = -1;
-    this.onComplete.emit(completedItem[0]);
+  public removeItem (item: ListItem): void {
+    console.info(item);
+    if (this.deleteable) {
+      console.info(item);
+      this.onRemove.emit(item);
+    }
   }
 
   public toggleItemMenu (event: MouseEvent, index: number): void {
@@ -77,22 +99,28 @@ export class ListComponent {
     elem: HTMLInputElement,
     index: number
   ) {
-    if (elem.contentEditable !== 'true') {
-      elem.contentEditable = 'true';
-      elem.focus();
-    } else {
-      this.commitEdit(elem, index);
-      elem.contentEditable = 'false';
+    if (this.editable) {
+      if (elem.contentEditable !== 'true') {
+        elem.contentEditable = 'true';
+        elem.focus();
+      } else {
+        this.commitEdit(elem, index);
+        elem.contentEditable = 'false';
+      }
     }
   }
 
   public commitEdit (elem: HTMLElement, index: number) {
-    if (elem.textContent) {
-      this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
-      elem.textContent = this.items[index].name;
-      this.onEdit.emit({});
-    } else {
-      this.removeItem(index);
+    if (this.editable) {
+      if (elem.textContent) {
+        // deep copy
+        const oldItem = JSON.parse(JSON.stringify(this.items[index]));
+        this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
+        elem.textContent = this.items[index].name;
+        this.onEdit.emit([ oldItem, this.items[index] ]);
+      } else {
+        this.removeItem(this.items[index]);
+      }
     }
   }
 
@@ -102,9 +130,11 @@ export class ListComponent {
     elem: HTMLElement,
     index: number
   ) {
-    if (keyCode === 13) {
-      elem.contentEditable = 'false';
-      this.commitEdit(elem, index);
+    if (this.editable) {
+      if (keyCode === 13) {
+        elem.contentEditable = 'false';
+        this.commitEdit(elem, index);
+      }
     }
   }
 
@@ -131,7 +161,7 @@ export class ListComponent {
       }
       // insert the moved Item at new position
       this.items.splice(targetIndex, 0, movedItem);
-      this.onEdit.emit({ });
+      this.onReorder.emit({ });
     }
     this.blink(movedElem);
   }

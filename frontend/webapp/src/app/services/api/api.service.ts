@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
+import { List } from '../../models';
+
 // import { API_ROUTES } from './routes'; // TODO Currently unused import
 
 @Injectable()
@@ -10,6 +12,19 @@ export class ApiService {
   constructor (
     private http: Http
   ) {}
+
+  public getList (listId: string): Observable<List> {
+    return Observable.of({
+      uuid: 'abc-abc-abc',
+      name: 'test list',
+      items: [
+        { uuid: '0', name: 'entry 01', checked: false, amount: 4, unit: 'ml', onSale: false },
+        { uuid: '0', name: 'entry 02', checked: false, amount: 6, unit: 'L', onSale: true },
+        { uuid: '0', name: 'entry 03', checked: true, amount: 2, unit: 'kg', onSale: false },
+        { uuid: '0', name: 'entry 04', checked: true, amount: 12, unit: 'g', onSale: true },
+      ],
+    });
+  }
 
   /**
    * Makes API call to retrieve list entries

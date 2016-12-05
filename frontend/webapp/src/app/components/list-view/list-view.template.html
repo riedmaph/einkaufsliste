@@ -1,0 +1,25 @@
+<sl-list [items]="completedItems" deleteable></sl-list>
+
+<sl-list [items]="items" editable deleteable sortable></sl-list>
+
+<div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
+
+<form [formGroup]="form" class="new-entry-form">
+  <span *ngIf="form.controls['newEntry'].invalid" class="form-error">
+    Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
+  </span>
+  <input
+    [autoCompletion]="apiService.getAutoCompletion"
+    (onSelect)="add($event)"
+    type="text"
+    placeholder="Add a new entry..."
+    formControlName="newEntry"
+  >
+  <button
+    md-fab color="accent"
+    (click)="add($event)"
+    [disabled]="form.invalid"
+  >
+    <md-icon>add</md-icon>
+  </button>
+</form>

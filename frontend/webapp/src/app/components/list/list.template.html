@@ -6,15 +6,19 @@
     *ngFor="let item of items; let i = index"
     [id]="i"
     (dblclick)="toggleItemMenu($event, i)"
-
   >
-    <md-checkbox color="primary" (click)="completeItem(i)"></md-checkbox>
+    <md-checkbox
+      color="primary"
+      (click)="item.checked = !item.checked"
+      [checked]="item.checked"
+    ></md-checkbox>
     <span class="item-text" #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
       {{ item.amount }} {{ item.unit }} {{ item.name }}
     </span>
 
     <div class="item-button-wrapper" [class.show]="itemMenuIndex === i">
       <button color="accent"
+        *ngIf="editable"
         class="edit-button"
         (click)="toggleEditable($event, textfield, i)"
         md-ripple
@@ -28,8 +32,9 @@
       </button>
 
       <button color="warn"
+        *ngIf="deleteable"
         class="delete-button"
-        (click)="removeItem(i)"
+        (click)="removeItem(item)"
         md-ripple
       >
         <md-icon class="material-icons">delete</md-icon>

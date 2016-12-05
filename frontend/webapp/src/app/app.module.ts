@@ -24,11 +24,12 @@ import {
   AuthService,
   AuthGuard,
   ApiMapperService,
+  ListItemParser,
 } from './services';
 
 // Components
 import {
-  HomeComponent,
+  ListViewComponent,
   NoContentComponent,
   NavigationComponent,
   ListComponent,
@@ -60,7 +61,7 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    HomeComponent,
+    ListViewComponent,
     NoContentComponent,
     NavigationComponent,
     ListComponent,
@@ -90,6 +91,7 @@ type StoreType = {
     AuthService,
     ApiMapperService,
     AuthGuard,
+    ListItemParser,
   ],
 })
 export class AppModule {
