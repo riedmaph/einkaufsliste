@@ -293,6 +293,12 @@
                             "$ref": "#/definitions/ListWithItems"
                         }
                     },
+                    "404": {
+                        "description": "A list with the requested ID does not exists.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
                     "500": {
                         "description": "Unhandeled error.",
                         "schema": {
@@ -508,52 +514,6 @@
                     }
                 }
             }
-        },
-        "/lists/{listid}/items/move": {
-            "put": {
-                "tags": [
-                    "Items"
-                ],
-                "summary": "Move an existing item.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "List id to update item in.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Id and values of the item to be updated.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/MoveItem"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation."
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -700,7 +660,8 @@
             ],
             "properties": {
                 "id": {
-                    "type": "integer",
+                    "type": "string",
+                    "format": "uuid",
                     "description": "Unique identifer of item."
                 }
             }
@@ -714,23 +675,6 @@
                     "$ref": "#/definitions/ItemID"
                 }
             ]
-        },
-        "MoveItem": {
-            "type": "object",
-            "required": [
-                "from",
-                "to"
-            ],
-            "properties": {
-                "from": {
-                    "type": "integer",
-                    "description": "Actual position of the moved item."
-                },
-                "to": {
-                    "type": "integer",
-                    "description": "Target position of the moved item."
-                }
-            }
         },
         "Error": {
             "type": "object",
