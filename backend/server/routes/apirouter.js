@@ -23,22 +23,22 @@ router.use(tokenhandler.verifyToken);
 /* ----- protected Routes ----- */
 /* Lists */
 router.route('/lists')
-		.get(lists.getAllLists)
-		.post(lists.createList)		
+  .get(lists.getAllLists)
+  .post(lists.createList)   
 
 router.route('/lists/:listid')
-	.get(lists.getListWithItems)
-	.put(lists.updateList)		
-	.delete(lists.deleteList);
+  .get(lists.getListWithItems)
+  .put(lists.updateList)    
+  .delete(lists.deleteList);
 
 /* items */
 router.route('/lists/:listid/items')
-		.get(items.getListItems)
-		.post(items.createItem)
+  .get(items.getListItems)
+  .post(items.createItem)
 
 router.route('/lists/:listid/items/:itemid')
-		.put(items.updateItem)
-		.delete(items.deleteItem);
+  .put(items.updateItem)
+  .delete(items.deleteItem);
 
 router.route('/lists/:listid/items/move')
   .put(items.moveItem);
