@@ -73,6 +73,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public ngAfterViewInit (): void {
     this.listComponents.forEach(listComp => {
+      listComp.onEdit.subscribe(([ oldItem, newItem ]) => this.update(oldItem, newItem));
       listComp.onRemove.subscribe(item => this.removeItem(item));
       listComp.onReorder.subscribe(this.reorderItems);
     });
@@ -102,6 +103,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
       window.scrollTo(0, document.body.getBoundingClientRect().height);
     }
+  }
+
+  public update(oldItem: ListItem, newItem: ListItem): void {
+    this.apiService.updateItem(this.list.id, oldItem.id, newItem);
   }
 
   /**

@@ -11,6 +11,7 @@ export const API_ROUTES = {
     entries: {
       add: `${API_BASE_URL}/lists/:listId/items`,
       remove: `${API_BASE_URL}/lists/:listId/items/:itemId`,
+      update: `${API_BASE_URL}/lists/:listId/items/:itemId`,
     },
   },
 };

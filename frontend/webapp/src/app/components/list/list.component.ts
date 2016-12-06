@@ -72,6 +72,12 @@ export class ListComponent {
     return this.sortableFlag;
   }
 
+  public toggleChecked (item: ListItem) {
+    const oldItem = JSON.parse(JSON.stringify(item));
+    item.checked = item.checked;
+    this.onEdit.emit([ oldItem, item ]);
+  }
+
   /**
    * Removes an item from the items list, after confirmation was successful
    *

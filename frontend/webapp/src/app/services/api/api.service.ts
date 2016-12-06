@@ -65,4 +65,13 @@ export class ApiService {
     );
   }
 
+  public updateItem (listUuid: string, itemId: string, item: ListItem): Observable<any> {
+    return this.authHttp.put(
+      API_ROUTES.lists.entries.update
+        .replace(':listId', listUuid)
+        .replace(':itemId', itemId),
+      item,
+    );
+  }
+
 }
