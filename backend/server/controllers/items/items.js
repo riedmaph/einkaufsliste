@@ -63,6 +63,7 @@ function updateItem(req, res, next) {
 
 function deleteItem(req, res, next) {
   req.body.id = req.params.itemid;
+  
   db.conn.none(sqlDeleteItem, req.body)
     .then(function () {
       res.sendStatus(200);

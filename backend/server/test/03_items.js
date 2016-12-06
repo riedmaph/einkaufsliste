@@ -263,7 +263,6 @@ describe('Items', () => {
       chai.request(app)
           .delete('/api/lists/'+listid+'/items/'+id1)
           .set('x-access-token', token)
-          .send(item)
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
