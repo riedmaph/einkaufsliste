@@ -137,14 +137,13 @@ export class ListComponent {
   }
 
   private blink (elem: HTMLElement): void {
-    const originalClass = elem.className;
     const blinkDuration = 250;
     const offset = 200;
     // nested timeouts to avoid race conditions
     setTimeout(() => {
-      elem.className = 'blink';
+      elem.classList.add('blink');
       setTimeout(() => {
-        elem.className = originalClass;
+        elem.classList.remove('blink');
       }, blinkDuration);
     }, offset);
   }
