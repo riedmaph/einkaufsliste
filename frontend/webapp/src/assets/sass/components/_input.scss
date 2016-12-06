@@ -10,9 +10,20 @@ button {
 
 input, md-input {
     display: block;
+    box-sizing: border-box;
 
     &:focus {
         outline: none;
+    }
+
+    &.form-field--sm {
+        flex: 0;
+        width: 3rem;
+        padding: 0 .25em;
+    }
+
+    &.form-field--lg {
+        flex: 1;
     }
 }
 

@@ -6,17 +6,33 @@
 
 <form [formGroup]="form" class="new-entry-form">
   <span
-    *ngIf="!form.controls['newEntry'].pristine && form.controls['newEntry'].errors && form.controls['newEntry'].errors.maxlength"
+    *ngIf="!form.controls['itemName'].pristine && form.controls['itemName'].errors && form.controls['itemName'].errors.maxlength"
     class="form-error"
   >
     Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
   </span>
   <input
+    type="number"
+    formControlName="amount"
+    name="amount"
+    class="form-field--sm"
+    placeholder="1"
+  >
+  <input
+    type="text"
+    formControlName="unit"
+    name="unit"
+    class="form-field--sm"
+    placeholder="kg"
+  >
+  <input
     [autoCompletion]="apiService.getAutoCompletion"
     (onSelect)="add($event)"
     type="text"
-    placeholder="Add a new entry..."
-    formControlName="newEntry"
+    placeholder="Apples"
+    formControlName="itemName"
+    name="itemName"
+    class="form-field--lg"
   >
   <button
     md-fab color="accent"

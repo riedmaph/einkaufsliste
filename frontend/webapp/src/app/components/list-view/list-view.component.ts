@@ -41,7 +41,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      newEntry: [ '', Validators.compose([
+      amount: [ '', Validators.required ],
+      unit: [ '', Validators.required ],
+      itemName: [ '', Validators.compose([
         Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
       ]) ],
@@ -85,15 +87,20 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     event.preventDefault();
 
     if (this.form.valid) {
-      this.list.items.push({
-        name: this.form.controls['newEntry'].value,
-        unit: 'stk',
-        amount: 1,
-        onSale: false,
-        uuid: '',
+      const newItem: ListItem = {
+        name: this.form.value.itemName,
+        unit: this.form.value.unit,
+        amount: this.form.value.amount,
         checked: false,
+      };
+
+      this.apiService.addItem(this.list.id, newItem).subscribe(res => {
+        newItem.id = res.id;
+        this.list.items.push(newItem);
+        this.form.controls['itemName'].setValue('');
       });
-      this.form.controls['newEntry'].setValue('');
+
+      window.scrollTo(0, document.body.getBoundingClientRect().height);
     }
   }
 
@@ -104,7 +111,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @return {void}
    */
   public removeItem (item: ListItem): void {
-    this.list.items.splice(this.list.items.indexOf(item), 1);
+    this.apiService.removeItem(this.list.id, item).subscribe(
+      () => this.list.items.splice(this.list.items.indexOf(item), 1),
+    );
   }
 
   public reorderItems (): void {

@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     private router: Router,
   ) {}
 
-  canActivate() {
+  public canActivate (): boolean {
     if (this.authService.loggedIn) {
       return true;
     } else {
