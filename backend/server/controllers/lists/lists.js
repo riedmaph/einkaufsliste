@@ -88,6 +88,22 @@ function deleteList(req, res, next) {
     });
 }
 
+function moveItems(req, res, next) {
+  
+  if(req.body.from < req.body.to) {         //move up
+    db.conn.none(sqlMoveItemUp, req.body)
+      .then(function () {
+        res.sendStatus(200);
+      })
+      .catch(function (err) {
+        return next(err);
+      });
+  }
+  else {                                    //move down
+
+  }
+}
+
 module.exports = {
   getAllLists,
   getListWithItems,

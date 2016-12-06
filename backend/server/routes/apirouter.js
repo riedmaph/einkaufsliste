@@ -13,9 +13,9 @@ router.get('/', function(req, res, next) {
 
 /* Users */
 router.route('/users/register')
-	.post(users.register);
+  .post(users.register);
 router.route('/users/login')
-	.post(users.login);
+  .post(users.login);
 
 // check if a valid token is provided
 router.use(tokenhandler.verifyToken);
@@ -23,27 +23,30 @@ router.use(tokenhandler.verifyToken);
 /* ----- protected Routes ----- */
 /* Lists */
 router.route('/lists')
-		.get(lists.getAllLists)
-		.post(lists.createList)
-		.put(lists.updateList)
-		.delete(lists.deleteList);
+  .get(lists.getAllLists)
+  .post(lists.createList)
+  .put(lists.updateList)
+  .delete(lists.deleteList);
 
 router.route('/lists/:listid')
 	.get(lists.getListWithItems)
 
 /* items */
 router.route('/lists/:listid/items')
-		.get(items.getListItems)
-		.post(items.createItem)
-		.put(items.updateItem)
-		.delete(items.deleteItem);
+  .get(items.getListItems)
+  .post(items.createItem)
+  .put(items.updateItem)
+  .delete(items.deleteItem);
+
+router.route('/lists/:listid/items/move')
+  .put(items.moveItem);
 
 // error handler
 router.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.status(err.status || 500)
-   	.json({
-     	message: err.message
+    .json({
+      message: err.message
    });
 
 });
