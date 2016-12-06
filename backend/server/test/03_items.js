@@ -216,14 +216,13 @@ describe('Items', () => {
   describe('/PUT', () => {
     it('it should update an existing item', (done) => {
       var item = {
-          id: id1,
           name: "newitem1Updated",
           checked: true,
           amount: 10.00,
           unit: 'stk'
       }
       chai.request(app)
-          .put('/api/lists/'+listid+'/items')
+          .put('/api/lists/'+listid+'/items/'+id1)
           .set('x-access-token', token)
           .send(item)
           .end((err, res) => {
@@ -235,7 +234,7 @@ describe('Items', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .put('/api/lists/'+listid+'/items')
+          .put('/api/lists/'+listid+'/items/'+id1)
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -246,7 +245,7 @@ describe('Items', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .put('/api/lists/'+listid+'/items')
+          .put('/api/lists/'+listid+'/items/'+id1)
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);
@@ -260,11 +259,8 @@ describe('Items', () => {
   
   describe('/DELETE', () => {
     it('it should delete an existing item', (done) => {
-      var item = {
-          id: id1
-      }
       chai.request(app)
-          .delete('/api/lists/'+listid+'/items')
+          .delete('/api/lists/'+listid+'/items/'+id1)
           .set('x-access-token', token)
           .send(item)
           .end((err, res) => {
@@ -276,7 +272,7 @@ describe('Items', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .delete('/api/lists/'+listid+'/items')
+          .delete('/api/lists/'+listid+'/items/'+id1)
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -287,7 +283,7 @@ describe('Items', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .delete('/api/lists/'+listid+'/items')
+          .delete('/api/lists/'+listid+'/items/'+id1)
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);

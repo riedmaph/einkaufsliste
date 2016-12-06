@@ -174,11 +174,10 @@ describe('Lists', () => {
   describe('/PUT', () => {
     it('it should update an existing list', (done) => {
       var list = {
-          id: id1,
           name: "newlist1Updated"
       }
       chai.request(app)
-          .put('/api/lists')
+          .put('/api/lists/'+id1)
           .set('x-access-token', token)
           .send(list)
           .end((err, res) => {
@@ -190,7 +189,7 @@ describe('Lists', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .put('/api/lists')
+          .put('/api/lists/'+id1)
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -201,7 +200,7 @@ describe('Lists', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .put('/api/lists')
+          .put('/api/lists/'+id1)
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);
@@ -214,13 +213,9 @@ describe('Lists', () => {
 
   describe('/DELETE', () => {
     it('it should delete an existing list', (done) => {
-      var list = {
-          id: id1
-      }
       chai.request(app)
-          .delete('/api/lists')
+          .delete('/api/lists/'+id1)
           .set('x-access-token', token)
-          .send(list)
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -230,7 +225,7 @@ describe('Lists', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .delete('/api/lists')
+          .delete('/api/lists/'+id1)
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -241,7 +236,7 @@ describe('Lists', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .delete('/api/lists')
+          .delete('/api/lists/'+id1)
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);

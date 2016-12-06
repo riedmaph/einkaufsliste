@@ -24,17 +24,19 @@ router.use(tokenhandler.verifyToken);
 /* Lists */
 router.route('/lists')
 		.get(lists.getAllLists)
-		.post(lists.createList)
-		.put(lists.updateList)
-		.delete(lists.deleteList);
+		.post(lists.createList)		
 
 router.route('/lists/:listid')
 	.get(lists.getListWithItems)
+	.put(lists.updateList)		
+	.delete(lists.deleteList);
 
 /* items */
 router.route('/lists/:listid/items')
 		.get(items.getListItems)
 		.post(items.createItem)
+
+router.route('/lists/:listid/items/:itemid')
 		.put(items.updateItem)
 		.delete(items.deleteItem);
 

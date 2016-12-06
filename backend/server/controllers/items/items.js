@@ -51,7 +51,7 @@ function createItem(req, res, next) {
 
 function updateItem(req, res, next) {
   req.body.listid = req.params.listid;
-  req.body.id = parseInt(req.body.id);
+  req.body.id = req.params.itemid;
   req.body.amount = parseFloat(req.body.amount);
 
   db.conn.none(sqlUpdateItem, req.body)
@@ -64,6 +64,7 @@ function updateItem(req, res, next) {
 }
 
 function deleteItem(req, res, next) {
+  req.body.id = req.params.itemid;
   db.conn.none(sqlDeleteItem, req.body)
     .then(function () {
       res.sendStatus(200);

@@ -69,6 +69,7 @@ function createList(req, res, next) {
 }
 
 function updateList(req, res, next) {
+  req.body.id = req.params.listid;
   db.conn.none(sqlUpdateList, req.body)
     .then(function () {
       res.sendStatus(200);
@@ -79,6 +80,7 @@ function updateList(req, res, next) {
 }
 
 function deleteList(req, res, next) {
+  req.body.id = req.params.listid;
   db.conn.none(sqlDeleteList, req.body)
     .then(function () {
       res.sendStatus(200);
