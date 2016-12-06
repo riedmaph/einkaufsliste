@@ -5,7 +5,10 @@
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
 <form [formGroup]="form" class="new-entry-form">
-  <span *ngIf="form.controls['newEntry'].invalid" class="form-error">
+  <span
+    *ngIf="!form.controls['newEntry'].pristine && form.controls['newEntry'].errors && form.controls['newEntry'].errors.maxlength"
+    class="form-error"
+  >
     Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
   </span>
   <input
@@ -18,7 +21,7 @@
   <button
     md-fab color="accent"
     (click)="add($event)"
-    [disabled]="form.invalid"
+    [disabled]="!form.pristine && form.invalid"
   >
     <md-icon>add</md-icon>
   </button>

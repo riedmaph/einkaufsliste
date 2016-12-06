@@ -1,8 +1,8 @@
 import {
   Component,
   OnInit,
-  AfterContentInit,
-  ContentChildren,
+  AfterViewInit,
+  ViewChildren,
   QueryList,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -24,16 +24,16 @@ import {
   templateUrl: './list-view.template.html',
   styleUrls: [ './list-view.style.scss' ],
 })
-export class ListViewComponent implements OnInit, AfterContentInit {
+export class ListViewComponent implements OnInit, AfterViewInit {
 
-  public list: List;
+  public list: List = null;
 
   public form: FormGroup;
 
   public MAX_LENGTH: number = 140;
 
-  @ContentChildren(ListComponent)
-  private listComponents: QueryList<ListComponent>
+  @ViewChildren(ListComponent)
+  private listComponents: QueryList<ListComponent>;
 
   constructor (
     private apiService: ApiService,
@@ -41,7 +41,11 @@ export class ListViewComponent implements OnInit, AfterContentInit {
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      newEntry: [ '', Validators.maxLength(this.MAX_LENGTH) ],
+      newEntry: [ '', Validators.compose([
+        Validators.maxLength(this.MAX_LENGTH),
+        Validators.required,
+      ]) ],
+
     });
   }
 
@@ -65,10 +69,9 @@ export class ListViewComponent implements OnInit, AfterContentInit {
   /**
    * @memberOf AfterViewInit
    */
-  public ngAfterContentInit (): void {
+  public ngAfterViewInit (): void {
     this.listComponents.forEach(listComp => {
-      listComp.onRemove.subscribe(this.removeItem);
-      listComp.onEdit.subscribe(this.updateItem);
+      listComp.onRemove.subscribe(item => this.removeItem(item));
       listComp.onReorder.subscribe(this.reorderItems);
     });
   }
@@ -101,18 +104,10 @@ export class ListViewComponent implements OnInit, AfterContentInit {
    * @return {void}
    */
   public removeItem (item: ListItem): void {
-    console.info(item);
-    const itemIndex = this.list.items.indexOf(item);
-    console.info(itemIndex);
-    this.list.items.splice(itemIndex, 1);
-    console.info(this.list);
-  }
-
-  public updateItem ([ oldItem, newItem ]: [ ListItem, ListItem ]): void {
-    console.info(oldItem, newItem);
+    this.list.items.splice(this.list.items.indexOf(item), 1);
   }
 
   public reorderItems (): void {
-    return;
+    return; // TODO
   }
 }

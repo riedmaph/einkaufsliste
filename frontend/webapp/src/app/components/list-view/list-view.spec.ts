@@ -3,17 +3,22 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { HttpModule } from '@angular/http';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
-import { HomeComponent } from './home.component';
+import { ListViewComponent } from './list-view.component';
 import { ApiService } from '../../services/api';
+import { List } from '../../models';
 
-describe('HomeComponent', () => {
+describe('ListViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         ApiService,
-        HomeComponent,
+        ListViewComponent,
+        { provide: ActivatedRoute, useValue: null },
+        { provide: FormBuilder, useValue: { group: () => null } },
       ],
       imports: [
         HttpModule,
@@ -21,26 +26,56 @@ describe('HomeComponent', () => {
     }).compileComponents();
   });
 
-  it('should be defined',  inject([ HomeComponent ], (home: HomeComponent) => {
-    expect(home instanceof HomeComponent).toBe(true);
+  it('should be defined',  inject([ ListViewComponent ], (listview: ListViewComponent) => {
+    expect(listview instanceof ListViewComponent).toBe(true);
   }));
 
-  it('should push an item to completed items when completing it',
-  inject([ HomeComponent ], (home) => {
-    home.completedItems = [ 'entry1' ];
-    home.complete('entry2');
-    expect(home.completedItems).toEqual([ 'entry1', 'entry2' ]);
-    home.complete('entry3');
-    expect(home.completedItems).toEqual([ 'entry1', 'entry2', 'entry3' ]);
-  }));
 
-  it('should push an item to items list when marking it as incomplete',
-  inject([ HomeComponent ], (home) => {
-    home.items = [ ];
-    home.incomplete('entry1');
-    expect(home.items).toEqual([ 'entry1' ]);
-    home.incomplete('entry2');
-    expect(home.items).toEqual([ 'entry1', 'entry2' ]);
-  }));
+  it(
+    'should split items in completed and incompleted items',
+    inject([ ListViewComponent ], (listview: ListViewComponent) => {
+      const list: List = {
+        uuid: 'abc-abc-abc',
+        name: 'Test List',
+        items: [
+          {
+            name: 'entry 01',
+            unit: 'stk',
+            amount: 1,
+            checked: false,
+            onSale: false,
+          },
+          {
+            name: 'entry 02',
+            unit: 'stk',
+            amount: 1,
+            checked: true,
+            onSale: false,
+          },
+        ],
+      };
+
+      listview.list = list;
+
+      expect(listview.items).toEqual([
+        {
+          name: 'entry 01',
+          unit: 'stk',
+          amount: 1,
+          checked: false,
+          onSale: false,
+        },
+      ]);
+      expect(listview.completedItems).toEqual([
+        {
+          name: 'entry 02',
+          unit: 'stk',
+          amount: 1,
+          checked: true,
+          onSale: false,
+        },
+      ]);
+    })
+  );
 
 });

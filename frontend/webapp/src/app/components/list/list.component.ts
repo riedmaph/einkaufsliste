@@ -79,10 +79,9 @@ export class ListComponent {
    * @returns {void}
    */
   public removeItem (item: ListItem): void {
-    console.info(item);
     if (this.deleteable) {
-      console.info(item);
       this.onRemove.emit(item);
+      this.itemMenuIndex = -1;
     }
   }
 
