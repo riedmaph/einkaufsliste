@@ -1,0 +1,1 @@
+INSERT INTO ${schemaname:raw}.Enduser(id, email, password) VALUES(${id}, ${email}, ${hash})

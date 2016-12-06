@@ -15,12 +15,14 @@
       </a>
     </span>
 
-    <button *ngIf="authService.loggednIn" md-icon-button [md-menu-trigger-for]="menu">
-      <i class="material-icons">more_vert</i>
-    </button>
+    <div *ngIf="authService.loggedIn">
+      <md-menu x-position="before" #menu="mdMenu">
+          <button md-menu-item (click)="authService.logout()"> Sign Out </button>
+      </md-menu>
 
-    <md-menu *ngIf="authService.loggednIn" x-position="before" #menu="mdMenu">
-        <button md-menu-item (click)="authService.logout()"> Sign Out </button>
-    </md-menu>
+      <button md-icon-button [md-menu-trigger-for]="menu">
+        <i class="material-icons">more_vert</i>
+      </button>
+    </div>
   </md-toolbar>
 </nav>
