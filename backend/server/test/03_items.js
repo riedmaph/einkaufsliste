@@ -99,6 +99,7 @@ describe('Items', () => {
     it('it should create a new item', (done) => {
       var item = {
           name: "newitem1",
+          position: 0,
           checked: false,
           amount: 10.00,
           unit: 'stk'

@@ -13,9 +13,9 @@ router.get('/', function(req, res, next) {
 
 /* Users */
 router.route('/users/register')
-	.post(users.register);
+  .post(users.register);
 router.route('/users/login')
-	.post(users.login);
+  .post(users.login);
 
 // check if a valid token is provided
 router.use(tokenhandler.verifyToken);
@@ -40,12 +40,15 @@ router.route('/lists/:listid/items/:itemid')
 		.put(items.updateItem)
 		.delete(items.deleteItem);
 
+router.route('/lists/:listid/items/move')
+  .put(items.moveItem);
+
 // error handler
 router.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.status(err.status || 500)
-   	.json({
-     	message: err.message
+    .json({
+      message: err.message
    });
 
 });
