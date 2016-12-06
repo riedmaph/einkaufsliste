@@ -33,6 +33,7 @@ import {
   NoContentComponent,
   NavigationComponent,
   ListComponent,
+  ListOverviewComponent,
   RegisterComponent,
   LoginComponent,
 } from './components';
@@ -64,6 +65,7 @@ type StoreType = {
     NoContentComponent,
     NavigationComponent,
     ListComponent,
+    ListOverviewComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
     RegisterComponent,

@@ -12,9 +12,4 @@ export const LIST_VIEW_ROUTES: Routes = [
       list: ListResolver,
     },
   },
-  {
-    path: '',
-    redirectTo: 'list/0',
-    pathMatch: 'full',
-  },
 ];

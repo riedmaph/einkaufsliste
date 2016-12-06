@@ -14,6 +14,11 @@ export class ApiService {
     private authHttp: AuthHttp
   ) {}
 
+  public getAllLists (): Observable<List[]> {
+    return this.authHttp.get(API_ROUTES.lists.all)
+      .map(res => res.json().lists);
+  }
+
   public getList (listUuid: string): Observable<List> {
     return this.authHttp.get(API_ROUTES.lists.single.replace(':listId', listUuid))
       .map(res => res.json());
