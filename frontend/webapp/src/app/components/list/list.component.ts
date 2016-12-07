@@ -11,7 +11,10 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 @Component({
   selector: 'sl-list',
   templateUrl: './list.template.html',
-  styleUrls: [ './list.style.scss' ],
+  styleUrls: [
+    './list.style.scss',
+    './list.dragdrop.style.scss',
+  ],
 })
 export class ListComponent {
 
@@ -130,5 +133,18 @@ export class ListComponent {
       this.items.splice(targetIndex, 0, movedItem);
       this.onEdit.emit({ });
     }
+    this.blink(movedElem);
+  }
+
+  private blink (elem: HTMLElement): void {
+    const blinkDuration = 250;
+    const offset = 200;
+    // nested timeouts to avoid race conditions
+    setTimeout(() => {
+      elem.classList.add('blink');
+      setTimeout(() => {
+        elem.classList.remove('blink');
+      }, blinkDuration);
+    }, offset);
   }
 }
