@@ -16,6 +16,7 @@ function validatePassword(password) {
 function register(req, res, next) {
   db.conn.oneOrNone(sqlRegisterCheckUser, req.body)
     .then(function (user) {
+      throw new Error('haha');
       if(!user) {
 
         if(validatePassword(req.body.password)) {
@@ -37,6 +38,7 @@ function register(req, res, next) {
                   });
               })
               .catch(function (err) {
+                err.message = 'controllers.users.register.sqlRegisterInsertUser: ' + err.message;
                 return next(err);
               });
           });
@@ -56,6 +58,7 @@ function register(req, res, next) {
       }
     })
     .catch(function (err) {
+      err.message = 'controllers.users.register.sqlRegisterCheckUser: ' + err.message;
       return next(err);
     });
 }
@@ -66,6 +69,7 @@ function login(req, res, next) {
       if(user) {
         password(req.body.password).verifyAgainst(user.password, function(error, verified) {
           if(error) {
+            err.message = 'controllers.users.login.verifypassword: ' + err.message;
             return next(error);
           }
 
@@ -92,6 +96,7 @@ function login(req, res, next) {
       }
     })
     .catch(function (err) {
+      err.message = 'controllers.users.login.sqlRegisterCheckUser: ' + err.message;
       return next(err);
     });
 }
