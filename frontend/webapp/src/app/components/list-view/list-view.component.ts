@@ -51,9 +51,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /** Getter for unchecked items */
   public get items (): ListItem[] {
     return this.list.items.filter(i => !i.checked);
   }
+
+  /** Getter for checked items */
   public get completedItems (): ListItem[] {
     return this.list.items.filter(i => i.checked);
   }
@@ -105,6 +108,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Propagate change of an item via API
+   *
+   * @param {ListItem} item Item that changed in its new state
+   * @return {void}
+   */
   public update(item: ListItem): void {
     this.apiService.updateItem(this.list.id, item.id, item)
       .subscribe(() => undefined);

@@ -13,13 +13,17 @@ import { List } from '../../models';
 })
 export class ListOverviewComponent implements OnInit {
 
+  /** Available lists */
   public lists: List[] = [ ];
 
   constructor (
     private route: ActivatedRoute,
   ) {}
 
-  public ngOnInit () {
+  /**
+   * @memberOf OnInit
+   */
+  public ngOnInit (): void {
     this.route.data.subscribe((data: { lists: List[] }) => this.lists = data.lists);
   }
 }

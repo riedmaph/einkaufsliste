@@ -45,34 +45,49 @@ export class ListComponent {
     );
   }
 
+  /** Setter for editableFlag */
   @Input()
   @HostBinding('attr.editable')
   public set editable (value: boolean) {
     this.editableFlag = (value != null && `${value}` !== 'false');
   }
+
+  /** Getter for editableFlag */
   public get editable (): boolean {
     return this.editableFlag;
   }
 
+  /** Setter for deleteableFlag */
   @Input()
   @HostBinding('attr.deleteable')
   public set deleteable (value: boolean) {
     this.deleteableFlag = (value != null && `${value}` !== 'false');
   }
+
+  /** Getter for deleteableFlag */
   public get deleteable (): boolean {
     return this.deleteableFlag;
   }
 
+  /** Setter for sortableFlag */
   @Input()
   @HostBinding('attr.sortable')
   public set sortable (value: boolean) {
     this.sortableFlag = (value != null && `${value}` !== 'false');
   }
+
+  /** Getter for sortableFlag */
   public get sortable (): boolean {
     return this.sortableFlag;
   }
 
-  public toggleChecked (item: ListItem) {
+  /**
+   * Toggles the checked state of an item and propagates the edit
+   *
+   * @param {ListItem} item Item to update
+   * @return {void}
+   */
+  public toggleChecked (item: ListItem): void {
     item.checked = !item.checked;
     this.onEdit.emit(item);
   }
@@ -90,6 +105,13 @@ export class ListComponent {
     }
   }
 
+  /**
+   * Toggles the visibility of the item-menu
+   *
+   * @param {MouseEvent} event Double click event that triggered this toggle
+   * @param {number} index Index of the element whoose item-menu to toggleChecked
+   * @return {void}
+   */
   public toggleItemMenu (event: MouseEvent, index: number): void {
     if (this.itemMenuIndex === index) {
       this.onEdit.emit(this.items[index]);
@@ -99,7 +121,14 @@ export class ListComponent {
     }
   }
 
-  public commitEdit (item: ListItem) {
+  /**
+   * Commits the edit on an item and propagates the changes
+   * Items without a name or amount = 0 are removed
+   *
+   * @param {ListItem} item Item to update
+   * @return {void}
+   */
+  public commitEdit (item: ListItem): void {
     if (this.editable) {
       if (item.name && item.amount) {
         this.onEdit.emit(item);

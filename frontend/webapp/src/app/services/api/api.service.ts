@@ -70,6 +70,14 @@ export class ApiService {
     );
   }
 
+  /**
+   * Make API call to update a given item
+   *
+   * @param {string} listUuid UUID of the list the item is input
+   * @param {string} itemId ID of the item to update
+   * @param {ListItem} item Updated item
+   * @return {Observable<any>}
+   */
   public updateItem (listUuid: string, itemId: string, item: ListItem): Observable<any> {
     return this.authHttp.put(
       API_ROUTES.lists.entries.update

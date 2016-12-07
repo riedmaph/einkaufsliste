@@ -24,7 +24,6 @@ import {
   AuthService,
   AuthGuard,
   ApiMapperService,
-  ListItemParser,
 } from './services';
 
 // Components
@@ -94,7 +93,6 @@ type StoreType = {
     AuthService,
     ApiMapperService,
     AuthGuard,
-    ListItemParser,
   ],
 })
 export class AppModule {
