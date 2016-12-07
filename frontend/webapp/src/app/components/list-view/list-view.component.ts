@@ -11,7 +11,6 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
-import * as _ from 'lodash';
 
 import { ListComponent } from '../list';
 import { ApiService } from '../../services/api';
@@ -74,7 +73,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public ngAfterViewInit (): void {
     this.listComponents.forEach(listComp => {
-      listComp.onEdit.subscribe(([ oldItem, newItem ]) => this.update(oldItem, newItem));
+      listComp.onEdit.subscribe(newItem => this.update(newItem));
       listComp.onRemove.subscribe(item => this.removeItem(item));
       listComp.onReorder.subscribe(this.reorderItems);
     });
@@ -106,10 +105,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public update(oldItem: ListItem, newItem: ListItem): void {
-    this.apiService.updateItem(this.list.id, oldItem.id, newItem)
-      // On error: Undo by resetting values from oldItem. @TODO show warning
-      .subscribe(null, () => _.merge(newItem, oldItem));
+  public update(item: ListItem): void {
+    this.apiService.updateItem(this.list.id, item.id, item)
+      .subscribe(() => undefined);
   }
 
   /**

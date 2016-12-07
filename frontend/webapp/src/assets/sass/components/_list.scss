@@ -5,8 +5,10 @@ md-list {
 }
 
 md-list-item {
+    display: block;
     position: relative;
     z-index: 1;
+    transition: background-color .25s ease-in-out;
 }
 
 .md-list-item {
@@ -31,13 +33,13 @@ md-list-item {
     text-align: right;
 
     &.show {
-        width: 12rem;
+        width: 10rem;
     }
 
     button {
         display: inline-block;
         height: 48px;
-        width: 6rem;
+        width: 3rem;
         color: #fff;
         border: none;
 
@@ -49,4 +51,37 @@ md-list-item {
             background-color: #536DFE;
         }
     }
+}
+
+md-list-item.edit-mode, li.edit-mode {
+    background-color: #ddd;
+}
+
+.item {
+    display: flex;
+    width: 100%;
+}
+
+.item-unit,
+.item-amount,
+.item-name {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 .1em;
+    margin: 0 .1em;
+    font-size: 1rem;
+    line-height: 2rem;
+}
+
+.item-amount {
+    text-align: right;
+}
+
+.item-unit, .item-amount {
+    width: auto;
+    max-width: auto;
+}
+
+.item-name {
+    flex: 1;
 }

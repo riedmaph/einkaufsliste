@@ -10,12 +10,14 @@ import { ListViewComponent } from './list-view.component';
 import { ApiService } from '../../services/api';
 import { List } from '../../models';
 
+import { ApiServiceStub } from '../../../testing';
+
 describe('ListViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ApiService,
+        { provide: ApiService, useClass: ApiServiceStub },
         ListViewComponent,
         { provide: ActivatedRoute, useValue: null },
         { provide: FormBuilder, useValue: { group: () => null } },
@@ -35,7 +37,7 @@ describe('ListViewComponent', () => {
     'should split items in completed and incompleted items',
     inject([ ListViewComponent ], (listview: ListViewComponent) => {
       const list: List = {
-        uuid: 'abc-abc-abc',
+        id: 'abc-abc-abc',
         name: 'Test List',
         items: [
           {

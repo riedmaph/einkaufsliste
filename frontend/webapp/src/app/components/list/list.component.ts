@@ -26,7 +26,7 @@ export class ListComponent {
   public onRemove: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   @Output()
-  public onEdit: EventEmitter<[ ListItem, ListItem ]> = new EventEmitter<[ ListItem, ListItem ]>();
+  public onEdit: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   @Output()
   public onReorder: EventEmitter<any> = new EventEmitter<any>();
@@ -73,9 +73,8 @@ export class ListComponent {
   }
 
   public toggleChecked (item: ListItem) {
-    const oldItem = JSON.parse(JSON.stringify(item));
     item.checked = !item.checked;
-    this.onEdit.emit([ oldItem, item ]);
+    this.onEdit.emit(item);
   }
 
   /**
@@ -93,53 +92,21 @@ export class ListComponent {
 
   public toggleItemMenu (event: MouseEvent, index: number): void {
     if (this.itemMenuIndex === index) {
+      this.onEdit.emit(this.items[index]);
       this.itemMenuIndex = -1;
     } else {
       this.itemMenuIndex = index;
     }
   }
 
-  public toggleEditable (
-    event: MouseEvent | KeyboardEvent,
-    elem: HTMLInputElement,
-    index: number
-  ) {
+  public commitEdit (item: ListItem) {
     if (this.editable) {
-      if (elem.contentEditable !== 'true') {
-        elem.contentEditable = 'true';
-        elem.focus();
+      if (item.name && item.amount) {
+        this.onEdit.emit(item);
       } else {
-        this.commitEdit(elem, index);
-        elem.contentEditable = 'false';
+        this.removeItem(item);
       }
-    }
-  }
-
-  public commitEdit (elem: HTMLElement, index: number) {
-    if (this.editable) {
-      if (elem.textContent) {
-        // deep copy
-        const oldItem = JSON.parse(JSON.stringify(this.items[index]));
-        this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
-        elem.textContent = this.items[index].name;
-        this.onEdit.emit([ oldItem, this.items[index] ]);
-      } else {
-        this.removeItem(this.items[index]);
-      }
-    }
-  }
-
-  public onEditHandler (
-    event: KeyboardEvent,
-    keyCode: number,
-    elem: HTMLElement,
-    index: number
-  ) {
-    if (this.editable) {
-      if (keyCode === 13) {
-        elem.contentEditable = 'false';
-        this.commitEdit(elem, index);
-      }
+      this.itemMenuIndex = -1;
     }
   }
 

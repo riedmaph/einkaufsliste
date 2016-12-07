@@ -58,3 +58,19 @@ md-input.invalid {
         }
     }
 }
+
+.list-item-form {
+    display: flex;
+
+    input {
+        border: none;
+        background: #fff;
+        line-height: 2rem;
+        text-align: center;
+
+        &.form-field--lg {
+            display: block;
+            text-align: left;
+        }
+    }
+}
