@@ -11,6 +11,7 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+import * as _ from 'lodash';
 
 import { ListComponent } from '../list';
 import { ApiService } from '../../services/api';
@@ -106,7 +107,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   public update(oldItem: ListItem, newItem: ListItem): void {
-    this.apiService.updateItem(this.list.id, oldItem.id, newItem);
+    this.apiService.updateItem(this.list.id, oldItem.id, newItem)
+      // On error: Undo by resetting values from oldItem. @TODO show warning
+      .subscribe(null, () => _.merge(newItem, oldItem));
   }
 
   /**

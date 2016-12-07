@@ -9,7 +9,7 @@
   >
     <md-checkbox
       color="primary"
-      (click)="item.checked = !item.checked"
+      (click)="toggleChecked(item)"
       [checked]="item.checked"
     ></md-checkbox>
     <span class="item-text" #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">

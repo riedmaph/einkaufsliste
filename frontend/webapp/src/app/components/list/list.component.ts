@@ -74,7 +74,7 @@ export class ListComponent {
 
   public toggleChecked (item: ListItem) {
     const oldItem = JSON.parse(JSON.stringify(item));
-    item.checked = item.checked;
+    item.checked = !item.checked;
     this.onEdit.emit([ oldItem, item ]);
   }
 

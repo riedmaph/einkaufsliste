@@ -126,6 +126,7 @@
     "imports-loader": "0.6.5",
     "istanbul-instrumenter-loader": "0.2.0",
     "json-loader": "0.5.4",
+    "lodash": "4.17.2",
     "karma": "1.3.0",
     "karma-chrome-launcher": "2.0.0 ",
     "karma-coverage": "1.1.1",
