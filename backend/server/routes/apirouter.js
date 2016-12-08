@@ -1,10 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var tokenhandler = require('../controllers/tokenhandler');
+var path = require('path');
 
-var users = require('../controllers/users/users');
-var lists = require('../controllers/lists/lists');
-var items = require('../controllers/items/items');
+var logger = require(path.join('..', 'logging', 'logger'));
+
+var tokenhandler = require(path.join('..', 'controllers', 'tokenhandler'));
+
+var users = require(path.join('..', 'controllers', 'users', 'users'));
+var lists = require(path.join('..', 'controllers', 'lists', 'lists'));
+var items = require(path.join('..', 'controllers', 'items', 'items'));
 
 // redirect root to doc
 router.get('/', function(req, res, next) {
@@ -36,15 +40,16 @@ router.route('/lists/:listid/items')
   .get(items.getListItems)
   .post(items.createItem)
 
+router.route('/lists/:listid/items/move')
+  .put(items.moveItem);
+
 router.route('/lists/:listid/items/:itemid')
   .put(items.updateItem)
   .delete(items.deleteItem);
 
-router.route('/lists/:listid/items/move')
-  .put(items.moveItem);
-
 // error handler
 router.use(function(err, req, res, next) {
+  logger.log('error', err.message);
   // set locals, only providing error in development
   res.status(err.status || 500)
     .json({
