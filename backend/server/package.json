@@ -12,7 +12,8 @@
     "morgan": "~1.7.0",
     "password-hash-and-salt": "^0.1.4",
     "pg-promise": "^3.2.3",
-    "uuid": "^3.0.0"
+    "uuid": "^3.0.0",
+    "winston": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

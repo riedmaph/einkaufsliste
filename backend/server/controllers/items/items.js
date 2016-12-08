@@ -22,6 +22,7 @@ function getListItems(req, res, next) {
         });
     })
     .catch(function (err) {
+      err.message = 'controllers.items.getListItems: ' + err.message;
       return next(err);
 
     });
@@ -40,7 +41,7 @@ function createItem(req, res, next) {
       });
     })
     .catch(function (err) {
-      console.log(err);
+      err.message = 'controllers.items.createItem: ' + err.message;
       return next(err);
     });
         
@@ -57,6 +58,7 @@ function updateItem(req, res, next) {
       res.sendStatus(200);
     })
     .catch(function (err) {
+      err.message = 'controllers.items.updateItem: ' + err.message;
       return next(err);
     });
 }
@@ -69,7 +71,7 @@ function deleteItem(req, res, next) {
       res.sendStatus(200);
     })
     .catch(function (err) {
-      console.log(err);
+      err.message = 'controllers.items.deleteItem: ' + err.message;
       return next(err);
     });
 }
@@ -91,7 +93,7 @@ function moveItem(req, res, next) {
         res.sendStatus(200);
       })
       .catch(function (err) {
-        console.log(err);
+        err.message = 'controllers.items.moveItem: ' + err.message;
         return next(err);
       });
 }

@@ -20,6 +20,7 @@ function getAllLists(req, res, next) {
         });
     })
     .catch(function (err) {
+      err.message = 'controllers.lists.getAllLists: ' + err.message;
       return next(err);
     });
 }
@@ -37,7 +38,7 @@ function getListWithItems(req, res, next) {
               .json(list);
           })
           .catch(function (err) {
-            console.log(err);
+            err.message = 'controllers.lists.getListWithItems.sqlReadItems: ' + err.message;
             return next(err);
           });
       }
@@ -49,7 +50,7 @@ function getListWithItems(req, res, next) {
       }
     })
     .catch(function (err) {
-      console.log(err);
+      err.message = 'controllers.lists.getListWithItems.sqlReadList: ' + err.message;
       return next(err);
     });
 }
@@ -64,6 +65,7 @@ function createList(req, res, next) {
           });
         })
       .catch(function (err) {
+        err.message = 'controllers.lists.createList: ' + err.message;
         return next(err);
       });
 }
@@ -75,6 +77,7 @@ function updateList(req, res, next) {
       res.sendStatus(200);
     })
     .catch(function (err) {
+      err.message = 'controllers.lists.updateList: ' + err.message;
       return next(err);
     });
 }
@@ -86,24 +89,9 @@ function deleteList(req, res, next) {
       res.sendStatus(200);
     })
     .catch(function (err) {
+      err.message = 'controllers.lists.deleteList: ' + err.message;
       return next(err);
     });
-}
-
-function moveItems(req, res, next) {
-  
-  if(req.body.from < req.body.to) {         //move up
-    db.conn.none(sqlMoveItemUp, req.body)
-      .then(function () {
-        res.sendStatus(200);
-      })
-      .catch(function (err) {
-        return next(err);
-      });
-  }
-  else {                                    //move down
-
-  }
 }
 
 module.exports = {
