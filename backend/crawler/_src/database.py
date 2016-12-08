@@ -249,6 +249,31 @@ class ElisaDbBase:
 	def insertBrand(self, brandName, shopId):
 		self.db.insertSingle("Crawled.Brand (name, shop)", (brandName, shopId))
 
+	def insertMarket(self, marketName, address, latitude, longditude, hours, hours2, extId, shopId):
+		tbl = "Crawled.Market (name, address, latitude, longditude, hours, hours2, extId, shop)"
+		row =  (marketName, address, latitude, longditude, hours, hours2, extId, shopId)
+		self.db.insertSingle(tbl,row)
+
+	def insertOffer(self, title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, marketId):
+		tbl = "Crawled.Offer (title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, market)"
+		row =  (title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, marketId)
+		self.db.insertSingle(tbl,row)
+
+	def insertCrawledMarket(self, marketId, count):
+		self.db.insertSingle("crawled.ProcessedMarket (market, count)",(marketId, count))
+
+	def deleteShopMarkets(self, shopId):
+		self.db.execute('DELETE FROM Crawled.market WHERE shop=%s', (shopId,))
+
+	def deleteShopOffers(self, shopId):
+		#self.db.execute('DELETE FROM Crawled.offer WHERE market in (SELECT id from Crawled.market WHERE shop=%s)', (shopId,))
+		print "deleteShopOffers disabled"
+
+	def getMarketIds(self, shopId):
+		#self.db.execute('SELECT id, extid FROM Crawled.market WHERE shop=%s AND id not in (SELECT market from crawled.offer)', (shopId,))
+		self.db.execute('SELECT id, extid FROM Crawled.market WHERE shop=%s AND id not in (SELECT market from crawled.ProcessedMarket)', (shopId,))
+		return self.db.fetchall()
+
 	def commit(self):
 		self.db.commit()
 
