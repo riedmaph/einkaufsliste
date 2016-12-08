@@ -249,10 +249,13 @@ class ElisaDbBase:
 	def insertBrand(self, brandName, shopId):
 		self.db.insertSingle("Crawled.Brand (name, shop)", (brandName, shopId))
 
-	def insertMarket(self, marketName, address, latitude, longditude, hours, hours2, extId, shopId):
-		tbl = "Crawled.Market (name, address, latitude, longditude, hours, hours2, extId, shop)"
-		row =  (marketName, address, latitude, longditude, hours, hours2, extId, shopId)
+	def insertMarket(self, marketName, latitude, longditude, street, zip, city, hours, hours2, extId, shopId):
+		tbl = "Crawled.Market (name, latitude, longditude, street, zip, city, hours, hours2, extId, shop)"
+		row =  (marketName, latitude, longditude, street, zip, city, hours, hours2, extId, shopId)
 		self.db.insertSingle(tbl,row)
+
+	def updateMarket(self, extId, street, zip, city):
+		self.db.execute('UPDATE Crawled.market SET street=%s, zip=%s, city=%s WHERE extid=%s', (street, zip, city, extId))
 
 	def insertOffer(self, title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, marketId):
 		tbl = "Crawled.Offer (title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, market)"

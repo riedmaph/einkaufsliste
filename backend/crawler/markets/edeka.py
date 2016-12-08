@@ -69,8 +69,8 @@ while True:
 				return store[fld]
 			else:
 				return None
-		address = store["strasse_tlc"] + ", " +store["plz_tlc"] +  " " + store["ort_tlc"]
-		db.insertMarket(store["name_tlc"], address, getVal("geoLat_doubleField_d"), getVal("geoLng_doubleField_d"), getVal("oeffnungszeiten_tlc"), getVal("oeffnungszeitenZusatz_tlc"), store["marktID_tlc"], shopId )
+		#db.updateMarket(store["marktID_tlc"], store["strasse_tlc"], store["plz_tlc"], store["ort_tlc"])
+		db.insertMarket(store["name_tlc"], getVal("geoLat_doubleField_d"), getVal("geoLng_doubleField_d"), store["strasse_tlc"], store["plz_tlc"], store["ort_tlc"], getVal("oeffnungszeiten_tlc"), getVal("oeffnungszeitenZusatz_tlc"), store["marktID_tlc"], shopId )
 	
 	# load next page...
 	offset += blockSize

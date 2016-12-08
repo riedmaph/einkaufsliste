@@ -56,9 +56,11 @@ CREATE TABLE IF NOT EXISTS Crawled.Brand (
 CREATE TABLE IF NOT EXISTS Crawled.Market (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    address TEXT,
     latitude double precision,
     longditude double precision,
+    street TEXT,
+    zip TEXT,
+    city TEXT,
     hours TEXT,
     hours2 TEXT,
     extId int,
@@ -95,5 +97,6 @@ create index idx_article_category on crawled.article(category);
 create index idx_attribute_article on crawled.attribute(article);
 create index idx_brand_shop on crawled.brand(shop);
 create index idx_market_shop on crawled.market(shop);
+create index idx_market_extid on crawled.market(extid);
 create index idx_offer_market on crawled.offer(market);
 create index idx_ProcessedMarket_market on crawled.ProcessedMarket(market);
