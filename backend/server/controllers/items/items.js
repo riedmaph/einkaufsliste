@@ -9,6 +9,7 @@ var sqlGetIdItem = db.loadSql(path.join('controllers', 'items', 'getIdItem.sql')
 
 var sqlUpdateItem = db.loadSql(path.join('controllers', 'items', 'updateItem.sql'));
 var sqlDeleteItem = db.loadSql(path.join('controllers', 'items', 'deleteItem.sql'));
+var sqlGetPosition = db.loadSql(path.join('controllers', 'items', 'getPosition.sql'));
 var sqlMoveItemDown = db.loadSql(path.join('controllers', 'items', 'moveItemDown.sql'));
 var sqlMoveItemUp = db.loadSql(path.join('controllers', 'items', 'moveItemUp.sql'));
 
@@ -78,24 +79,41 @@ function deleteItem(req, res, next) {
 
 function moveItem(req, res, next) {  
   req.body.listid = req.params.listid;
+  req.body.id = req.params.itemid;
 
-  var sql;
+  db.conn.oneOrNone(sqlGetPosition, req.body)
+    .then(function (position) {
+      if(position) {
+        var sql;
+        req.body.from = position;
 
-  if(req.body.from < req.body.to) {         //move down
-    sql = sqlMoveItemDown;
-  }
-  else {                                    //move up
-    sql = sqlMoveItemUp;
-  }
+        if(req.body.from < req.body.targetposition) {         //move down
+          sql = sqlMoveItemDown;
+        }
+        else {                                    //move up
+          sql = sqlMoveItemUp;
+        }
 
-  db.conn.none(sql, req.body)
-      .then(function () {
-        res.sendStatus(200);
-      })
-      .catch(function (err) {
-        err.message = 'controllers.items.moveItem: ' + err.message;
-        return next(err);
-      });
+        db.conn.none(sql, req.body)
+          .then(function () {
+            res.sendStatus(200);
+          })
+          .catch(function (err) {
+            err.message = 'controllers.items.moveItem.sqlMoveItem: ' + err.message;
+            return next(err);
+          });
+      }
+      else {
+        res.status(400)
+          .json({
+            message: 'Item does not exist.'
+          });
+      }
+    })
+    .catch(function (err) {
+      err.message = 'controllers.items.moveItem.sqlGetPosition: ' + err.message;
+      return next(err);
+    });
 }
 
 module.exports = {
