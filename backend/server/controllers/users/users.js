@@ -16,7 +16,6 @@ function validatePassword(password) {
 function register(req, res, next) {
   db.conn.oneOrNone(sqlRegisterCheckUser, req.body)
     .then(function (user) {
-      throw new Error('haha');
       if(!user) {
 
         if(validatePassword(req.body.password)) {
