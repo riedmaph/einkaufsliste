@@ -24,6 +24,12 @@ export class ApiService {
       .map(res => res.json());
   }
 
+  public createList (listName: string): Observable<{ id: string }> {
+    return this.authHttp.post(API_ROUTES.lists.create, {
+      name: listName,
+    }).map(res => res.json());
+  }
+
   /**
    * Makes API call to retrieve auto completion suggestions for given input
    *
@@ -37,6 +43,8 @@ export class ApiService {
       // .get(API_ROUTES.autoCompletion')
       // .map(response => <string[]> response.json())
   }
+
+
 
   /**
    * Make the API call to add a given item to a given list

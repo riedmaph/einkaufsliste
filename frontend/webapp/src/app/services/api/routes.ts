@@ -7,6 +7,7 @@ export const API_ROUTES = {
     login: `${API_BASE_URL}/users/login`,
   },
   lists: {
+    create: `${API_BASE_URL}/lists`,
     single: `${API_BASE_URL}/lists/:listId`,
     all: `${API_BASE_URL}/lists`,
     entries: {
