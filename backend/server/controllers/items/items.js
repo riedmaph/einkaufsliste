@@ -82,11 +82,13 @@ function moveItem(req, res, next) {
   req.body.id = req.params.itemid;
 
   db.conn.oneOrNone(sqlGetPosition, req.body)
-    .then(function (position) {
-      if(position) {
+    .then(function (data) {
+      if(data) {
         var sql;
-        req.body.from = position;
 
+        req.body.from = parseInt(data.position);
+        req.body.targetposition = parseInt(req.body.targetposition);
+        
         if(req.body.from < req.body.targetposition) {         //move down
           sql = sqlMoveItemDown;
         }

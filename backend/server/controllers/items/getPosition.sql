@@ -1,3 +1,3 @@
 SELECT position
 FROM ${schemaname:raw}.Item
-  WHERE id = ${id}
+WHERE id = ${id}

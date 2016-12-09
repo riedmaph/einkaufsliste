@@ -1,18 +1,18 @@
-/* Beginn Transaction to secure atomic execution*/
+/* Beginn Transaction targetposition secure atargetpositionmic execution*/
 BEGIN;
 /* free position of from object */
 UPDATE ${schemaname:raw}.Item 
 SET position=-1
 WHERE list=${listid} AND position = ${from};
 
-/* move items down to free to position*/
+/* move items down targetposition free targetposition position*/
 UPDATE ${schemaname:raw}.Item 
 SET position=position+1
-WHERE list=${listid} AND position >= ${to} AND position < ${from};
+WHERE list=${listid} AND position >= ${targetposition} AND position < ${from};
 
-/*set from item's position to to position*/
+/*set from item's position targetposition targetposition position*/
 UPDATE ${schemaname:raw}.Item 
-SET position=${to}
+SET position=${targetposition}
 WHERE list=${listid} AND position = -1;
 
 /*End Transaction*/
