@@ -54,7 +54,7 @@ function extactIDsFromJSON(data) {
 
 
 //clear the test schema before testing
-describe('Items MOVE', () => {
+describe('Items Move', () => {
 
   before((done) => {
     dbhandler.deleteUsers((err) => {
