@@ -51,7 +51,7 @@ while True:
 		if "houseNumber" in address: 
 			street+=" "+address["houseNumber"]
 		geo = market["geoLocation"]
-		name = market["name"]
+		name = getVal("name")
 		if name is None:
 			name = "?"
 		db.insertMarket(name, geo["latitude"], geo["longitude"], street, address["postalCode"], address["city"], str(getVal("openingHours")), None, market["id"], shopId )

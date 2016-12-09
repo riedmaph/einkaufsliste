@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS Crawled.ProcessedMarket (
     market INT NOT NULL REFERENCES Crawled.Market(id) ON DELETE CASCADE,
     count int,
     crawled timestamp DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 create index idx_category_shop on crawled.category(shop);
 create index idx_category_parent on crawled.category(parent);
