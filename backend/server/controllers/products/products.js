@@ -9,6 +9,7 @@ function findProducts(req, res, next) {
 
   db.conn.any(sqlFindProducts, req.body)
     .then(function (data) {
+      console.log('da');
       if(data) {
         res.status(200)
           .json({
@@ -18,7 +19,6 @@ function findProducts(req, res, next) {
     })
     .catch(function (err) {
       err.message = 'controllers.products.findProducts: ' + err.message;
-      consle.log('test: ' + err.message);
       return next(err);
     });
 }
