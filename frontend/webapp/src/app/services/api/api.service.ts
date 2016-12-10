@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
-// import { API_ROUTES } from './routes'; // TODO Currently unused import
+import { AuthHttp } from 'angular2-jwt';
+
+import { List, ListItem } from '../../models';
+
+import { API_ROUTES } from './routes';
 
 @Injectable()
 export class ApiService {
 
   constructor (
-    private http: Http
+    private authHttp: AuthHttp
   ) {}
 
-  /**
-   * Makes API call to retrieve list entries
-   * @TODO
-   */
-  public getEntries (): Observable<any> { // TODO model
-    return Observable.of(JSON.parse(localStorage.getItem('entries') || '[]'));
-    // return this.http
-      // .get(API_ROUTES.entries)
-      // .map(response => response.json());
+  public getAllLists (): Observable<List[]> {
+    return this.authHttp.get(API_ROUTES.lists.all)
+      .map(res => res.json().lists);
   }
 
-  public getCompleted (): Observable<any> {
-    return Observable.of(JSON.parse(localStorage.getItem('completed') || '[]'));
+  public getList (listUuid: string): Observable<List> {
+    return this.authHttp.get(API_ROUTES.lists.single.replace(':listId', listUuid))
+      .map(res => res.json());
+  }
+
+  public createList (listName: string): Observable<{ id: string }> {
+    return this.authHttp.post(API_ROUTES.lists.create, {
+      name: listName,
+    }).map(res => res.json());
   }
 
   /**
@@ -38,6 +42,57 @@ export class ApiService {
     // return this.http
       // .get(API_ROUTES.autoCompletion')
       // .map(response => <string[]> response.json())
+  }
+
+
+
+  /**
+   * Make the API call to add a given item to a given list
+   *
+   * @param {string} listUuid UUID of the list to add to
+   * @param {ListItem} item List item to add
+   * @return {Observable<{ uuid: string }>}
+   */
+  public addItem (listUuid: string, item: ListItem): Observable<{ id: string }> {
+    return this.authHttp.post(API_ROUTES.lists.entries.add.replace(':listId', listUuid), {
+      listid: listUuid,
+      name: item.name,
+      checked: item.checked,
+      amount: item.amount,
+      unit: item.unit,
+    }).map(res => res.json());
+  }
+
+  /**
+   * Make API call to remove an items from a given list
+   *
+   * @param {string} listUuid UUID of the list to remove from
+   * @param {ListItem} item List item to remove
+   * @return {Observable<any>}
+   */
+  public removeItem (listUuid: string, item: ListItem): Observable<any> {
+    return this.authHttp.delete(
+      API_ROUTES.lists.entries.remove
+        .replace(':listId', listUuid)
+        .replace(':itemId', item.id)
+    );
+  }
+
+  /**
+   * Make API call to update a given item
+   *
+   * @param {string} listUuid UUID of the list the item is input
+   * @param {string} itemId ID of the item to update
+   * @param {ListItem} item Updated item
+   * @return {Observable<any>}
+   */
+  public updateItem (listUuid: string, itemId: string, item: ListItem): Observable<any> {
+    return this.authHttp.put(
+      API_ROUTES.lists.entries.update
+        .replace(':listId', listUuid)
+        .replace(':itemId', itemId),
+      item,
+    );
   }
 
 }

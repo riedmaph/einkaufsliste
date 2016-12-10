@@ -1,0 +1,29 @@
+<md-list>
+  <md-list-item *ngFor="let list of lists">
+    <a [routerLink]="[ '/list', list.id ]">{{ list.name }}</a>
+  </md-list-item>
+</md-list>
+
+<form [formGroup]="form">
+  <span
+    *ngIf="!form.controls['listName'].pristine && form.controls['listName'].errors && form.controls['listName'].errors.maxlength"
+    class="form-error"
+  >
+    Name can only be {{ MAX_NAME_LENGTH }} characters long.
+  </span>
+
+  <input
+    type="text"
+    placeholder="List name"
+    formControlName="listName"
+    name="listName"
+    class="form-field"
+  >
+  <button
+    md-fab color="accent"
+    (click)="addList($event)"
+    [disabled]="!form.pristine && form.invalid"
+  >
+    <md-icon>add</md-icon>
+  </button>
+</form>
