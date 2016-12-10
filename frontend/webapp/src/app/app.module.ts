@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@angular/material';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { DragulaModule, DragulaService } from 'ng2-dragula/ng2-dragula';
-import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { provideAuth } from 'angular2-jwt';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -28,11 +28,11 @@ import {
 
 // Components
 import {
-  HomeComponent,
+  ListViewComponent,
   NoContentComponent,
   NavigationComponent,
   ListComponent,
-  CompletedComponent,
+  ListOverviewComponent,
   RegisterComponent,
   LoginComponent,
 } from './components';
@@ -60,11 +60,11 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    HomeComponent,
+    ListViewComponent,
     NoContentComponent,
     NavigationComponent,
     ListComponent,
-    CompletedComponent,
+    ListOverviewComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
     RegisterComponent,
@@ -85,7 +85,10 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    AUTH_PROVIDERS,
+    provideAuth({
+      headerName: 'x-access-token',
+      noTokenScheme: true,
+    }),
     ApiService,
     AuthService,
     ApiMapperService,

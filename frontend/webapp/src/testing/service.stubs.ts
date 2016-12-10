@@ -9,3 +9,7 @@ export class AuthServiceStub {
   }
 
 }
+
+export class ApiServiceStub {
+  // nothing yet
+}
