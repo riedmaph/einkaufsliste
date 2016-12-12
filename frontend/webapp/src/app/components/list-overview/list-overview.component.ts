@@ -80,6 +80,7 @@ export class ListOverviewComponent implements OnInit {
           items: [ ],
         }));
     }
+    console.log("neu Liste: " + this.form.value.listName )
   }
 
   public amountOpen (list: List): Number {

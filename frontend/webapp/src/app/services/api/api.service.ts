@@ -28,9 +28,10 @@ export class ApiService {
   }
 
   public createList (listName: string): Observable<{ id: string }> {
-    return this.authHttp.post(API_ROUTES.lists.create, {
+   return this.createListMock();
+   /* return this.authHttp.post(API_ROUTES.lists.create, {
       name: listName,
-    }).map(res => res.json());
+    }).map(res => res.json());*/
   }
 
   /**
@@ -113,7 +114,7 @@ export class ApiService {
  */
   private getMockedData(): Observable<List[]> {
 
-  //Whole Method to be deleted! just for mocking //
+  // Whole Method to be deleted! just for mocking //
 
     // items vv
     const newItem0: ListItem = {
@@ -155,6 +156,11 @@ export class ApiService {
     lists.push(newList1);
 
     return Observable.of(lists);
- //Whole Method to be deleted! just for mocking */
+ // Whole Method to be deleted! just for mocking */
   }
+
+  // Whole Method to be deleted! just for mocking */
+  private createListMock (): Observable<{ id: string }> {
+   return Observable.of( { id: 'aNewId-12345'});
+}
 }
