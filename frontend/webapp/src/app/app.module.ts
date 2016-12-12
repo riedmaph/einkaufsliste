@@ -36,7 +36,7 @@ import {
   RegisterComponent,
   LoginComponent,
 } from './components';
-
+import { ConfirmComponent } from './components/confirm';
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
 
@@ -69,9 +69,11 @@ type StoreType = {
     AutoCompletionDirective,
     RegisterComponent,
     LoginComponent,
+    ConfirmComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
