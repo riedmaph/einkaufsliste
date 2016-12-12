@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import {
   FormBuilder,
   FormGroup,
@@ -20,6 +21,7 @@ import { ApiService } from '../../services';
 export class ListOverviewComponent implements OnInit {
 
   public MAX_NAME_LENGTH: number = 32;
+  public duringDrag: boolean = false;
 
   /** Available lists */
   public lists: List[] = [ ];
@@ -30,6 +32,7 @@ export class ListOverviewComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
+    private dragulaService: DragulaService,
   ) {
     this.form = this.formBuilder.group({
       listName: [ '', Validators.compose([
@@ -37,6 +40,20 @@ export class ListOverviewComponent implements OnInit {
         Validators.maxLength(this.MAX_NAME_LENGTH),
       ]) ],
     });
+    dragulaService.setOptions('draggable-listoverview', {
+      removeOnSpill: true,
+      moves: function (el, container, handle) {
+        return handle.className === 'drag-handle';
+      },
+    });
+    dragulaService.dropModel.subscribe((value) => {
+      this.updateOrder(value.slice(1));
+    });
+    dragulaService.removeModel.subscribe((value) => {
+      this.updateDelete(value.slice(1)[0]);
+     });
+    dragulaService.drag.subscribe(() => this.duringDrag = true);
+    dragulaService.dragend.subscribe(() => this.duringDrag = false);
   }
 
   /**
@@ -63,5 +80,19 @@ export class ListOverviewComponent implements OnInit {
           items: [ ],
         }));
     }
+  }
+
+  public amountOpen (list: List): Number {
+    const num: Number = list.items.filter( item => item.checked === false).length;
+    return num;
+  }
+
+  private updateOrder (args): void {
+    // TODO communicate update or ordering
+  }
+
+  private updateDelete (deletedelem: HTMLElement): void {
+    const href: string = deletedelem.firstElementChild.getAttribute('href');
+    this.apiService.deleteList(href);
   }
 }
