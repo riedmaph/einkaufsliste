@@ -42,8 +42,21 @@ export class ApiService {
   public deleteList (href: string): Observable<any> {
     return this.authHttp.delete(
       API_ROUTES.lists.single.replace('/lists/:listId', href)
-    );
+    ).map( res => res.json());
   }
+
+  /**
+   * Make API call to update a list and change its name
+   *
+   * @param {string} listId id of the renamed list
+   * @param {string} newName new name of the renamed list
+   */
+  public renameList (listId: string, newName: string): Observable<any> {
+    return this.authHttp.put(
+      API_ROUTES.lists.single.replace(':listId', listId),
+      { name: newName }).map( res => res.json());
+  }
+  
   /**
    * Makes API call to retrieve auto completion suggestions for given input
    *

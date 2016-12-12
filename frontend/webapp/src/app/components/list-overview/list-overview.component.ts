@@ -89,7 +89,7 @@ export class ListOverviewComponent implements OnInit {
    ) {
      if (keyCode === 13) {
        elem.contentEditable = 'false';
-      this.commitEdit(elem, list);
+      this.commitEdit(list);
      }
    }
 
@@ -102,14 +102,16 @@ export class ListOverviewComponent implements OnInit {
       elem.contentEditable = 'true';
       elem.focus();
     } else {
-      this.commitEdit(elem, list);
+      this.commitEdit(list);
       elem.contentEditable = 'false';
      }
    }
 
-  public commitEdit (elem: HTMLElement, list: List) {
-    this.lists.find( l => l.id === list.id).name.replace(/[\r\n\t]/g, '');
-    this.onEdit.emit({});
+  public commitEdit ( list: List) {
+    // update of the list is performed automatically (dragulaModel)
+    const updatedList = this.lists.find( l => l.id === list.id);
+    updatedList.name.replace(/[\r\n\t]/g, '');
+    this.apiService.renameList(updatedList.id, updatedList.name);
   }
 
   public amountOpen (list: List): Number {
