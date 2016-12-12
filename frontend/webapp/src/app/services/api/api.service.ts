@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
 import { AuthHttp } from 'angular2-jwt';
 
 import { List, ListItem } from '../../models';
-
 import { API_ROUTES } from './routes';
 
 @Injectable()
@@ -15,9 +13,9 @@ export class ApiService {
   ) {}
 
   public getAllLists (): Observable<List[]> {
+    // TODO: REVERT
     return this.getMockedData();
-
-/* TODO REVERT
+    /* 
     return this.authHttp.get(API_ROUTES.lists.all)
       .map(res => res.json().lists); */
   }
@@ -202,7 +200,7 @@ export class ApiService {
 }
 
 /**
- * private Method to mock API call to get a Lists
+ * private Method to mock API call to get a List
  */
   private mockList(): Observable<List>{
 

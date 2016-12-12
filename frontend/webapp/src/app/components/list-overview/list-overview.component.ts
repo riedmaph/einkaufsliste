@@ -50,7 +50,7 @@ export class ListOverviewComponent implements OnInit {
       },
     });
     dragulaService.dropModel.subscribe((value) => {
-      this.updateOrder(value.slice(1));
+      this.updateOrder();
     });
     dragulaService.removeModel.subscribe((value) => {
       this.updateDelete(value.slice(1)[0]);
@@ -122,12 +122,12 @@ export class ListOverviewComponent implements OnInit {
     return num;
   }
 
-  private updateOrder (args): void {
+  private updateOrder (): void {
     // TODO communicate update or ordering
-    console.log("updateOrder called");
   }
 
   private updateDelete (deletedelem: HTMLElement): void {
+    // lists array is updated automatically by dragula
     let dialogRef = this.dialog.open(ConfirmComponent, {
        disableClose: false,
     });
@@ -136,7 +136,7 @@ export class ListOverviewComponent implements OnInit {
       const href: string = deletedelem.firstElementChild.getAttribute('href');
       this.apiService.deleteListFromOverview(href);
       } else {
-        //lists is reset to all list from api
+        // lists is reset previous state i.e. all lists fom api
         this.apiService.getAllLists().subscribe( allLists => this.lists = allLists);
       }
     });
