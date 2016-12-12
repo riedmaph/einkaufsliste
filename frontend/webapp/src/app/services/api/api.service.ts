@@ -31,6 +31,16 @@ export class ApiService {
   }
 
   /**
+   * Make API call to delete a list from the list Overview
+   *
+   * @param {string} href of the deleted list
+   */
+  public deleteList (href: string): Observable<any> {
+    return this.authHttp.delete(
+      API_ROUTES.lists.single.replace('/lists/:listId', href)
+    );
+  }
+  /**
    * Makes API call to retrieve auto completion suggestions for given input
    *
    * @param {string} input Current user input
