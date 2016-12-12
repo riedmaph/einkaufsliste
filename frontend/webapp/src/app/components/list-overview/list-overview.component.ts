@@ -87,8 +87,8 @@ export class ListOverviewComponent implements OnInit {
    public onEditHandler (
    event: KeyboardEvent,
    keyCode: number,
-     elem: HTMLElement,
-     list: List
+   elem: HTMLElement,
+   list: List
    ) {
      if (keyCode === 13) {
        elem.contentEditable = 'false';

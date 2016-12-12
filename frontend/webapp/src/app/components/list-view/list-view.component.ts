@@ -151,4 +151,35 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  public onEditHandler (
+   event: KeyboardEvent,
+   keyCode: number,
+   elem: HTMLElement
+   ) {
+     if (keyCode === 13) {
+       elem.contentEditable = 'false';
+      this.commitEdit(elem);
+     }
+   }
+
+  public toggleEditable (
+    event: MouseEvent | KeyboardEvent,
+    elem: HTMLInputElement
+  ) {
+    if (elem.contentEditable !== 'true') {
+      elem.contentEditable = 'true';
+      elem.focus();
+    } else {
+      this.commitEdit(elem);
+      elem.contentEditable = 'false';
+     }
+   }
+
+  public commitEdit (elem: HTMLElement) {
+    if (elem.textContent){
+      this.list.name = elem.textContent.replace(/[\r\n\t]/g, '');
+      this.apiService.renameList(this.list.id, this.list.name);
+    }
+  }
 }
