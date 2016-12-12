@@ -75,7 +75,6 @@ describe('Items MOVE', () => {
             res.body.should.be.a('object'); 
 
             var idsActual = extactIDsFromJSON(data);
-
             idsActual.should.be.eql(idsCorrect);
 
             done();
@@ -84,7 +83,7 @@ describe('Items MOVE', () => {
         });
     });
   });
-
+  
   describe('Create 5 items and move one down', () => {
 
     it('it should result in items being in the correct order', (done) => {
@@ -106,7 +105,6 @@ describe('Items MOVE', () => {
             res.body.should.be.a('object'); 
 
             var idsActual = extactIDsFromJSON(data);
-
             idsActual.should.be.eql(idsCorrect);
 
             done();
@@ -137,7 +135,6 @@ describe('Items MOVE', () => {
             res.body.should.be.a('object'); 
 
             var idsActual = extactIDsFromJSON(data);
-
             idsActual.should.be.eql(idsCorrect);
 
             done();
@@ -168,7 +165,6 @@ describe('Items MOVE', () => {
             res.body.should.be.a('object'); 
 
             var idsActual = extactIDsFromJSON(data);
-
             idsActual.should.be.eql(idsCorrect);
 
             done();

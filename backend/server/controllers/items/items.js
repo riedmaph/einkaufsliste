@@ -13,6 +13,8 @@ var sqlGetPosition = db.loadSql(path.join('controllers', 'items', 'getPosition.s
 var sqlMoveItemDown = db.loadSql(path.join('controllers', 'items', 'moveItemDown.sql'));
 var sqlMoveItemUp = db.loadSql(path.join('controllers', 'items', 'moveItemUp.sql'));
 
+var sqlMoveItem = db.loadSql(path.join('controllers', 'items', 'moveItem.sql'));
+
 function getListItems(req, res, next) {
   var listId = req.params.listid;
   db.conn.any(sqlReadItems, req.params)
@@ -80,40 +82,15 @@ function deleteItem(req, res, next) {
 function moveItem(req, res, next) {  
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
+  req.body.targetposition = parseInt(req.body.targetposition);
 
-  db.conn.oneOrNone(sqlGetPosition, req.body)
-    .then(function (data) {
-      if(data) {
-        var sql;
 
-        req.body.from = parseInt(data.position);
-        req.body.targetposition = parseInt(req.body.targetposition);
-        
-        if(req.body.from < req.body.targetposition) {         //move down
-          sql = sqlMoveItemDown;
-        }
-        else {                                    //move up
-          sql = sqlMoveItemUp;
-        }
-
-        db.conn.none(sql, req.body)
-          .then(function () {
-            res.sendStatus(200);
-          })
-          .catch(function (err) {
-            err.message = 'controllers.items.moveItem.sqlMoveItem: ' + err.message;
-            return next(err);
-          });
-      }
-      else {
-        res.status(400)
-          .json({
-            message: 'Item does not exist.'
-          });
-      }
+  db.conn.none(sqlMoveItem, req.body)
+    .then(function () {
+      res.sendStatus(200);
     })
     .catch(function (err) {
-      err.message = 'controllers.items.moveItem.sqlGetPosition: ' + err.message;
+      err.message = 'controllers.items.moveItem.sqlMoveItem: ' + err.message;
       return next(err);
     });
 }
