@@ -17,13 +17,13 @@ export class ApiService {
   public getAllLists (): Observable<List[]> {
     return this.getMockedData();
 
-/* TO BE REVERTED!
+/* TODO REVERT
     return this.authHttp.get(API_ROUTES.lists.all)
       .map(res => res.json().lists); */
   }
 
   public getList (listUuid: string): Observable<List> {
-    //TODO: REVERT
+    // TODO: REVERT
     return this.mockList();
     /*
 
@@ -32,7 +32,9 @@ export class ApiService {
   }
 
   public createList (listName: string): Observable<{ id: string }> {
+   // TODO: REVERT
    return this.createListMock();
+
    /* return this.authHttp.post(API_ROUTES.lists.create, {
       name: listName,
     }).map(res => res.json());*/
@@ -136,12 +138,14 @@ export class ApiService {
     );
   }
 
+// vv Private Methods for Mocking   vv  
+
 /**
  * private Method to mock API call to get All Lists
  */
   private getMockedData(): Observable<List[]> {
 
-  // Whole Method to be deleted! just for mocking //
+  // Whole Method to be deleted after review! just for mocking //
 
     // items vv
     const newItem0: ListItem = {
@@ -171,10 +175,16 @@ export class ApiService {
 
     // define Lists
     const newList0: List = {
-      id: 'MeineCooleId_picknick', name: 'Picknick', items: itemArray, count: itemArray.length,
+      id: 'MeineCooleId_picknick',
+      name: 'Picknick',
+      items: itemArray,
+      count: itemArray.length,
     };
     const newList1: List = {
-      id: 'MeineCooleId_skiwochenende', name: 'Skiwochenende', items: itemArray, count: itemArray.length,
+      id: 'MeineCooleId_skiwochenende',
+      name: 'Skiwochenende',
+      items: itemArray,
+      count: itemArray.length,
     };
 
     // assemble list of lists
@@ -188,14 +198,14 @@ export class ApiService {
 
   // Whole Method to be deleted! just for mocking */
   private createListMock (): Observable<{ id: string }> {
-   return Observable.of( { id: 'aNewId-12345'});
+   return Observable.of({ id: 'aNewId-12345'});
 }
 
 /**
  * private Method to mock API call to get a Lists
  */
   private mockList(): Observable<List>{
-    
+
 // items vv
     const newItem0: ListItem = {
       name: 'Eintrag A',
@@ -223,9 +233,9 @@ export class ApiService {
     itemArray.push(newItem2);
 
     // define Lists
-    const  newList0: List = {
+    const  newList: List = {
       id: 'MeineCooleId_picknick', name: 'Picknick', items: itemArray, count: itemArray.length,
     };
-    return Observable.of(newList0);
+    return Observable.of(newList);
   }
 }

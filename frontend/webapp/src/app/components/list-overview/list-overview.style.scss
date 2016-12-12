@@ -67,6 +67,8 @@ md-card-title {
  }
 .drag-handle{
     font-size: 1.5em;
+    cursor: -webkit-grab;
+    cursor: grab;
 }
 .remove-indicator{
     font-size: 5em;

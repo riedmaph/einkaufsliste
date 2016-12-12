@@ -7,7 +7,7 @@ export const LIST_OVERVIEW_ROUTES: Routes = [
   {
     path: '',
     component: ListOverviewComponent,
-    canActivate: [ AuthGuard ],
+  //  canActivate: [ AuthGuard ],
     resolve: {
       lists: ListsResolver,
     },

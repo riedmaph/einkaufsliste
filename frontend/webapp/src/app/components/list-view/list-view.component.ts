@@ -150,8 +150,5 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       this.list.items = [ ];
       }
     });
-
-    console.log("Methode in listComponent aufgerufen");
-    console.log(this.list.name);
   }
 }
