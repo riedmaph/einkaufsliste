@@ -12,37 +12,15 @@ chai.use(chaiHttp);
 var dbhandler = require(path.join('..', 'test', 'dbhandler', 'dbhandler'));
 
 var token;
-var listid;
-var id1;
-var id2;
-var id3;
-var id4;
-var id5;
 
-function createItem(name) {
-  var id;
-
-  it('it should create a new item', (done) => {
-    var item = {
-        name: name,
-        checked: false,
-        amount: 10.00,
-        unit: 'stk'
-    }
-    chai.request(app)
-        .post('/api/lists/'+listid+'/items')
-        .set('x-access-token', token)
-        .send(item)
-        .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.should.have.property('id');
-            id = res.body.id;
-          done();
-        });
-  });
-
-  return id;
+//IDs hardcoded according to setUpMoveItems.sql
+var listid = '5c7397aa-b249-11e6-b98b-000c29c17dad';
+var itemIDs = {
+  id1: '5c7397aa-b249-11e6-b98b-001c29c17dad',
+  id2: '5c7397aa-b249-11e6-b98b-002c29c17dad',
+  id3: '5c7397aa-b249-11e6-b98b-003c29c17dad',
+  id4: '5c7397aa-b249-11e6-b98b-004c29c17dad',
+  id5: '5c7397aa-b249-11e6-b98b-005c29c17dad',
 }
 
 function extactIDsFromJSON(data) {
@@ -56,164 +34,143 @@ function extactIDsFromJSON(data) {
 //clear the test schema before testing
 describe('Items MOVE', () => {
 
-  before((done) => {
-    dbhandler.deleteUsers((err) => {
-      var user = {
-        email: "newuser",
-        password: "newpassword"
-      }
-      chai.request(app)
-          .post('/api/users/register')
-          .send(user)
-          .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
-              res.body.should.have.property('token');
-              token = res.body.token;
-
-              var list = {
-                name: "newlist1"
+  beforeEach((done) => {
+    var user = {
+                email: "test@test.de",
+                password: "testpass"
               }
 
-              chai.request(app)
-                  .post('/api/lists/')
-                  .set('x-access-token', token)
-                  .send(list)
-                  .end((err, res) => {
-                      res.should.have.status(200);
-                      res.body.should.be.a('object');
-                      res.body.should.have.property('id');
-                      listid = res.body.id;
-                    done();
-                  });
-          });
+    dbhandler.setUpMoveItems((err) => {   
+      chai.request(app)
+        .post('/api/users/login')
+        .send(user)
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('token');
+            token = res.body.token;                         
+                  done();
+        });
     });
   });
 
-  describe('/Create 5 items and move them arround', () => {
+  describe('Create 5 items and move one up', () => {
 
-    id1 = createItem("newitem1");
-    id2 = createItem("newitem2");
-    id3 = createItem("newitem3"); 
-    id4 = createItem("newitem4"); 
-    id5 = createItem("newitem5");
+    it('it should result in items being in the correct order', (done) => {
 
-    it('it should move an item up', (done) => {
-
-      var idsCorrect = [1, 2, 4, 5, 3];
+      var idsCorrect = [itemIDs.id1, itemIDs.id3, itemIDs.id4, itemIDs.id2, itemIDs.id5];
 
       var postions = {
-        from: 2,
-        to: 4,
+        targetposition: 3
       }
 
       chai.request(app)
-          .put('/api/lists/'+listid+'/items/move')
-          .set('x-access-token', token)
-          .send(postions)
-          .end((err, res) => {
+        .put('/api/lists/'+listid+'/items/'+itemIDs.id2+'/move')
+        .set('x-access-token', token)
+        .send(postions)
+        .end((err, res) => {
 
-            dbhandler.getIdsOrderedByPositionList(listid, (data) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object'); 
+          dbhandler.getIdsOrderedByPositionList(listid, (data) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object'); 
 
-              var idsActual = extactIDsFromJSON(data);
-              
-              //idsActual.should.be.eql(idsCorrect);
+            var idsActual = extactIDsFromJSON(data);
+            idsActual.should.be.eql(idsCorrect);
 
-              done();
-            });     
+            done();
+          });     
 
-          });
+        });
     });
+  });
+  
+  describe('Create 5 items and move one down', () => {
 
-    it('it should move an item down', (done) => {
+    it('it should result in items being in the correct order', (done) => {
 
-      var idsCorrect = [1, 2, 3, 4, 5];
+      var idsCorrect = [itemIDs.id1, itemIDs.id4, itemIDs.id2, itemIDs.id3, itemIDs.id5];
 
       var postions = {
-        from: 4,
-        to: 2,
+        targetposition: 1
       }
 
       chai.request(app)
-          .put('/api/lists/'+listid+'/items/move')
-          .set('x-access-token', token)
-          .send(postions)
-          .end((err, res) => {
+        .put('/api/lists/'+listid+'/items/'+itemIDs.id4+'/move')
+        .set('x-access-token', token)
+        .send(postions)
+        .end((err, res) => {
 
-            dbhandler.getIdsOrderedByPositionList(listid, (data) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object'); 
+          dbhandler.getIdsOrderedByPositionList(listid, (data) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object'); 
 
-              var idsActual = extactIDsFromJSON(data);
-              
-              //idsActual.should.be.eql(idsCorrect);
+            var idsActual = extactIDsFromJSON(data);
+            idsActual.should.be.eql(idsCorrect);
 
-              done();
-            });     
+            done();
+          });     
 
-          });
+        });
     });
-
-    it('it should move an item up, boundaries', (done) => {
-
-      var idsCorrect = [5, 1, 2, 3, 4];
-
-      var postions = {
-        from: 4,
-        to: 0,
-      }
-
-      chai.request(app)
-          .put('/api/lists/'+listid+'/items/move')
-          .set('x-access-token', token)
-          .send(postions)
-          .end((err, res) => {
-
-            dbhandler.getIdsOrderedByPositionList(listid, (data) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object'); 
-
-              var idsActual = extactIDsFromJSON(data);
-              
-              //idsActual.should.be.eql(idsCorrect);
-
-              done();
-            });     
-
-          });
-    });
-
-    it('it should move an item down, boundaries', (done) => {
-
-      var idsCorrect = [1, 2, 3, 4, 5];
-
-      var postions = {
-        from: 0,
-        to: 4,
-      }
-
-      chai.request(app)
-          .put('/api/lists/'+listid+'/items/move')
-          .set('x-access-token', token)
-          .send(postions)
-          .end((err, res) => {
-
-            dbhandler.getIdsOrderedByPositionList(listid, (data) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object'); 
-
-              var idsActual = extactIDsFromJSON(data);
-              
-              //idsActual.should.be.eql(idsCorrect);
-
-              done();
-            });     
-
-          });
-    });
-
   });
 
+  describe('Create 5 items and move one up boundaries', () => {
+
+    it('it should result in items being in the correct order', (done) => {
+
+      var idsCorrect = [itemIDs.id2, itemIDs.id3, itemIDs.id4, itemIDs.id5, itemIDs.id1];
+
+      var postions = {
+        targetposition: 4
+      }
+
+      chai.request(app)
+        .put('/api/lists/'+listid+'/items/'+itemIDs.id1+'/move')
+        .set('x-access-token', token)
+        .send(postions)
+        .end((err, res) => {
+
+          dbhandler.getIdsOrderedByPositionList(listid, (data) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object'); 
+
+            var idsActual = extactIDsFromJSON(data);
+            idsActual.should.be.eql(idsCorrect);
+
+            done();
+          });     
+
+        });
+    });
+  });
+
+  describe('Create 5 items and move one down boundaries', () => {
+
+    it('it should result in items being in the correct order', (done) => {
+
+      var idsCorrect = [itemIDs.id5, itemIDs.id1, itemIDs.id2, itemIDs.id3, itemIDs.id4];
+
+      var postions = {
+        targetposition: 0
+      }
+
+      chai.request(app)
+        .put('/api/lists/'+listid+'/items/'+itemIDs.id5+'/move')
+        .set('x-access-token', token)
+        .send(postions)
+        .end((err, res) => {
+
+          dbhandler.getIdsOrderedByPositionList(listid, (data) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object'); 
+
+            var idsActual = extactIDsFromJSON(data);
+            idsActual.should.be.eql(idsCorrect);
+
+            done();
+          });     
+
+        });
+    });
+  });
 });
