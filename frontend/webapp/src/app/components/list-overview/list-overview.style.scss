@@ -18,10 +18,6 @@
 
     -webkit-flex: 1 1 16em;
 }
-.flex-item a{
-   text-decoration: none;
-}
-
 md-card {
     padding: 1.5em;
     box-shadow: 1px 1px 2px 1px #888888;
@@ -31,7 +27,10 @@ md-card::hover{
      box-shadow: 0 0 0 0 #888888 !important;
      border-bottom: none !important;
 }
-
+md-card a{
+    text-decoration: none;
+    color: black;
+}
 md-card-title {
     font-size: 1em;
     padding-bottom: 1em;
@@ -56,13 +55,25 @@ md-card-title {
     cursor: -webkit-grabbing;
 }
 .remove-container{
-  margin-top: 3em;
-  border: thin solid #ccc !important;
-  border-bottom: none !important;
-  opacity: 0.5;
-  color: #888888 !important;
+    margin-top: 3em;
+    border: thin solid #ccc !important;
+    border-bottom: none !important;
+    opacity: 0.5;
+    color: #888888 !important;
  }
  .form-field{
-  display: inline-flex !important;
-  margin: 2em 1em !important;
+    display: inline-flex !important;
+    margin: 2em 1em !important;
  }
+.drag-handle{
+    font-size: 1.5em;
+}
+
+form{
+   margin: 1em;
+   padding: 1em;
+   box-shadow: 1px 1px 2px 1px #888888;
+   border-bottom: 2px solid #4caf50;
+   background-color: white;
+   display: inline-block !important;
+}

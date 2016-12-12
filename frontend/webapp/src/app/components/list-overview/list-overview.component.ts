@@ -80,7 +80,36 @@ export class ListOverviewComponent implements OnInit {
           items: [ ],
         }));
     }
-    console.log("neu Liste: " + this.form.value.listName )
+  }
+   public onEditHandler (
+   event: KeyboardEvent,
+   keyCode: number,
+     elem: HTMLElement,
+     list: List
+   ) {
+     if (keyCode === 13) {
+       elem.contentEditable = 'false';
+      this.commitEdit(elem, list);
+     }
+   }
+
+  public toggleEditable (
+    event: MouseEvent | KeyboardEvent,
+    elem: HTMLInputElement,
+    list: List
+  ) {
+    if (elem.contentEditable !== 'true') {
+      elem.contentEditable = 'true';
+      elem.focus();
+    } else {
+      this.commitEdit(elem, list);
+      elem.contentEditable = 'false';
+     }
+   }
+
+  public commitEdit (elem: HTMLElement, list: List) {
+    this.lists.find( l => l.id === list.id).name.replace(/[\r\n\t]/g, '');
+    this.onEdit.emit({});
   }
 
   public amountOpen (list: List): Number {
@@ -90,10 +119,16 @@ export class ListOverviewComponent implements OnInit {
 
   private updateOrder (args): void {
     // TODO communicate update or ordering
+    console.log("updateOrder called");
   }
 
   private updateDelete (deletedelem: HTMLElement): void {
     const href: string = deletedelem.firstElementChild.getAttribute('href');
     this.apiService.deleteList(href);
   }
+
+
+
 }
+
+

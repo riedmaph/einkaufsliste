@@ -4,28 +4,34 @@
  [dragulaModel]="lists"
 >
   <div *ngFor="let list of lists" class="flex-item">
-   <a [routerLink]="[ '/list', list.id ]">
-    <md-card>
-      <span class="drag-handle"> ⇆ </span> 
-      <md-card-title align="middle">{{ list.name }}</md-card-title>
-      <md-card-actions align="middle">
-        Items: {{ list.count }}
-        <i> Offen: {{ amountOpen(list) }} </i>
-      </md-card-actions>
-      <p align="right">
-       <i>
-        <small>private list</small>
-       </i>
-      </p>
+    <md-card> 
+      <span class="drag-handle"> ⇆ </span>
+      <md-card-title
+        #textfield
+        (dblclick)="toggleEditable($event, textfield, list)"
+        (keyup)="onEditHandler($event, $event.keyCode, textfield, list)"
+        align="middle"
+      >{{ list.name }}
+      </md-card-title>
+      <a [routerLink]="[ '/list', list.id ]">
+        <md-card-actions align="middle">
+          Items: {{ list.count }}
+          <i> Offen: {{ amountOpen(list) }} </i>
+        </md-card-actions>
+        <p align="right">
+          <i>
+            <small>private list</small>
+          </i>
+        </p>
+      </a>
     </md-card>
-   </a>
   </div>
 </div>
 
 
 
-
 <form [formGroup]="form">
+  
   <span
     *ngIf="!form.controls['listName'].pristine && form.controls['listName'].errors && form.controls['listName'].errors.maxlength"
     class="form-error"
