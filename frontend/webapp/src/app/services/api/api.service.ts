@@ -15,8 +15,8 @@ export class ApiService {
   ) {}
 
   public getAllLists (): Observable<List[]> {
-    return this.authHttp.get(API_ROUTES.lists.all)
-   
+    return this.getMockedData();
+
 /* TO BE REVERTED!
     return this.authHttp.get(API_ROUTES.lists.all)
       .map(res => res.json().lists); */
@@ -113,7 +113,7 @@ export class ApiService {
  */
   private getMockedData(): Observable<List[]> {
 
-  /* Whole Method to be deleted! just for mocking */
+  //Whole Method to be deleted! just for mocking //
 
     // items vv
     const newItem0: ListItem = {
@@ -155,6 +155,6 @@ export class ApiService {
     lists.push(newList1);
 
     return Observable.of(lists);
-/* Whole Method to be deleted! just for mocking */
+ //Whole Method to be deleted! just for mocking */
   }
 }

@@ -1,8 +1,41 @@
-<md-list>
-  <md-list-item *ngFor="let list of lists">
-    <a [routerLink]="[ '/list', list.id ]">{{ list.name }}</a>
-  </md-list-item>
-</md-list>
+<div 
+ class="flex-container" 
+ [dragula]="'draggable-listoverview'"
+ [dragulaModel]="lists"
+>
+  <div *ngFor="let list of lists" class="flex-item">
+   <a [routerLink]="[ '/list', list.id ]">
+    <md-card>
+      <span class="drag-handle"> ⇆ </span> 
+      <md-card-title align="middle">{{ list.name }}</md-card-title>
+      <md-card-actions align="middle">
+        Items: {{ list.count }}
+        <i> Offen: {{ amountOpen(list) }} </i>
+      </md-card-actions>
+      <p align="right">
+       <i>
+        <small>shared with Gernot Brunner</small>
+       </i>
+      </p>
+    </md-card>
+   </a>
+  </div>
+</div>
+
+<div
+ *ngIf="duringDrag"
+ class="remove-container"
+ [dragula]="'draggable-listoverview_NOOOOO'"
+ align="middle"
+>
+  <img 
+   class="icon icons8-Trash"
+    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABP0lEQVRoQ+1Z7RHBQBB9qUAJlKATSqADpeiAEuhECXRABczOJDMmyO47l3CZl7/7cvc+du9iVCj8qQrnDwn4dYJKYGwJrADsHFF7AOtcwnO2UIR8wzubCEbAPZdrwXVC3EKgekMJCDrfwELmhkBjSYA0cBg4k8AwjMhdUgT0PcwUJwo80CxQnCiwBMT6mzKVAiuBP0+gnWb7tPLq1A2cBHZayCPo1ZM45ZwBj6BXl4DYiAGfbmLPYa+uBJRAywEdo5GW0DH65JJ3ynh1nUKRljOM7gHym6rTWA2xhvi1QaiuoMBk7xZ3E0dPMQ9HmUqBx/Kj/gpg4tmYWL8AmDHvpiRwALBgNiGwRwBLAp/0P7E5dOohhRuAOYBz3wJsfROxrTecMhu+wVrbmCEblrytldJCX/LN+7oE5PWTX634BB6TJVExvaUx8gAAAABJRU5ErkJggg==" 
+   width=40em 
+   height=40em
+  >
+</div>
+
 
 <form [formGroup]="form">
   <span
