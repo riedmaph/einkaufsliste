@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 
 var config = {};
 config.tokensecrete='supersicher';
-config.tokenexpiresin='2 days';
+config.tokenexpiresin='14 days';
 
 function createToken(userid) {
 
