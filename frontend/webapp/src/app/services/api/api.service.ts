@@ -23,8 +23,12 @@ export class ApiService {
   }
 
   public getList (listUuid: string): Observable<List> {
+    //TODO: REVERT
+    return this.mockList();
+    /*
+
     return this.authHttp.get(API_ROUTES.lists.single.replace(':listId', listUuid))
-      .map(res => res.json());
+      .map(res => res.json());*/
   }
 
   public createList (listName: string): Observable<{ id: string }> {
@@ -39,12 +43,22 @@ export class ApiService {
    *
    * @param {string} href of the deleted list
    */
-  public deleteList (href: string): Observable<any> {
+  public deleteListFromOverview (href: string): Observable<any> {
     return this.authHttp.delete(
       API_ROUTES.lists.single.replace('/lists/:listId', href)
     ).map( res => res.json());
   }
 
+  /**
+   * Make API call to delete a list from the list vie
+   *
+   * @param {string} listId of the deleted list
+   */
+  public deleteList (listId: string): Observable<any> {
+    return this.authHttp.delete(
+      API_ROUTES.lists.single.replace(':listId', listId)
+    ).map( res => res.json());
+  }
   /**
    * Make API call to update a list and change its name
    *
@@ -176,4 +190,42 @@ export class ApiService {
   private createListMock (): Observable<{ id: string }> {
    return Observable.of( { id: 'aNewId-12345'});
 }
+
+/**
+ * private Method to mock API call to get a Lists
+ */
+  private mockList(): Observable<List>{
+    
+// items vv
+    const newItem0: ListItem = {
+      name: 'Eintrag A',
+      unit: ' Kiste',
+      amount: 1,
+      checked: false,
+    };
+    const newItem1: ListItem = {
+      name: 'Eintrag B',
+      unit: ' Flaschen',
+      amount: 3,
+      checked: false,
+    };
+    const newItem2: ListItem = {
+      name: 'Eintrag C',
+      unit: 'Stück',
+      amount: 17,
+      checked: true,
+    };
+    let itemArray: ListItem[] = [ ];
+
+    // assemble items vv
+    itemArray.push(newItem0);
+    itemArray.push(newItem1);
+    itemArray.push(newItem2);
+
+    // define Lists
+    const  newList0: List = {
+      id: 'MeineCooleId_picknick', name: 'Picknick', items: itemArray, count: itemArray.length,
+    };
+    return Observable.of(newList0);
+  }
 }

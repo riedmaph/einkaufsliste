@@ -6,6 +6,8 @@ import {
   QueryList,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { Location } from '@angular/common';
 import {
   FormGroup,
   FormBuilder,
@@ -13,6 +15,7 @@ import {
 } from '@angular/forms';
 
 import { ListComponent } from '../list';
+import { ConfirmComponent } from '../confirm/confirm.component';
 import { ApiService } from '../../services/api';
 import {
   ListItem,
@@ -38,6 +41,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   constructor (
     private apiService: ApiService,
     private route: ActivatedRoute,
+    private dialog: MdDialog,
+    private location: Location,
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
@@ -133,5 +138,20 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   public reorderItems (): void {
     return; // TODO
+  }
+
+  public deleteList (): void {
+    let dialogRef = this.dialog.open(ConfirmComponent, {
+       disableClose: false,
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+      this.apiService.deleteList(this.list.id);
+      this.list.items = [ ];
+      }
+    });
+
+    console.log("Methode in listComponent aufgerufen");
+    console.log(this.list.name);
   }
 }

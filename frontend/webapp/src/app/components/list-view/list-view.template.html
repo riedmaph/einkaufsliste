@@ -1,5 +1,11 @@
 <sl-list [items]="completedItems" deleteable></sl-list>
 
+
+<button md-menu-item (click)="deleteList()"> 
+  <md-icon>delete</md-icon>
+  delete this list
+</button>
+
 <sl-list [items]="items" editable deleteable sortable></sl-list>
 
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>

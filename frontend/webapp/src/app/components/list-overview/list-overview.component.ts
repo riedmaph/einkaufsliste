@@ -134,7 +134,7 @@ export class ListOverviewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
       const href: string = deletedelem.firstElementChild.getAttribute('href');
-      this.apiService.deleteList(href);
+      this.apiService.deleteListFromOverview(href);
       } else {
         //lists is reset to all list from api
         this.apiService.getAllLists().subscribe( allLists => this.lists = allLists);
