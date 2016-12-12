@@ -56,7 +56,7 @@ export class ApiService {
       API_ROUTES.lists.single.replace(':listId', listId),
       { name: newName }).map( res => res.json());
   }
-  
+
   /**
    * Makes API call to retrieve auto completion suggestions for given input
    *

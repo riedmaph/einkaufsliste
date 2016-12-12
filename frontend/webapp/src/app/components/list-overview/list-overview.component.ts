@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
+import { MdDialog } from '@angular/material';
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +12,7 @@ import {
 } from '@angular/forms';
 
 import { List } from '../../models';
+import { ConfirmComponent } from '../confirm/confirm.component';
 import { ApiService } from '../../services';
 
 @Component({
@@ -32,6 +34,7 @@ export class ListOverviewComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private apiService: ApiService,
+    private dialog: MdDialog,
     private dragulaService: DragulaService,
   ) {
     this.form = this.formBuilder.group({
@@ -125,10 +128,19 @@ export class ListOverviewComponent implements OnInit {
   }
 
   private updateDelete (deletedelem: HTMLElement): void {
-    const href: string = deletedelem.firstElementChild.getAttribute('href');
-    this.apiService.deleteList(href);
+    let dialogRef = this.dialog.open(ConfirmComponent, {
+       disableClose: false,
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+      const href: string = deletedelem.firstElementChild.getAttribute('href');
+      this.apiService.deleteList(href);
+      } else {
+        //lists is reset to all list from api
+        this.apiService.getAllLists().subscribe( allLists => this.lists = allLists);
+      }
+    });
   }
-
 
 
 }
