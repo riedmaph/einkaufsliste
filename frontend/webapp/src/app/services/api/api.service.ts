@@ -16,7 +16,10 @@ export class ApiService {
 
   public getAllLists (): Observable<List[]> {
     return this.authHttp.get(API_ROUTES.lists.all)
-      .map(res => res.json().lists);
+   
+/* TO BE REVERTED!
+    return this.authHttp.get(API_ROUTES.lists.all)
+      .map(res => res.json().lists); */
   }
 
   public getList (listUuid: string): Observable<List> {
@@ -105,4 +108,53 @@ export class ApiService {
     );
   }
 
+/**
+ * private Method to mock API call to get All Lists
+ */
+  private getMockedData(): Observable<List[]> {
+
+  /* Whole Method to be deleted! just for mocking */
+
+    // items vv
+    const newItem0: ListItem = {
+      name: 'Eintrag A',
+      unit: ' Kiste',
+      amount: 1,
+      checked: false,
+    };
+    const newItem1: ListItem = {
+      name: 'Eintrag B',
+      unit: ' Flaschen',
+      amount: 3,
+      checked: false,
+    };
+    const newItem2: ListItem = {
+      name: 'Eintrag C',
+      unit: 'Stück',
+      amount: 17,
+      checked: true,
+    };
+    const itemArray: ListItem[] = [ ];
+
+    // assemble items vv
+    itemArray.push(newItem0);
+    itemArray.push(newItem1);
+    itemArray.push(newItem2);
+
+    // define Lists
+    const newList0: List = {
+      id: 'MeineCooleId_picknick', name: 'Picknick', items: itemArray, count: itemArray.length,
+    };
+    const newList1: List = {
+      id: 'MeineCooleId_skiwochenende', name: 'Skiwochenende', items: itemArray, count: itemArray.length,
+    };
+
+    // assemble list of lists
+    const lists: List[] = [ ];
+    lists.push(newList0);
+    lists.push(newList1);
+
+    return Observable.of(lists);
+/* Whole Method to be deleted! just for mocking */
+  }
 }
