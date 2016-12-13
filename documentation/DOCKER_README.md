@@ -41,6 +41,7 @@ The settings->port-> tab shows e.g. the ip-address
 - ```route``` (ips, gateway)
 - ```docker ps``` (-a shows all) (all docker container with id and status)
 - ```docker inspect <container id> (details), docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id``` (ip-address of docker)
+- `docker exec -it <container> bash` get into a container (open a shell inside)
 
 # Common Probles with docker-machine env
 - Cerificate error: follow instructions displayed
