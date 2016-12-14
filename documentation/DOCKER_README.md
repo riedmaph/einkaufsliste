@@ -33,8 +33,8 @@ exit
   - ```docker-compose up```
 
 # Docker informations on windows:
-Use kitematic, the basic setup will fail -> klick use virtualbox -> skip registration
-The settings->port-> tab shows e.g. the ip-address
+Use kitematic, the basic setup will fail -> click use virtualbox -> skip registration
+The settings -> port -> tab shows e.g. the ip-address
 
 # Docker information on linux (won't work on windows with docker-toolbox):
 - ```ifconig``` (ips)
@@ -62,4 +62,4 @@ The settings->port-> tab shows e.g. the ip-address
    - make sure you listen to that addresses, edit postgresql.conf, same dir as pg_hba.conf (or all i.e. : `listen_addresses = '*'`)
 
 # If you have windows pro or higher and don't require virtualbox for other porjects:
-You can isntall docker directly and linux commands will probably work
+You can install docker directly and linux commands will probably work
