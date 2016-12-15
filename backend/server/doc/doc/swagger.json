@@ -945,7 +945,7 @@
                 },
                 "market": {
                     "type": "integer",
-                    "description": "Unique identifer of offer."
+                    "description": "Unique identifer of market."
                 },
                 "discount": {
                     "type": "string",
