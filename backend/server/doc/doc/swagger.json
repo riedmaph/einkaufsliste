@@ -597,12 +597,12 @@
                 }
             }
         },
-        "/markets/search/{searchstring}": {
+        "/markets/search": {
             "get": {
                 "tags": [
                     "Markets"
                 ],
-                "summary": "Find markets by values in all their attributes, seperated by blanks, non case sensitiv.",
+                "summary": "Find markets by values in all their attributes, seperated by blanks, non case sensitive.",
                 "description": "",
                 "parameters": [
                     {
@@ -613,11 +613,28 @@
                         "type": "string"
                     },
                     {
-                        "in": "path",
-                        "name": "searchstring",
-                        "description": "String to search for.",
+                        "in": "query",
+                        "name": "longditude",
+                        "description": "Longditude of user's position.",
                         "required": true,
-                        "type": "string"
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "latitude",
+                        "description": "Latitude of user's position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "max-distance",
+                        "description": "Maximum distance (airline) between user and market in meters.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
                     }
                 ],
                 "responses": {
@@ -896,11 +913,13 @@
                     "description": "Name of market."
                 },
                 "latitude": {
-                    "type": "string",
+                    "type": "number",
+                    "format": "decimal",
                     "description": "Latitude of market."
                 },
                 "longditude": {
-                    "type": "string",
+                    "type": "number",
+                    "format": "decimal",
                     "description": "Longditude of market."
                 },
                 "street": {
@@ -928,38 +947,38 @@
                     "type": "integer",
                     "description": "Unique identifer of offer."
                 },
-                "title": {
+                "discount": {
                     "type": "string",
-                    "description": "Title of offer."
+                    "description": "Discount of offer in original format from crawling."
                 },
-                "productname": {
-                    "type": "string",
-                    "description": "Productname of offer."
-                },
-                "price": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Price of offer."
-                },
-                "offerfrom": {
+                "offerFrom": {
                     "type": "string",
                     "description": "Startdate of offer."
                 },
-                "offerto": {
+                "offerTo": {
                     "type": "string",
                     "description": "Enddate of offer."
+                },
+                "product": {
+                    "$ref": "#/definitions/Product"
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Productname of offer."
                 },
                 "brand": {
                     "type": "string",
                     "description": "Brand of offer."
                 },
-                "discount": {
-                    "type": "string",
-                    "description": "Discount of offer in percentage."
-                },
-                "minimumquantityfordiscount": {
-                    "type": "string",
-                    "description": "Minimun quantity to enable discount of offer."
+                "price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Price of offer."
                 }
             }
         },
