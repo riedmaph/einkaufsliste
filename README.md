@@ -48,6 +48,10 @@ The frontend nginx redirects requests made to the `/api` route to this container
 
 _Note:_ The backend expects to find a `config.json` in `/backend/config`. See `/backend/config/config.sample.json` for the format.
 
+_Local test environment_:
+ - Prepare a local database container as described in `/backend/database/localdb.md`
+ - Use `docker-compose -f docker-compose.yml -f docker-compose.localdb.yml up -d` to start all three docker containers.
+
 ## Code-Style
 ### Git-Workflow
 - No commits to `master`

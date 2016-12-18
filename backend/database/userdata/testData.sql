@@ -8,4 +8,3 @@ INSERT INTO UserData_Test.Item (name, position, amount, unit, list) VALUES('Bana
 INSERT INTO UserData_Test.Item (name, position, amount, unit, list) VALUES('Hühnerfilet', 1, 350, 'g', '5c7397aa-b249-11e6-b98b-000c29c17dad');
 INSERT INTO UserData_Test.Item (name, position, amount, unit, list) VALUES('Bier', 20, 0, 'Stk', '60e4d786-b249-11e6-b98b-000c29c17dad');
 INSERT INTO UserData_Test.Item (name, position, amount, unit, list) VALUES('Popcorn', 3, 1, 'kg', '60e4d786-b249-11e6-b98b-000c29c17dad');
-
