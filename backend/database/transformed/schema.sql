@@ -43,4 +43,21 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
   zip text,
   city text
 );
-;
+
+CREATE TABLE transformed.offer
+(
+  id integer,
+  title text,
+  price double precision,
+  offerfrom date,
+  offerto date,
+  "coalesce" text,
+  name text,
+  size text,
+  discount text,
+  productid integer,
+  minimumquantityfordiscount text,
+  extid text,
+  market integer,
+  description text
+);

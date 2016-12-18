@@ -1,4 +1,3 @@
-CREATE TABLE transformed.offer AS
 WITH relevantNames AS (SELECT a.id,a.title,n.name
    FROM crawled.offer a, (SELECT * FROM transformed.productName WHERE name IS NOT NULL AND trim(name) <> '') n
    WHERE title IS NOT null
@@ -14,6 +13,7 @@ FROM (SELECT id,cleanString(title) title, lower(cleanString(title)) titlej, left
 JOIN (SELECT lower(brand)||' %' brand,left(lower(brand),3) fast_join FROM transformed.brand WHERE brand<>'' AND brand IS NOT null) b ON a.fast_join=b.fast_join
 WHERE a.titlej LIKE b.brand
 GROUP BY a.id,a.title)
+Insert into transformed.offer
 SELECT id,
 trim(cleanString(entity2char(COALESCE(title, substring(description FROM (position('<strong>' IN description)+char_length('<strong>')) for (GREATEST(0,position('</strong>' IN description) - (position('<strong>' IN description)+char_length('<strong>'))))))))) AS title,
 price::DOUBLE PRECISION,
