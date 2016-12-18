@@ -1,8 +1,9 @@
 
-# Start postgres-db docker container
-
+# Start docker container postgres-db
+```
 cd $ELISA
 docker-compose -f docker-compose.yml -f docker-compose.localdb.yml up -d postgres-db
+```
 
 ### Note: 
 The data is stored in a persistent docker volume. View volumes with
