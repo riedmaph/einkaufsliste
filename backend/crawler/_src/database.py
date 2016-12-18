@@ -6,14 +6,24 @@ dbcpath = os.path.join(script_dir, "../../config/config.json")
 dbcfile = open(dbcpath).read()
 dbconfig = json.loads(dbcfile)
 
-
 import psycopg2
 
 class PostgresAdapter:
-	def __init__(self):
+	def __init__(self, user, db=None):
 		# connect to db
-		self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbpasscrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
+		dbcUser = dbconfig["users"][user]
+		if db is None:
+			db = dbconfig["selectedDb"]
+
+		dbcDb = dbconfig["databases"][db]
+
+		self.conn = psycopg2.connect(database=dbcDb["dbname"], user=dbcUser["username"], password=dbcUser["pw"] , host=dbcDb["dbhost"], port=dbcDb["dbport"])
 		self.cur = self.conn.cursor()
+
+		self.isProtected = dbcDb["protected"]
+
+	def isProtected(self):
+		return self.isProtected;
 
 	def execute(self, stmt, data=None):
 		self.cur.execute(stmt, data)
@@ -185,7 +195,7 @@ class BrandBuffer:
 # All operations interact immediately with the DB
 class ElisaDbBase:
 	def __init__(self):
-		self.db = PostgresAdapter()
+		self.db = PostgresAdapter(user="crawler")
 
 	# obtain shop id  (create shop if it does not exist yet)
 	def getOrCreateShop(self, name, url):

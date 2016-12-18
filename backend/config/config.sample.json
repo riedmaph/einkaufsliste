@@ -1,11 +1,29 @@
 {
-    "dbhost": "",
-    "dbport": 0,
-    "dbname": "",
-    "dbusercrawler": "",
-    "dbpasscrawler": "",
-    "dbusertransformer": "",
-    "dbpasstransformer": "",
-    "dbuserapi": "",
-    "dbpassapi": ""
+    "selectedDb": "primary",
+    "databases": {
+        "primary": {
+            "dbhost": "",
+            "dbport": 0,
+            "dbname": "",
+            "protected": false
+        }
+    },
+    "users": {
+        "admin": {
+            "username": "",
+            "pw": ""
+        },
+        "crawler": {
+            "username": "",
+            "pw": ""
+        },
+        "transformer": {
+            "username": "",
+            "pw": ""
+        },
+        "api": {
+            "username": "",
+            "pw": ""
+        }
+    }    
 }

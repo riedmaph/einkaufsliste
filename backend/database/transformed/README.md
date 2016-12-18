@@ -2,5 +2,5 @@
 Create schema transformed
 --------------------
 ```
-$ ./rebuildSchema.sh
+$ ./rebuildSchema.sh [<db>]
 ```
