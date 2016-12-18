@@ -33,3 +33,4 @@ function getUser {
 	eval "$2='$_username'"
 	eval "$3='$_pw'"
 }
+

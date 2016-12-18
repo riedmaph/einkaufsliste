@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  HostBinding,
 } from '@angular/core';
 
 import { ListItem } from '../../models/list-item.model';
@@ -11,7 +12,10 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 @Component({
   selector: 'sl-list',
   templateUrl: './list.template.html',
-  styleUrls: [ './list.style.scss' ],
+  styleUrls: [
+    './list.style.scss',
+    './list.dragdrop.style.scss',
+  ],
 })
 export class ListComponent {
 
@@ -19,15 +23,19 @@ export class ListComponent {
   public items: ListItem[] = [ ];
 
   @Output()
-  public onRemove: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
+  public onRemove: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   @Output()
-  public onEdit: EventEmitter<any> = new EventEmitter<any>();
+  public onEdit: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   @Output()
-  public onComplete: EventEmitter<ListItem> = new EventEmitter<ListItem>();
+  public onReorder: EventEmitter<any> = new EventEmitter<any>();
 
   public itemMenuIndex: number = -1;
+
+  private editableFlag: boolean = false;
+  private deleteableFlag: boolean = false;
+  private sortableFlag: boolean = false;
 
   constructor(
     private dragulaService: DragulaService,
@@ -37,71 +45,97 @@ export class ListComponent {
     );
   }
 
+  /** Setter for editableFlag */
+  @Input()
+  @HostBinding('attr.editable')
+  public set editable (value: boolean) {
+    this.editableFlag = (value != null && `${value}` !== 'false');
+  }
+
+  /** Getter for editableFlag */
+  public get editable (): boolean {
+    return this.editableFlag;
+  }
+
+  /** Setter for deleteableFlag */
+  @Input()
+  @HostBinding('attr.deleteable')
+  public set deleteable (value: boolean) {
+    this.deleteableFlag = (value != null && `${value}` !== 'false');
+  }
+
+  /** Getter for deleteableFlag */
+  public get deleteable (): boolean {
+    return this.deleteableFlag;
+  }
+
+  /** Setter for sortableFlag */
+  @Input()
+  @HostBinding('attr.sortable')
+  public set sortable (value: boolean) {
+    this.sortableFlag = (value != null && `${value}` !== 'false');
+  }
+
+  /** Getter for sortableFlag */
+  public get sortable (): boolean {
+    return this.sortableFlag;
+  }
+
+  /**
+   * Toggles the checked state of an item and propagates the edit
+   *
+   * @param {ListItem} item Item to update
+   * @return {void}
+   */
+  public toggleChecked (item: ListItem): void {
+    item.checked = !item.checked;
+    this.onEdit.emit(item);
+  }
+
   /**
    * Removes an item from the items list, after confirmation was successful
    *
    * @param {number} index Index of element to remove
    * @returns {void}
    */
-  public removeItem (index: number): void {
-    let removedItems = this.items.splice(index, 1);
-    this.itemMenuIndex = -1;
-    this.onRemove.emit(removedItems);
+  public removeItem (item: ListItem): void {
+    if (this.deleteable) {
+      this.onRemove.emit(item);
+      this.itemMenuIndex = -1;
+    }
   }
 
   /**
-   * Moves an item from the items to the completed items list
+   * Toggles the visibility of the item-menu
    *
-   * @param {number} index Index of the element to move to the completed items section
+   * @param {MouseEvent} event Double click event that triggered this toggle
+   * @param {number} index Index of the element whoose item-menu to toggleChecked
    * @return {void}
    */
-  public completeItem (index: number): void {
-    let completedItem = this.items.splice(index, 1);
-    this.itemMenuIndex = -1;
-    this.onComplete.emit(completedItem[0]);
-  }
-
   public toggleItemMenu (event: MouseEvent, index: number): void {
     if (this.itemMenuIndex === index) {
+      this.onEdit.emit(this.items[index]);
       this.itemMenuIndex = -1;
     } else {
       this.itemMenuIndex = index;
     }
   }
 
-  public toggleEditable (
-    event: MouseEvent | KeyboardEvent,
-    elem: HTMLInputElement,
-    index: number
-  ) {
-    if (elem.contentEditable !== 'true') {
-      elem.contentEditable = 'true';
-      elem.focus();
-    } else {
-      this.commitEdit(elem, index);
-      elem.contentEditable = 'false';
-    }
-  }
-
-  public commitEdit (elem: HTMLElement, index: number) {
-    if (elem.textContent) {
-      this.items[index].name = elem.textContent.replace(/[\r\n\t]/g, '');
-      elem.textContent = this.items[index].name;
-      this.onEdit.emit({});
-    } else {
-      this.removeItem(index);
-    }
-  }
-
-  public onEditHandler (
-    event: KeyboardEvent,
-    keyCode: number,
-    elem: HTMLElement,
-    index: number
-  ) {
-    if (keyCode === 13) {
-      elem.contentEditable = 'false';
-      this.commitEdit(elem, index);
+  /**
+   * Commits the edit on an item and propagates the changes
+   * Items without a name or amount = 0 are removed
+   *
+   * @param {ListItem} item Item to update
+   * @return {void}
+   */
+  public commitEdit (item: ListItem): void {
+    if (this.editable) {
+      if (item.name && item.amount) {
+        this.onEdit.emit(item);
+      } else {
+        this.removeItem(item);
+      }
+      this.itemMenuIndex = -1;
     }
   }
 
@@ -128,7 +162,20 @@ export class ListComponent {
       }
       // insert the moved Item at new position
       this.items.splice(targetIndex, 0, movedItem);
-      this.onEdit.emit({ });
+      this.onReorder.emit({ });
     }
+    this.blink(movedElem);
+  }
+
+  private blink (elem: HTMLElement): void {
+    const blinkDuration = 250;
+    const offset = 200;
+    // nested timeouts to avoid race conditions
+    setTimeout(() => {
+      elem.classList.add('blink');
+      setTimeout(() => {
+        elem.classList.remove('blink');
+      }, blinkDuration);
+    }, offset);
   }
 }

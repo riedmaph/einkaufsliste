@@ -2,8 +2,29 @@ label {
     display: block;
 }
 
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
 input, md-input {
     display: block;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.form-field--sm {
+        flex: 0;
+        width: 3rem;
+        padding: 0 .25em;
+    }
+
+    &.form-field--lg {
+        flex: 1;
+    }
 }
 
 .form-error {
@@ -34,6 +55,22 @@ md-input.invalid {
 
         .md-input-ripple {
             background-color: $color-error;
+        }
+    }
+}
+
+.list-item-form {
+    display: flex;
+
+    input {
+        border: none;
+        background: #fff;
+        line-height: 2rem;
+        text-align: center;
+
+        &.form-field--lg {
+            display: block;
+            text-align: left;
         }
     }
 }

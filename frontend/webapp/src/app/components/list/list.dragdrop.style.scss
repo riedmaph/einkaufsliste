@@ -1,0 +1,32 @@
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    height: 2em !important;
+    padding: 0.5em !important;
+    z-index: 9999 !important;
+    width: 97% !important;
+    left: 0.1em !important;
+    background-color: #FFF;
+    box-shadow: 1px 1px 2px 1px #888888;
+    border-bottom: 2px solid #4caf50 !important;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+}
+.gu-hide {
+    display: none !important;
+}
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+.gu-transit {
+    opacity: 0.5;
+    cursor: -webkit-grabbing;
+}
+.blink {
+    color: #4caf50;
+    font-weight: bold;
+}

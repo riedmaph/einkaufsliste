@@ -6,30 +6,60 @@
     *ngFor="let item of items; let i = index"
     [id]="i"
     (dblclick)="toggleItemMenu($event, i)"
-
+    [class.edit-mode]="itemMenuIndex === i"
   >
-    <md-checkbox color="primary" (click)="completeItem(i)"></md-checkbox>
-    <span class="item-text" #textfield (keyup)="onEditHandler($event, $event.keyCode, textfield, i)">
-      {{ item.amount }} {{ item.unit }} {{ item.name }}
+    <md-checkbox
+      color="primary"
+      (click)="toggleChecked(item)"
+      [checked]="item.checked"
+    ></md-checkbox>
+    <span
+      class="item"
+      *ngIf="!editable || itemMenuIndex !== i"
+    >
+      <span class="item-amount">{{ item.amount }}</span>
+      <span class="item-unit">{{ item.unit }}</span>
+      <span class="item-name">{{ item.name }}</span>
     </span>
+    <div class="list-item-form item" *ngIf="editable && itemMenuIndex === i">
+      <input
+        type="number"
+        [(ngModel)]="item.amount"
+        name="amount"
+        class="item-amount form-field--sm"
+        placeholder="1"
+      >
+      <input
+        type="text"
+        [(ngModel)]="item.unit"
+        name="unit"
+        class="item-unit form-field--sm"
+        placeholder="kg"
+      >
+      <input
+        type="text"
+        placeholder="Apples"
+        [(ngModel)]="item.name"
+        name="itemName"
+        class="item-name form-field--lg"
+      >
+    </div>
 
     <div class="item-button-wrapper" [class.show]="itemMenuIndex === i">
       <button color="accent"
+        *ngIf="editable"
         class="edit-button"
-        (click)="toggleEditable($event, textfield, i)"
+        (click)="commitEdit(item)"
         md-ripple
       >
-        <md-icon *ngIf="textfield.contentEditable !== 'true'"
-          class="material-icons">edit</md-icon
-        >
-        <md-icon *ngIf="textfield.contentEditable === 'true'"
-          class="material-icons">done</md-icon
+        <md-icon class="material-icons">done</md-icon
         >
       </button>
 
       <button color="warn"
+        *ngIf="deleteable"
         class="delete-button"
-        (click)="removeItem(i)"
+        (click)="removeItem(item)"
         md-ripple
       >
         <md-icon class="material-icons">delete</md-icon>

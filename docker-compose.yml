@@ -14,8 +14,6 @@ services:
     volumes:
       - ./backend/server:/usr/src/app
       - ./backend/config:/usr/src/config
-    command: [ "npm", "install" ]
-    command: [ "npm", "start" ]
     restart: alyways
 
   webserver:

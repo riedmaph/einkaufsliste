@@ -2,14 +2,16 @@ import { Routes } from '@angular/router';
 
 import {
   NoContentComponent,
-  HOME_ROUTES,
+  LIST_VIEW_ROUTES,
   REGISTER_ROUTES,
   LOGIN_ROUTES,
+  LIST_OVERVIEW_ROUTES,
 } from './components';
 
 export const ROUTES: Routes = [
-  ...HOME_ROUTES,
+  ...LIST_VIEW_ROUTES,
   ...REGISTER_ROUTES,
   ...LOGIN_ROUTES,
+  ...LIST_OVERVIEW_ROUTES,
   { path: '**',    component: NoContentComponent },
 ];
