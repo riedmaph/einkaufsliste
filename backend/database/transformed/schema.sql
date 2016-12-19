@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
     article INT NOT NULL REFERENCES Transformed.Article(id) ON DELETE CASCADE,
     tag INT NOT NULL REFERENCES Transformed.Tag(id) ON DELETE CASCADE,
     preference INT NOT NULL
-)
+);
 
 CREATE TABLE IF NOT EXISTS Transformed.Market
 (
