@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
 
 CREATE TABLE transformed.offer
 (
-  id integer,
+  id integer primary key,
   title text,
   price double precision,
   offerfrom date,
