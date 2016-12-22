@@ -49,7 +49,7 @@ router.route('/lists/:listid/items/:itemid')
   .delete(items.deleteItem);
 
 /* products */
-router.route('/products/search/:searchstring')
+router.route('/products/search')
   .get(products.findProducts)
 
 // error handler

@@ -531,7 +531,7 @@
                 }
             }
         },
-        "/products/search/{searchstring}": {
+        "/products/search": {
             "get": {
                 "tags": [
                     "Products"
@@ -547,8 +547,8 @@
                         "type": "string"
                     },
                     {
-                        "in": "path",
-                        "name": "searchstring",
+                        "in": "query",
+                        "name": "q",
                         "description": "String to search for.",
                         "required": true,
                         "type": "string"

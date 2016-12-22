@@ -1,7 +1,7 @@
-var path = require('path');
-var uuid = require('uuid');
+const path = require('path');
+const uuid = require('uuid');
 
-var db = require(path.join('..', 'dbconnector.js'));
+const db = require(path.join('..', 'dbconnector.js'));
 
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
 var sqlCreateItem = db.loadSql(path.join('controllers', 'items', 'createItem.sql'));
@@ -99,9 +99,9 @@ function moveItem(req, res, next) {
 }
 
 module.exports = {
-  getListItems,
-  createItem,
-  updateItem,
-  deleteItem,
-  moveItem
+  getListItems: getListItems,
+  createItem: createItem,
+  updateItem: updateItem,
+  deleteItem: deleteItem,
+  moveItem: moveItem
 };

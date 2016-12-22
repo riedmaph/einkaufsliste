@@ -1,13 +1,14 @@
-var path = require('path');
+const path = require('path');
 
-var db = require(path.join('..', 'dbconnector.js'));
+const db = require(path.join('..', 'dbconnector.js'));
 
 var sqlFindProducts = db.loadSql(path.join('controllers', 'products', 'findProducts.sql'));
 
 function findProducts(req, res, next) {
-  req.body.searchstring = req.params.searchstring;
+  var options = {};
+  options.searchstring = req.query.q;
 
-  db.conn.any(sqlFindProducts, req.body)
+  db.conn.any(sqlFindProducts, options)
     .then(function (data) {
       if(data) {
         res.status(200)
@@ -23,5 +24,5 @@ function findProducts(req, res, next) {
 }
 
 module.exports = {
-  findProducts
+  findProducts : findProducts
 }

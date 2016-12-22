@@ -49,7 +49,8 @@ The frontend nginx redirects requests made to the `/api` route to this container
 _Note:_ The backend expects to find a `config.json` in `/backend/config`. See `/backend/config/config.sample.json` for the format.
 
 ### Backend Database
-To use the AWS database set `dbhost` and `dbport` accordingly. (Get actual values from https://trello.com/c/9beLL65y/44-wichtige-links)
+To switch out the database, set the parameters `dbhost` and `dbport` in the `config.json` in `backend/config`.
+If you do not know the data for you respective database setup, request it from you database admin or the like.
 
 To setup the database locally execute the following commands:
 - run `/backend/database/rebuildDatabase.sh` to setup database and users.
@@ -57,7 +58,7 @@ To setup the database locally execute the following commands:
 - run `/backend/database/transformed/rebuildSchema.sh` to setup shema for crawled.
 - run `/backend/database/userData/rebuildSchema.sh` to setup shema for crawled.
 
-To insert the acutal transformed data do the following steps:
+To insert the current transformed data do the following steps:
 - download the actual transformed data into `backend/database/data` (Get actual link from https://trello.com/c/9beLL65y/44-wichtige-links, Transformed Data)
 - execute `backend/database/data/import.sh`
 

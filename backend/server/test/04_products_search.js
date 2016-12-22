@@ -36,7 +36,7 @@ describe('Products/Search', () => {
   describe('/GET', () => {
     it('it should return no products for xyz', (done) => {
       chai.request(app)
-          .get('/api/products/search/xyz')
+          .get('/api/products/search?q=xyz')
           .set('x-access-token', token)
           .end((err, res) => {
             res.should.have.status(200);
@@ -49,7 +49,7 @@ describe('Products/Search', () => {
     });
     it('it should return products for kokos', (done) => {
       chai.request(app)
-          .get('/api/products/search/kokos')
+          .get('/api/products/search?q=kokos')
           .set('x-access-token', token)
           .end((err, res) => {
             res.should.have.status(200);
