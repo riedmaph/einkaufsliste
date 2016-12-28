@@ -78,7 +78,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.listComponents.forEach(listComp => {
       listComp.onEdit.subscribe(newItem => this.update(newItem));
       listComp.onRemove.subscribe(item => this.removeItem(item));
-      listComp.onReorder.subscribe(this.reorderItems);
+      listComp.onReorder.subscribe(x => console.log('Output von reorder emitter: ' + x[0] + x[1]));
+      //listComp.onReorder.subscribe(this.reorderItems);
     });
   }
 
@@ -131,7 +132,15 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public reorderItems (): void {
-    return; // TODO
+  /**
+   * Propagates reordering of an item to the API
+   *
+   * @param {ListItem} movedItem moved item
+   * @param {number} to new position of the item
+   * @return {void}
+   */
+  public reorderItems (movedItem: ListItem, to: number): void {
+    this.apiService.reorderItem(movedItem, to)
+      .subscribe(() => undefined);
   }
 }
