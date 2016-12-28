@@ -108,7 +108,6 @@ export class ApiService {
       API_ROUTES.lists.entries.move
         .replace(':listId', item.listUuid)
         .replace(':itemId', item.id),
-      to)
-      .map(response => response.json());
+     { targetposition: to })
   }
 }
