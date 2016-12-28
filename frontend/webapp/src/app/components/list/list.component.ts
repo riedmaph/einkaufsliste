@@ -36,6 +36,7 @@ export class ListComponent {
   private editableFlag: boolean = false;
   private deleteableFlag: boolean = false;
   private sortableFlag: boolean = false;
+  private lastMovedItem: ListItem = undefined;
 
   constructor(
     private dragulaService: DragulaService,
@@ -43,6 +44,9 @@ export class ListComponent {
     this.dragulaService.dragend.subscribe(
       draggedElement => this.reorderItems(draggedElement[1])
     );
+    dragulaService.drag.subscribe((value) => {
+      this.saveMovedItem(value.slice(1));
+    });
   }
 
   /** Setter for editableFlag */
@@ -147,7 +151,7 @@ export class ListComponent {
    */
   public reorderItems (movedElem: HTMLElement): void {
     let nextElement: any = movedElem.nextSibling;
-    if (nextElement && nextElement.id) {
+    if (nextElement && nextElement.id && this.lastMovedItem) {
       let movedItemIndex = Number(movedElem.id);
       let movedItem = this.items[movedItemIndex];
       // delete the moved Item
@@ -162,7 +166,8 @@ export class ListComponent {
       }
       // insert the moved Item at new position
       this.items.splice(targetIndex, 0, movedItem);
-      this.onReorder.emit({ });
+      this.onReorder.emit([this.lastMovedItem, targetIndex]);
+
     }
     this.blink(movedElem);
   }
@@ -178,4 +183,12 @@ export class ListComponent {
       }, blinkDuration);
     }, offset);
   }
+
+  private saveMovedItem (elem: HTMLElement): void {
+    const movedItemIndex = Number(elem[0].id);
+    const movedItem = this.items[movedItemIndex];
+    if (movedItem){
+      this.lastMovedItem = movedItem;
+  }
+}
 }

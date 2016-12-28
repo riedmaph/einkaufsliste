@@ -102,7 +102,6 @@ export class ApiService {
    * @param {number} to new position of the item
    * @return {Observable<any>} 
    * 
-   * TODO: where to get the listId from
    */
   public reorderItem (item: ListItem, to: number): Observable<any> {
     return this.authHttp.put(
