@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS Transformed.ArticleTag;
 DROP TABLE IF EXISTS Transformed.Tag;
 DROP TABLE IF EXISTS Transformed.Article;
+DROP TABLE IF EXISTS Transformed.Offer;
+DROP TABLE IF EXISTS Transformed.Market;
 
 DROP SCHEMA IF EXISTS Transformed;
 
@@ -44,9 +46,9 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
   city text
 );
 
-CREATE TABLE transformed.offer
+CREATE TABLE transformed.offer IF NOT EXISTS Transformed.Offer
 (
-  id integer,
+  id integer primary key,
   title text,
   price double precision,
   offerfrom date,
