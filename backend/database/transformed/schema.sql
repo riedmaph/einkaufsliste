@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
   city text
 );
 
-CREATE TABLE transformed.offer IF NOT EXISTS Transformed.Offer
+CREATE TABLE IF NOT EXISTS Transformed.Offer
 (
   id integer primary key,
   title text,
