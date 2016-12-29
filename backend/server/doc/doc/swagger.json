@@ -602,7 +602,7 @@
                 "tags": [
                     "Markets"
                 ],
-                "summary": "Find markets by values in all their attributes, seperated by blanks, non case sensitive.",
+                "summary": "Find markets, located within a given radius around the provided position.",
                 "description": "",
                 "parameters": [
                     {
@@ -615,7 +615,7 @@
                     {
                         "in": "query",
                         "name": "longditude",
-                        "description": "Longditude of user's position.",
+                        "description": "Longditude of the given position.",
                         "required": true,
                         "type": "number",
                         "format": "decimal"
@@ -623,7 +623,7 @@
                     {
                         "in": "query",
                         "name": "latitude",
-                        "description": "Latitude of user's position.",
+                        "description": "Latitude of the given position.",
                         "required": true,
                         "type": "number",
                         "format": "decimal"
