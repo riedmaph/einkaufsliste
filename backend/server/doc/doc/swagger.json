@@ -596,6 +596,130 @@
                     }
                 }
             }
+        },
+        "/markets/search": {
+            "get": {
+                "tags": [
+                    "Markets"
+                ],
+                "summary": "Find markets, located within a given radius around the provided position.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "longditude",
+                        "description": "Longditude of the given position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "latitude",
+                        "description": "Latitude of the given position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "max-distance",
+                        "description": "Maximum distance (airline) between user and market in meters.",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "markets": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Market"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/markets/{marketid}/offers": {
+            "get": {
+                "tags": [
+                    "Offers"
+                ],
+                "summary": "Get all offers of the specified market.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "marketid",
+                        "description": "ID of market to load offers from.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "offers": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Offer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -774,6 +898,92 @@
                 "targetposition": {
                     "type": "integer",
                     "description": "Target position of the moved item."
+                }
+            }
+        },
+        "Market": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifer of market."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of market."
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "decimal",
+                    "description": "Latitude of market."
+                },
+                "longditude": {
+                    "type": "number",
+                    "format": "decimal",
+                    "description": "Longditude of market."
+                },
+                "street": {
+                    "type": "string",
+                    "description": "Street of market."
+                },
+                "zip": {
+                    "type": "string",
+                    "description": "Zip-Code of market."
+                },
+                "city": {
+                    "type": "string",
+                    "description": "City of market."
+                }
+            }
+        },
+        "Offer": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifer of offer."
+                },
+                "market": {
+                    "type": "integer",
+                    "description": "Unique identifer of market."
+                },
+                "offerPrice": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Price of offer."
+                },
+                "discount": {
+                    "type": "string",
+                    "description": "Discount of offer in original format from crawling."
+                },
+                "offerFrom": {
+                    "type": "string",
+                    "description": "Startdate of offer."
+                },
+                "offerTo": {
+                    "type": "string",
+                    "description": "Enddate of offer."
+                },
+                "product": {
+                    "$ref": "#/definitions/Product"
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Productname of offer."
+                },
+                "brand": {
+                    "type": "string",
+                    "description": "Brand of offer."
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Original price of product."
                 }
             }
         },
