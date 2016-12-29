@@ -132,15 +132,43 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Reorders the list items and
    * Propagates reordering of an item to the API
    *
    * @param {ListItem} movedItem moved item
-   * @param {number} to new position of the item
+   * @param {HTMLElement} movedElem the HTMLElement moved via drag&drop
    * @return {void}
    */
-  public reorderItems (movedItem: ListItem, to: number): void {
-    movedItem.listUuid = this.list.id;
-    this.apiService.reorderItem(movedItem, to)
-      .subscribe(() => undefined);
+  public reorderItems (movedItem: ListItem, movedElem: HTMLElement): void {
+
+    if (movedItem) {
+      const nextElement: any = movedElem.nextSibling;
+      let targetIndex: number = 0;
+      let apiTo: number = 0;
+      const movedItemIndex = this.list.items.indexOf(movedItem);
+
+      if (nextElement && nextElement.id) {
+        // determine new position
+        const nextPosition = this.list.items.findIndex( val => val.id === nextElement.id);
+        // different handling for moving up and down
+        if (nextPosition < movedItemIndex) {
+          targetIndex = nextPosition;
+        } else {
+          targetIndex = nextPosition - 1;
+        }
+        targetIndex = targetIndex < 0 ? 0 : targetIndex;
+        apiTo = targetIndex;
+      } else {
+      // new position at end  
+      targetIndex = this.list.items.length;
+      apiTo = this.list.items.length - 1;
+      }
+
+      // insert the moved Item at new position
+      this.list.items.splice(targetIndex, 0, this.list.items.splice(movedItemIndex, 1)[0]);
+      movedItem.listUuid = this.list.id;
+      this.apiService.reorderItem(movedItem, apiTo).subscribe(() => undefined);
+      console.log("moved " + movedItem.name + " to " + apiTo);
+    }
   }
 }

@@ -144,45 +144,17 @@ export class ListComponent {
   }
 
   /**
-   * Reorders the item array according to drag and drop actions
+   * Propagets the drag&drop information to the list-view
+   * Reordering the items in this component is misleading, as they 
+   * are injected by the list-view
    *
    * @param {HTMLElement} movedItem element that was dragged by the user.
    * @returns {void}
    */
-public reorderItems (movedElem: HTMLElement): void {
-  if (this.lastMovedItem) {
-    let nextElement: any = movedElem.nextSibling;
-    let targetIndex: number = 0;
-    let nextPosition: number = 0;
-    const movedItemIndex = this.items.indexOf(this.lastMovedItem);
-
-    if (nextElement && nextElement.id && this.lastMovedItem) {
-      // determine new position
-      const nextElementID = nextElement.id;
-      nextPosition = this.items.findIndex( val => val.id === nextElementID);
-      if (nextPosition < movedItemIndex) {
-        targetIndex = nextPosition;
-      } else {
-        targetIndex = nextPosition - 1;
-      }
-      targetIndex = targetIndex < 0 ? 0 : targetIndex;
-
-    } else {
-      targetIndex = this.items.length;
-      nextPosition = this.items.length;
-    }
-
-      // insert the moved Item at new position
-      this.items.splice(targetIndex, 0, this.items.splice(movedItemIndex, 1)[0]);
-      this.onReorder.emit([this.lastMovedItem, nextPosition]); 
-      // TODO: check if really nextPosition or targetIndex
-
-      console.log('Items:');
-      this.items.forEach( x => console.log(x.name + ' ' + x.id));
-
+  public reorderItems (movedElem: HTMLElement): void {
+    this.onReorder.emit([this.lastMovedItem, movedElem]);
     this.blink(movedElem);
   }
-}
 
 
 
