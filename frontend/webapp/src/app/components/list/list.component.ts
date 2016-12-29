@@ -149,28 +149,42 @@ export class ListComponent {
    * @param {HTMLElement} movedItem element that was dragged by the user.
    * @returns {void}
    */
-  public reorderItems (movedElem: HTMLElement): void {
+public reorderItems (movedElem: HTMLElement): void {
+  if (this.lastMovedItem) {
     let nextElement: any = movedElem.nextSibling;
+    let targetIndex: number = 0;
+    let nextPosition: number = 0;
+    const movedItemIndex = this.items.indexOf(this.lastMovedItem);
+
     if (nextElement && nextElement.id && this.lastMovedItem) {
-      let movedItemIndex = Number(movedElem.id);
-      let movedItem = this.items[movedItemIndex];
-      // delete the moved Item
-      this.items.splice(movedItemIndex, 1);
       // determine new position
       const nextElementID = nextElement.id;
-      let targetIndex: number = 0;
-      if (nextElementID < movedItemIndex) {
-        targetIndex = nextElementID;
+      nextPosition = this.items.findIndex( val => val.id === nextElementID);
+      if (nextPosition < movedItemIndex) {
+        targetIndex = nextPosition;
       } else {
-        targetIndex = nextElementID - 1;
+        targetIndex = nextPosition - 1;
       }
-      // insert the moved Item at new position
-      this.items.splice(targetIndex, 0, movedItem);
-      this.onReorder.emit([this.lastMovedItem, targetIndex]);
+      targetIndex = targetIndex < 0 ? 0 : targetIndex;
 
+    } else {
+      targetIndex = this.items.length;
+      nextPosition = this.items.length;
     }
+
+      // insert the moved Item at new position
+      this.items.splice(targetIndex, 0, this.items.splice(movedItemIndex, 1)[0]);
+      this.onReorder.emit([this.lastMovedItem, nextPosition]); 
+      // TODO: check if really nextPosition or targetIndex
+
+      console.log('Items:');
+      this.items.forEach( x => console.log(x.name + ' ' + x.id));
+
     this.blink(movedElem);
   }
+}
+
+
 
   private blink (elem: HTMLElement): void {
     const blinkDuration = 250;
@@ -185,7 +199,7 @@ export class ListComponent {
   }
 
   private saveMovedItem (elem: HTMLElement): void {
-    const movedItemIndex = Number(elem[0].id);
+    const movedItemIndex = this.items.findIndex( val => val.id === elem[0].id);
     const movedItem = this.items[movedItemIndex];
     if (movedItem){
       this.lastMovedItem = movedItem;
