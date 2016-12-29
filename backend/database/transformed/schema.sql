@@ -63,3 +63,4 @@ CREATE TABLE transformed.offer IF NOT EXISTS Transformed.Offer
   market integer,
   description text
 );
+
