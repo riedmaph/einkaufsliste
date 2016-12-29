@@ -947,6 +947,11 @@
                     "type": "integer",
                     "description": "Unique identifer of market."
                 },
+                "offerPrice": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "Price of offer."
+                },
                 "discount": {
                     "type": "string",
                     "description": "Discount of offer in original format from crawling."
@@ -978,7 +983,7 @@
                 "price": {
                     "type": "number",
                     "format": "double",
-                    "description": "Price of offer."
+                    "description": "Original price of product."
                 }
             }
         },
