@@ -78,7 +78,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.listComponents.forEach(listComp => {
       listComp.onEdit.subscribe(newItem => this.update(newItem));
       listComp.onRemove.subscribe(item => this.removeItem(item));
-      listComp.onReorder.subscribe(tuple => this.reorderItems(tuple[0], tuple[1]));
+      listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
+        this.reorderItems(tuple[0], tuple[1], tuple[2])
+      );
     });
   }
 
@@ -136,39 +138,16 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * Propagates reordering of an item to the API
    *
    * @param {ListItem} movedItem moved item
-   * @param {HTMLElement} movedElem the HTMLElement moved via drag&drop
+   * @param {number} newPosition new Position porpagated to the api
+   * @param {number} targetIndex array index used for moving the item in the this.list.item
    * @return {void}
    */
-  public reorderItems (movedItem: ListItem, movedElem: HTMLElement): void {
-
-    if (movedItem) {
-      const nextElement: any = movedElem.nextSibling;
-      let targetIndex: number = 0;
-      let newPosition: number = 0;
+  public reorderItems (movedItem: ListItem, newPosition: number, targetIndex: number): void {
       const movedItemIndex = this.list.items.indexOf(movedItem);
-
-      if (nextElement && nextElement.id) {
-        // determine new position
-        const nextPosition = this.list.items.findIndex(val => (val.id === nextElement.id));
-        // different handling for moving up and down
-        if (nextPosition < movedItemIndex) {
-          targetIndex = nextPosition;
-        } else {
-          targetIndex = nextPosition - 1;
-        }
-        targetIndex = targetIndex < 0 ? 0 : targetIndex;
-        newPosition = targetIndex;
-      } else {
-        // new position at end  
-        targetIndex = this.list.items.length;
-        newPosition = this.list.items.length - 1;
-      }
-
       // insert the moved Item at new position
       this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
       movedItem.listUuid = this.list.id;
       this.apiService.reorderItem(movedItem, newPosition)
         .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
-    }
   }
 }

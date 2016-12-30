@@ -148,15 +148,37 @@ export class ListComponent {
    * Reordering the items in this component is misleading, as they 
    * are injected by the list-view
    *
-   * @param {HTMLElement} movedItem element that was dragged by the user.
+   * @param {HTMLElement} movedElem element that was dragged by the user.
    * @returns {void}
    */
   public reorderItems (movedElem: HTMLElement): void {
-    this.onReorder.emit([ this.lastMovedItem, movedElem ]);
+    if (this.lastMovedItem) {
+      const nextElement: any = movedElem.nextElementSibling;
+      let targetIndex: number = 0;
+      let newPosition: number = 0;
+      const movedItemIndex = this.items.indexOf(this.lastMovedItem);
+
+      if (nextElement && nextElement.id) {
+        // determine new position
+        const nextPosition = this.items.findIndex(val => (val.id === nextElement.id));
+        // different handling for moving up and down
+        if (nextPosition < movedItemIndex) {
+          targetIndex = nextPosition;
+        } else {
+          targetIndex = nextPosition - 1;
+        }
+        targetIndex = targetIndex < 0 ? 0 : targetIndex;
+        newPosition = targetIndex;
+      } else {
+        // new position at end  
+        targetIndex = this.items.length;
+        newPosition = this.items.length - 1;
+      }
+
+    this.onReorder.emit([ this.lastMovedItem, newPosition, targetIndex ]);
     this.blink(movedElem);
+    }
   }
-
-
 
   private blink (elem: HTMLElement): void {
     const blinkDuration = 250;
