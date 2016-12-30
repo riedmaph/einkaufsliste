@@ -36,7 +36,7 @@ export class ListComponent {
   private editableFlag: boolean = false;
   private deleteableFlag: boolean = false;
   private sortableFlag: boolean = false;
-  private lastMovedItem: ListItem = undefined;
+  private lastMovedItem: ListItem;
 
   constructor(
     private dragulaService: DragulaService,
@@ -152,7 +152,7 @@ export class ListComponent {
    * @returns {void}
    */
   public reorderItems (movedElem: HTMLElement): void {
-    this.onReorder.emit([this.lastMovedItem, movedElem]);
+    this.onReorder.emit([ this.lastMovedItem, movedElem ]);
     this.blink(movedElem);
   }
 
@@ -171,10 +171,10 @@ export class ListComponent {
   }
 
   private saveMovedItem (elem: HTMLElement): void {
-    const movedItemIndex = this.items.findIndex( val => val.id === elem[0].id);
+    const movedItemIndex = this.items.findIndex(val => (val.id === elem[0].id));
     const movedItem = this.items[movedItemIndex];
-    if (movedItem){
+    if (movedItem) {
       this.lastMovedItem = movedItem;
+    }
   }
-}
 }

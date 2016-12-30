@@ -144,12 +144,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     if (movedItem) {
       const nextElement: any = movedElem.nextSibling;
       let targetIndex: number = 0;
-      let apiTo: number = 0;
+      let newPosition: number = 0;
       const movedItemIndex = this.list.items.indexOf(movedItem);
 
       if (nextElement && nextElement.id) {
         // determine new position
-        const nextPosition = this.list.items.findIndex( val => val.id === nextElement.id);
+        const nextPosition = this.list.items.findIndex(val => (val.id === nextElement.id));
         // different handling for moving up and down
         if (nextPosition < movedItemIndex) {
           targetIndex = nextPosition;
@@ -157,18 +157,18 @@ export class ListViewComponent implements OnInit, AfterViewInit {
           targetIndex = nextPosition - 1;
         }
         targetIndex = targetIndex < 0 ? 0 : targetIndex;
-        apiTo = targetIndex;
+        newPosition = targetIndex;
       } else {
-      // new position at end  
-      targetIndex = this.list.items.length;
-      apiTo = this.list.items.length - 1;
+        // new position at end  
+        targetIndex = this.list.items.length;
+        newPosition = this.list.items.length - 1;
       }
 
       // insert the moved Item at new position
-      this.list.items.splice(targetIndex, 0, this.list.items.splice(movedItemIndex, 1)[0]);
+      this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
       movedItem.listUuid = this.list.id;
-      this.apiService.reorderItem(movedItem, apiTo)
-      .subscribe(() => console.info('moved item ' + movedItem.name + ' to position ' + apiTo));
+      this.apiService.reorderItem(movedItem, newPosition)
+        .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
     }
   }
 }

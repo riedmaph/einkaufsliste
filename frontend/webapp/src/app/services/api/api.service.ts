@@ -99,15 +99,16 @@ export class ApiService {
    * Makes API call to persistent reordering of items 
    * 
    * @param {ListItem} item moved item
-   * @param {number} to new position of the item
+   * @param {number} newPosition new position of the item
    * @return {Observable<any>} 
    * 
    */
-  public reorderItem (item: ListItem, to: number): Observable<any> {
+  public reorderItem (item: ListItem, newPosition: number): Observable<any> {
     return this.authHttp.put(
       API_ROUTES.lists.entries.move
         .replace(':listId', item.listUuid)
         .replace(':itemId', item.id),
-     { targetposition: to })
+      { targetposition: newPosition }
+    );
   }
 }
