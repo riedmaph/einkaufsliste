@@ -17,6 +17,7 @@ import { ListComponent } from '../list';
 import {
   ApiService,
   ListApiService,
+  ListItemParser,
 } from '../../services';
 
 import {
@@ -47,6 +48,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private listApiService: ListApiService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private listItemParser: ListItemParser,
   ) {
     this.form = this.formBuilder.group({
       amount: '',
@@ -175,7 +177,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @see ApiService.getAutoCompletion
    */
   public get autoCompletionFn (): (_: string) => Observable<Product[]> {
-    return (str: string) => this.apiService.getAutoCompletion(str);
+    return (str: string) => this.apiService.getAutoCompletion(this.listItemParser.parse(str).name);
   }
 
   /**
@@ -202,4 +204,48 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       this.listApiService.rename(this.list.id, this.list.name);
     }
   }
+
+  public updateHighlighting (event: KeyboardEvent, inputElem: HTMLElement) {
+    event.preventDefault();
+
+    // const value = inputElem.textContent;
+    // inputElem.innerText = value;
+
+    // const originCursorPos = getCaretPosition(inputElem);
+
+    // const parsedResult = this.listItemParser.parse(value);
+
+    /*
+    if (originCursorPos > -1) {
+      const caretPosRange = document.createRange();
+      caretPosRange.setStart(inputElem, originCursorPos);
+      caretPosRange.setEnd(inputElem, originCursorPos);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(caretPosRange);
+    }
+    */
+  }
+}
+
+const colorScheme = new Map<string, string>();
+colorScheme.set('NameToken', '#F00');
+colorScheme.set('AmountToken', '#0F0');
+colorScheme.set('UnitToken', '#00F');
+
+function getCaretPosition(elem: HTMLElement): number {
+  const selection: Selection = window.getSelection();
+  if (selection.rangeCount) {
+    const range: Range = selection.getRangeAt(0);
+    if (range.commonAncestorContainer.parentNode === elem) {
+      return range.endOffset;
+    }
+  }
+  return -1;
+}
+
+function setSelection(elem, start, length) {
+  const range: Range = document.createRange();
+  range.setStart(elem, start);
+  range.setEnd(elem, start + length);
 }

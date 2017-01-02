@@ -19,29 +19,17 @@
       Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
     </span>
     <input
-      type="number"
-      formControlName="amount"
-      name="amount"
-      class="form-field--sm"
-      placeholder="1"
-    >
-    <input
-      type="text"
-      formControlName="unit"
-      name="unit"
-      class="form-field--sm"
-      placeholder="kg"
-    >
-    <input
       [autoCompletion]="autoCompletionFn"
       (onSelect)="addItem($event)"
       (onValueChange)="updateValue($event)"
+      (onKeyup)="updateHighlighting($event, inputElem)"
       type="text"
       placeholder="Apples"
       formControlName="itemName"
       name="itemName"
       class="form-field--lg"
       [maxLength]="MAX_LENGTH"
+      #inputElem
     >
     <button
       md-fab color="accent"
