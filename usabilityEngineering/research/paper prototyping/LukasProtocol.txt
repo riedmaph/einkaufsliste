@@ -1,0 +1,30 @@
+THINK ALOUD
+
+LUKAS.unsorted
+ suche in jeder abteilung was ich dort noch brauche könnte.
+ suche welche items in der nähe sind, häufiges scrollen
+ "wenn ich mich jetzt hier auskennen würde, würde ich das in dieser und jener reihenfolge machen"
+streicht durch wen er ein item hat, obwohl nicht auf so etwas hingewiesen
+ archivieren, besonders markieren von nicht gefundenen items
+Liste muss am ende leer sein, deswegen diese markieren
+ kommentarfunktion
+ "und dann steht da dass ich jetzt fertig bin"
+ 
+LUKAS.partitioned
+nach was ist denn das gruppiert?
+frustration wenn gruppierung nicht sinvoll erscheint. trotzdem an vorgegebene Reihenfolge gehalten
+ bei mehreren Möglichkeiten. "ich weiß ja was ich meine, wenn es von wem anderen gemacht wird, brauch ich infos oder ich rate halt"
+
+
+
+
+INTERVIEW
+-wenn für mich einkaufe, dann normale listen. ich mache die gruppierung implizit selbst
+-gruppierung impliziert gleiche location, aber nicht immer korrekt
+-reihenfolge der gruppen nicht sinnvoll
+-sortierung in normaler liste (i.e. random) nicht erkennbar
+- gruppierung änderbar. selbst gruppieren nicht, da man das impliziert macht
+- normalerweise nur wenige items (n < in eine tasche passend)
+- höchst priorisiertes sortierargument einer Liste: wegstrecke im markt
+- beide varianten gleich effizient
+- abgehakte items sollen verschwinden, damit positives gefühl wenn die liste kleiner wird
