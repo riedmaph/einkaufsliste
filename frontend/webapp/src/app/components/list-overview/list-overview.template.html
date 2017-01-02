@@ -1,10 +1,37 @@
-<md-list>
-  <md-list-item *ngFor="let list of lists">
-    <a [routerLink]="[ '/list', list.id ]">{{ list.name }}</a>
-  </md-list-item>
-</md-list>
+<div 
+ class="flex-container" 
+ [dragula]="'draggable-listoverview'"
+ [dragulaModel]="lists"
+>
+  <div *ngFor="let list of lists" class="flex-item">
+    <md-card> 
+      <span class="drag-handle"> ⇆ </span>
+      <md-card-title
+        #textfield
+        (dblclick)="toggleEditable($event, textfield, list)"
+        (keyup)="onEditHandler($event, $event.keyCode, textfield, list)"
+        align="middle"
+      >{{ list.name }}
+      </md-card-title>
+      <a [routerLink]="[ '/list', list.id ]">
+        <md-card-actions align="middle">
+          Items: {{ list.count }}
+          <i> Offen: {{ amountOpen(list) }} </i>
+        </md-card-actions>
+        <p align="right">
+          <i>
+            <small>private list</small>
+          </i>
+        </p>
+      </a>
+    </md-card>
+  </div>
+</div>
+
+
 
 <form [formGroup]="form">
+  
   <span
     *ngIf="!form.controls['listName'].pristine && form.controls['listName'].errors && form.controls['listName'].errors.maxlength"
     class="form-error"
@@ -27,3 +54,12 @@
     <md-icon>add</md-icon>
   </button>
 </form>
+
+<div
+ *ngIf="duringDrag"
+ class="remove-container"
+ [dragula]="'remove-area'"
+ align="middle"
+>
+ <md-icon class="remove-indicator">delete</md-icon>
+</div>

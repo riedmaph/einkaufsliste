@@ -1,5 +1,12 @@
-<sl-list [items]="completedItems" deleteable></sl-list>
+<h1 #textfield
+  (dblclick)="toggleEditable($event, textfield)"
+  (keyup)="onEditHandler($event, $event.keyCode, textfield)"
+>
+  {{ list.name }} 
+  <md-icon class="deleteList" (click)="deleteList()">delete</md-icon>
+</h1>
 
+<sl-list [items]="completedItems" deleteable></sl-list>
 <sl-list [items]="items" editable deleteable sortable></sl-list>
 
 <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>

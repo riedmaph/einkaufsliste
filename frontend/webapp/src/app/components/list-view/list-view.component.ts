@@ -6,6 +6,8 @@ import {
   QueryList,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { Location } from '@angular/common';
 import {
   FormGroup,
   FormBuilder,
@@ -13,6 +15,7 @@ import {
 } from '@angular/forms';
 
 import { ListComponent } from '../list';
+import { ConfirmComponent } from '../confirm/confirm.component';
 import { ApiService } from '../../services/api';
 import {
   ListItem,
@@ -38,6 +41,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   constructor (
     private apiService: ApiService,
     private route: ActivatedRoute,
+    private dialog: MdDialog,
+    private location: Location,
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
@@ -133,5 +138,48 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   public reorderItems (): void {
     return; // TODO
+  }
+
+  public deleteList (): void {
+    let dialogRef = this.dialog.open(ConfirmComponent, {
+       disableClose: false,
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+      this.apiService.deleteList(this.list.id);
+      this.list.items = [ ];
+      }
+    });
+  }
+
+  public onEditHandler (
+   event: KeyboardEvent,
+   keyCode: number,
+   elem: HTMLElement
+   ) {
+     if (keyCode === 13) {
+       elem.contentEditable = 'false';
+      this.commitEdit(elem);
+     }
+   }
+
+  public toggleEditable (
+    event: MouseEvent | KeyboardEvent,
+    elem: HTMLInputElement
+  ) {
+    if (elem.contentEditable !== 'true') {
+      elem.contentEditable = 'true';
+      elem.focus();
+    } else {
+      this.commitEdit(elem);
+      elem.contentEditable = 'false';
+     }
+   }
+
+  public commitEdit (elem: HTMLElement) {
+    if (elem.textContent){
+      this.list.name = elem.textContent.replace(/[\r\n\t]/g, '');
+      this.apiService.renameList(this.list.id, this.list.name);
+    }
   }
 }
