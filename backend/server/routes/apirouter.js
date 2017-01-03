@@ -9,6 +9,7 @@ var tokenhandler = require(path.join('..', 'controllers', 'tokenhandler'));
 var users = require(path.join('..', 'controllers', 'users', 'users'));
 var lists = require(path.join('..', 'controllers', 'lists', 'lists'));
 var items = require(path.join('..', 'controllers', 'items', 'items'));
+var markets = require(path.join('..', 'controllers', 'markets', 'markets'));
 
 // redirect root to doc
 router.get('/', function(req, res, next) {
@@ -47,6 +48,10 @@ router.route('/lists/:listid/items/:itemid')
 
 router.route('/lists/:listid/items/:itemid/move')
   .put(items.moveItem);
+
+/* markets */
+router.route('/markets/search')
+  .get(markets.getMarketsByPositionAndRadius);
 
 // error handler
 router.use(function(err, req, res, next) {

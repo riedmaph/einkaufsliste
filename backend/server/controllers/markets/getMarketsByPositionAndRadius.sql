@@ -1,3 +1,3 @@
-SELECT *
-FROM transformed.market
-WHERE earth_box( ll_to_earth(48.174751, 11.633622), 300) @> ll_to_earth(latitude, longditude);
+SELECT market.id, market.name, market.latitude, market.longditude, market.street, market.zip, market.city
+FROM Transformed.Market market
+WHERE earth_box(ll_to_earth(${latitude}, ${longditude}), ${maxdistance}) @> ll_to_earth(market.latitude, market.longditude);
