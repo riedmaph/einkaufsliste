@@ -104,7 +104,7 @@ export class ApiService {
    * 
    */
   public reorderItem (item: ListItem, newPosition: number): Observable<any> {
-    return this.authHttp.put(
+    return this.authHttp.patch(
       API_ROUTES.lists.entries.move
         .replace(':listId', item.listUuid)
         .replace(':itemId', item.id),
