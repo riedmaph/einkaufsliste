@@ -8,7 +8,6 @@ function getMarketsByPositionAndRadius(req, res, next) {
   req.query.maxdistance = req.query['max-distance'];
   db.conn.any(sqlGetMarkets, req.query)
     .then(function (data) {
-      console.log(req.query);
       res.status(200)
         .json({
           markets: data
