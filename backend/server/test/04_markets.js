@@ -102,12 +102,6 @@ describe('Markets', () => {
               res.body.markets.should.be.a('array');
               res.body.markets.length.should.be.eql(2);
               res.body.markets.map(function(a) {return a.name;}).should.have.members(['EDEKA Häfner', 'Marktkauf Unterföhring']);
-              /*res.body.markets[0].should.be.a('object');
-              res.body.markets[0].should.have.property('name');
-              res.body.markets[0].name.should.be.eql('EDEKA Häfner');
-              res.body.markets[1].should.be.a('object');
-              res.body.markets[1].should.have.property('name');
-              res.body.markets[1].name.should.be.eql('Marktkauf Unterföhring');*/
             done();
           });
     });

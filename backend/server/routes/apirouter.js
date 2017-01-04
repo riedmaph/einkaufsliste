@@ -53,6 +53,9 @@ router.route('/lists/:listid/items/:itemid/move')
 router.route('/markets/search')
   .get(markets.getMarketsByPositionAndRadius);
 
+router.route('/markets/:marketid/offers')
+  .get(markets.getOffers);
+
 // error handler
 router.use(function(err, req, res, next) {
   logger.log('error', err.message);
