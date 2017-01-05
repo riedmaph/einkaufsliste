@@ -2,11 +2,11 @@
 Create schema userdata
 --------------------
 ```
-$ ./rebuildSchema.sh
+$ ./rebuildSchema.sh [<db>]
 ```
 
 Insert test data
 --------------------
 ```
-$ ./insertTestData.sh
+$ ./insertTestData.sh [<db>]
 ```

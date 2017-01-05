@@ -9,6 +9,4 @@ if [ $protected = True ]; then
 	exit
 fi
 
-getUser "crawler" dbusercrawler dbpasscrawler
-
-PGPASSWORD=$dbpasscrawler psql -h $dbhost -p $dbport -U $dbusercrawler -d $dbname -a -f "schema.sql";
+psql -h $dbhost -p $dbport -U postgres -d $dbname -f data.sql
