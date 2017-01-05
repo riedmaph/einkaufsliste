@@ -41,12 +41,10 @@ router.route('/lists/:listid/items')
   .get(items.getListItems)
   .post(items.createItem)
 
-router.route('/lists/:listid/items/move')
-  .put(items.moveItem);
-
 router.route('/lists/:listid/items/:itemid')
   .put(items.updateItem)
-  .delete(items.deleteItem);
+  .delete(items.deleteItem)
+  .patch(items.moveItem);  
 
 /* products */
 router.route('/products/search')
