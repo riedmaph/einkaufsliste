@@ -529,10 +529,8 @@
                         }
                     }
                 }
-            }
-        },
-        "/lists/{listid}/items/{itemid}/move": {
-            "put": {
+            },
+            "patch": {
                 "tags": [
                     "Items"
                 ],
@@ -709,6 +707,10 @@
                 "name": {
                     "type": "string",
                     "description": "Name of item."
+                },
+                "position": {
+                    "type": "integer",
+                    "description": "Zero-based position if item within its list."
                 },
                 "checked": {
                     "type": "boolean",
