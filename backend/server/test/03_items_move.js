@@ -32,7 +32,7 @@ function extactIDsFromJSON(data) {
 
 
 //clear the test schema before testing
-describe('Items MOVE', () => {
+describe('Items Move', () => {
 
   beforeEach((done) => {
     var user = {

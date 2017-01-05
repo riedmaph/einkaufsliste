@@ -1,7 +1,7 @@
-var path = require('path');
+const path = require('path');
 var uuid = require('uuid');
 
-var db = require(path.join('..', 'dbconnector.js'));
+const db = require(path.join('..', 'dbconnector.js'));
 
 var sqlReadLists = db.loadSql(path.join('controllers', 'lists', 'readLists.sql'));
 var sqlCreateList = db.loadSql(path.join('controllers', 'lists', 'createList.sql'));
@@ -95,9 +95,9 @@ function deleteList(req, res, next) {
 }
 
 module.exports = {
-  getAllLists,
-  getListWithItems,
-  createList,
-  updateList,
-  deleteList
+  getAllLists: getAllLists,
+  getListWithItems: getListWithItems,
+  createList: createList,
+  updateList: updateList,
+  deleteList: deleteList
 };
