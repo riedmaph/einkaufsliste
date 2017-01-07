@@ -18,12 +18,16 @@ var pgp = require("pg-promise")(options);
 
 var dbsettings = require(path.join('..', '..', 'config', 'config'));
 
+var dbsSel = dbsettings.selectedDb;
+var dbsDb = dbsettings.databases[dbsSel]
+var dbsUser = dbsettings.users.api
+
 var cn = {
-    host: dbsettings.dbhost,
-    port: dbsettings.dbport,
-    database: dbsettings.dbname,
-    user: dbsettings.dbuserapi,
-    password: dbsettings.dbpassapi
+    host: process.env.PGHOST || dbsDb.dbhost,
+    port: process.env.PGPORT || dbsDb.dbport,
+    database: dbsDb.dbname,
+    user: dbsUser.username,
+    password: dbsUser.pw
 };
 
 //set settings to load sql-scripts according to ENV
@@ -31,12 +35,12 @@ var loadSqlSettings;
 
 if(process.env.NODE_ENV == 'test') {
   loadSqlSettings = {
-      schemaname: dbsettings.dbschemanameuserdatatest
+      schemaname: "userdata_test"
   }
 }
 else {
   loadSqlSettings = {
-      schemaname: dbsettings.dbschemanameuserdata
+      schemaname: "userdata"
   }
 }
 

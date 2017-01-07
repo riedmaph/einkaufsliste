@@ -27,3 +27,4 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
     unit TEXT,
     list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE
 );
+

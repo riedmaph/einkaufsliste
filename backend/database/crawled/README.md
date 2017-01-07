@@ -2,5 +2,5 @@
 Create schema crawled
 --------------------
 ```
-$ ./rebuildSchema.sh
+$ ./rebuildSchema.sh [<db>]
 ```
