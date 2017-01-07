@@ -24,6 +24,7 @@ import {
   AuthService,
   AuthGuard,
   ApiMapperService,
+  NavigationService,
 } from './services';
 
 // Components
@@ -31,6 +32,7 @@ import {
   ListViewComponent,
   NoContentComponent,
   NavigationComponent,
+  NavTitleComponent,
   ListComponent,
   ListOverviewComponent,
   RegisterComponent,
@@ -63,6 +65,7 @@ type StoreType = {
     ListViewComponent,
     NoContentComponent,
     NavigationComponent,
+    NavTitleComponent,
     ListComponent,
     ListOverviewComponent,
     AutoCompletionComponent,
@@ -95,6 +98,7 @@ type StoreType = {
     AuthService,
     ApiMapperService,
     AuthGuard,
+    NavigationService,
   ],
 })
 export class AppModule {
