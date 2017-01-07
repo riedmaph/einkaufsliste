@@ -117,9 +117,8 @@ export class ListOverviewComponent implements OnInit {
     this.apiService.renameList(updatedList.id, updatedList.name);
   }
 
-  public amountOpen (list: List): Number {
-    const num: Number = list.items.filter( item => item.checked === false).length;
-    return num;
+  public amountOpen (list: List): number {
+    return list.items ? list.items.filter( item => item.checked === false).length : 0;
   }
 
   private updateOrder (): void {

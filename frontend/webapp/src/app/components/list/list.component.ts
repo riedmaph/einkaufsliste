@@ -36,6 +36,7 @@ export class ListComponent {
   private editableFlag: boolean = false;
   private deleteableFlag: boolean = false;
   private sortableFlag: boolean = false;
+  private lastMovedItem: ListItem;
 
   constructor(
     private dragulaService: DragulaService,
@@ -43,6 +44,9 @@ export class ListComponent {
     this.dragulaService.dragend.subscribe(
       draggedElement => this.reorderItems(draggedElement[1])
     );
+    dragulaService.drag.subscribe((value) => {
+      this.saveMovedItem(value.slice(1));
+    });
   }
 
   /** Setter for editableFlag */
@@ -140,31 +144,40 @@ export class ListComponent {
   }
 
   /**
-   * Reorders the item array according to drag and drop actions
+   * Propagets the drag&drop information to the list-view
+   * Reordering the items in this component is misleading, as they 
+   * are injected by the list-view
    *
-   * @param {HTMLElement} movedItem element that was dragged by the user.
+   * @param {HTMLElement} movedElem element that was dragged by the user.
    * @returns {void}
    */
   public reorderItems (movedElem: HTMLElement): void {
-    let nextElement: any = movedElem.nextSibling;
-    if (nextElement && nextElement.id) {
-      let movedItemIndex = Number(movedElem.id);
-      let movedItem = this.items[movedItemIndex];
-      // delete the moved Item
-      this.items.splice(movedItemIndex, 1);
-      // determine new position
-      const nextElementID = nextElement.id;
+    if (this.lastMovedItem) {
+      const nextElement: any = movedElem.nextElementSibling;
       let targetIndex: number = 0;
-      if (nextElementID < movedItemIndex) {
-        targetIndex = nextElementID;
+      let newPosition: number = 0;
+      const movedItemIndex = this.items.indexOf(this.lastMovedItem);
+
+      if (nextElement && nextElement.id) {
+        // determine new position
+        const nextPosition = this.items.findIndex(val => (val.id === nextElement.id));
+        // different handling for moving up and down
+        if (nextPosition < movedItemIndex) {
+          targetIndex = nextPosition;
+        } else {
+          targetIndex = nextPosition - 1;
+        }
+        targetIndex = targetIndex < 0 ? 0 : targetIndex;
+        newPosition = targetIndex;
       } else {
-        targetIndex = nextElementID - 1;
+        // new position at end  
+        targetIndex = this.items.length;
+        newPosition = this.items.length - 1;
       }
-      // insert the moved Item at new position
-      this.items.splice(targetIndex, 0, movedItem);
-      this.onReorder.emit({ });
-    }
+
+    this.onReorder.emit([ this.lastMovedItem, newPosition, targetIndex ]);
     this.blink(movedElem);
+    }
   }
 
   private blink (elem: HTMLElement): void {
@@ -177,5 +190,13 @@ export class ListComponent {
         elem.classList.remove('blink');
       }, blinkDuration);
     }, offset);
+  }
+
+  private saveMovedItem (elem: HTMLElement): void {
+    const movedItemIndex = this.items.findIndex(val => (val.id === elem[0].id));
+    const movedItem = this.items[movedItemIndex];
+    if (movedItem) {
+      this.lastMovedItem = movedItem;
+    }
   }
 }

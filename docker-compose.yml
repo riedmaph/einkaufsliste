@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   backend:
     container_name: node_backend
     build:

@@ -83,7 +83,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.listComponents.forEach(listComp => {
       listComp.onEdit.subscribe(newItem => this.update(newItem));
       listComp.onRemove.subscribe(item => this.removeItem(item));
-      listComp.onReorder.subscribe(this.reorderItems);
+      listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
+        this.reorderItems(tuple[0], tuple[1], tuple[2])
+      );
     });
   }
 
@@ -136,8 +138,22 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public reorderItems (): void {
-    return; // TODO
+  /**
+   * Reorders the list items and
+   * Propagates reordering of an item to the API
+   *
+   * @param {ListItem} movedItem moved item
+   * @param {number} newPosition new Position porpagated to the api
+   * @param {number} targetIndex array index used for moving the item in the this.list.item
+   * @return {void}
+   */
+  public reorderItems (movedItem: ListItem, newPosition: number, targetIndex: number): void {
+      const movedItemIndex = this.list.items.indexOf(movedItem);
+      // insert the moved Item at new position
+      this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
+      movedItem.listUuid = this.list.id;
+      this.apiService.reorderItem(movedItem, newPosition)
+        .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
   }
 
   public deleteList (): void {

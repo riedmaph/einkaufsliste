@@ -6,14 +6,24 @@ dbcpath = os.path.join(script_dir, "../../config/config.json")
 dbcfile = open(dbcpath).read()
 dbconfig = json.loads(dbcfile)
 
-
 import psycopg2
 
 class PostgresAdapter:
-	def __init__(self):
+	def __init__(self, user, db=None):
 		# connect to db
-		self.conn = psycopg2.connect(database=dbconfig["dbname"], user=dbconfig["dbusercrawler"], password=dbconfig["dbpasscrawler"] , host=dbconfig["dbhost"], port=dbconfig["dbport"])
+		dbcUser = dbconfig["users"][user]
+		if db is None:
+			db = dbconfig["selectedDb"]
+
+		dbcDb = dbconfig["databases"][db]
+
+		self.conn = psycopg2.connect(database=dbcDb["dbname"], user=dbcUser["username"], password=dbcUser["pw"] , host=dbcDb["dbhost"], port=dbcDb["dbport"])
 		self.cur = self.conn.cursor()
+
+		self.isProtected = dbcDb["protected"]
+
+	def isProtected(self):
+		return self.isProtected;
 
 	def execute(self, stmt, data=None):
 		self.cur.execute(stmt, data)
@@ -185,7 +195,7 @@ class BrandBuffer:
 # All operations interact immediately with the DB
 class ElisaDbBase:
 	def __init__(self):
-		self.db = PostgresAdapter()
+		self.db = PostgresAdapter(user="crawler")
 
 	# obtain shop id  (create shop if it does not exist yet)
 	def getOrCreateShop(self, name, url):
@@ -248,6 +258,34 @@ class ElisaDbBase:
 
 	def insertBrand(self, brandName, shopId):
 		self.db.insertSingle("Crawled.Brand (name, shop)", (brandName, shopId))
+
+	def insertMarket(self, marketName, latitude, longditude, street, zip, city, hours, hours2, extId, shopId):
+		tbl = "Crawled.Market (name, latitude, longditude, street, zip, city, hours, hours2, extId, shop)"
+		row =  (marketName, latitude, longditude, street, zip, city, hours, hours2, extId, shopId)
+		self.db.insertSingle(tbl,row)
+
+	def updateMarket(self, extId, street, zip, city):
+		self.db.execute('UPDATE Crawled.market SET street=%s, zip=%s, city=%s WHERE extid=%s', (street, zip, city, extId))
+
+	def insertOffer(self, title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, marketId):
+		tbl = "Crawled.Offer (title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, market)"
+		row =  (title, price, offerFrom, offerTo, description, brand, priceNormal, size, discount, basePrice, productId, minimumQuantityForDiscount, extId, marketId)
+		self.db.insertSingle(tbl,row)
+
+	def insertCrawledMarket(self, marketId, count):
+		self.db.insertSingle("crawled.ProcessedMarket (market, count)",(marketId, count))
+
+	def deleteShopMarkets(self, shopId):
+		self.db.execute('DELETE FROM Crawled.market WHERE shop=%s', (shopId,))
+
+	def deleteShopOffers(self, shopId):
+		#self.db.execute('DELETE FROM Crawled.offer WHERE market in (SELECT id from Crawled.market WHERE shop=%s)', (shopId,))
+		print "deleteShopOffers disabled"
+
+	def getMarketIds(self, shopId):
+		#self.db.execute('SELECT id, extid FROM Crawled.market WHERE shop=%s AND id not in (SELECT market from crawled.offer)', (shopId,))
+		self.db.execute('SELECT id, extid FROM Crawled.market WHERE shop=%s AND id not in (SELECT market from crawled.ProcessedMarket)', (shopId,))
+		return self.db.fetchall()
 
 	def commit(self):
 		self.db.commit()

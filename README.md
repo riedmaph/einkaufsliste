@@ -46,7 +46,15 @@ Use `docker restart node_backend` to restart the server.
 _Note:_ The backend server runs on port `3000` as configures in the `docker-compose.yml`.
 The frontend nginx redirects requests made to the `/api` route to this container.
 
-_Note:_ The backend expects to find a `config.json` in `/backend/config`. See `/backend/config/config.sample.json` for the format.
+_Note:_ The backend expects to find a `config.json` in `backend/config`. See `backend/config/config.sample.json` for the format.
+
+**Local test environment**:
+ - Prepare a local database container as described in `backend/database/localdb.md`
+ - Use `docker-compose -f docker-compose.yml -f docker-compose.localdb.yml up -d` to start all three docker containers.
+
+_Note:_ `docker-compose.yml` defines the conatiners `backend` (nodejs) and `webserver` (nginx) as used in production. `docker-compose.localdb.yml` defines an additional container `postgres-db` for the local test database and modifies the `backend` conatiner to connect it with `postgres-db`.
+
+
 
 ## Code-Style
 ### Git-Workflow
