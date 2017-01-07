@@ -30,7 +30,7 @@ finally press ctrl+D twice to exit psql and logout
 Create db and users for crawling, transformation and user data
 --------------------
 ```
-$ ./rebuildDatabase.sh
+$ ./rebuildDatabase.sh [<db>]
 ```
 
 Create schemata

@@ -65,7 +65,7 @@ describe('Items MOVE', () => {
       }
 
       chai.request(app)
-        .put('/api/lists/'+listid+'/items/'+itemIDs.id2+'/move')
+        .patch('/api/lists/'+listid+'/items/'+itemIDs.id2)
         .set('x-access-token', token)
         .send(postions)
         .end((err, res) => {
@@ -95,7 +95,7 @@ describe('Items MOVE', () => {
       }
 
       chai.request(app)
-        .put('/api/lists/'+listid+'/items/'+itemIDs.id4+'/move')
+        .patch('/api/lists/'+listid+'/items/'+itemIDs.id4)
         .set('x-access-token', token)
         .send(postions)
         .end((err, res) => {
@@ -125,7 +125,7 @@ describe('Items MOVE', () => {
       }
 
       chai.request(app)
-        .put('/api/lists/'+listid+'/items/'+itemIDs.id1+'/move')
+        .patch('/api/lists/'+listid+'/items/'+itemIDs.id1)
         .set('x-access-token', token)
         .send(postions)
         .end((err, res) => {
@@ -155,7 +155,7 @@ describe('Items MOVE', () => {
       }
 
       chai.request(app)
-        .put('/api/lists/'+listid+'/items/'+itemIDs.id5+'/move')
+        .patch('/api/lists/'+listid+'/items/'+itemIDs.id5)
         .set('x-access-token', token)
         .send(postions)
         .end((err, res) => {

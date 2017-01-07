@@ -43,11 +43,8 @@ router.route('/lists/:listid/items')
 
 router.route('/lists/:listid/items/:itemid')
   .put(items.updateItem)
-  .delete(items.deleteItem);
-
-
-router.route('/lists/:listid/items/:itemid/move')
-  .put(items.moveItem);
+  .delete(items.deleteItem)
+  .patch(items.moveItem);  
 
 /* markets */
 router.route('/markets/search')

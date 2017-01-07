@@ -1,0 +1,49 @@
+Shopping Lists as an External Memory Aid for Grocery Shopping: Influences on List Writing and List Fulfillment
+
+Lauren G BLock, Vicki G Morwitz
+
+http://www.sciencedirect.com/science/article/pii/S105774089970358X
+
+
+We explore the use of shopping lists as an external memory aid to consumers’ grocery shopping by examining the factors that influence the content of consumers’ shopping lists and the effectiveness of shopping lists as external memory aids. We analyze the shopping lists and actual purchase behavior of a panel of consumers during multiple grocery shopping trips conducted over a 2-month period. Our results indicate that consumers record on their lists approximately 40% of the items they ultimately purchase. Consistent with the external memory literature, we find that consumers write items on their shopping lists for which there are financial incentives to remember (e.g., manufacturers’ coupons), need-based incentives to remember (e.g., the product is frequently used), and schema-based advantages to remember (e.g., items purchased on fill-in trips). More than 80% of the items written on the shopping list were actually purchased.
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Art Thomas, Ron Garland, (1993) "SUPERMARKET SHOPPING LISTS: THEIR EFFECT ON CONSUMER EXPENDITURE", International Journal of Retail & Distribution Management, Vol. 21 Iss: 2
+
+
+
+
+The presence of a written shopping list on a major grocery buying trip to the supermarket is tangible evidence of out‐of‐store planning by the shopper. This pre‐planning may influence both time spent in store and grocery expenditure, two factors of importance to supermarket retailers. Set in a New Zealand city, examines the extent to which a written grocery shopping list affects these two factors by comparing the behaviour of two matched samples, one with lists and one without. The findings are conclusive: written shopping lists significantly reduce average expenditure; the presence of children accompanying the shopper significantly increases expenditure and time spent in store. While supermarket retailers cannot dissuade customers from bringing a written shopping list to the store, they can encourage customers to spend more time in‐store, and to shop with someone else, thereby increasing average expenditure.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+Exploring Cross-Device Web Use on PCs and Mobile Devices
+
+Shaun K. Kane
+, Amy K. Karlson
+, Brian R. Meyers
+, Paul Johns
+,
+Andy Jacobs
+, and Greg Smith2
+
+
+Ganzes paper => PDF
+
+Studie:  webcontent sharen zwischen mobile und PC wird gemacht!
+STudie2: welche Inhalte werden da geteilt? Using this metric, we found that a median of 75.4% (μ = 63.2%) of the domains
+visited on the phone were also visited on the PC, and a median of 13.1% (μ = 14.1%)
+of the domains visited on the PC were also visited on the phone. 
+
+
+The studies presented here provide strong support for sharing web information between
+PCs and mobile devices. 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
