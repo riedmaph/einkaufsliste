@@ -1,28 +1,26 @@
-<nav>
-  <md-toolbar color="primary">
-    <button class="toolbar-button">
-      <i class="material-icons">menu</i>
+<md-toolbar color="primary">
+  <button md-icon-button (click)="toggleSidenav()">
+    <i class="material-icons">menu</i>
+  </button>
+
+  <span class="toolbar-title toolbar-fill-remaining">Einkaufsliste</span>
+
+  <span *ngIf="!authService.loggedIn">
+    <a routerLink="/register" routerLinkActive="active">
+      Register
+    </a>
+    <a routerLink="/login" routerLinkActive="active">
+      Login
+    </a>
+  </span>
+
+  <div *ngIf="authService.loggedIn">
+    <md-menu x-position="before" #menu="mdMenu">
+        <button md-menu-item (click)="authService.logout()"> Sign Out </button>
+    </md-menu>
+
+    <button md-icon-button [md-menu-trigger-for]="menu">
+      <i class="material-icons">more_vert</i>
     </button>
-
-    <span class="toolbar-title toolbar-fill-remaining">Einkaufsliste</span>
-
-    <span *ngIf="!authService.loggedIn">
-      <a routerLink="/register" routerLinkActive="active">
-        Register
-      </a>
-      <a routerLink="/login" routerLinkActive="active">
-        Login
-      </a>
-    </span>
-
-    <div *ngIf="authService.loggedIn">
-      <md-menu x-position="before" #menu="mdMenu">
-          <button md-menu-item (click)="authService.logout()"> Sign Out </button>
-      </md-menu>
-
-      <button md-icon-button [md-menu-trigger-for]="menu">
-        <i class="material-icons">more_vert</i>
-      </button>
-    </div>
-  </md-toolbar>
-</nav>
+  </div>
+</md-toolbar>

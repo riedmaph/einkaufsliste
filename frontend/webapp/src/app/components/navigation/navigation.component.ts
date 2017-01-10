@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { AuthService } from '../../services';
 
 @Component({
@@ -8,8 +12,15 @@ import { AuthService } from '../../services';
 })
 export class NavigationComponent {
 
+  @Output()
+  public onSidenavToggle = new EventEmitter();
+
   constructor (
     public authService: AuthService,
   ) {}
+
+  public toggleSidenav() {
+    this.onSidenavToggle.emit();
+  }
 
 }

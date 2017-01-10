@@ -1,5 +1,14 @@
-<sl-navigation></sl-navigation>
+<md-sidenav-layout>
+  <md-sidenav #sidenav>
+    Here will go the list overview
+  </md-sidenav>
 
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <nav>
+    <sl-navigation (onSidenavToggle)="sidenav.toggle()"></sl-navigation>
+  </nav>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+</md-sidenav-layout>
