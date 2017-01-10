@@ -55,21 +55,6 @@ _Note:_ The backend expects to find a `config.json` in `backend/config`. See `ba
 _Note:_ `docker-compose.yml` defines the conatiners `backend` (nodejs) and `webserver` (nginx) as used in production. `docker-compose.localdb.yml` defines an additional container `postgres-db` for the local test database and modifies the `backend` conatiner to connect it with `postgres-db`.
 
 
-
-### Backend Database
-To switch out the database, set the parameters `dbhost` and `dbport` in the `config.json` in `backend/config`.
-If you do not know the data for you respective database setup, request it from you database admin or the like.
-
-To setup the database locally execute the following commands:
-- run `/backend/database/rebuildDatabase.sh` to setup database and users.
-- run `/backend/database/crawled/rebuildSchema.sh` to setup shema for crawled.
-- run `/backend/database/transformed/rebuildSchema.sh` to setup shema for crawled.
-- run `/backend/database/userData/rebuildSchema.sh` to setup shema for crawled.
-
-To insert the current transformed data do the following steps:
-- download the actual transformed data into `backend/database/data` (Get actual link from https://trello.com/c/9beLL65y/44-wichtige-links, Transformed Data)
-- execute `backend/database/data/import.sh`
-
 ## Code-Style
 ### Git-Workflow
 - No commits to `master`
