@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION public.cleanstring(text)
  LANGUAGE sql
  IMMUTABLE STRICT
 AS $function$
-    SELECT regexp_replace($1,'[^\x20-\x7E\xA1-\xFF]+',' ','g');
+    SELECT trim(regexp_replace(regexp_replace($1,'[^\x20-\x7E\xA1-\xFF]+','','g'),'"','','g'));
 $function$
 
 create table character_entity(
