@@ -1,11 +1,11 @@
 <ul *ngIf="isOpen">
-  <li 
-    *ngFor="let suggestion of suggestions; let i = index" 
+  <li
+    *ngFor="let suggestion of suggestions; let i = index"
     [class.selected]="i === selectedIndex"
     (click)="select($event, suggestion)"
     (mouseover)="selectedIndex = i"
   >
-    {{ suggestion }}
+    {{ suggestion | json }}
   </li>
   <li *ngIf="loading" class="empty">Loading...</li>
   <li *ngIf="!suggestions.length && !loading" class="empty">No suggestions</li>

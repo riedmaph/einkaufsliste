@@ -5,6 +5,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 
+import { Product } from '../../models';
+
 @Component({
   selector: 'auto-completion',
   templateUrl: './auto-completion.template.html',
@@ -28,7 +30,7 @@ export class AutoCompletionComponent {
 
   private isOpenFlag: boolean = false;
 
-  private suggestionList: string[] = [ ];
+  private suggestionList: Product[] = [ ];
 
   private selectedIndex: number = -1;
 
@@ -36,12 +38,12 @@ export class AutoCompletionComponent {
     return this.isOpenFlag;
   }
 
-  public get suggestions (): string[] {
+  public get suggestions (): Product[] {
     return this.suggestionList;
   }
 
   @Input()
-  public set suggestions (suggestions: string[]) {
+  public set suggestions (suggestions: Product[]) {
     this.suggestionList = suggestions;
     this.selectedIndex = -1;
     this.onValueChanged.emit();
@@ -69,7 +71,7 @@ export class AutoCompletionComponent {
     }
   }
 
-  public get value (): string {
+  public get value (): Product {
     return (this.selectedIndex < 0 ? null : this.suggestions[this.selectedIndex]);
   }
 
@@ -83,9 +85,8 @@ export class AutoCompletionComponent {
     this.onClose.emit();
   }
 
-  public select (event: MouseEvent | KeyboardEvent, suggestion: string) {
-    event['value'] = suggestion;
-    this.onSelect.emit(event);
+  public select (event: MouseEvent | KeyboardEvent, suggestion: Product) {
+    this.onSelect.emit({ event: event, suggestion: suggestion });
   }
 
 }

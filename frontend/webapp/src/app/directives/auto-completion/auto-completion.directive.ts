@@ -17,6 +17,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { AutoCompletionComponent } from './auto-completion.component';
+import { Product } from '../../models';
 
 @Directive({
   selector: '[autoCompletion]',
@@ -25,26 +26,29 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
 
   @Input()
   @HostBinding('attr.openDelay')
-  public openDelay: number = 100;
+  public openDelay: number = 200;
 
   @Input()
   @HostBinding('attr.closeDelay')
-  public closeDelay: number = 100;
+  public closeDelay: number = 200;
 
   @Input()
   @HostBinding('attr.minChars')
-  public minChars: number = 2;
+  public minChars: number = 3;
 
   /**
    * Origin of the suggestions
    * @type { ((_: string) => Observable<string[]>) | string[]}
    */
   @Input()
-  public autoCompletion: ((_: string) => Observable<string[]>) | string[] = null;
+  public autoCompletion: ((_: string) => Observable<{ products: Product[] }>) = null;
 
 
   @Output()
   public onSelect: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  public onValueChange: EventEmitter<Product> = new EventEmitter<Product>();
 
   @Output()
   public onOpen: EventEmitter<any> = new EventEmitter<any>();
@@ -76,10 +80,11 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     window.addEventListener('resize', this.resizeAutoCompletion(this.autoCompletionComponent));
     this.resizeAutoCompletion(this.autoCompletionComponent)();
 
-    this.autoCompletionComponent.instance.onSelect.subscribe((event: { value: string }) => {
-      this.element.nativeElement.value = event.value;
-      this.autoCompletionComponent.instance.close();
-    });
+    this.autoCompletionComponent.instance.onSelect
+      .subscribe((event: { event: Event, suggestion: Product }) => {
+        this.element.nativeElement.value = event.suggestion;
+        this.autoCompletionComponent.instance.close();
+      });
 
     this.autoCompletionComponent.instance.onClose.subscribe((e: any) => {
       this.onClose.emit(e);
@@ -131,7 +136,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
    * @param {number} keyCode pressed key
    * @return {void}
    */
-  @HostListener('keydown', [ '$event', '$event.keyCode' ])
+  @HostListener('keyup', [ '$event', '$event.keyCode' ])
   public onKeyUp (event: KeyboardEvent, keyCode: number): void {
     switch (keyCode) {
       case 9:
@@ -140,6 +145,11 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
           event.preventDefault();
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();
+          this.onValueChange.emit(this.element.nativeElement.value);
+          this.onSelect.emit({
+            event: event,
+            suggestion: this.autoCompletionComponent.instance.value,
+          });
         }
         break;
       case 13:
@@ -148,7 +158,11 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
           event.preventDefault();
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();
-          this.onSelect.emit(event);
+          this.onValueChange.emit(this.element.nativeElement.value);
+          this.onSelect.emit({
+            event: event,
+            suggestion: this.autoCompletionComponent.instance.value,
+          });
         }
         break;
       case 38:
@@ -164,38 +178,26 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
         if (this.element.nativeElement.value.length >= this.minChars) {
           window.clearTimeout(this.closeTimeout);
           this.openTimeout = window.setTimeout(() => {
-            if (this.autoCompletion != null && typeof this.autoCompletion === 'function') {
-              this.autoCompletionComponent.instance.loading = true;
-              this.autoCompletion(this.element.nativeElement.value)
-                .subscribe((suggestions: string[]) => {
-                  this.autoCompletionComponent.instance.loading = false;
-                  if (
-                    Array.isArray(suggestions) &&
-                    suggestions != null &&
-                    suggestions
-                  ) {
-                    this.autoCompletionComponent.instance.suggestions = suggestions;
-                    this.autoCompletionComponent.instance.open();
-                  }
+            this.autoCompletionComponent.instance.loading = true;
+            this.autoCompletion(this.element.nativeElement.value)
+              .subscribe((suggestions: { products: Product[] }) => {
+                console.info(suggestions);
+                this.autoCompletionComponent.instance.loading = false;
+                if (
+                  suggestions != null &&
+                  suggestions.hasOwnProperty('products') &&
+                  Array.isArray(suggestions.products)
+                ) {
+                  this.autoCompletionComponent.instance.suggestions = suggestions.products;
+                  this.autoCompletionComponent.instance.open();
                 }
-              );
-            } else if (
-              Array.isArray(this.autoCompletion) &&
-              this.autoCompletion != null &&
-              this.autoCompletion.length
-            ) {
-              // TODO improve similarity search
-              const fittingSuggestions = this.autoCompletion.filter((s: string) =>
-                s.toLowerCase().startsWith(this.element.nativeElement.value.toLowerCase()));
-              this.autoCompletionComponent.instance.suggestions = fittingSuggestions;
-              if (fittingSuggestions.length > 0) {
-                this.autoCompletionComponent.instance.open();
               }
-            }
+            );
           }, this.openDelay);
         } else {
           this.autoCompletionComponent.instance.close();
         }
+        this.onValueChange.emit(this.element.nativeElement.value);
     }
   }
 

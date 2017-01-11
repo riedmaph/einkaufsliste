@@ -11,12 +11,14 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { ListComponent } from '../list';
 import { ApiService } from '../../services/api';
 import {
   ListItem,
   List,
+  Product,
 } from '../../models';
 
 @Component({
@@ -84,13 +86,17 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     });
   }
 
+  public updateValue (value: Product) {
+    this.form.controls['itemName'].updateValueAndValidity();
+  }
+
   /**
    * Adds an item to list
    *
    * @param {Event} event Event that triggered this addition
    */
-  public add (event: Event): void {
-    event.preventDefault();
+  public add (data: { event: Event, value: string }): void {
+    data.event.preventDefault();
 
     if (this.form.valid) {
       const newItem: ListItem = {
@@ -149,5 +155,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       movedItem.listUuid = this.list.id;
       this.apiService.reorderItem(movedItem, newPosition)
         .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
+  }
+
+  public get autoCompletionFn (): (_: string) => Observable<{ products: Product[] }> {
+    return (str: string) => this.apiService.getAutoCompletion(str);
   }
 }
