@@ -598,7 +598,7 @@
         "/favoritemarkets": {
             "get": {
                 "tags": [
-                    "Lists"
+                    "Favoritemarkets"
                 ],
                 "summary": "Get all favorite markets for the user.",
                 "description": "",
