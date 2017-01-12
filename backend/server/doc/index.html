@@ -76,7 +76,7 @@
         defaultModelRendering: 'schema',
         showRequestHeaders: false,
           operationsSorter: function (a, b) { 
-          var order = { 'get': '0', 'post': '1', 'put': '2', 'delete': '3' }; 
+          var order = { 'get': '0', 'post': '1', 'put': '2', 'patch': '3', 'delete': '4' }; 
           return order[a.method].localeCompare(order[b.method]);    
         }
       });
