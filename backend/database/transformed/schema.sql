@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS Transformed.ArticleTag;
 DROP TABLE IF EXISTS Transformed.Tag;
 DROP TABLE IF EXISTS Transformed.Article;
+DROP TABLE IF EXISTS Transformed.Market;
+DROP TABLE IF EXISTS Transformed.Offer;
 
 DROP SCHEMA IF EXISTS Transformed;
 

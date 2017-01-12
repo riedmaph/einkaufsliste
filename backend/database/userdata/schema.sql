@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS :schemaname.Item;
 DROP TABLE IF EXISTS :schemaname.List;
 DROP TABLE IF EXISTS :schemaname.Enduser;
+DROP TABLE IF EXISTS :schemaname.FavioriteMarket;
 
 DROP SCHEMA IF EXISTS :schemaname;
 
