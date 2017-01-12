@@ -594,6 +594,131 @@
                     }
                 }
             }
+        },
+        "/favoritemarkets": {
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Get all favorite markets for the user.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "markets": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Market"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Favoritemarkets"
+                ],
+                "summary": "Add a new market to user's favorite markets.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "ID of market to be added.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/MarketID"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/favoritemarkets/{marketid}": {
+            "delete": {
+                "tags": [
+                    "Favoritemarkets"
+                ],
+                "summary": "Remove a market from user's favorite markets.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "marketid",
+                        "description": "ID of market to be removed.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -778,6 +903,59 @@
                     "description": "Target position of the moved item."
                 }
             }
+        },
+        "MarketID": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifer of market."
+                }
+            }
+        },
+        "MarketValues": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of market."
+                },
+                "latitude": {
+                    "type": "number",
+                    "format": "decimal",
+                    "description": "Latitude of market."
+                },
+                "longditude": {
+                    "type": "number",
+                    "format": "decimal",
+                    "description": "Longditude of market."
+                },
+                "street": {
+                    "type": "string",
+                    "description": "Street of market."
+                },
+                "zip": {
+                    "type": "string",
+                    "description": "Zip-Code of market."
+                },
+                "city": {
+                    "type": "string",
+                    "description": "City of market."
+                }
+            }
+        },
+        "Market": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/MarketID"
+                },
+                {
+                    "$ref": "#/definitions/MarketValues"
+                }
+            ]
         },
         "Error": {
             "type": "object",
