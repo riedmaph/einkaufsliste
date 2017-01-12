@@ -903,13 +903,21 @@
                 }
             }
         },
-        "Market": {
+        "MarketID": {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
                 "id": {
                     "type": "integer",
                     "description": "Unique identifer of market."
-                },
+                }
+            }
+        },
+        "MarketValues": {
+            "type": "object",
+            "properties": {
                 "name": {
                     "type": "string",
                     "description": "Name of market."
@@ -937,6 +945,16 @@
                     "description": "City of market."
                 }
             }
+        },
+        "Market": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/MarketID"
+                },
+                {
+                    "$ref": "#/definitions/MarketValues"
+                }
+            ]
         },
         "Offer": {
             "type": "object",
