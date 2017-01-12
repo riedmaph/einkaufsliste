@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS Transformed.ArticleTag;
 DROP TABLE IF EXISTS Transformed.Tag;
 DROP TABLE IF EXISTS Transformed.Article;
+DROP TABLE IF EXISTS Transformed.Market;
+DROP TABLE IF EXISTS Transformed.Offer;
 
 DROP SCHEMA IF EXISTS Transformed;
 
@@ -31,8 +33,7 @@ CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
     preference INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Transformed.Market
-(
+CREATE TABLE IF NOT EXISTS Transformed.Market (
   id serial primary key,
   name text,
   latitude double precision,
@@ -44,8 +45,7 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
   city text
 );
 
-CREATE TABLE transformed.offer
-(
+CREATE TABLE IF NOT EXISTS Transformed.Offer (
   id integer primary key,
   title text,
   price double precision,
