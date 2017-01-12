@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
     preference INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Transformed.Market
-(
+CREATE TABLE IF NOT EXISTS Transformed.Market (
   id serial primary key,
   name text,
   latitude double precision,
@@ -44,8 +43,7 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
   city text
 );
 
-CREATE TABLE transformed.offer
-(
+CREATE TABLE IF NOT EXISTS Transformed.Offer (
   id integer primary key,
   title text,
   price double precision,
