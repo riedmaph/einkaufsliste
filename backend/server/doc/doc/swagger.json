@@ -765,6 +765,71 @@
                     }
                 }
             }
+        },
+        "/lists/{listId}/optimised": {
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Retrieve a list in optimised state.",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authentication and authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listId",
+                        "description": "ID of list to optimise.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "by",
+                        "description": "Property to optimise by",
+                        "required": false,
+                        "type": "string",
+                        "enum": [ "price" ],
+                        "default": "price"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/OptimisedList"
+                        }
+                    },
+                    "400": {
+                        "description": "Unknown optimisation type.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "WWW-Authenticate": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -866,6 +931,26 @@
                 }
             ]
         },
+        "OptimisedList": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/List"
+                },
+                {
+                    "required": [
+                        "items"
+                    ],
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ItemWithAlternatives"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
         "ItemValues": {
             "type": "object",
             "required": [
@@ -947,6 +1032,20 @@
                 "name": {
                     "type": "string",
                     "description": "Name of product."
+                }
+            }
+        },
+        "ItemWithAlternatives": {
+            "type": "object",
+            "required": [
+
+            ],
+            "properties": {
+                "item": {
+                    "$ref": "#/definitions/Item"
+                },
+                "alternatives": {
+                    "$ref": "#/definitions/ItemList"
                 }
             }
         },
