@@ -5,7 +5,7 @@
     (click)="select($event, suggestion)"
     (mouseover)="selectedIndex = i"
   >
-    {{ suggestion | json }}
+    {{ suggestion }}
   </li>
   <li *ngIf="loading" class="empty">Loading...</li>
   <li *ngIf="!suggestions.length && !loading" class="empty">No suggestions</li>

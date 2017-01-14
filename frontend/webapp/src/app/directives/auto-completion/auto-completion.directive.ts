@@ -45,7 +45,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
 
 
   @Output()
-  public onSelect: EventEmitter<any> = new EventEmitter<any>();
+  public onSelect: EventEmitter<string> = new EventEmitter<string>();
 
   @Output()
   public onValueChange: EventEmitter<Product> = new EventEmitter<Product>();
@@ -74,16 +74,21 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
    * @return {void}
    */
   public ngAfterContentInit (): void {
+    this.element.nativeElement.setAttribute('autocomplete', 'off');
+
     const factory = this.resolver.resolveComponentFactory(AutoCompletionComponent);
     this.autoCompletionComponent = this.viewContainerRef.createComponent(factory);
 
-    window.addEventListener('resize', this.resizeAutoCompletion(this.autoCompletionComponent));
-    this.resizeAutoCompletion(this.autoCompletionComponent)();
+    this.resizeAutoCompletion();
 
     this.autoCompletionComponent.instance.onSelect
-      .subscribe((event: { event: Event, suggestion: Product }) => {
-        this.element.nativeElement.value = event.suggestion;
+      .subscribe((data: { event: Event, suggestion: Product }) => {
+        console.info('AC Directive received', data.suggestion);
+        this.element.nativeElement.value = data.suggestion;
+        console.info('AC Directive set input to', this.element.nativeElement.value);
         this.autoCompletionComponent.instance.close();
+        this.onValueChange.emit(data.suggestion);
+        console.info('AC Directive emits', data.suggestion);
       });
 
     this.autoCompletionComponent.instance.onClose.subscribe((e: any) => {
@@ -95,17 +100,13 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     });
   }
 
-  /**
-   * @return {() => void} Event handler function that resizes the auto-completion list
-   */
-  public resizeAutoCompletion (component): () => void {
-    return () => {
-      if (component) {
-        const inputBB = this.element.nativeElement.getBoundingClientRect();
-        component.location.nativeElement.style.bottom = inputBB.height + 'px';
-        component.location.nativeElement.style.width = inputBB.width + 'px';
-      }
-    };
+  public resizeAutoCompletion (): void {
+    if (this && this.autoCompletionComponent) {
+      const inputBB = this.element.nativeElement.getBoundingClientRect();
+      this.autoCompletionComponent.location.nativeElement.style.bottom = inputBB.height + 'px';
+      this.autoCompletionComponent.location.nativeElement.style.width = inputBB.width + 'px';
+    }
+    window.requestAnimationFrame(() => this.resizeAutoCompletion());
   }
 
   /**
@@ -125,6 +126,21 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     this.autoCompletionComponent.destroy();
   }
 
+  @HostListener('keydown', [ '$event', '$event.keyCode' ])
+  public onKeyDown (event: KeyboardEvent, keyCode: number): void {
+    switch (keyCode) {
+      case 9:
+        // Tab
+        if (this.autoCompletionComponent.instance.value) {
+          event.preventDefault();
+          this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
+          this.autoCompletionComponent.instance.close();
+        }
+        break;
+      default:
+    }
+  }
+
   /**
    * Handles keyboard events:
    * - Tab enters the selected auto-completion value into the input
@@ -138,31 +154,17 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
    */
   @HostListener('keyup', [ '$event', '$event.keyCode' ])
   public onKeyUp (event: KeyboardEvent, keyCode: number): void {
+    event.preventDefault();
     switch (keyCode) {
-      case 9:
-        // Tab
-        if (this.autoCompletionComponent.instance.value) {
-          event.preventDefault();
-          this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
-          this.autoCompletionComponent.instance.close();
-          this.onValueChange.emit(this.element.nativeElement.value);
-          this.onSelect.emit({
-            event: event,
-            suggestion: this.autoCompletionComponent.instance.value,
-          });
-        }
-        break;
       case 13:
         // Enter
         if (this.autoCompletionComponent.instance.value) {
-          event.preventDefault();
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();
           this.onValueChange.emit(this.element.nativeElement.value);
-          this.onSelect.emit({
-            event: event,
-            suggestion: this.autoCompletionComponent.instance.value,
-          });
+          this.onSelect.emit(
+            this.autoCompletionComponent.instance.value,
+          );
         }
         break;
       case 38:

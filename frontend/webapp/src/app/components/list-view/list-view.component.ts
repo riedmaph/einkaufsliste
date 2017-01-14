@@ -2,8 +2,8 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ViewChildren,
   QueryList,
+  ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -43,8 +43,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      amount: [ '', Validators.required ],
-      unit: [ '', Validators.required ],
+      amount: [ '' /*, Validators.required */ ],
+      unit: [ '' /* , Validators.required */ ],
       itemName: [ '', Validators.compose([
         Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
@@ -79,7 +79,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit (): void {
     this.listComponents.forEach(listComp => {
       listComp.onEdit.subscribe(newItem => this.update(newItem));
-      listComp.onRemove.subscribe(item => this.removeItem(item));
+      listComp.onRemove.subscribe(item => this.remove(item));
       listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
         this.reorderItems(tuple[0], tuple[1], tuple[2])
       );
@@ -87,6 +87,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   public updateValue (value: Product) {
+    this.form.controls['itemName'].setValue(value);
     this.form.controls['itemName'].updateValueAndValidity();
   }
 
@@ -95,9 +96,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    *
    * @param {Event} event Event that triggered this addition
    */
-  public add (data: { event: Event, value: string }): void {
-    data.event.preventDefault();
-
+  public add (value: string): void {
     if (this.form.valid) {
       const newItem: ListItem = {
         name: this.form.value.itemName,
@@ -133,7 +132,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @param {string[]} items The items to remove
    * @return {void}
    */
-  public removeItem (item: ListItem): void {
+  public remove (item: ListItem): void {
     this.apiService.removeItem(this.list.id, item).subscribe(
       () => this.list.items.splice(this.list.items.indexOf(item), 1),
     );

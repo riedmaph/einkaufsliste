@@ -86,6 +86,7 @@ export class AutoCompletionComponent {
   }
 
   public select (event: MouseEvent | KeyboardEvent, suggestion: Product) {
+    console.info('AC Component', suggestion);
     this.onSelect.emit({ event: event, suggestion: suggestion });
   }
 
