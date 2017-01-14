@@ -43,8 +43,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      amount: [ '' /*, Validators.required */ ],
-      unit: [ '' /* , Validators.required */ ],
+      amount: [ '', Validators.required ],
+      unit: [ '', Validators.required ],
       itemName: [ '', Validators.compose([
         Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
@@ -86,9 +86,13 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public updateValue (value: Product) {
+  /**
+   * Propagates input change to the FormGroup
+   *
+   * @param {Product} value New value
+   */
+  public updateValue (value: Product): void {
     this.form.controls['itemName'].setValue(value);
-    this.form.controls['itemName'].updateValueAndValidity();
   }
 
   /**
@@ -148,14 +152,18 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @return {void}
    */
   public reorderItems (movedItem: ListItem, newPosition: number, targetIndex: number): void {
-      const movedItemIndex = this.list.items.indexOf(movedItem);
-      // insert the moved Item at new position
-      this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
-      movedItem.listUuid = this.list.id;
-      this.apiService.reorderItem(movedItem, newPosition)
-        .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
+    const movedItemIndex = this.list.items.indexOf(movedItem);
+    // insert the moved Item at new position
+    this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
+    movedItem.listUuid = this.list.id;
+    this.apiService.reorderItem(movedItem, newPosition)
+      .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
   }
 
+  /**
+   * Scope wrapper for ApiService.getAutoCompletion
+   * @see ApiService.getAutoCompletion
+   */
   public get autoCompletionFn (): (_: string) => Observable<{ products: Product[] }> {
     return (str: string) => this.apiService.getAutoCompletion(str);
   }

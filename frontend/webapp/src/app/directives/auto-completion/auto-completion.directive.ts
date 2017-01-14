@@ -36,14 +36,6 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   @HostBinding('attr.minChars')
   public minChars: number = 3;
 
-  /**
-   * Origin of the suggestions
-   * @type { ((_: string) => Observable<string[]>) | string[]}
-   */
-  @Input()
-  public autoCompletion: ((_: string) => Observable<{ products: Product[] }>) = null;
-
-
   @Output()
   public onSelect: EventEmitter<string> = new EventEmitter<string>();
 
@@ -69,6 +61,13 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   ) { }
 
   /**
+   * Origin of the suggestions
+   * @type { ((_: string) => Observable<string[]>)}
+   */
+  @Input()
+  public autoCompletion: ((_: string) => Observable<{ products: Product[] }>) = () => null;
+
+  /**
    * Generates the auto-completion list component, positions it at the host element
    *
    * @return {void}
@@ -83,12 +82,9 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
 
     this.autoCompletionComponent.instance.onSelect
       .subscribe((data: { event: Event, suggestion: Product }) => {
-        console.info('AC Directive received', data.suggestion);
         this.element.nativeElement.value = data.suggestion;
-        console.info('AC Directive set input to', this.element.nativeElement.value);
         this.autoCompletionComponent.instance.close();
         this.onValueChange.emit(data.suggestion);
-        console.info('AC Directive emits', data.suggestion);
       });
 
     this.autoCompletionComponent.instance.onClose.subscribe((e: any) => {
@@ -100,6 +96,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     });
   }
 
+  /** Repeatedly updates the size and positin of the suggestion-list */
   public resizeAutoCompletion (): void {
     if (this && this.autoCompletionComponent) {
       const inputBB = this.element.nativeElement.getBoundingClientRect();
@@ -126,6 +123,14 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     this.autoCompletionComponent.destroy();
   }
 
+  /**
+   * Handles keyboard events:
+   * - Tab enters the selected auto-completion value into the input
+   *
+   * @param {KeyboardEvent} event triggering keyboard event
+   * @param {number} keyCode pressed key
+   * @return {void}
+   */
   @HostListener('keydown', [ '$event', '$event.keyCode' ])
   public onKeyDown (event: KeyboardEvent, keyCode: number): void {
     switch (keyCode) {
@@ -135,6 +140,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
           event.preventDefault();
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();
+          this.onValueChange.emit(this.element.nativeElement.value);
         }
         break;
       default:
@@ -143,7 +149,6 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
 
   /**
    * Handles keyboard events:
-   * - Tab enters the selected auto-completion value into the input
    * - Enter does the same as tab but also emits the onSelect Event
    * - Up and down select next and prev entries in the auto-completion list respectively
    * - All other keys trigger auto-completion to look for new suggestions
@@ -183,7 +188,6 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
             this.autoCompletionComponent.instance.loading = true;
             this.autoCompletion(this.element.nativeElement.value)
               .subscribe((suggestions: { products: Product[] }) => {
-                console.info(suggestions);
                 this.autoCompletionComponent.instance.loading = false;
                 if (
                   suggestions != null &&
@@ -199,7 +203,6 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
         } else {
           this.autoCompletionComponent.instance.close();
         }
-        this.onValueChange.emit(this.element.nativeElement.value);
     }
   }
 
@@ -223,7 +226,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
    */
   @HostListener('window:keyup', [ '$event', '$event.keyCode' ])
   public closeImmediate (event: KeyboardEvent, keyCode?: number): void {
-    if (keyCode && keyCode === 27) {
+    if (keyCode === 27) {
       this.autoCompletionComponent.instance.close();
     }
   }
