@@ -11,12 +11,13 @@
       md-list-avatar
       [alt]="market.name"
       [src]="resolveImage(market.brand)"
-      [style.border-color]="market.colour"
     >
     <h4 md-line>{{ market.name }}</h4>
     <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }}</p>
+    <button md-icon-button (click)="remove(i)"><md-icon>star</md-icon></button>
   </md-list-item>
 </md-list>
+<div *ngIf="!favouriteMarkets.length" class="empty"><span>No entries</span></div>
 <button md-fab class="add-btn">
   <md-icon class="md-24">add</md-icon>
 </button>

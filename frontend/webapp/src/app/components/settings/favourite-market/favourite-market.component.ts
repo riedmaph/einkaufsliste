@@ -21,11 +21,11 @@ export class FavouriteMarketSettingsComponent implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
+  /** @memorOf OnInit */
   public ngOnInit (): void {
     this.route.data.subscribe(
       (data: { favourites: Market[] }) => {
         this.favouriteMarkets = data.favourites;
-        console.info(this.favouriteMarkets);
       },
       (err) => {
         this.error = err.message || 'An error occurred';
@@ -33,7 +33,19 @@ export class FavouriteMarketSettingsComponent implements OnInit {
     );
   }
 
+  /**
+   * @param {string} brand Brand name
+   * @returns {string} Path to image for given brand or placeholder
+   */
   public resolveImage (brand: string) {
     return '/assets/img/marketPlaceholder.png';
+  }
+
+  /**
+   * Removes a given market from the favourites
+   * @TODO
+   */
+  public remove (index: number): void {
+    // @TODO
   }
 }

@@ -17,7 +17,8 @@
 
     <div *ngIf="authService.loggedIn">
       <md-menu x-position="before" #menu="mdMenu">
-          <button md-menu-item (click)="authService.logout()"> Sign Out </button>
+        <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
+        <button md-menu-item (click)="authService.logout()"> Sign Out </button>
       </md-menu>
 
       <button md-icon-button [md-menu-trigger-for]="menu">
