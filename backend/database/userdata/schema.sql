@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS :schemaname.Item;
 DROP TABLE IF EXISTS :schemaname.List;
 DROP TABLE IF EXISTS :schemaname.Enduser;
-DROP TABLE IF EXISTS :schemaname.FavoriteMarket;
+DROP TABLE IF EXISTS :schemaname.FavouriteMarket;
 
 DROP SCHEMA IF EXISTS :schemaname;
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
     list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS :schemaname.FavoriteMarket (
+CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (
     enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE,
     market int NOT NULL REFERENCES Transformed.Market(id) ON DELETE CASCADE
 );
