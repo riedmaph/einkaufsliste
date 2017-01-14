@@ -595,12 +595,12 @@
                 }
             }
         },
-        "/markets/favorites": {
+        "/markets/favourites": {
             "get": {
                 "tags": [
-                    "Lists"
+                    "Markets"
                 ],
-                "summary": "Get all favorite markets for the user.",
+                "summary": "Get all favourite markets for the user.",
                 "description": "",
                 "parameters": [
                     {
@@ -635,12 +635,12 @@
                 }
             }
         },
-        "/markets/favorites/{marketid}": {
+        "/markets/favourites/{marketid}": {
             "post": {
                 "tags": [
-                    "Favoritemarkets"
+                    "Markets"
                 ],
-                "summary": "Add a new market to user's favorite markets.",
+                "summary": "Add a new market to user's favourite markets.",
                 "description": "",
                 "parameters": [
                     {
@@ -679,9 +679,9 @@
             },
             "delete": {
                 "tags": [
-                    "Favoritemarkets"
+                    "Markets"
                 ],
-                "summary": "Remove a market from user's favorite markets.",
+                "summary": "Remove a market from user's favourite markets.",
                 "description": "",
                 "parameters": [
                     {
