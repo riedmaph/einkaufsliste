@@ -36,6 +36,7 @@ import {
   RegisterComponent,
   LoginComponent,
   SettingsComponent,
+  SettingsOverviewComponent,
   FavouriteMarketSettingsComponent,
 } from './components';
 
@@ -72,6 +73,7 @@ type StoreType = {
     RegisterComponent,
     LoginComponent,
     SettingsComponent,
+    SettingsOverviewComponent,
     FavouriteMarketSettingsComponent,
   ],
   entryComponents: [

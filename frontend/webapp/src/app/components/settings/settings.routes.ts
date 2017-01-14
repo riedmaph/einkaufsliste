@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 
 import { SettingsComponent } from './settings.component';
 import { FavouriteMarketSettingsComponent } from './favourite-market';
+import { SettingsOverviewComponent } from './overview';
+
 import {
   AuthGuard,
   FavouriteMarketResolver,
@@ -10,10 +12,11 @@ import {
 export const SETTINGS_ROUTES: Routes = [
   {
     path: 'settings',
+    component: SettingsComponent,
     children: [
       {
         path: '',
-        component: SettingsComponent,
+        component: SettingsOverviewComponent,
       },
       {
         path: 'favourite-markets',

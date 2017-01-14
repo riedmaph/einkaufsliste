@@ -118,6 +118,7 @@ export class ApiService {
 
 
   public getFavouriteMarkets (): Observable<Market[]> {
-    return Observable.of([ ]);
+    return this.authHttp.get(API_ROUTES.markets.favourites.get)
+      .map(res => res.json().markets);
   }
 }

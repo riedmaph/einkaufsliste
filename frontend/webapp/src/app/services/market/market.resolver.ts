@@ -14,7 +14,7 @@ export class FavouriteMarketResolver implements Resolve<Market[]> {
 
   constructor (
     private apiService: ApiService,
-  ) {}
+  ) { }
 
   public resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Market[]> {
     return this.apiService.getFavouriteMarkets();
