@@ -24,7 +24,7 @@ export class AutoCompletionComponent {
   public onValueChanged: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
-  public onSelect: EventEmitter<any> = new EventEmitter<any>();
+  public onSelect: EventEmitter<Product> = new EventEmitter<Product>();
 
   public loading: boolean = false;
 
@@ -85,8 +85,8 @@ export class AutoCompletionComponent {
     this.onClose.emit();
   }
 
-  public select (event: MouseEvent | KeyboardEvent, suggestion: Product) {
-    this.onSelect.emit({ event: event, suggestion: suggestion });
+  public select (suggestion: Product) {
+    this.onSelect.emit(suggestion);
   }
 
 }

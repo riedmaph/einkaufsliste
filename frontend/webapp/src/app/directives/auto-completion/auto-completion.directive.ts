@@ -81,10 +81,10 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     this.resizeAutoCompletion();
 
     this.autoCompletionComponent.instance.onSelect
-      .subscribe((data: { event: Event, suggestion: Product }) => {
-        this.element.nativeElement.value = data.suggestion;
+      .subscribe((suggestion: Product) => {
+        this.element.nativeElement.value = suggestion;
         this.autoCompletionComponent.instance.close();
-        this.onValueChange.emit(data.suggestion);
+        this.onValueChange.emit(suggestion);
       });
 
     this.autoCompletionComponent.instance.onClose.subscribe((e: any) => {
@@ -163,6 +163,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     switch (keyCode) {
       case 13:
         // Enter
+        event.preventDefault();
         if (this.autoCompletionComponent.instance.value) {
           this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
           this.autoCompletionComponent.instance.close();

@@ -2,7 +2,7 @@
   <li
     *ngFor="let suggestion of suggestions; let i = index"
     [class.selected]="i === selectedIndex"
-    (click)="select($event, suggestion)"
+    (click)="select(suggestion)"
     (mouseover)="selectedIndex = i"
   >
     {{ suggestion }}
