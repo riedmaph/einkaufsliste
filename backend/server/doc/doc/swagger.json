@@ -595,10 +595,10 @@
                 }
             }
         },
-        "/favoritemarkets": {
+        "/markets/favorites": {
             "get": {
                 "tags": [
-                    "Favoritemarkets"
+                    "Lists"
                 ],
                 "summary": "Get all favorite markets for the user.",
                 "description": "",
@@ -633,7 +633,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/markets/favorites/{marketid}": {
             "post": {
                 "tags": [
                     "Favoritemarkets"
@@ -649,13 +651,12 @@
                         "type": "string"
                     },
                     {
-                        "in": "body",
-                        "name": "body",
-                        "description": "ID of market to be added.",
+                        "in": "path",
+                        "name": "marketid",
+                        "description": "ID of market to be removed.",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/MarketID"
-                        }
+                        "type": "integer",
+                        "format": "int64"
                     }
                 ],
                 "responses": {
@@ -675,9 +676,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/favoritemarkets/{marketid}": {
+            },
             "delete": {
                 "tags": [
                     "Favoritemarkets"
