@@ -78,8 +78,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public ngAfterViewInit (): void {
     this.listComponents.forEach(listComp => {
-      listComp.onEdit.subscribe(newItem => this.update(newItem));
-      listComp.onRemove.subscribe(item => this.remove(item));
+      listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
+      listComp.onRemove.subscribe(item => this.removeItem(item));
       listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
         this.reorderItems(tuple[0], tuple[1], tuple[2])
       );
@@ -96,11 +96,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Adds an item to list
-   *
-   * @param {Event} event Event that triggered this addition
+   * Adds an item to list. Grabs the values from this.form (thus requires it to be updated)
    */
-  public add (value: string): void {
+  public addItem (): void {
     if (this.form.valid) {
       const newItem: ListItem = {
         name: this.form.value.itemName,
@@ -125,7 +123,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @param {ListItem} item Item that changed in its new state
    * @return {void}
    */
-  public update(item: ListItem): void {
+  public updateItem (item: ListItem): void {
     this.apiService.updateItem(this.list.id, item.id, item)
       .subscribe(() => undefined);
   }
@@ -136,7 +134,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @param {string[]} items The items to remove
    * @return {void}
    */
-  public remove (item: ListItem): void {
+  public removeItem (item: ListItem): void {
     this.apiService.removeItem(this.list.id, item).subscribe(
       () => this.list.items.splice(this.list.items.indexOf(item), 1),
     );

@@ -37,7 +37,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   public minChars: number = 3;
 
   @Output()
-  public onSelect: EventEmitter<string> = new EventEmitter<string>();
+  public onSelect: EventEmitter<Product> = new EventEmitter<Product>();
 
   @Output()
   public onValueChange: EventEmitter<Product> = new EventEmitter<Product>();
@@ -57,7 +57,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     private element: ElementRef,
     private resolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
-    private renderer: Renderer
+    private renderer: Renderer,
   ) { }
 
   /**
@@ -124,8 +124,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   }
 
   /**
-   * Handles keyboard events:
-   * - Tab enters the selected auto-completion value into the input
+   * Tab enters the selected auto-completion value into the input
    *
    * @param {KeyboardEvent} event triggering keyboard event
    * @param {number} keyCode pressed key
@@ -133,26 +132,24 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
    */
   @HostListener('keydown', [ '$event', '$event.keyCode' ])
   public onKeyDown (event: KeyboardEvent, keyCode: number): void {
-    switch (keyCode) {
-      case 9:
-        // Tab
-        if (this.autoCompletionComponent.instance.value) {
-          event.preventDefault();
-          this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
-          this.autoCompletionComponent.instance.close();
-          this.onValueChange.emit(this.element.nativeElement.value);
-        }
-        break;
-      default:
+    if (keyCode === 9) {
+      // Tab
+      if (this.autoCompletionComponent.instance.value) {
+        event.preventDefault();
+        this.element.nativeElement.value = this.autoCompletionComponent.instance.value;
+        this.autoCompletionComponent.instance.close();
+        this.onValueChange.emit(this.element.nativeElement.value);
+      }
     }
   }
 
   /**
    * Handles keyboard events:
-   * - Enter does the same as tab but also emits the onSelect Event
+   * - Enter does the same as tab in `onKeyDown` but also emits the onSelect Event
    * - Up and down select next and prev entries in the auto-completion list respectively
    * - All other keys trigger auto-completion to look for new suggestions
    *
+   * @see AutoCompletionDirective.onKeyDown
    * @param {KeyboardEvent} event triggering keyboard event
    * @param {number} keyCode pressed key
    * @return {void}

@@ -26,7 +26,7 @@ export class ApiService {
    * Makes API call to retrieve auto completion suggestions for given input
    *
    * @param {string} input Current user input
-   * @return {Observable<string[]>} List of auto completion suggestions
+   * @return {Observable<Product[]>} List of auto completion suggestions
    */
   public getAutoCompletion (input: string): Observable<{ products: Product[] }> {
     const queryParams: URLSearchParams = new URLSearchParams();
