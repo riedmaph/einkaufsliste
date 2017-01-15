@@ -162,7 +162,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * Scope wrapper for ApiService.getAutoCompletion
    * @see ApiService.getAutoCompletion
    */
-  public get autoCompletionFn (): (_: string) => Observable<{ products: Product[] }> {
+  public get autoCompletionFn (): (_: string) => Observable<Product[]> {
     return (str: string) => this.apiService.getAutoCompletion(str);
   }
 }

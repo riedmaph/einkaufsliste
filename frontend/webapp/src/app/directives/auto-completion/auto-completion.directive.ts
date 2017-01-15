@@ -65,7 +65,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
    * @type { ((_: string) => Observable<string[]>)}
    */
   @Input()
-  public autoCompletion: ((_: string) => Observable<{ products: Product[] }>) = () => null;
+  public autoCompletion: ((_: string) => Observable<Product[]>) = () => null;
 
   /**
    * Generates the auto-completion list component, positions it at the host element
@@ -185,14 +185,13 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
           this.openTimeout = window.setTimeout(() => {
             this.autoCompletionComponent.instance.loading = true;
             this.autoCompletion(this.element.nativeElement.value)
-              .subscribe((suggestions: { products: Product[] }) => {
+              .subscribe((suggestions: Product[]) => {
                 this.autoCompletionComponent.instance.loading = false;
                 if (
                   suggestions != null &&
-                  suggestions.hasOwnProperty('products') &&
-                  Array.isArray(suggestions.products)
+                  Array.isArray(suggestions)
                 ) {
-                  this.autoCompletionComponent.instance.suggestions = suggestions.products;
+                  this.autoCompletionComponent.instance.suggestions = suggestions;
                   this.autoCompletionComponent.instance.open();
                 }
               }

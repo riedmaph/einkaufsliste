@@ -28,7 +28,7 @@ export class ApiService {
    * @param {string} input Current user input
    * @return {Observable<Product[]>} List of auto completion suggestions
    */
-  public getAutoCompletion (input: string): Observable<{ products: Product[] }> {
+  public getAutoCompletion (input: string): Observable<Product[]> {
     const queryParams: URLSearchParams = new URLSearchParams();
     queryParams.set('q', input);
 
@@ -37,7 +37,7 @@ export class ApiService {
     };
 
     return this.authHttp.get(API_ROUTES.products.search, options)
-      .map(response => { return { products: response.json().products.map(p => p.name) }; });
+      .map(res => res.json().products.map(p => p.name));
   }
 
   public getAllLists (): Observable<List[]> {
