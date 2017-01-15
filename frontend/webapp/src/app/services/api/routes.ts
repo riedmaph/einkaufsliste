@@ -17,4 +17,7 @@ export const API_ROUTES = {
       move: `${API_BASE_URL}/lists/:listId/items/:itemId`,
     },
   },
+  products: {
+    search: `${API_BASE_URL}/products/search`,
+  },
 };

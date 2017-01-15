@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
+import {
+  RequestOptionsArgs,
+  URLSearchParams,
+} from '@angular/http';
 import { Observable } from 'rxjs';
 
 import { AuthHttp } from 'angular2-jwt';
 
-import { List, ListItem } from '../../models';
+import {
+  List,
+  ListItem,
+  Product,
+} from '../../models';
 
 import { API_ROUTES } from './routes';
 
@@ -11,8 +19,26 @@ import { API_ROUTES } from './routes';
 export class ApiService {
 
   constructor (
-    private authHttp: AuthHttp
-  ) {}
+    private authHttp: AuthHttp,
+  ) { }
+
+  /**
+   * Makes API call to retrieve auto completion suggestions for given input
+   *
+   * @param {string} input Current user input
+   * @return {Observable<Product[]>} List of auto completion suggestions
+   */
+  public getAutoCompletion (input: string): Observable<Product[]> {
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('q', input);
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+
+    return this.authHttp.get(API_ROUTES.products.search, options)
+      .map(res => res.json().products.map(p => p.name));
+  }
 
   public getAllLists (): Observable<List[]> {
     return this.authHttp.get(API_ROUTES.lists.all)
@@ -28,20 +54,6 @@ export class ApiService {
     return this.authHttp.post(API_ROUTES.lists.create, {
       name: listName,
     }).map(res => res.json());
-  }
-
-  /**
-   * Makes API call to retrieve auto completion suggestions for given input
-   *
-   * @param {string} input Current user input
-   * @return {Observable<string[]>} List of auto completion suggestions
-   * @TODO
-   */
-  public getAutoCompletion (input: string): Observable<string[]> {
-    return Observable.of([ 'Apple', 'Orange', 'Banana', 'Pear', 'Peach', 'Pineapple' ]);
-    // return this.http
-      // .get(API_ROUTES.autoCompletion')
-      // .map(response => <string[]> response.json())
   }
 
 
@@ -96,12 +108,12 @@ export class ApiService {
   }
 
   /**
-   * Makes API call to persistent reordering of items 
-   * 
+   * Makes API call to persistent reordering of items
+   *
    * @param {ListItem} item moved item
    * @param {number} newPosition new position of the item
-   * @return {Observable<any>} 
-   * 
+   * @return {Observable<any>}
+   *
    */
   public reorderItem (item: ListItem, newPosition: number): Observable<any> {
     return this.authHttp.patch(
