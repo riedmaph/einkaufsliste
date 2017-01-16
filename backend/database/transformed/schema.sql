@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Transformed.ArticleTag (
 
 CREATE TABLE IF NOT EXISTS Transformed.Market
 (
-  id serial primary key,
+  id integer primary key,
   name text,
   latitude double precision,
   longditude double precision,

@@ -24,10 +24,25 @@ function getOffers(req, res, next) {
   db.conn.any(sqlReadOffers, req.params)
     .then(function (data) {
       res.status(200)
-        .json({
-          //offers: data
-          //offers: data.map(function(offer) {return {id: offer.id, market: offer.market, offerprice: offer.offerprice}})
-          offers: data.map(function(offer) {return {id: offer.id, market: offer.market, offerprice: offer.offerprice, offerfrom: offer.offerfrom, offerto: offer.offerto, discount: offer.discount, product:{name: offer.name, brand: offer.brand, price: offer.price}}})
+        .json({          
+          offers: data.map(
+            function(offer) 
+            {
+              return {
+                        id: offer.id, 
+                        market: offer.market, 
+                        offerprice: offer.offerprice, 
+                        offerfrom: offer.offerfrom, 
+                        offerto: offer.offerto, 
+                        discount: offer.discount, 
+                        product:{
+                          name: offer.name, 
+                          brand: offer.brand, 
+                          price: offer.price
+                        }
+                      }
+            }
+          )
         });
     })
     .catch(function (err) {
