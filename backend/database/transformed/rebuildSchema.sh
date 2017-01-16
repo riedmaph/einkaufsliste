@@ -12,5 +12,5 @@ fi
 getUser "transformer" dbusertransformer dbpasstransformer
 getUser "admin" dbuseradmin dbpassadmin
 
-PGPASSWORD=$dbpasstransformer psql -h $dbhost -p $dbport -U $dbusertransformer -d $dbname -a -f "schema.sql";
 PGPASSWORD=$dbpassadmin psql -h $dbhost -p $dbport -U $dbuseradmin -d $dbname -a -f "permissions.sql" -v dbusertransformer=$dbusertransformer;
+PGPASSWORD=$dbpasstransformer psql -h $dbhost -p $dbport -U $dbusertransformer -d $dbname -a -f "schema.sql";
