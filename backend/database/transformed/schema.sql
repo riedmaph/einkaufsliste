@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Transformed.Market
 
 CREATE TABLE IF NOT EXISTS Transformed.Offer
 (
-  id serial primary key,
+  id integer primary key,
   title text,
   price double precision,
   offerfrom date,
