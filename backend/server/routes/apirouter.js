@@ -10,6 +10,7 @@ var users = require(path.join('..', 'controllers', 'users', 'users'));
 var lists = require(path.join('..', 'controllers', 'lists', 'lists'));
 var items = require(path.join('..', 'controllers', 'items', 'items'));
 var products = require(path.join('..', 'controllers', 'products', 'products'));
+var markets = require(path.join('..', 'controllers', 'markets', 'markets'));
 
 // redirect root to doc
 router.get('/', function(req, res, next) {
@@ -29,11 +30,11 @@ router.use(tokenhandler.verifyToken);
 /* Lists */
 router.route('/lists')
   .get(lists.getAllLists)
-  .post(lists.createList)   
+  .post(lists.createList)
 
 router.route('/lists/:listid')
   .get(lists.getListWithItems)
-  .put(lists.updateList)    
+  .put(lists.updateList)
   .delete(lists.deleteList);
 
 /* items */
@@ -44,11 +45,18 @@ router.route('/lists/:listid/items')
 router.route('/lists/:listid/items/:itemid')
   .put(items.updateItem)
   .delete(items.deleteItem)
-  .patch(items.moveItem);  
+  .patch(items.moveItem);
 
 /* products */
 router.route('/products/search')
   .get(products.findProducts)
+
+/* markets */
+router.route('/markets/search')
+  .get(markets.getMarketsByPositionAndRadius);
+
+router.route('/markets/:marketid/offers')
+  .get(markets.getOffers);
 
 // error handler
 router.use(function(err, req, res, next) {
