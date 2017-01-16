@@ -116,9 +116,44 @@ export class ApiService {
     );
   }
 
-
+  /**
+   * Makes API call to get favourite markets of the user
+   *
+   * @return {Observable<Market>}
+   *
+   */
   public getFavouriteMarkets (): Observable<Market[]> {
     return this.authHttp.get(API_ROUTES.markets.favourites.get)
       .map(res => res.json().markets);
+  }
+
+  /**
+   * Makes API call to get markets of the user by Distance
+   *
+   * @TODO Parameter, @TODO json.new -> json.markets
+   * @param @TODO
+   * @return {Observable<Market>}
+   *
+   */
+  public getMarketsByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
+    return this.authHttp.get(API_ROUTES.markets.search)
+      .map(res => res.json().new);
+  }
+
+  /**
+   * Makes API call to add a markets to the favourite markets
+   *
+   * @TODO Parameter, @TODO json.new -> json.markets
+   * @param The Id of the new favourite market
+   * @return {Observable<any>}
+   *
+   */
+  public addFavouriteMarket(marketId: Number): Observable<any> {
+   /* return this.authHttp.post(API_ROUTES.markets.favourites.add
+    .replace(':marketId', marketId)
+    )
+      .map(res => res.json());
+      */
+      return null;
   }
 }

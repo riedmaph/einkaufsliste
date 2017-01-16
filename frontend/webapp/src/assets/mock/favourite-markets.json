@@ -10,7 +10,7 @@
       "city": "Testcity"
     },
     {
-      "id": 1,
+      "id": 2,
       "name": "Test Market 2",
       "latitude": 0,
       "longditude": 0,
@@ -19,7 +19,7 @@
       "city": "Testcity"
     },
     {
-      "id": 1,
+      "id": 3,
       "name": "Test Market 3",
       "latitude": 0,
       "longditude": 0,
@@ -28,7 +28,7 @@
       "city": "Testcity"
     },
     {
-      "id": 1,
+      "id": 4,
       "name": "Test Market 4",
       "latitude": 0,
       "longditude": 0,
@@ -36,5 +36,34 @@
       "zip": "12345",
       "city": "Testcity"
     }
+  ],
+  "new": [
+    {
+      "id": 66,
+      "name": "NEW Test Market 6",
+      "latitude": 0,
+      "longditude": 0,
+      "street": "Teststreet 66",
+      "zip": "12345",
+      "city": "Testcity"
+    }, 
+    {
+      "id": 77,
+      "name": " NEW Test Market 2",
+      "latitude": 0,
+      "longditude": 0,
+      "street": "Teststreet 77",
+      "zip": "12345",
+      "city": "Testcity"
+    },
+     {
+      "id": 4,
+      "name": "Test Market 4",
+      "latitude": 0,
+      "longditude": 0,
+      "street": "Teststreet 7",
+      "zip": "12345",
+      "city": "Testcity"
+    }    
   ]
 }

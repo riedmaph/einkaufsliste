@@ -23,5 +23,6 @@ export const API_ROUTES = {
       add: `${API_BASE_URL}/markets/favourites/:marketId`,
       remove: `${API_BASE_URL}/markets/favourites/:marketId`,
     },
+    search: `/assets/mock/favourite-markets.json`, // @TODO
   },
 };
