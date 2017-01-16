@@ -4,12 +4,12 @@ DROP TABLE IF EXISTS transformed.UnitDictionary;
 DROP TABLE IF EXISTS Transformed.UnitTranslation;
 
 DROP TABLE IF EXISTS transformed.DiscoverLogBrand;
-DROP TABLE IF EXISTS transformed.DiscoverLogPorductNam;
+DROP TABLE IF EXISTS transformed.DiscoverLogProductNam;
 DROP TABLE IF EXISTS transformed.MineLogSize;
 DROP TABLE IF EXISTS transformed.MineLogBrand;
-DROP TABLE IF EXISTS transformed.MineLogPorductName;
+DROP TABLE IF EXISTS transformed.MineLogProductName;
 DROP TABLE IF EXISTS transformed.PreprocessingLogBrand;
-DROP TABLE IF EXISTS transformed.PreprocessingLogPorductName;
+DROP TABLE IF EXISTS transformed.PreprocessingLogProductName;
 
 DROP VIEW IF EXISTS Transformed.ProductName;
 DROP TABLE IF EXISTS Transformed.ProductNameForce;
@@ -197,7 +197,7 @@ CREATE TABLE transformed.PreprocessingLogBrand (
     blacklist TEXT NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-CREATE TABLE transformed.PreprocessingLogPorductName (
+CREATE TABLE transformed.PreprocessingLogProductName (
     transformation BIGINT PRIMARY KEY REFERENCES Transformed.ArticleRaw(id),
     blacklist TEXT NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -221,7 +221,7 @@ CREATE TABLE transformed.MineLogBrand (
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (transformation,brand)
 );
-CREATE TABLE transformed.MineLogPorductName (
+CREATE TABLE transformed.MineLogProductName (
     transformation BIGINT REFERENCES Transformed.ArticleRaw(id),
     productName TEXT REFERENCES Transformed.ProductNameDictionary(name) ON UPDATE CASCADE ON DELETE CASCADE,
     likelihood DOUBLE PRECISION NOT NULL,
@@ -236,7 +236,7 @@ CREATE TABLE transformed.DiscoverLogBrand (
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (transformation,brand)
 );
-CREATE TABLE transformed.DiscoverLogPorductNam (
+CREATE TABLE transformed.DiscoverLogProductNam (
     transformation BIGINT REFERENCES Transformed.ArticleRaw(id),
     productName TEXT,
     likelihood DOUBLE PRECISION NOT NULL,
@@ -406,7 +406,7 @@ CREATE OR REPLACE FUNCTION public.normalDistributionPDF(double precision,double 
  IMMUTABLE STRICT
 AS $function$
     SELECT 1/($2*sqrt(2*Pi()))*exp(-($3-$1)*($3-$1)/(2*$2*$2));
-$function$
+$function$;
 
 CREATE OR REPLACE FUNCTION public.exponentialDistributionPDF(double precision,double precision)
  RETURNS double precision
@@ -414,4 +414,4 @@ CREATE OR REPLACE FUNCTION public.exponentialDistributionPDF(double precision,do
  IMMUTABLE STRICT
 AS $function$
     SELECT $1*exp(-$1*$2);
-$function$
+$function$;
