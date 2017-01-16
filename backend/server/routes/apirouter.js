@@ -47,8 +47,8 @@ router.route('/lists/:listid/items/:itemid')
   .patch(items.moveItem);  
 
 /* markets */
-router.route('/markets/search')
-  .get(markets.getMarketsByPositionAndRadius);
+router.route('/markets')
+  .get(markets.getMarkets);
 
 router.route('/markets/:marketid/offers')
   .get(markets.getOffers);
