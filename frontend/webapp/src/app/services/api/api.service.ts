@@ -3,7 +3,11 @@ import { Observable } from 'rxjs';
 
 import { AuthHttp } from 'angular2-jwt';
 
-import { List, ListItem } from '../../models';
+import {
+  List,
+  ListItem,
+  Market,
+} from '../../models';
 
 import { API_ROUTES } from './routes';
 
@@ -96,12 +100,12 @@ export class ApiService {
   }
 
   /**
-   * Makes API call to persistent reordering of items 
-   * 
+   * Makes API call to persistent reordering of items
+   *
    * @param {ListItem} item moved item
    * @param {number} newPosition new position of the item
-   * @return {Observable<any>} 
-   * 
+   * @return {Observable<any>}
+   *
    */
   public reorderItem (item: ListItem, newPosition: number): Observable<any> {
     return this.authHttp.patch(
@@ -110,5 +114,11 @@ export class ApiService {
         .replace(':itemId', item.id),
       { targetposition: newPosition }
     );
+  }
+
+
+  public getFavouriteMarkets (): Observable<Market[]> {
+    return this.authHttp.get(API_ROUTES.markets.favourites.get)
+      .map(res => res.json().markets);
   }
 }

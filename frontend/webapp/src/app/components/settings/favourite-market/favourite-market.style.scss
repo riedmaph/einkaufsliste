@@ -1,0 +1,27 @@
+.subtitle-area {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0 0 0;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+  }
+}
+
+h3 {
+  flex: 1;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+.add-btn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    color: #fff;
+}
