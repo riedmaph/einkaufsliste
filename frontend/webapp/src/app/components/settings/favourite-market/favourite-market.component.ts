@@ -1,9 +1,8 @@
 import {
   Component,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { Market } from '../../../models';
 
 @Component({
@@ -16,6 +15,7 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public favouriteMarkets: Market[] = [ ];
 
   public error: string = '';
+  public myModel: Number= 100;
 
   constructor (
     private route: ActivatedRoute,
