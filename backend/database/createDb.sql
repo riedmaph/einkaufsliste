@@ -16,3 +16,6 @@ CREATE DATABASE :dbname WITH OWNER :dbuseradmin ENCODING 'UTF8';
 GRANT CREATE ON DATABASE :dbname to :dbusercrawler;
 GRANT CREATE ON DATABASE :dbname to :dbusertransformer;
 GRANT CREATE ON DATABASE :dbname to :dbuserapi;
+
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
