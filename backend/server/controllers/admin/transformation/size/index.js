@@ -11,7 +11,7 @@ function transformUnitBySize(t,id) {
 }
 
 function insertMineLogSize(t,data) {
-  return t.none(sqlInsertMineLogSize, data);
+  return t.one(sqlInsertMineLogSize, data);
 }
 
 module.exports = {

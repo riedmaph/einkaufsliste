@@ -7,6 +7,10 @@ var sizeTransformation = require(path.join('..', 'transformation', 'size', 'inde
 var brandTransformation = require(path.join('..', 'transformation', 'brand', 'index'));
 var productNameTransformation = require(path.join('..', 'transformation', 'productName', 'index'));
 
+var sqlInsertArticle = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'insertArticle.sql'));
+var sqlInsertArticleRaw = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'insertArticleRaw.sql'));
+
+
 function getTransformedUnitBySize(req, res, next) {
   sizeTransformation.transformUnitBySize(db.connTransform,req.params.id)
     .then(function (transformedUnit) {
@@ -20,6 +24,7 @@ function getTransformedUnitBySize(req, res, next) {
 }
 
 function putTransformedUnitBySize(req, res, next) {
+  var returnData;
   db.connTransform.tx(t => {
     return t.sequence((index, data, delay) => {
       switch (index) {
@@ -27,11 +32,13 @@ function putTransformedUnitBySize(req, res, next) {
           return sizeTransformation.transformUnitBySize(t,req.params.id);
         case 1:
           return sizeTransformation.insertMineLogSize(t,data);
-      }
+        case 2:
+          returnData=data;
+       }
     })
   })
-    .then(transformedUnit => {
-      res.status(200).send();
+    .then(empty => {
+      res.status(200).send(returnData);
     })
     .catch(err => {
       err.message = 'controllers.admin.transformation.putTransformedUnit' + err.message;
@@ -52,6 +59,7 @@ function getMineBrand(req, res, next) {
 }
 
 function putMineBrand(req, res, next) {
+  var returnData;
   db.connTransform.tx(t => {
     return t.sequence((index, data, delay) => {
       switch (index) {
@@ -59,11 +67,13 @@ function putMineBrand(req, res, next) {
           return brandTransformation.transformMineBrand(t,req.params.id);
         case 1:
           return brandTransformation.insertMineLogBrand(t,data);
-      }
+        case 2:
+          returnData=data;
+       }
     })
   })
-    .then(function (transformedUnit) {
-      res.status(200).send();
+    .then(empty => {
+      res.status(200).send(returnData);
     })
     .catch(err => {
       err.message = 'controllers.admin.transformation.putMineBrand ' + err;
@@ -84,6 +94,7 @@ function getMineProductName(req, res, next) {
 }
 
 function putMineProductName(req, res, next) {
+  var returnData;
   db.connTransform.tx(t => {
     return t.sequence((index, data, delay) => {
       switch (index) {
@@ -91,11 +102,13 @@ function putMineProductName(req, res, next) {
           return productNameTransformation.transformMineProductName(t,req.params.id);
         case 1:
           return productNameTransformation.insertMineLogProductName(t,data);
-      }
+        case 2:
+          returnData=data;
+       }
     })
   })
-    .then(function (transformedUnit) {
-      res.status(200).send();
+    .then(empty => {
+      res.status(200).send(returnData);
     })
     .catch(err => {
       console.log(JSON.stringify(err));
@@ -104,10 +117,73 @@ function putMineProductName(req, res, next) {
     });
 }
 
+function getArticleTransformation(req, res, next) {
+  productNameTransformation.transformMineProductName({},req.params.id)
+    .then(function (transformedUnit) {
+      res.status(200)
+        .json(transformedUnit);
+    })
+    .catch(err => {
+      err.message = 'controllers.admin.transformation.getMineProductName ' + err.message;
+      return next(err);
+    });
+}
+
+function putArticleTransformation(req, res, next) {
+  var returnData;
+  db.connTransform.tx(t => {
+    return t.sequence((index, data, delay) => {
+      console.log(index,data);
+      switch (index) {
+        case 0:
+          return sizeTransformation.transformUnitBySize(t,req.params.id);
+        case 1:
+          return sizeTransformation.insertMineLogSize(t,data);
+        case 2:
+          return brandTransformation.transformMineBrand(t,req.params.id);
+        case 3:
+          return brandTransformation.insertMineLogBrand(t,data);
+        case 4:
+          return productNameTransformation.transformMineProductName(t,req.params.id);
+        case 5:
+          return productNameTransformation.insertMineLogProductName(t,data);
+        case 6:
+          return t.one(sqlInsertArticle,{ id: req.params.id });
+        case 7:
+          returnData=data;
+      }
+    })
+  })
+    .then(empty => {
+      res.status(200).send(returnData);
+    })
+    .catch(err => {
+      console.log(JSON.stringify(err));
+      err.message = 'controllers.admin.transformation.putMineProductName ' + JSON.stringify(err);
+      return next(err);
+    });
+}
+
+function postArticleRaw(req, res, next) {
+  db.connTransform.one(sqlInsertArticleRaw,req.body)
+    .then(function (newArticle) {
+      res.status(201)
+        .json(newArticle);
+    })
+    .catch(err => {
+      console.log(err);
+      err.message = 'controllers.admin.transformation.postArticle: ' + err.message;
+      return next(err);
+    });
+}
+
 module.exports = {
+  getArticleTransformation,
   getMineBrand,
   getMineProductName,
   getTransformedUnitBySize,
+  postArticleRaw,
+  putArticleTransformation,
   putMineBrand,
   putMineProductName,
   putTransformedUnitBySize,

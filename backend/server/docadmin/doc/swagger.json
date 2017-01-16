@@ -13,154 +13,40 @@
         "application/json"
     ],
     "paths": {
-        "/users/register": {
+        "/admin/transformation/articles": {
             "post": {
                 "tags": [
-                    "Users"
+                    "Admin",
+                    "Transformation"
                 ],
-                "summary": "Register a new User.",
+                "summary": "Create a new raw article instance",
                 "description": "",
                 "parameters": [
                     {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
-                        "description": "Email-address and password for new user.",
+                        "description": "",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/User"
+                            "$ref": "#/definitions/ArticleRaw"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Token for the user.",
-                        "schema": {
-                            "$ref": "#/definitions/Token"
-                        }
-                    },
+                        "description": "Successful operation. TODO: Describe output to much workd for now"
+                     },
                     "400": {
-                        "description": "User already exists or password is invalid.",
+                        "description": "Item does not exist.",
                         "schema": {
                             "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/users/login": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Login as an existng User.",
-                "description": "",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Email-address and password for new user.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Token for the user.",
-                        "schema": {
-                            "$ref": "#/definitions/Token"
-                        }
-                    },
-                    "401": {
-                        "description": "Unknown user or bad password.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/lists": {
-            "get": {
-                "tags": [
-                    "Lists"
-                ],
-                "summary": "Get all lists for the user.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation.",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "lists": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/List"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Lists"
-                ],
-                "summary": "Add a new List.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Name of the new list to be added.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ListValues"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation.",
-                        "schema": {
-                            "$ref": "#/definitions/ListID"
                         }
                     },
                     "403": {
@@ -178,12 +64,13 @@
                 }
             }
         },
-        "/lists/{listid}": {
+        "/admin/transformation/articles/{id}": {
             "get": {
                 "tags": [
-                    "Lists"
+                    "Admin",
+                    "Transformation"
                 ],
-                "summary": "Get details and all items of the specified list.",
+                "summary": "NOT YET implemented! Perform a product name mining transformation don't write",
                 "description": "",
                 "parameters": [
                     {
@@ -195,8 +82,8 @@
                     },
                     {
                         "in": "path",
-                        "name": "listid",
-                        "description": "ID of list to load details and items from.",
+                        "name": "id",
+                        "description": "ID of the transformed.article raw",
                         "required": true,
                         "type": "integer",
                         "format": "int64"
@@ -204,9 +91,18 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation.",
+                        "description": "Successful operation. TODO: Describe output to much workd for now"
+                     },
+                    "400": {
+                        "description": "Item does not exist.",
                         "schema": {
-                            "$ref": "#/definitions/ListWithItems"
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "500": {
@@ -219,9 +115,10 @@
             },
             "put": {
                 "tags": [
-                    "Lists"
+                    "Admin",
+                    "Transformation"
                 ],
-                "summary": "Update an existing List.",
+                "summary": "Perform a product name mining transformation and write",
                 "description": "",
                 "parameters": [
                     {
@@ -233,58 +130,8 @@
                     },
                     {
                         "in": "path",
-                        "name": "listid",
-                        "description": "ID of List to be updated.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Values of list to be updated.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ListValues"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation."
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Lists"
-                ],
-                "summary": "Delete an existing List.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "ID of List to be deleted.",
+                        "name": "id",
+                        "description": "ID of the transformed.article raw",
                         "required": true,
                         "type": "integer",
                         "format": "int64"
@@ -292,289 +139,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation."
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "404": {
-                        "description": "A list with the requested ID does not exists.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/lists/{listid}/items": {
-            "get": {
-                "tags": [
-                    "Items"
-                ],
-                "summary": "Get all items of the specified list.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "ID of list to load items from.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation.",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "items": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Item"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Items"
-                ],
-                "summary": "Add a new item to a list.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "ID of list of item to be created.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Values of item to be created.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ItemValues"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation.",
-                        "schema": {
-                            "$ref": "#/definitions/ItemID"
-                        }
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/lists/{listid}/items/{itemid}": {
-            "put": {
-                "tags": [
-                    "Items"
-                ],
-                "summary": "Update an existing item.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "ID of list of item to be updated.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "path",
-                        "name": "itemid",
-                        "description": "ID of item to be update.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Values of item to be updated.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/ItemValuesWithList"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation."
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Items"
-                ],
-                "summary": "Delete an existing Item.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "ID of list of the item to be deleted.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "path",
-                        "name": "itemid",
-                        "description": "ID of item to be deleted.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation."
-                    },
-                    "403": {
-                        "description": "Failed to authenticate token.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "500": {
-                        "description": "Unhandeled error.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/lists/{listid}/items/{itemid}/move": {
-            "put": {
-                "tags": [
-                    "Items"
-                ],
-                "summary": "Move an existing item in its list.",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "x-access-token",
-                        "in": "header",
-                        "description": "JWT for user authorization.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "path",
-                        "name": "listid",
-                        "description": "ID of list of item to be moved.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "path",
-                        "name": "itemid",
-                        "description": "ID of item to be moved.",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Target position of item to be moved.",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/MoveItem"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation."
+                        "description": "Successful operation. TODO: Describe output to much workd for now"
                     },
                     "400": {
                         "description": "Item does not exist.",
@@ -603,7 +168,7 @@
                     "Admin",
                     "Transformation"
                 ],
-                "summary": "Perform a brand mining transformation don't write",
+                "summary": "Perform a brand name mining transformation don't write",
                 "description": "",
                 "parameters": [
                     {
@@ -654,7 +219,7 @@
                     "Admin",
                     "Transformation"
                 ],
-                "summary": "Perform a brand mining transformation and write",
+                "summary": "Perform a product name mining transformation and write",
                 "description": "",
                 "parameters": [
                     {
@@ -940,152 +505,55 @@
                 }
             }
         },
-        "ListValues": {
+        "ArticleRaw": {
             "type": "object",
             "required": [
-                "name"
+                "title"
             ],
             "properties": {
+                "title": {
+                    "type": "string"
+                },
                 "name": {
-                    "type": "string",
-                    "description": "Name of list."
-                }
-            }
-        },
-        "ListID": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "Unique identifer of list."
-                }
-            }
-        },
-        "List": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ListID"
+                    "type": "string"
                 },
-                {
-                    "$ref": "#/definitions/ListValues"
+                "brand": {
+                    "type": "string"
                 },
-                {
-                    "required": [
-                        "count"
-                    ],
-                    "properties": {
-                        "count": {
-                            "type": "integer",
-                            "description": "Number of items in list."
-                        }
-                    }
-                }
-            ]
-        },
-        "ItemList": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/Item"
-            }
-        },
-        "ListWithItems": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/List"
+                "size": {
+                    "type": "string"
                 },
-                {
-                    "required": [
-                        "items"
-                    ],
-                    "properties": {
-                        "items": {
-                            "$ref": "#/definitions/ItemList"
-                        }
-                    }
-                }
-            ]
-        },
-        "ItemValues": {
-            "type": "object",
-            "required": [
-                "name",
-                "checked",
-                "amount",
-                "unit"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Name of item."
-                },
-                "checked": {
-                    "type": "boolean",
-                    "description": "Defines if item is checked or not."
+                "packagesize": {
+                    "type": "integer"
                 },
                 "amount": {
-                    "type": "number",
-                    "description": "Amount of item."
+                    "type": "number"
                 },
                 "unit": {
-                    "type": "string",
-                    "description": "Unit of item."
-                }
-            }
-        },
-        "ItemValuesWithList": {
-            "allOf": [
-                {
-                    "required": [
-                        "listid"
-                    ],
-                    "properties": {
-                        "listid": {
-                            "type": "integer",
-                            "description": "ID of the list the item belongs to."
-                        }
-                    }
+                    "type": "string"
                 },
-                {
-                    "$ref": "#/definitions/ItemValues"
-                }
-            ]
-        },
-        "ItemID": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "Unique identifer of item."
-                }
-            }
-        },
-        "Item": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/ItemID"
+                "url": {
+                    "type": "string"
                 },
-                {
-                    "$ref": "#/definitions/ItemValues"
-                }
-            ]
-        },
-        "MoveItem": {
-            "type": "object",
-            "required": [
-                "targetposition"
-            ],
-            "properties": {
-                "targetposition": {
-                    "type": "integer",
-                    "description": "Target position of the moved item."
+                "price": {
+                    "type": "number"
+                },
+                "invoker": {
+                    "type": "string",
+                    "description": "e.g. crawler"
+                },
+                "invokerRefId": {
+                    "type": "integer"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    } 
+                },
+                "source": {
+                    "type": "string",
+                    "description": "i.e. shop"
                 }
             }
         },

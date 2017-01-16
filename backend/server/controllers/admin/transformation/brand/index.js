@@ -13,7 +13,7 @@ function transformMineBrand(t,id) {
 function insertMineLogBrand(t,data) {
   var queries = [];
   data.forEach(d => {
-    queries.push(t.none(sqlInsertMineLogBrand, d));
+    queries.push(t.any(sqlInsertMineLogBrand, d));
   });
   return t.batch(queries);
 }

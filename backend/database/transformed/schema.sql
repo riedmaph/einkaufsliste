@@ -206,7 +206,7 @@ CREATE TABLE transformed.PreprocessingLogProductName (
 
 CREATE TABLE transformed.MineLogSize (
     transformation BIGINT REFERENCES Transformed.ArticleRaw(id),
-    productsize INT,
+    packagesize INT,
     amount REAL,
     unit TEXT,
     likelihood DOUBLE PRECISION NOT NULL,

@@ -13,7 +13,7 @@ function transformMineProductName(t, id) {
 function insertMineLogProductName(t, data) {
   var queries = [];
   data.forEach(d => {
-    queries.push(t.none(sqlInsertMineLogProductName, d));
+    queries.push(t.any(sqlInsertMineLogProductName, d));
   });
   return t.batch(queries);
 }
