@@ -19,9 +19,9 @@ export class FavouriteMarketSettingsComponent implements OnInit {
 
   public error: string = '';
   public distance: Number= 100;
-  public lat: Number;
-  public long: Number;
-
+  public lat: Number = 48.1407179;
+  public long: Number = 11.556641819;
+  public zipCode: Number = 85221;
   public showAddMenu = false;
 
   constructor (
@@ -70,7 +70,23 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    * stores the data into possibleMarkets list
    */
   public searchByDistance (): void {
-    this.apiService.getMarketsByDistance(this.lat, this.long, this.distance)
+   /* this.apiService.getMarketsByDistance(this.lat, this.long, this.distance)
+      .subscribe( response => this.possibleMarkets = response
+      .filter(market => !this.favouriteMarkets
+      .find(fav => fav.id === market.id) ));
+     */
+    let coordinates: any;
+    navigator.geolocation.getCurrentPosition(pos => coordinates = pos);
+    this.lat = coordinates.coords.latitude;
+    this.long = coordinates.coorsd.longditude;
+  }
+
+  /**
+   * Gets qualified markets from ApiService and filters for already favoured markets
+   * stores the data into possibleMarkets list
+   */
+  public searchByZip (): void {
+    this.apiService.getMarketsByZip(this.zipCode)
       .subscribe( response => this.possibleMarkets = response
       .filter(market => !this.favouriteMarkets
       .find(fav => fav.id === market.id) ));

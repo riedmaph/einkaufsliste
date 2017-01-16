@@ -128,18 +128,35 @@ export class ApiService {
   }
 
   /**
-   * Makes API call to get markets of the user by Distance
+   * Makes API call to get markets by Distance
    *
-   * @TODO Parameter, @TODO json.new -> json.markets
+   * 
    * @param @TODO
    * @return {Observable<Market>}
    *
    */
   public getMarketsByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
-    return this.authHttp.get(API_ROUTES.markets.search)
-      .map(res => res.json().new);
+    return this.authHttp.post(API_ROUTES.markets.search,
+      { longditude: long,
+        latitude: lat,
+        'max-distance': distance,
+      })
+      .map(res => res.json().markets);
   }
 
+  /**
+   * Makes API call to get markets for the user by ZIP
+   *
+   * 
+   * @param {Number} zip Zip Code 
+   * @return {Observable<Market>}
+   *
+   */
+  public getMarketsByZip (zip: Number,): Observable<Market[]> {
+    return this.authHttp.get(API_ROUTES.markets.zip)
+      .map(res => res.json().new);
+  }
+  
   /**
    * Makes API call to add a markets to the favourite markets
    *
@@ -149,11 +166,9 @@ export class ApiService {
    *
    */
   public addFavouriteMarket(marketId: Number): Observable<any> {
-   /* return this.authHttp.post(API_ROUTES.markets.favourites.add
-    .replace(':marketId', marketId)
-    )
-      .map(res => res.json());
+/*  return this.authHttp.post(API_ROUTES.markets.favourites.add
+      .replace(':marketId', marketId)).map(res => res.json());
       */
-      return null;
+      return Observable.of('response');
   }
 }

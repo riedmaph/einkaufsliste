@@ -25,3 +25,20 @@ h4 {
     bottom: 1rem;
     color: #fff;
 }
+
+.inputContainer {
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    padding: 0 2em;
+}
+
+md-slider {
+    width: 80%;
+}
+
+md-input {
+    margin: 1em;
+    text-align: center;
+    max-width: 6em;
+}

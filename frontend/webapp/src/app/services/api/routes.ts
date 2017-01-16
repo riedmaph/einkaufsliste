@@ -19,10 +19,11 @@ export const API_ROUTES = {
   },
   markets: {
     favourites: {
-      get: `/assets/mock/favourite-markets.json`, // @TODO
+      get: `/assets/mock/favourite-markets.json`, // @TODO update
       add: `${API_BASE_URL}/markets/favourites/:marketId`,
       remove: `${API_BASE_URL}/markets/favourites/:marketId`,
     },
-    search: `/assets/mock/favourite-markets.json`, // @TODO
+    search: `${API_BASE_URL}/markets/search`, // @TODO update
+    zip: `/assets/mock/favourite-markets.json`, // @TODO update
   },
 };

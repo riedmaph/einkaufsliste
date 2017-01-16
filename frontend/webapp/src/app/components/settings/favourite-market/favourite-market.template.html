@@ -17,13 +17,18 @@
       <button md-icon-button (click)="add(market)"><md-icon>star_border</md-icon></button>
     </md-list-item>
   </md-list>
-  <p>
-    <md-slider flex md-discrete min="0" max="255" [(ngModel)]="distance" id="distance" aria-label="distance" ></md-slider>
-    <input flex type="number" [(ngModel)]="distance" aria-label="distance" aria-controls="distance">
-  </p>
-  
-  <button md-button (click)="searchByDistance()" class="md-primary">Search</button>
-  
+  <div class="inputContainer" >
+    <h5> Distance </h5>
+    <md-slider flex md-discrete step="500" min="0" max="20000" [(ngModel)]="distance" id="distance" aria-label="distance" ></md-slider>
+      m
+    <md-input flex type="number" [(ngModel)]="distance" aria-label="distance" aria-controls="distance"></md-input>
+    <button md-button (click)="searchByDistance()" class="md-primary searchBtn">Search by Distance</button>
+  </div>
+  <div class="inputContainer" >
+    <h5> ZIP Code </h5>
+    <md-input flex type="number" [(ngModel)]="zipCode" placeholder="ZIP-code"></md-input>
+    <button md-button (click)="searchByZip()" class="md-primary searchBtn">Search via ZIP Code</button>
+  </div>
 </div>
 
 
