@@ -1081,8 +1081,6 @@
                 }
             ]
         },
-<<<<<<< HEAD
-=======
         "Offer": {
             "type": "object",
             "properties": {
@@ -1134,7 +1132,6 @@
                 }
             }
         },
->>>>>>> c48b864d9549950868dba5b54c4c336a715d31cc
         "Error": {
             "type": "object",
             "properties": {
