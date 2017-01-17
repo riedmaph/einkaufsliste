@@ -19,6 +19,8 @@ export class ListOverviewComponent implements OnInit {
   /** Lists of the user */
   public lists: List[] = [ ];
 
+  private expandedLists: { [listId: string]: boolean } = { };
+
   @Output()
   public onSidenavClose = new EventEmitter();
 
@@ -75,7 +77,20 @@ export class ListOverviewComponent implements OnInit {
     this.onSidenavClose.emit();
   }
 
+  public toggleDetailsForList (list: List): void {
+    let expanded = this.areDetailsVisibleForList(list);
+    this.lists.forEach(l => this.expandedLists[l.id] = false);
+    this.expandedLists[list.id] = !expanded;
+  }
+
+  public areDetailsVisibleForList (list: List): boolean {
+    return this.expandedLists[list.id];
+  }
+
   private reloadLists (): void {
-    this.apiService.getAllLists().subscribe(lists => this.lists = lists);
+    this.apiService.getAllLists().subscribe(lists => {
+      this.lists = lists;
+      lists.forEach(list => this.expandedLists[list.id] = false);
+    });
   }
 }

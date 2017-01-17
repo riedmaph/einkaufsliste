@@ -4,13 +4,24 @@
 
 md-list-item span {
   cursor: pointer;
+  margin: 0 0 0 .5em;
   width: 12em;
 }
 
 md-list-item:hover {
-  background: #eee;
+  background: #fafafa;
+}
+
+.expanded-list-item {
+  height: 6em;
 }
 
 .list-overview-button {
+  color: gray;
+}
+
+.list-detail-text {
+  margin: 1em 1em 1em 8em;
+  font-size: .8em;
   color: gray;
 }

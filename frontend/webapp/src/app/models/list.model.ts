@@ -6,4 +6,5 @@ export interface List {
 
   items?: ListItem[];
   count?: number;
+  completed?: number;
 }

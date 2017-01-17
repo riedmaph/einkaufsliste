@@ -6,7 +6,20 @@
 </md-toolbar>
 
 <md-list>
-  <md-list-item *ngFor="let list of lists; let i = index">
+  <div
+    *ngFor="let list of lists; let i = index"
+    [class.expanded-list-item]="areDetailsVisibleForList(list)"
+  >
+  <md-list-item>
+
+    <button md-icon-button
+      class="list-overview-button"
+      (click)="toggleDetailsForList(list)"
+    >
+      <i *ngIf="!areDetailsVisibleForList(list)" class="material-icons">expand_more</i>
+      <i *ngIf="areDetailsVisibleForList(list)" class="material-icons">expand_less</i>
+    </button>
+
     <span
       [routerLink]="[ '/list', list.id ]"
       (click)="closeSidenav()"
@@ -21,4 +34,9 @@
       <i class="material-icons">delete</i>
     </button>
   </md-list-item>
+  <div *ngIf="areDetailsVisibleForList(list)">
+    <p class="list-detail-text">{{ list.completed }} of {{ list.count }} completed</p>
+    <md-progress-bar mode="determinate" value="{{ list.completed / list.count * 100}}"></md-progress-bar>
+  </div>
+  </div>
 </md-list>
