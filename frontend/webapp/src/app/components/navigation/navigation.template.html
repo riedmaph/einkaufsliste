@@ -3,7 +3,7 @@
     <i class="material-icons">menu</i>
   </button>
 
-  <span class="toolbar-title toolbar-fill-remaining">Einkaufsliste</span>
+  <span class="toolbar-title toolbar-fill-remaining">{{ navigation.title }}</span>
 
   <span *ngIf="!authService.loggedIn">
     <a routerLink="/register" routerLinkActive="active">

@@ -1,16 +1,43 @@
 import { Injectable } from '@angular/core';
+import {
+  RequestOptionsArgs,
+  URLSearchParams,
+} from '@angular/http';
 import { Observable } from 'rxjs';
 import { AuthHttp } from 'angular2-jwt';
 
-import { List, ListItem } from '../../models';
+import {
+  List,
+  ListItem,
+  Product,
+} from '../../models';
+
 import { API_ROUTES } from './routes';
 
 @Injectable()
 export class ApiService {
 
   constructor (
-    private authHttp: AuthHttp
-  ) {}
+    private authHttp: AuthHttp,
+  ) { }
+
+  /**
+   * Makes API call to retrieve auto completion suggestions for given input
+   *
+   * @param {string} input Current user input
+   * @return {Observable<Product[]>} List of auto completion suggestions
+   */
+  public getAutoCompletion (input: string): Observable<Product[]> {
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('q', input);
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+
+    return this.authHttp.get(API_ROUTES.products.search, options)
+      .map(res => res.json().products.map(p => p.name));
+  }
 
   public getAllLists (): Observable<List[]> {
     return this.authHttp.get(API_ROUTES.lists.all)
@@ -60,22 +87,6 @@ export class ApiService {
       API_ROUTES.lists.single.replace(':listId', listId),
       { name: newName }).map( res => res.json());
   }
-
-  /**
-   * Makes API call to retrieve auto completion suggestions for given input
-   *
-   * @param {string} input Current user input
-   * @return {Observable<string[]>} List of auto completion suggestions
-   * @TODO
-   */
-  public getAutoCompletion (input: string): Observable<string[]> {
-    return Observable.of([ 'Apple', 'Orange', 'Banana', 'Pear', 'Peach', 'Pineapple' ]);
-    // return this.http
-      // .get(API_ROUTES.autoCompletion')
-      // .map(response => <string[]> response.json())
-  }
-
-
 
   /**
    * Make the API call to add a given item to a given list

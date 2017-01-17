@@ -1,13 +1,14 @@
 var jwt = require('jsonwebtoken');
 
-var config = {};
-config.tokensecrete='supersicher';
-config.tokenexpiresin='14 days';
+const config = {
+  tokenSecret: 'supersicher',
+  tokenExpiresIn: '14 days',
+}
 
 function createToken(userid) {
 
-	var token = jwt.sign({'userid': userid}, config.tokensecrete, {
-    expiresIn: config.tokenexpiresin // expires in 24 hours
+	var token = jwt.sign({'userid': userid}, config.tokenSecret, {
+    expiresIn: config.tokenExpiresIn // expires in 24 hours
   });
 
 	return token;
@@ -23,7 +24,7 @@ function verifyToken(req, res, next) {
   if (token) {
 
     // verifies secret and checks exp
-    jwt.verify(token, config.tokensecrete, function(err, decoded) {      
+    jwt.verify(token, config.tokenSecret, function(err, decoded) {      
       if (err) {
         res.status(403)
           .json({

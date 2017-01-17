@@ -1,10 +1,10 @@
-var path = require('path');
+const path = require('path');
 
-var uuid = require('uuid');
-var password = require('password-hash-and-salt');
+const uuid = require('uuid');
+const password = require('password-hash-and-salt');
 
-var db = require(path.join('..', 'dbconnector.js'));
-var tokenhandler = require(path.join('..', 'tokenhandler'));
+const db = require(path.join('..', 'dbconnector.js'));
+const tokenhandler = require(path.join('..', 'tokenhandler'));
 
 var sqlRegisterCheckUser = db.loadSql(path.join('controllers', 'users', 'registerCheckUser.sql'));
 var sqlRegisterInsertUser = db.loadSql(path.join('controllers', 'users', 'registerInsertUser.sql'));
@@ -101,6 +101,6 @@ function login(req, res, next) {
 }
 
 module.exports = {
-  register,
-  login
+  register: register,
+  login: login
 };

@@ -2,8 +2,8 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ViewChildren,
   QueryList,
+  ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdDialog } from '@angular/material';
@@ -13,6 +13,7 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { ListComponent } from '../list';
 import { ConfirmComponent } from '../confirm/confirm.component';
@@ -20,6 +21,7 @@ import { ApiService } from '../../services/api';
 import {
   ListItem,
   List,
+  Product,
 } from '../../models';
 
 @Component({
@@ -81,7 +83,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public ngAfterViewInit (): void {
     this.listComponents.forEach(listComp => {
-      listComp.onEdit.subscribe(newItem => this.update(newItem));
+      listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
       listComp.onRemove.subscribe(item => this.removeItem(item));
       listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
         this.reorderItems(tuple[0], tuple[1], tuple[2])
@@ -90,13 +92,18 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Adds an item to list
+   * Propagates input change to the FormGroup
    *
-   * @param {Event} event Event that triggered this addition
+   * @param {Product} value New value
    */
-  public add (event: Event): void {
-    event.preventDefault();
+  public updateValue (value: Product): void {
+    this.form.controls['itemName'].setValue(value);
+  }
 
+  /**
+   * Adds an item to list. Grabs the values from this.form (thus requires it to be updated)
+   */
+  public addItem (): void {
     if (this.form.valid) {
       const newItem: ListItem = {
         name: this.form.value.itemName,
@@ -121,7 +128,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @param {ListItem} item Item that changed in its new state
    * @return {void}
    */
-  public update(item: ListItem): void {
+  public updateItem (item: ListItem): void {
     this.apiService.updateItem(this.list.id, item.id, item)
       .subscribe(() => undefined);
   }
@@ -148,12 +155,20 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @return {void}
    */
   public reorderItems (movedItem: ListItem, newPosition: number, targetIndex: number): void {
-      const movedItemIndex = this.list.items.indexOf(movedItem);
-      // insert the moved Item at new position
-      this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
-      movedItem.listUuid = this.list.id;
-      this.apiService.reorderItem(movedItem, newPosition)
-        .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
+    const movedItemIndex = this.list.items.indexOf(movedItem);
+    // insert the moved Item at new position
+    this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
+    movedItem.listUuid = this.list.id;
+    this.apiService.reorderItem(movedItem, newPosition)
+      .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
+  }
+
+  /**
+   * Scope wrapper for ApiService.getAutoCompletion
+   * @see ApiService.getAutoCompletion
+   */
+  public get autoCompletionFn (): (_: string) => Observable<Product[]> {
+    return (str: string) => this.apiService.getAutoCompletion(str);
   }
 
   public deleteList (): void {
