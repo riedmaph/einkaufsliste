@@ -120,10 +120,10 @@ function removeFromFavouriteMarkets(req, res, next) {
 }
 
 module.exports = {
-  getMarkets: getMarkets,
-  getOffers: getOffers,
-  getFavouriteMarkets: getFavouriteMarkets,
-  addToFavouriteMarkets: addToFavouriteMarkets,
-  removeFromFavouriteMarkets: removeFromFavouriteMarkets  
+  getMarkets,
+  getOffers,
+  getFavouriteMarkets,
+  addToFavouriteMarkets,
+  removeFromFavouriteMarkets  
  }
 
