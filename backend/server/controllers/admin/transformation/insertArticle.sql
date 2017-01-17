@@ -1,8 +1,8 @@
 INSERT INTO transformed.article
 (id, title, "name", likelihoodname, namefromtransformationphase, brand, likelihoodbrand, brandfromtransformationphase, "size", packagesize, amount, unit, likelihoodsize, sizefromtransformationphase, url, price, "invoker", invokerrefid, categories, "source")
 SELECT a.id, a.title,
-    COALESCE(a.name,mlp.productname), COALESCE(mlp.likelihood,1), CASE WHEN a.name IS NOT NULL THEN 'original' WHEN mlp.productname IS NOT NULL THEN 'mining' ELSE NULL END,
-    COALESCE(a.brand,mlb.brand), COALESCE(mlb.likelihood,1), CASE WHEN a.brand IS NOT NULL THEN 'original' WHEN mlb.brand IS NOT NULL THEN 'mining' ELSE NULL END,
+    COALESCE(NULLIF(a.name,''),mlp.productname), COALESCE(mlp.likelihood,1), CASE WHEN a.name IS NOT NULL THEN 'original' WHEN mlp.productname IS NOT NULL THEN 'mining' ELSE NULL END,
+    COALESCE(NULLIF(a.brand,''),mlb.brand), COALESCE(mlb.likelihood,1), CASE WHEN a.brand IS NOT NULL THEN 'original' WHEN mlb.brand IS NOT NULL THEN 'mining' ELSE NULL END,
     "size", COALESCE(a.packagesize,mls.packagesize), COALESCE(a.amount,mls.amount), COALESCE(a.unit,mls.unit), COALESCE(mls.likelihood,1), CASE WHEN mls.amount IS NULL THEN 'mining' ELSE 'original' END,
     a.url, a.price, a."invoker", a.invokerrefid, a.categories, a."source"
 FROM

@@ -130,28 +130,39 @@ function getArticleTransformation(req, res, next) {
 }
 
 function putArticleTransformation(req, res, next) {
-  var returnData;
+  var returnData = [];
+  var id = parseInt(req.params.id);
+  var end = parseInt(req.params.end || req.params.id);
+  if (end < id) {
+    console.error(end,id,end < id);
+    res.status(400).send();
+    return;
+  }
   db.connTransform.tx(t => {
     return t.sequence((index, data, delay) => {
-      console.log(index,data);
-      switch (index) {
+      if (id == end && index%7==0 && index!=0) {
+        return undefined;
+      }
+      if (index!=0 && index%7==0){
+        returnData.push(data);
+        ++id;
+      }
+      switch (index%7) {
         case 0:
-          return sizeTransformation.transformUnitBySize(t,req.params.id);
+          return sizeTransformation.transformUnitBySize(t,id);
         case 1:
           return sizeTransformation.insertMineLogSize(t,data);
         case 2:
-          return brandTransformation.transformMineBrand(t,req.params.id);
+          return brandTransformation.transformMineBrand(t,id);
         case 3:
           return brandTransformation.insertMineLogBrand(t,data);
         case 4:
-          return productNameTransformation.transformMineProductName(t,req.params.id);
+          return productNameTransformation.transformMineProductName(t,id);
         case 5:
           return productNameTransformation.insertMineLogProductName(t,data);
         case 6:
-          return t.one(sqlInsertArticle,{ id: req.params.id });
-        case 7:
-          returnData=data;
-      }
+          return t.one(sqlInsertArticle,{ id: id });
+      }  
     })
   })
     .then(empty => {
