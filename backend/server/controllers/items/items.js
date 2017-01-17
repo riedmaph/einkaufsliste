@@ -53,7 +53,6 @@ function createItem(req, res, next) {
 function updateItem(req, res, next) {
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
-
   req.body.amount = parseFloat(req.body.amount);
 
   db.conn.none(sqlUpdateItem, req.body)
