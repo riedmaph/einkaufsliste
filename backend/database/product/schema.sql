@@ -70,3 +70,14 @@ CREATE TABLE Product.Offer (
   offerfrom date,
   offerto date,
 );
+
+CREATE TABLE Product.Tag (
+  name TEXT PRIMARY KEY
+);
+
+CREATE TABLE Product.ArticleTag (
+  article INTEGER REFERENCES Product.Article (id),
+  tag TEXT REFERENCES Product.Tag (name),
+  preference INTEGER,
+  PRIMARY KEY (article,tag)
+);
