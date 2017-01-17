@@ -61,17 +61,6 @@ export class ApiService {
   }
 
   /**
-   * Make API call to delete a list from the list overview
-   *
-   * @param {string} href of the deleted list
-   */
-  public deleteListFromOverview (href: string): Observable<any> {
-    return this.authHttp.delete(
-      API_ROUTES.lists.single.replace('/lists/:listId', href)
-    ).map( res => res.json());
-  }
-
-  /**
    * Make API call to delete a list from the list view
    *
    * @param {string} listId of the deleted list
@@ -79,7 +68,7 @@ export class ApiService {
   public deleteList (listId: string): Observable<any> {
     return this.authHttp.delete(
       API_ROUTES.lists.single.replace(':listId', listId)
-    ).map( res => res.json());
+    );
   }
 
   /**

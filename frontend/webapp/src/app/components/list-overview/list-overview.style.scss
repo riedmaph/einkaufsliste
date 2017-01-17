@@ -1,8 +1,16 @@
-md-list-item {
-  margin: 0 2em 0 0;
+.toolbar-fill-remaining {
+  flex: 1 1 auto;
+}
+
+md-list-item span {
   cursor: pointer;
+  width: 12em;
 }
 
 md-list-item:hover {
   background: #eee;
+}
+
+.list-overview-button {
+  color: gray;
 }

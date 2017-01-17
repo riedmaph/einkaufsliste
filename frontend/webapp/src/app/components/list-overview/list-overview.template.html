@@ -1,15 +1,24 @@
 <md-toolbar color="primary">
+  <span class="toolbar-fill-remaining">Your Lists</span>
   <button md-icon-button (click)="closeSidenav()">
-    <i class="material-icons">close</i>
+    <i class="material-icons">menu</i>
   </button>
 </md-toolbar>
 
 <md-list>
-  <md-list-item
-    *ngFor="let list of lists; let i = index"
-    [routerLink]="[ '/list', list.id ]"
-    (click)="closeSidenav()"
-  >
-    <span>{{ list.name }}</span>
+  <md-list-item *ngFor="let list of lists; let i = index">
+    <span
+      [routerLink]="[ '/list', list.id ]"
+      (click)="closeSidenav()"
+    >
+      {{ list.name }}
+    </span>
+    <button md-icon-button
+      class="list-overview-button"
+      [routerLink]="[ '/' ]"
+      (click)="deleteList(list)"
+    >
+      <i class="material-icons">delete</i>
+    </button>
   </md-list-item>
 </md-list>
