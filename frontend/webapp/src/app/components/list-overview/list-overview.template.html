@@ -1,65 +1,15 @@
-<div 
- class="flex-container" 
- [dragula]="'draggable-listoverview'"
- [dragulaModel]="lists"
->
-  <div *ngFor="let list of lists" class="flex-item">
-    <md-card> 
-      <span class="drag-handle"> ⇆ </span>
-      <md-card-title
-        #textfield
-        (dblclick)="toggleEditable($event, textfield, list)"
-        (keyup)="onEditHandler($event, $event.keyCode, textfield, list)"
-        align="middle"
-      >{{ list.name }}
-      </md-card-title>
-      <a [routerLink]="[ '/list', list.id ]">
-        <md-card-actions align="middle">
-          Items: {{ list.count }}
-          <i> Offen: {{ amountOpen(list) }} </i>
-        </md-card-actions>
-        <p align="right">
-          <i>
-            <small>private list</small>
-          </i>
-        </p>
-      </a>
-    </md-card>
-  </div>
-</div>
-
-
-
-<form [formGroup]="form">
-  
-  <span
-    *ngIf="!form.controls['listName'].pristine && form.controls['listName'].errors && form.controls['listName'].errors.maxlength"
-    class="form-error"
-  >
-    Name can only be {{ MAX_NAME_LENGTH }} characters long.
-  </span>
-
-  <input
-    type="text"
-    placeholder="List name"
-    formControlName="listName"
-    name="listName"
-    class="form-field"
-  >
-  <button
-    md-fab color="accent"
-    (click)="addList($event)"
-    [disabled]="!form.pristine && form.invalid"
-  >
-    <md-icon>add</md-icon>
+<md-toolbar color="primary">
+  <button md-icon-button (click)="closeSidenav()">
+    <i class="material-icons">close</i>
   </button>
-</form>
+</md-toolbar>
 
-<div
- *ngIf="duringDrag"
- class="remove-container"
- [dragula]="'remove-area'"
- align="middle"
->
- <md-icon class="remove-indicator">delete</md-icon>
-</div>
+<md-list>
+  <md-list-item
+    *ngFor="let list of lists; let i = index"
+    [routerLink]="[ '/list', list.id ]"
+    (click)="closeSidenav()"
+  >
+    <span>{{ list.name }}</span>
+  </md-list-item>
+</md-list>

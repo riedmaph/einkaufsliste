@@ -39,6 +39,11 @@ export class ApiService {
       .map(res => res.json().products.map(p => p.name));
   }
 
+  /**
+   * Gets all lists for an authenticated user
+   *
+   * @return {Observable<List[]>} Observable list of the user's lists
+   */
   public getAllLists (): Observable<List[]> {
     return this.authHttp.get(API_ROUTES.lists.all)
       .map(res => res.json().lists);
@@ -56,7 +61,7 @@ export class ApiService {
   }
 
   /**
-   * Make API call to delete a list from the list Overview
+   * Make API call to delete a list from the list overview
    *
    * @param {string} href of the deleted list
    */
@@ -67,7 +72,7 @@ export class ApiService {
   }
 
   /**
-   * Make API call to delete a list from the list vie
+   * Make API call to delete a list from the list view
    *
    * @param {string} listId of the deleted list
    */
@@ -76,6 +81,7 @@ export class ApiService {
       API_ROUTES.lists.single.replace(':listId', listId)
     ).map( res => res.json());
   }
+
   /**
    * Make API call to update a list and change its name
    *
