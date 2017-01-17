@@ -12,18 +12,21 @@ LEFT OUTER JOIN (
   FROM $(schemaTransformed:raw).minelogsize o
   JOIN (SELECT transformation, max(likelihood) max FROM $(schemaTransformed:raw).minelogsize WHERE transformation=${id} GROUP BY transformation) m ON o.transformation=m.transformation AND o.likelihood=m.max
   WHERE o.transformation=${id}
+  LIMIT 1
 ) mls ON a.id = mls.transformation AND a.packagesize IS NULL AND a.amount IS NULL AND a.unit IS NULL
 LEFT OUTER JOIN  (
 SELECT o.*
   FROM $(schemaTransformed:raw).minelogbrand o
   JOIN (SELECT transformation, max(likelihood) max FROM $(schemaTransformed:raw).minelogbrand WHERE transformation=${id} GROUP BY transformation) m ON o.transformation=m.transformation AND o.likelihood=m.max
   WHERE o.transformation=${id}
+  LIMIT 1
 ) mlb ON a.id = mlb.transformation AND a.brand IS NULL
 LEFT OUTER JOIN  (
 SELECT o.*
   FROM $(schemaTransformed:raw).minelogproductname o
   JOIN (SELECT transformation, max(likelihood) max FROM $(schemaTransformed:raw).minelogproductname WHERE transformation=${id} GROUP BY transformation) m ON o.transformation =m.transformation AND o.likelihood=m.max
   WHERE o.transformation=${id}
+  LIMIT 1
 ) mlp ON a.id = mlp.transformation AND a.name IS NULL
 WHERE a.id=${id}
 RETURNING *;
