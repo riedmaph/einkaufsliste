@@ -394,6 +394,7 @@ INSERT INTO transformed.UnitTranslation (alias,unit) VALUES ('WL','Anwendungen')
 
 
 GRANT USAGE ON SCHEMA transformed TO elisatransformer;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA transformed TO elisatransformer;
 GRANT SELECT ON ALL TABLES IN SCHEMA transformed TO elisatransformer;
 GRANT INSERT ON ALL TABLES IN SCHEMA transformed TO elisatransformer;
 GRANT UPDATE ON ALL TABLES IN SCHEMA transformed TO elisatransformer;
