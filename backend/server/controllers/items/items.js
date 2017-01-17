@@ -54,15 +54,6 @@ function updateItem(req, res, next) {
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
   req.body.amount = parseFloat(req.body.amount);
-  console.log(req.body.checked);
-  if(req.body.checked)
-  {
-    req.body.checked = Date.now();
-  }
-  else
-  {
-    req.body.checked = null;
-  }
 
   db.conn.none(sqlUpdateItem, req.body)
     .then(function () {
