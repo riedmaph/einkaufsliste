@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
     name TEXT,
     amount REAL,
     unit TEXT,
-    created TIMESTAMP DEFAULT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     checked TIMESTAMP DEFAULT NULL,
     list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE
 );
