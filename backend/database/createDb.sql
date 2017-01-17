@@ -17,5 +17,6 @@ GRANT CREATE ON DATABASE :dbname to :dbusercrawler;
 GRANT CREATE ON DATABASE :dbname to :dbusertransformer;
 GRANT CREATE ON DATABASE :dbname to :dbuserapi;
 
+\connect :dbname
 CREATE EXTENSION cube;
 CREATE EXTENSION earthdistance;
