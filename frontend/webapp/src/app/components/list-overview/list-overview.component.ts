@@ -5,6 +5,11 @@ import {
   EventEmitter,
 } from '@angular/core';
 
+import {
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+
 import { List }         from '../../models';
 import { ApiService }   from '../../services';
 import { AuthService }  from '../../services';
@@ -16,17 +21,22 @@ import { AuthService }  from '../../services';
 })
 export class ListOverviewComponent implements OnInit {
 
+  @Output()
+  public onSidenavClose = new EventEmitter();
+
+  public newListForm = this.formBuilder.group({
+    listName: ['', Validators.required],
+  });
+
   /** Lists of the user */
   public lists: List[] = [ ];
 
   private expandedLists: { [listId: string]: boolean } = { };
 
-  @Output()
-  public onSidenavClose = new EventEmitter();
-
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
+    private formBuilder: FormBuilder,
   ) { }
 
   /**
@@ -42,10 +52,9 @@ export class ListOverviewComponent implements OnInit {
    * Checks the API service for the user's lists whenever the sidebar gets
    * opened and there is not yet at least one list available to display.
    *
-   * The described situation occurs after the user logged in
-   * and opened the sidenav the first time. As the component was initialized
-   * while the user was still not logged in, one has to make sure to reload
-   * the lists at a later time.
+   * This special situation occurs after the user logged in and opened the
+   * sidenav the first time. As the component was initialized while the user was
+   * still not logged in, one has to make sure to reload the lists at a later time.
    *
    * @return {void}
    */
@@ -64,7 +73,23 @@ export class ListOverviewComponent implements OnInit {
   public deleteList (list: List): void {
     this.apiService.deleteList(list.id).subscribe(_ => {
       this.reloadLists();
-      this.closeSidenav();
+    });
+  }
+
+  /**
+   * Adds a new list to the user's lists.
+   *
+   * @param {Event} The event triggering the saving of the list.
+   * @return {void}
+   */
+  public addNewList (event: Event): void {
+    if (!this.newListForm.valid) {
+      return;
+    }
+    let listName: string = this.newListForm.value.listName;
+    this.apiService.createList(listName).subscribe(_ => {
+      this.newListForm.reset();
+      this.reloadLists();
     });
   }
 
@@ -77,13 +102,25 @@ export class ListOverviewComponent implements OnInit {
     this.onSidenavClose.emit();
   }
 
+  /**
+   * Toggles the details of a given list and closes all other list details.
+   *
+   * @param {List} The list whose details to toggle
+   * @return {void}
+   */
   public toggleDetailsForList (list: List): void {
-    let expanded = this.areDetailsVisibleForList(list);
+    let expanded = this.isExpanded(list);
     this.lists.forEach(l => this.expandedLists[l.id] = false);
     this.expandedLists[list.id] = !expanded;
   }
 
-  public areDetailsVisibleForList (list: List): boolean {
+  /**
+   * Whether the details of a list are currently visible
+   *
+   * @param {List} The list to check for expansion
+   * @return {boolean} Whether the list is expanded or not
+   */
+  public isExpanded (list: List): boolean {
     return this.expandedLists[list.id];
   }
 

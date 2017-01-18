@@ -1,4 +1,5 @@
 .toolbar-fill-remaining {
+  margin: 0 0 0 .5em;
   flex: 1 1 auto;
 }
 
@@ -24,4 +25,13 @@ md-list-item:hover {
   margin: 1em 1em 1em 8em;
   font-size: .8em;
   color: gray;
+}
+
+.new-list {
+  padding: .5em 1em 0 1em;
+}
+
+.new-list-input {
+  padding: 0 0 0 .5em;
+  width: 14em;
 }
