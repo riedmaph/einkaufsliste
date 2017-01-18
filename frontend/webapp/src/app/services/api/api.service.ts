@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 
 import {
@@ -15,7 +15,7 @@ import { API_ROUTES } from './routes';
 export class ApiService {
 
   constructor (
-    private authHttp: AuthHttp
+    private authHttp: AuthHttp,
   ) {}
 
   public getAllLists (): Observable<List[]> {
@@ -78,7 +78,7 @@ export class ApiService {
     return this.authHttp.delete(
       API_ROUTES.lists.entries.remove
         .replace(':listId', listUuid)
-        .replace(':itemId', item.id)
+        .replace(':itemId', item.id),
     );
   }
 
@@ -112,7 +112,7 @@ export class ApiService {
       API_ROUTES.lists.entries.move
         .replace(':listId', item.listUuid)
         .replace(':itemId', item.id),
-      { targetposition: newPosition }
+      { targetposition: newPosition },
     );
   }
 
@@ -136,11 +136,15 @@ export class ApiService {
    *
    */
   public getMarketsByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
-    return this.authHttp.post(API_ROUTES.markets.search,
-      { longditude: long,
-        latitude: lat,
-        'max-distance': distance,
-      })
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('longditude', long.toString());
+    queryParams.set('latitude', lat.toString());
+    queryParams.set('max-distance', distance.toString());
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+    return this.authHttp.get(API_ROUTES.markets.search, options)
       .map(res => res.json().markets);
   }
 
@@ -152,11 +156,11 @@ export class ApiService {
    * @return {Observable<Market>}
    *
    */
-  public getMarketsByZip (zip: Number,): Observable<Market[]> {
+  public getMarketsByZip (zip: Number): Observable<Market[]> {
     return this.authHttp.get(API_ROUTES.markets.zip)
       .map(res => res.json().new);
   }
-  
+
   /**
    * Makes API call to add a markets to the favourite markets
    *
@@ -169,6 +173,6 @@ export class ApiService {
 /*  return this.authHttp.post(API_ROUTES.markets.favourites.add
       .replace(':marketId', marketId)).map(res => res.json());
       */
-      return Observable.of('response');
+      return Observable.of('stuff');
   }
 }

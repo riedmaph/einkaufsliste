@@ -6,6 +6,14 @@
 <div *ngIf="showAddMenu"> 
   <h4>  Search for Markets </h4>
   <md-list *ngIf="favouriteMarkets?.length">
+    <span *ngIf="lat > 0"> Markets around
+      <a
+        color="accent"
+        [href]="this.locationInfo"
+        target="_blank"
+      > your position
+      </a>
+    </span>
     <md-list-item *ngFor="let market of possibleMarkets; let i = index">
       <img
         md-list-avatar
@@ -21,7 +29,7 @@
     <h5> Distance </h5>
     <md-slider flex md-discrete step="500" min="0" max="20000" [(ngModel)]="distance" id="distance" aria-label="distance" ></md-slider>
       m
-    <md-input flex type="number" [(ngModel)]="distance" aria-label="distance" aria-controls="distance"></md-input>
+    <md-input flex type="number" [(ngModel)]="distance"></md-input>
     <button md-button (click)="searchByDistance()" class="md-primary searchBtn">Search by Distance</button>
   </div>
   <div class="inputContainer" >
@@ -30,7 +38,6 @@
     <button md-button (click)="searchByZip()" class="md-primary searchBtn">Search via ZIP Code</button>
   </div>
 </div>
-
 
 <div *ngIf="error?.length">
   <span class="error">{{ error }}</span>

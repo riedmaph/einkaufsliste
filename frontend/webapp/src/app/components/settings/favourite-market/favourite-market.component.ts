@@ -18,11 +18,13 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public possibleMarkets: Market[] = [ ];
 
   public error: string = '';
-  public distance: Number= 100;
-  public lat: Number = 48.1407179;
-  public long: Number = 11.556641819;
+  public distance: Number= 2500;
   public zipCode: Number = 85221;
   public showAddMenu = false;
+  private lat: Number = 0;
+  private long: Number = 0;
+  private locationInfo: String = 'https://maps.googleapis.com/maps/api/staticmap?' +
+    'center=lat,long&zoom=13&size=300x300&sensor=false';
 
   constructor (
     private route: ActivatedRoute,
@@ -43,10 +45,20 @@ export class FavouriteMarketSettingsComponent implements OnInit {
 
   /**
    * @param {string} brand Brand name
-   * @returns {string} Path to image for given brand or placeholder
+   * @returns {string} Path to image for given brand or placeholder   
    */
   public resolveImage (brand: string) {
-    return '/assets/img/marketPlaceholder.png';
+     let path: string;
+     if ( !brand) {
+       Math.random() < 0.5 ? path = '/assets/img/edeka.png' : path = '/assets/img/rewe.png';
+     } else {
+       switch (brand) {
+         case 'Edeka':  path = '/assets/img/edeka.png'; break;
+         case 'Rewe': path = '/assets/img/rewe.png'; break;
+         default: path = '/assets/img/marketPlaceholder.png';
+       }
+     }
+    return path;
   }
 
   /**
@@ -70,15 +82,14 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    * stores the data into possibleMarkets list
    */
   public searchByDistance (): void {
-   /* this.apiService.getMarketsByDistance(this.lat, this.long, this.distance)
-      .subscribe( response => this.possibleMarkets = response
-      .filter(market => !this.favouriteMarkets
-      .find(fav => fav.id === market.id) ));
-     */
-    let coordinates: any;
-    navigator.geolocation.getCurrentPosition(pos => coordinates = pos);
-    this.lat = coordinates.coords.latitude;
-    this.long = coordinates.coorsd.longditude;
+    navigator.geolocation.getCurrentPosition(pos => this.setPosition(pos));
+    if (this.lat > 0) {
+      // defensive guard to avoid wrong results before position is set
+      this.apiService.getMarketsByDistance(this.lat, this.long, this.distance)
+        .subscribe( response => this.possibleMarkets = response
+        .filter(market => !this.favouriteMarkets
+        .find(fav => fav.id === market.id) ));
+      }
   }
 
   /**
@@ -106,5 +117,13 @@ export class FavouriteMarketSettingsComponent implements OnInit {
     // delete from possible Market list
     const index = this.possibleMarkets.findIndex(x => x.id === newMarket.id);
     this.possibleMarkets.splice(index, 1);
+  }
+
+  private setPosition (position: Position): void {
+    this.lat = position.coords.latitude;
+    this.long = position.coords.longitude;
+    this.locationInfo = this.locationInfo
+      .replace('lat', this.lat.toString())
+      .replace('long', this.long.toString());
   }
 }
