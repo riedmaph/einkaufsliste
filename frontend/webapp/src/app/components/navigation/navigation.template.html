@@ -6,6 +6,14 @@
 
     <span class="toolbar-title toolbar-fill-remaining">Einkaufsliste</span>
 
+    <button
+      *ngIf="authService.loggedIn"
+      md-icon-button
+      routerLink="/offers"
+    >
+      <i class="material-icons">local_offer</i>
+    </button>
+
     <span *ngIf="!authService.loggedIn">
       <a routerLink="/register" routerLinkActive="active">
         Register
