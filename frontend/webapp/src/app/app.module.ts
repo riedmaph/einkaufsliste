@@ -38,7 +38,7 @@ import {
   RegisterComponent,
   LoginComponent,
 } from './components';
-import { ConfirmComponent } from './components/confirm';
+import { ConfirmComponent } from './components/ui-elements/confirm';
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
 

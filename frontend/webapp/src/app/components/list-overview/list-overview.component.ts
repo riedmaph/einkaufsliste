@@ -29,13 +29,12 @@ import { List } from '../../models';
 })
 export class ListOverviewComponent implements OnInit {
 
+  public lists: List[] = [ ];
+
   @Output()
   public onSidenavClose = new EventEmitter();
 
   public newListForm;
-
-  /** Lists of the user */
-  public lists: List[] = [ ];
 
   private expandedLists: { [ listId: string ]: boolean } = { };
 
@@ -60,25 +59,18 @@ export class ListOverviewComponent implements OnInit {
   }
 
   /**
-   * Checks the API service for the user's lists whenever the sidebar gets
-   * opened and there is not yet at least one list available to display.
-   *
-   * This special situation occurs after the user logged in and opened the
-   * sidenav the first time. As the component was initialized while the user was
-   * still not logged in, one has to make sure to reload the lists at a later time.
+   * Checks the API service for the user's lists whenever the sidebar gets opened
    *
    * @return {void}
    */
   public onSidenavOpen (): void {
-    if (this.lists.length === 0) {
-      this.reloadLists();
-    }
+    this.reloadLists();
   }
 
   /**
    * Deletes a list after the confirmation of the user
    *
-   * @param {List} The list to delete
+   * @param {List} list The list to delete
    * @return {void}
    */
   public deleteList (list: List): void {
@@ -111,7 +103,7 @@ export class ListOverviewComponent implements OnInit {
   /**
    * Toggles the details of a given list and closes all other list details.
    *
-   * @param {List} The list whose details to toggle
+   * @param {List} list The list whose details to toggle
    * @return {void}
    */
   public toggleDetailsForList (list: List): void {
@@ -123,7 +115,7 @@ export class ListOverviewComponent implements OnInit {
   /**
    * Whether the details of a list are currently visible
    *
-   * @param {List} The list to check for expansion
+   * @param {List} list The list to check for expansion
    * @return {boolean} Whether the list is expanded or not
    */
   public isExpanded (list: List): boolean {
