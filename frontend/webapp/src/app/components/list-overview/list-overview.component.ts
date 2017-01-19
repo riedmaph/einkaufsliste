@@ -115,7 +115,7 @@ export class ListOverviewComponent implements OnInit {
    * @return {void}
    */
   public toggleDetailsForList (list: List): void {
-    let expanded = this.isExpanded(list);
+    const expanded = this.isExpanded(list);
     this.lists.forEach(l => this.expandedLists[l.id] = false);
     this.expandedLists[list.id] = !expanded;
   }
