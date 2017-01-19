@@ -1,7 +1,9 @@
 <md-sidenav-layout>
   <md-sidenav
     #sidenav (open)="listOverview.onSidenavOpen()">
-    <sl-list-overview #listOverview (onSidenavClose)="sidenav.close()"></sl-list-overview>
+    <sl-list-overview
+    #listOverview
+    (onSidenavClose)="sidenav.close()"></sl-list-overview>
   </md-sidenav>
 
   <nav>

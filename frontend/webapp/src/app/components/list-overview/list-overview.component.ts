@@ -10,9 +10,17 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { List }         from '../../models';
-import { ApiService }   from '../../services';
-import { AuthService }  from '../../services';
+import { MdDialog } from '@angular/material';
+
+import {
+  ApiService,
+  AuthService,
+} from '../../services';
+
+import { ConfirmComponent } from '../confirm';
+
+import { List } from '../../models';
+
 
 @Component({
   selector: 'sl-list-overview',
@@ -24,20 +32,23 @@ export class ListOverviewComponent implements OnInit {
   @Output()
   public onSidenavClose = new EventEmitter();
 
-  public newListForm = this.formBuilder.group({
-    listName: ['', Validators.required],
-  });
+  public newListForm;
 
   /** Lists of the user */
   public lists: List[] = [ ];
 
-  private expandedLists: { [listId: string]: boolean } = { };
+  private expandedLists: { [ listId: string ]: boolean } = { };
 
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-  ) { }
+    private dialog: MdDialog,
+  ) {
+    this.newListForm = this.formBuilder.group({
+      listName: [ '', Validators.required ],
+    });
+  }
 
   /**
    * @memberOf OnInit
@@ -65,36 +76,31 @@ export class ListOverviewComponent implements OnInit {
   }
 
   /**
-   * Deletes a given list, reloads the lists of the user and closes the sidenav
+   * Deletes a list after the confirmation of the user
    *
    * @param {List} The list to delete
    * @return {void}
    */
   public deleteList (list: List): void {
-    this.apiService.deleteList(list.id).subscribe(_ => {
-      this.reloadLists();
-    });
+    this.confirmDeletionOfList(list);
   }
 
   /**
-   * Adds a new list to the user's lists.
+   * Adds a new list to the user's lists
    *
-   * @param {Event} The event triggering the saving of the list.
    * @return {void}
    */
-  public addNewList (event: Event): void {
-    if (!this.newListForm.valid) {
-      return;
+  public addNewList (): void {
+    if (this.newListForm.valid) {
+      this.apiService.createList(this.newListForm.value.listName).subscribe(_ => {
+        this.newListForm.reset();
+        this.reloadLists();
+      });
     }
-    let listName: string = this.newListForm.value.listName;
-    this.apiService.createList(listName).subscribe(_ => {
-      this.newListForm.reset();
-      this.reloadLists();
-    });
   }
 
   /**
-   * Closes the sidenav and brings back focus to the main area
+   * Triggers closing the sidenav and setting focus back to the main area
    *
    * @return {void}
    */
@@ -122,6 +128,19 @@ export class ListOverviewComponent implements OnInit {
    */
   public isExpanded (list: List): boolean {
     return this.expandedLists[list.id];
+  }
+
+  private confirmDeletionOfList (list: List): void {
+    let dialogRef = this.dialog.open(ConfirmComponent, {
+       disableClose: false,
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.apiService.deleteList(list.id).subscribe(_ => {
+          this.reloadLists();
+        });
+      }
+    });
   }
 
   private reloadLists (): void {
