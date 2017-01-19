@@ -17,7 +17,7 @@ import {
   AuthService,
 } from '../../services';
 
-import { ConfirmComponent } from '../confirm';
+import { ConfirmComponent } from '../ui-elements/confirm';
 
 import { List } from '../../models';
 
@@ -146,7 +146,6 @@ export class ListOverviewComponent implements OnInit {
   private reloadLists (): void {
     this.apiService.getAllLists().subscribe(lists => {
       this.lists = lists;
-      lists.forEach(list => this.expandedLists[list.id] = false);
     });
   }
 }
