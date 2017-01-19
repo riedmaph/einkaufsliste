@@ -31,5 +31,6 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
 
 CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (
     enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE,
-    market int NOT NULL REFERENCES Transformed.Market(id) ON DELETE CASCADE
+    market int NOT NULL REFERENCES Transformed.Market(id) ON DELETE CASCADE,
+    UNIQUE(enduser, market)
 );
