@@ -47,11 +47,18 @@ router.route('/lists/:listid/items/:itemid')
   .patch(items.moveItem);  
 
 /* markets */
-router.route('/markets/search')
-  .get(markets.getMarketsByPositionAndRadius);
+router.route('/markets')
+  .get(markets.getMarkets);
 
 router.route('/markets/:marketid/offers')
   .get(markets.getOffers);
+  
+router.route('/markets/favourites')
+  .get(markets.getFavouriteMarkets);
+
+router.route('/markets/favourites/:marketid')
+  .post(markets.addToFavouriteMarkets)
+  .delete(markets.removeFromFavouriteMarkets);
 
 // error handler
 router.use(function(err, req, res, next) {
