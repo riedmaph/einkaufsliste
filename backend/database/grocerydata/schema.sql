@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS Grocerydata.ArticleCategoryTag;
+DROP TABLE IF EXISTS Grocerydata.CategoryTag;
 DROP TABLE IF EXISTS Grocerydata.Offer;
 DROP TABLE IF EXISTS Grocerydata.ArticleLocation;
 DROP TABLE IF EXISTS Grocerydata.Market;
@@ -20,7 +22,7 @@ CREATE TABLE Grocerydata.Brand (
 
 CREATE TABLE Grocerydata.Article (
     id SERIAL PRIMARY KEY,
-    name TEXT REFERENCES Grocerydata.Product(name) NOT NULL,
+    name TEXT REFERENCES Grocerydata.ProductName(name) NOT NULL,
     brand TEXT REFERENCES Grocerydata.Brand,
     UNIQUE (name,brand)
 );
@@ -46,7 +48,7 @@ CREATE TABLE Grocerydata.Market (
   id integer primary key,
   name text,
   latitude double precision,
-  longditude double precision,
+  longitude double precision,
   extid integer,
   shop TEXT REFERENCES Grocerydata.shop,
   street text,
@@ -66,18 +68,22 @@ CREATE TABLE Grocerydata.ArticleLocation (
 
 CREATE TABLE Grocerydata.Offer (
   id SERIAL PRIMARY KEY,
+  article INTEGER REFERENCES Grocerydata.ArticleVariation(id),
   offerprice double precision,
+  discount TEXT,
+  minimumquantityfordiscount TEXT,
   offerfrom date,
   offerto date,
+  market INTEGER REFERENCES Grocerydata.Market (id)
 );
 
-CREATE TABLE Grocerydata.Tag (
+CREATE TABLE Grocerydata.CategoryTag (
   name TEXT PRIMARY KEY
 );
 
-CREATE TABLE Grocerydata.ArticleTag (
+CREATE TABLE Grocerydata.ArticleCategoryTag (
   article INTEGER REFERENCES Grocerydata.Article (id),
-  tag TEXT REFERENCES Grocerydata.Tag (name),
+  tag TEXT REFERENCES Grocerydata.CategoryTag (name),
   preference INTEGER,
   PRIMARY KEY (article,tag)
 );
