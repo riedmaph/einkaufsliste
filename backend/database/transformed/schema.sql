@@ -1,13 +1,8 @@
 DROP TABLE IF EXISTS Transformed.ArticleTag;
 DROP TABLE IF EXISTS Transformed.Tag;
 DROP TABLE IF EXISTS Transformed.Article;
-<<<<<<< HEAD
 DROP TABLE IF EXISTS Transformed.Market;
 DROP TABLE IF EXISTS Transformed.Offer;
-=======
-DROP TABLE IF EXISTS Transformed.Offer;
-DROP TABLE IF EXISTS Transformed.Market;
->>>>>>> c48b864d9549950868dba5b54c4c336a715d31cc
 
 DROP SCHEMA IF EXISTS Transformed;
 
