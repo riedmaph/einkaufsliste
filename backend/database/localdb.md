@@ -35,7 +35,7 @@ cd $ELISA/backend/database
 
 ## Populate database with current snapshot
 ```
-cd $ELISA/backend/database/data
+cd $ELISA/backend/database/datatransfer
 ```
 If no up-to-date data.sql is available, create it with
 ```
@@ -64,7 +64,6 @@ Create schemas `userdata` and `userdata_test`
 ```
 cd $ELISA/backend/database/userdata
 ./rebuildSchema.sh
-./rebuildSchemaTest.sh
 ./insertTestData.sh
 ```
 

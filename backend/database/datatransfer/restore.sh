@@ -9,4 +9,4 @@ if [ $protected = True ]; then
 	exit
 fi
 
-psql -h $dbhost -p $dbport -U postgres -d $dbname -f data.sql
+psql -h $dbhost -p $dbport -U postgres -d $dbname -f data/data.sql
