@@ -3,29 +3,35 @@
   <h3>Favourite Markets</h3>
 </div>
 
+<!-- Possible Markets -->
 <div *ngIf="showAddMenu"> 
   <h4>  Search for Markets </h4>
-  <md-list *ngIf="favouriteMarkets?.length">
-    <span *ngIf="lat > 0"> Markets around
-      <a
-        color="accent"
-        [href]="this.locationInfo"
-        target="_blank"
-      > your position
-      </a>
-    </span>
-    <md-list-item *ngFor="let market of possibleMarkets; let i = index">
-      <img
-        md-list-avatar
-        [alt]="market.name"
-        [src]="resolveImage(market.brand)"
-      >
-      <h4 md-line>{{ market.name }}</h4>
-      <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }}</p>
-      <button md-icon-button (click)="add(market)"><md-icon>star_border</md-icon></button>
-    </md-list-item>
-  </md-list>
-  <div class="inputContainer" >
+  <!-- Search Results -->
+  <div *ngIf="showResults">
+    <md-list *ngIf="possibleMarkets.length > 0">
+      <span *ngIf="lat > 0"> Markets around
+        <a
+          color="accent"
+          [href]="this.locationInfo"
+          target="_blank"
+        > your position:
+        </a>
+      </span>
+      <md-list-item *ngFor="let market of possibleMarkets; let i = index">
+        <img
+          md-list-avatar
+          [alt]="market.name"
+          [src]="resolveImage(market.shop)"
+        >
+        <h4 md-line>{{ market.name }}</h4>
+        <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }}</p>
+        <button md-icon-button (click)="add(market)"><md-icon>star_border</md-icon></button>
+      </md-list-item>
+    </md-list>
+    <span class="empty" *ngIf="possibleMarkets.length == 0"> no results </span>
+  </div>
+  <!-- Controlls -->
+  <div *ngIf="lat > 0" class="inputContainer" >
     <h5> Distance </h5>
     <md-slider flex md-discrete step="500" min="0" max="20000" [(ngModel)]="distance" id="distance" aria-label="distance" ></md-slider>
       m
@@ -38,7 +44,9 @@
     <button md-button (click)="searchByZip()" class="md-primary searchBtn">Search via ZIP Code</button>
   </div>
 </div>
+<i *ngIf="showAddMenu" class="expand_less" (click)="toggleAddMenu()">expand_less</i>
 
+<!-- favouriteMarkets-->
 <div *ngIf="error?.length">
   <span class="error">{{ error }}</span>
 </div>
@@ -47,14 +55,14 @@
     <img
       md-list-avatar
       [alt]="market.name"
-      [src]="resolveImage(market.brand)"
+      [src]="resolveImage(market.shop)"
     >
     <h4 md-line>{{ market.name }}</h4>
     <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }}</p>
-    <button md-icon-button (click)="remove(i)"><md-icon>star</md-icon></button>
+    <button md-icon-button (click)="remove(market.id)"><md-icon>star</md-icon></button>
   </md-list-item>
 </md-list>
 <div *ngIf="!favouriteMarkets.length" class="empty"><span>No entries</span></div>
-<button md-fab class="add-btn" (click)=toggleAddMenu()>
+<button md-fab class="add-btn" *ngIf="!showAddMenu" (click)=toggleAddMenu()>
   <md-icon class="md-24">add</md-icon>
 </button>

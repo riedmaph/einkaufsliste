@@ -157,12 +157,17 @@ export class ApiService {
    *
    */
   public getMarketsByZip (zip: Number): Observable<Market[]> {
-    return this.authHttp.get(API_ROUTES.markets.zip)
-      .map(res => res.json().new);
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('zip', zip.toString());
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+    return this.authHttp.get(API_ROUTES.markets.search, options)
+      .map(res => res.json().markets);
   }
 
   /**
-   * Makes API call to add a markets to the favourite markets
+   * Makes API call to add a market to the favourite markets
    *
    * @TODO Parameter, @TODO json.new -> json.markets
    * @param The Id of the new favourite market
@@ -170,9 +175,19 @@ export class ApiService {
    *
    */
   public addFavouriteMarket(marketId: Number): Observable<any> {
-/*  return this.authHttp.post(API_ROUTES.markets.favourites.add
-      .replace(':marketId', marketId)).map(res => res.json());
-      */
-      return Observable.of('stuff');
+    return this.authHttp.post(API_ROUTES.markets.favourites.add
+      .replace(':marketId', marketId.toString()),
+      { marketid: marketId });
+  }
+   /**
+   * Makes API call to remove a market from the favourite markets
+   *
+   * @param The Id of the favourite market to delete
+   * @return {Observable<any>}
+   *
+   */
+  public deleteFavouriteMarket(marketId: Number): Observable<any> {
+    return this.authHttp.delete(API_ROUTES.markets.favourites.remove
+      .replace(':marketId', marketId.toString()));
   }
 }

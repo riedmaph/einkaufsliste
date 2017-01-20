@@ -20,9 +20,10 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public error: string = '';
   public distance: Number= 2500;
   public zipCode: Number = 85221;
-  public showAddMenu = false;
-  private lat: Number = 0;
-  private long: Number = 0;
+  private showAddMenu = false;
+  private showResults = false;
+  private lat: Number = 0; //48.301108;
+  private long: Number = 0; //11.487477;
   private locationInfo: String = 'https://maps.googleapis.com/maps/api/staticmap?' +
     'center=lat,long&zoom=13&size=300x300&sensor=false';
 
@@ -41,37 +42,36 @@ export class FavouriteMarketSettingsComponent implements OnInit {
         this.error = err.message || 'An error occurred';
       },
     );
+     navigator.geolocation.getCurrentPosition(pos => this.setPosition(pos));
   }
 
   /**
-   * @param {string} brand Brand name
+   * @param {string} brand shop franchise
    * @returns {string} Path to image for given brand or placeholder   
    */
   public resolveImage (brand: string) {
-     let path: string;
-     if ( !brand) {
-       Math.random() < 0.5 ? path = '/assets/img/edeka.png' : path = '/assets/img/rewe.png';
-     } else {
-       switch (brand) {
-         case 'Edeka':  path = '/assets/img/edeka.png'; break;
-         case 'Rewe': path = '/assets/img/rewe.png'; break;
-         default: path = '/assets/img/marketPlaceholder.png';
-       }
-     }
+    let path: string;
+    switch (brand) {
+      case 'EDEKA':  path = '/assets/img/edeka.png'; break;
+      case 'REWE': path = '/assets/img/rewe.png'; break;
+      default: path = '/assets/img/marketPlaceholder.png';
+    }
     return path;
   }
 
   /**
-   * Removes a given market from the favourites
+   * Removes the market with the given Id from the favourites
+   * and makes corresponding api call
    * @TODO
    */
-  public remove (index: number): void {
-    // @TODO
+  public remove (marketId: number): void {
+    this.apiService.deleteFavouriteMarket(marketId).subscribe(_ => {
+      const index = this.favouriteMarkets.findIndex(x => x.id === marketId);
+      this.favouriteMarkets.splice(index, 1); });
   }
 
   /**
-   * TODO: Open overlay Component
-   * current: displays container 
+   * displays container
    */
   public toggleAddMenu (): void {
     this.showAddMenu = !this.showAddMenu;
@@ -86,10 +86,11 @@ export class FavouriteMarketSettingsComponent implements OnInit {
     if (this.lat > 0) {
       // defensive guard to avoid wrong results before position is set
       this.apiService.getMarketsByDistance(this.lat, this.long, this.distance)
-        .subscribe( response => this.possibleMarkets = response
+        .subscribe(response => this.possibleMarkets = response
         .filter(market => !this.favouriteMarkets
-        .find(fav => fav.id === market.id) ));
-      }
+       .find(fav => fav.id === market.id) ));
+    }
+    this.showResults
   }
 
   /**
@@ -98,9 +99,11 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    */
   public searchByZip (): void {
     this.apiService.getMarketsByZip(this.zipCode)
-      .subscribe( response => this.possibleMarkets = response
+      .subscribe(response => this.possibleMarkets = response
       .filter(market => !this.favouriteMarkets
       .find(fav => fav.id === market.id) ));
+
+    this.showResults = true;
   }
 
   /**
@@ -112,11 +115,12 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    *   
    */
   public add (newMarket: Market): void {
-    this.apiService.addFavouriteMarket(newMarket.id).subscribe(res => this.possibleMarkets = res);
-    this.favouriteMarkets.push(newMarket);
-    // delete from possible Market list
-    const index = this.possibleMarkets.findIndex(x => x.id === newMarket.id);
-    this.possibleMarkets.splice(index, 1);
+    this.apiService.addFavouriteMarket(newMarket.id).subscribe(_ => {
+      this.favouriteMarkets.push(newMarket);
+      // delete from possible Market list
+      const index = this.possibleMarkets.findIndex(x => x.id === newMarket.id);
+      this.possibleMarkets.splice(index, 1); },
+    );
   }
 
   private setPosition (position: Position): void {
