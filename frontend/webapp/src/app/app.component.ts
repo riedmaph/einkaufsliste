@@ -16,8 +16,4 @@ import {
   ],
   templateUrl: 'app.template.html',
 })
-export class AppComponent {
-
-  public name: string = 'Shopping List';
-
-}
+export class AppComponent { }

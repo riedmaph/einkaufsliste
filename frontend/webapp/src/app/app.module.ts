@@ -29,14 +29,15 @@ import {
 
 // Components
 import {
+  ConfirmComponent,
+  ListComponent,
+  ListOverviewComponent,
   ListViewComponent,
+  LoginComponent,
   NoContentComponent,
   NavigationComponent,
   NavTitleComponent,
-  ListComponent,
-  ListOverviewComponent,
   RegisterComponent,
-  LoginComponent,
 } from './components';
 
 // Directives
@@ -72,9 +73,11 @@ type StoreType = {
     AutoCompletionDirective,
     RegisterComponent,
     LoginComponent,
+    ConfirmComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,

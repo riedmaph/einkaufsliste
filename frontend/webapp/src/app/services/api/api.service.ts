@@ -4,7 +4,6 @@ import {
   URLSearchParams,
 } from '@angular/http';
 import { Observable } from 'rxjs';
-
 import { AuthHttp } from 'angular2-jwt';
 
 import {
@@ -40,6 +39,11 @@ export class ApiService {
       .map(res => res.json().products.map(p => p.name));
   }
 
+  /**
+   * Gets all lists for an authenticated user
+   *
+   * @return {Observable<List[]>} Observable list of the user's lists
+   */
   public getAllLists (): Observable<List[]> {
     return this.authHttp.get(API_ROUTES.lists.all)
       .map(res => res.json().lists);
@@ -56,7 +60,28 @@ export class ApiService {
     }).map(res => res.json());
   }
 
+  /**
+   * Make API call to delete a list from the list view
+   *
+   * @param {string} listId of the deleted list
+   */
+  public deleteList (listId: string): Observable<any> {
+    return this.authHttp.delete(
+      API_ROUTES.lists.single.replace(':listId', listId)
+    );
+  }
 
+  /**
+   * Make API call to update a list and change its name
+   *
+   * @param {string} listId id of the renamed list
+   * @param {string} newName new name of the renamed list
+   */
+  public renameList (listId: string, newName: string): Observable<any> {
+    return this.authHttp.put(
+      API_ROUTES.lists.single.replace(':listId', listId),
+      { name: newName }).map( res => res.json());
+  }
 
   /**
    * Make the API call to add a given item to a given list
