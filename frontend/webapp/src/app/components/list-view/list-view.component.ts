@@ -16,7 +16,6 @@ import {
 import { Observable } from 'rxjs';
 
 import { ListComponent } from '../list';
-import { ConfirmComponent } from '../ui-elements/confirm/confirm.component';
 import { ApiService } from '../../services/api';
 import { NavigationService } from '../../services/navigation';
 import {
