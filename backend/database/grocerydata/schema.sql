@@ -53,9 +53,8 @@ CREATE TABLE Grocerydata.Market (
   shop TEXT REFERENCES Grocerydata.shop,
   street text,
   zip text,
-  city text,
-  UNIQUE(latitude,longitude,name)
-);
+  city text
+ );
 
 
 CREATE TABLE Grocerydata.ArticleLocation (
