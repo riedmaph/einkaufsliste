@@ -42,7 +42,7 @@ CREATE TABLE Transformed.Invoker (
     name TEXT PRIMARY KEY   
 );
 
-INSERT INTO Transformed.Invoker VALUES ('crawler'),('user');
+INSERT INTO Transformed.Invoker VALUES ('crawler'),('user'),('offercrawler');
 
 CREATE TABLE Transformed.Source (
     name Text PRIMARY KEY,

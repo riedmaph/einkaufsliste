@@ -1,5 +1,4 @@
 var path = require('path');
-
 var options = {
     // global event notification;
     error: function (error, e) {
@@ -61,16 +60,20 @@ module.exports.loadSql = function (file) {
   return new pgp.QueryFile(file, {minify: true, params:loadSqlSettings});
 }
 
+var cn = {
+    user: dbsUser.username,
+    password: dbsUser.pw
+};
 var cnTransform = {
-    host: dbsettings.dbhost,
-    port: dbsettings.dbport,
-    database: dbsettings.dbname,
-    user: dbsettings.dbusertransformer,
-    password: dbsettings.dbpasstransformer,
+    host: process.env.PGHOST || dbsDb.dbhost,
+    port: process.env.PGPORT || dbsDb.dbport,
+    database: dbsDb.dbname,
+    user: dbsettings.users.transformer.username,
+    password: dbsettings.users.transformer.pw,
 };
 
 //set settings to load sql-scripts according to ENV
-var loadSqlSettingsTransform = {  
+var loadSqlSettingsTransform = {
   schemaTransformed: 'transformed',
   schemaCrawled: 'crawled',
 }
