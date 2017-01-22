@@ -14,7 +14,7 @@ services:
     volumes:
       - ./backend/server:/usr/src/app
       - ./backend/config:/usr/src/config
-    restart: alyways
+    restart: always
 
   webserver:
     container_name: nginx_frontend

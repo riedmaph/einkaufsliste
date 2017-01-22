@@ -1,13 +1,14 @@
 <md-sidenav-layout>
   <md-sidenav
-    #sidenav (open)="listOverview.onSidenavOpen()">
+    #sidenav
+    (open)="listOverview.onSidenavOpen()">
     <sl-list-overview
     #listOverview
     (onSidenavClose)="sidenav.close()"></sl-list-overview>
   </md-sidenav>
 
   <nav>
-    <sl-navigation (onSidenavToggle)="sidenav.toggle()"></sl-navigation>
+    <sl-navigation (onSidenavButtonPressed)="sidenav.open()"></sl-navigation>
   </nav>
 
   <main>

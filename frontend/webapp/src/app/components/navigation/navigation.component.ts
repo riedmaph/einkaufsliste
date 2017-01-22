@@ -44,7 +44,7 @@ export class NavTitleComponent implements OnInit, OnDestroy {
 export class NavigationComponent {
 
   @Output()
-  public onSidenavToggle = new EventEmitter();
+  public onSidenavButtonPressed = new EventEmitter();
 
   private DEFAULT_TITLE: string = 'Elisa';
 
@@ -60,8 +60,8 @@ export class NavigationComponent {
     };
   }
 
-  public toggleSidenav() {
-    this.onSidenavToggle.emit();
+  public sidenavButtonPressed() {
+    this.onSidenavButtonPressed.emit();
   }
 
 }

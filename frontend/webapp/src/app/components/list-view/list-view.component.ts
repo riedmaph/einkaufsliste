@@ -174,41 +174,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     return (str: string) => this.apiService.getAutoCompletion(str);
   }
 
-  public deleteList (): void {
-    let dialogRef = this.dialog.open(ConfirmComponent, {
-       disableClose: false,
-    });
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-      this.apiService.deleteList(this.list.id);
-      this.list.items = [ ];
-      }
-    });
-  }
-
-  public onEditHandler (
-    event: KeyboardEvent,
-    keyCode: number,
-    elem: HTMLElement
-   ) {
+  public onEditHandler (event: KeyboardEvent, keyCode: number, elem: HTMLElement) {
      if (keyCode === 13) {
         elem.contentEditable = 'false';
         this.commitEdit(elem);
      }
-   }
-
-  public toggleEditable (
-    event: MouseEvent | KeyboardEvent,
-    elem: HTMLInputElement
-  ) {
-    if (elem.contentEditable !== 'true') {
-      elem.contentEditable = 'true';
-      elem.focus();
-    } else {
-      this.commitEdit(elem);
-      elem.contentEditable = 'false';
-     }
-   }
+  }
 
   public commitEdit (elem: HTMLElement) {
     if (elem.textContent){

@@ -1,7 +1,7 @@
 <md-toolbar color="primary">
   <span class="toolbar-fill-remaining">Your Lists</span>
   <button md-icon-button (click)="closeSidenav()">
-    <i class="material-icons">menu</i>
+    <i class="material-icons">close</i>
   </button>
 </md-toolbar>
 
@@ -13,7 +13,7 @@
     <md-list-item>
       <button md-icon-button
         class="list-overview-button"
-        (click)="toggleDetailsForList(list)"
+        (click)="toggleListDetails(list)"
       >
         <i *ngIf="!isExpanded(list)" class="material-icons">expand_more</i>
         <i *ngIf="isExpanded(list)" class="material-icons">expand_less</i>
@@ -26,7 +26,6 @@
       </span>
       <button md-icon-button
         class="list-overview-button"
-        [routerLink]="[ '/' ]"
         (click)="deleteList(list)"
       >
         <i class="material-icons">delete</i>

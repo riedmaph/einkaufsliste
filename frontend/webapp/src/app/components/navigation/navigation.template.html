@@ -1,7 +1,7 @@
 <md-toolbar color="primary">
   <button
     *ngIf="authService.loggedIn"
-    md-icon-button (click)="toggleSidenav()"
+    md-icon-button (click)="sidenavButtonPressed()"
   >
     <i class="material-icons">menu</i>
   </button>

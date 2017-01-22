@@ -31,6 +31,7 @@ import {
 import {
   ListViewComponent,
   NoContentComponent,
+  NoListSelectedComponent,
   NavigationComponent,
   NavTitleComponent,
   ListComponent,
@@ -64,6 +65,7 @@ type StoreType = {
     AppComponent,
     ListViewComponent,
     NoContentComponent,
+    NoListSelectedComponent,
     NavigationComponent,
     NavTitleComponent,
     ListComponent,

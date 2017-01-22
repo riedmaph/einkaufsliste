@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 
 import {
@@ -41,6 +42,7 @@ export class ListOverviewComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private authService: AuthService,
+    private router: Router,
     private formBuilder: FormBuilder,
     private dialog: MdDialog,
   ) {
@@ -59,12 +61,19 @@ export class ListOverviewComponent implements OnInit {
   }
 
   /**
-   * Checks the API service for the user's lists whenever the sidebar gets opened
+   * Checks the API service for the user's lists whenever the sidebar gets
+   * opened and there is not yet at least one list available to display.
+   *
+   * This special situation occurs after the user logged in and opened the
+   * sidenav the first time. As the component was initialized while the user was
+   * still not logged in, one has to make sure to reload the lists at a later time.
    *
    * @return {void}
    */
   public onSidenavOpen (): void {
-    this.reloadLists();
+    if (this.lists.length === 0) {
+      this.reloadLists();
+    }
   }
 
   /**
@@ -101,12 +110,12 @@ export class ListOverviewComponent implements OnInit {
   }
 
   /**
-   * Toggles the details of a given list and closes all other list details.
+   * Toggles the details of a given list and closes all other list details
    *
-   * @param {List} list The list whose details to toggle
+   * @param {List} list The list which triggered toggling and closing other lists' details
    * @return {void}
    */
-  public toggleDetailsForList (list: List): void {
+  public toggleListDetails (list: List): void {
     const expanded = this.isExpanded(list);
     this.lists.forEach(l => this.expandedLists[l.id] = false);
     this.expandedLists[list.id] = !expanded;
@@ -130,6 +139,7 @@ export class ListOverviewComponent implements OnInit {
       if (confirmed) {
         this.apiService.deleteList(list.id).subscribe(_ => {
           this.reloadLists();
+          this.router.navigate([ 'no-list-selected' ]);
         });
       }
     });
