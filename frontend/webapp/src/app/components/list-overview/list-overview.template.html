@@ -1,30 +1,27 @@
-<md-toolbar color="primary">
-  <span class="toolbar-fill-remaining">Your Lists</span>
-  <button md-icon-button (click)="closeSidenav()">
-    <i class="material-icons">close</i>
-  </button>
-</md-toolbar>
-
 <md-list>
   <div
     *ngFor="let list of lists; let i = index"
     [class.expanded-list-item]="isExpanded(list)"
   >
     <md-list-item>
-      <button md-icon-button
+      <button
+        md-icon-button
         class="list-overview-button"
         (click)="toggleListDetails(list)"
       >
         <i *ngIf="!isExpanded(list)" class="material-icons">expand_more</i>
         <i *ngIf="isExpanded(list)" class="material-icons">expand_less</i>
       </button>
-      <span
+      <a
         [routerLink]="[ '/list', list.id ]"
-        (click)="closeSidenav()"
+        [href]="'/list/' + list.id"
+        (click)="selectList()"
+        class="fill-remaining"
       >
         {{ list.name }}
-      </span>
-      <button md-icon-button
+      </a>
+      <button
+        md-icon-button
         class="list-overview-button"
         (click)="deleteList(list)"
       >
@@ -40,14 +37,6 @@
 
 <div class="new-list">
   <form [formGroup]="newListForm" (ngSubmit)="addNewList()">
-    <button md-icon-button
-      type="submit"
-      class="list-overview-button"
-      [disabled]="listName.characterCount == 0"
-    >
-      <i class="material-icons">add</i>
-    </button>
-
     <md-input
       formControlName="listName"
       type="text"
@@ -59,5 +48,14 @@
     >
       <md-hint align="end">{{ 24 - listName.characterCount }}</md-hint>
     </md-input>
+    <button
+      md-icon-button
+      type="submit"
+      class="list-overview-button"
+      [disabled]="listName.characterCount == 0"
+    >
+      <i class="material-icons">add</i>
+    </button>
+
   </form>
 </div>

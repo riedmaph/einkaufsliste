@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MdDialog } from '@angular/material';
-import { Location } from '@angular/common';
 import {
   FormGroup,
   FormBuilder,
@@ -17,7 +16,7 @@ import { Observable } from 'rxjs';
 
 import { ListComponent } from '../list';
 import { ApiService } from '../../services/api';
-import { NavigationService } from '../../services/navigation';
+
 import {
   ListItem,
   List,
@@ -42,10 +41,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   constructor (
     private apiService: ApiService,
-    private navigationService: NavigationService,
     private route: ActivatedRoute,
     private dialog: MdDialog,
-    private location: Location,
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
@@ -76,7 +73,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   public ngOnInit (): void {
     this.route.data.subscribe((data: { list: List }) => {
       this.list = data.list;
-      this.navigationService.title = this.list.name;
     });
   }
 
@@ -84,13 +80,15 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @memberOf AfterViewInit
    */
   public ngAfterViewInit (): void {
-    this.listComponents.forEach(listComp => {
-      listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
-      listComp.onRemove.subscribe(item => this.removeItem(item));
-      listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
-        this.reorderItems(tuple[0], tuple[1], tuple[2])
-      );
-    });
+    if (this.list && this.listComponents) {
+      this.listComponents.forEach(listComp => {
+        listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
+        listComp.onRemove.subscribe(item => this.removeItem(item));
+        listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
+          this.reorderItems(tuple[0], tuple[1], tuple[2])
+        );
+      });
+    }
   }
 
   /**

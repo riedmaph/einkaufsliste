@@ -1,8 +1,4 @@
 nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   box-shadow: 0 .2em .4em rgba(0, 0, 0, 0.3);
   z-index: 2;
 }
@@ -11,7 +7,7 @@ md-toolbar {
   padding: 0 .5em;
 }
 
-.toolbar-fill-remaining {
+.fill-remaining {
   flex: 1 1 auto;
 }
 

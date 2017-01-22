@@ -117,7 +117,7 @@ md-card.container {
     display: none;
 }
 
-@include breakpoint(phone) {
+@include breakpoint(mobile) {
     .phone-hidden { display: none !important; }
     .phone-mg-top { margin-top: 1em; }
     .phone-mg-bottom { margin-bottom: 1em; }

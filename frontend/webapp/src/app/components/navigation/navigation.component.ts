@@ -3,14 +3,12 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 
 import {
   AuthService,
   NavigationService,
-} from '../../services';
+} from 'app/services';
 
 @Component({
   selector: 'sl-nav-title',
@@ -39,12 +37,8 @@ export class NavTitleComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'sl-navigation',
   templateUrl: './navigation.template.html',
-  styleUrls: [ './navigation.style.scss' ],
 })
 export class NavigationComponent {
-
-  @Output()
-  public onSidenavButtonPressed = new EventEmitter();
 
   private DEFAULT_TITLE: string = 'Elisa';
 
@@ -58,10 +52,6 @@ export class NavigationComponent {
     return {
       title: this.navigationService.title || this.DEFAULT_TITLE,
     };
-  }
-
-  public sidenavButtonPressed() {
-    this.onSidenavButtonPressed.emit();
   }
 
 }

@@ -4,24 +4,17 @@ import {
   OnInit,
   EventEmitter,
 } from '@angular/core';
-
 import {
   FormBuilder,
+  FormGroup,
   Validators,
 } from '@angular/forms';
-
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 
-import {
-  ApiService,
-  AuthService,
-} from '../../services';
-
 import { ConfirmComponent } from '../ui-elements/confirm';
-
-import { List } from '../../models';
-
+import { ApiService } from 'app/services';
+import { List } from 'app/models';
 
 @Component({
   selector: 'sl-list-overview',
@@ -33,15 +26,14 @@ export class ListOverviewComponent implements OnInit {
   public lists: List[] = [ ];
 
   @Output()
-  public onSidenavClose = new EventEmitter();
+  public onListSelect: EventEmitter<any> = new EventEmitter<any>();
 
-  public newListForm;
+  public newListForm: FormGroup;
 
   private expandedLists: { [ listId: string ]: boolean } = { };
 
   constructor(
     private apiService: ApiService,
-    private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
     private dialog: MdDialog,
@@ -55,25 +47,7 @@ export class ListOverviewComponent implements OnInit {
    * @memberOf OnInit
    */
   public ngOnInit (): void {
-    if (this.authService.loggedIn) {
-      this.reloadLists();
-    }
-  }
-
-  /**
-   * Checks the API service for the user's lists whenever the sidebar gets
-   * opened and there is not yet at least one list available to display.
-   *
-   * This special situation occurs after the user logged in and opened the
-   * sidenav the first time. As the component was initialized while the user was
-   * still not logged in, one has to make sure to reload the lists at a later time.
-   *
-   * @return {void}
-   */
-  public onSidenavOpen (): void {
-    if (this.lists.length === 0) {
-      this.reloadLists();
-    }
+    this.reloadLists();
   }
 
   /**
@@ -105,8 +79,8 @@ export class ListOverviewComponent implements OnInit {
    *
    * @return {void}
    */
-  public closeSidenav (): void {
-    this.onSidenavClose.emit();
+  public selectList (): void {
+    this.onListSelect.emit();
   }
 
   /**
@@ -132,14 +106,14 @@ export class ListOverviewComponent implements OnInit {
   }
 
   private confirmDeletionOfList (list: List): void {
-    let dialogRef = this.dialog.open(ConfirmComponent, {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
        disableClose: false,
     });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.apiService.deleteList(list.id).subscribe(_ => {
           this.reloadLists();
-          this.router.navigate([ 'no-list-selected' ]);
+          this.router.navigate([ 'list' ]);
         });
       }
     });

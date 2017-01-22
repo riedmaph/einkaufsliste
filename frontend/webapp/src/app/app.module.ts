@@ -29,17 +29,17 @@ import {
 
 // Components
 import {
-  ListViewComponent,
-  NoContentComponent,
-  NoListSelectedComponent,
-  NavigationComponent,
-  NavTitleComponent,
+  ConfirmComponent,
   ListComponent,
   ListOverviewComponent,
-  RegisterComponent,
+  ListViewComponent,
   LoginComponent,
+  NoContentComponent,
+  NavigationComponent,
+  NavTitleComponent,
+  RegisterComponent,
 } from './components';
-import { ConfirmComponent } from './components/ui-elements/confirm';
+
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
 
@@ -65,7 +65,6 @@ type StoreType = {
     AppComponent,
     ListViewComponent,
     NoContentComponent,
-    NoListSelectedComponent,
     NavigationComponent,
     NavTitleComponent,
     ListComponent,
