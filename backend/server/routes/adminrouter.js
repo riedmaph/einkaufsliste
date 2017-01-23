@@ -4,7 +4,13 @@ var path = require('path');
 
 var logger = require(path.join('..', 'logging', 'logger'));
 
+var tokenhandler = require(path.join('..', 'controllers', 'tokenhandler'));
+
 var transformation = require(path.join('..', 'controllers', 'admin', 'transformation'));
+
+// check if a valid token is provided
+router.use(tokenhandler.verifyAdminToken);
+
 
 router.route('/transformation/articles')
   .post(transformation.postArticleRaw)
@@ -29,4 +35,15 @@ router.route('/transformation/articles/:id')
 //  .get(transformation.getArticleTransformation)
   .put(transformation.putArticleTransformation)
 
-  module.exports = router;
+// error handler
+router.use(function(err, req, res, next) {
+  logger.log('error', err.message);
+  // set locals, only providing error in development
+  res.status(err.status || 500)
+    .json({
+      message: err.message
+   });
+
+});
+  
+module.exports = router;
