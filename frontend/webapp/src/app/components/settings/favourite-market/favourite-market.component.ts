@@ -18,12 +18,12 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public possibleMarkets: Market[] = [ ];
 
   public error: string = '';
-  public distance: Number= 2500;
-  public zipCode: Number = 85221;
+  public distance: Number = 2500;
+  public zipCode: Number;
   private showAddMenu = false;
   private showResults = false;
-  private lat: Number = 0; //48.301108;
-  private long: Number = 0; //11.487477;
+  private lat: Number = 0;
+  private long: Number = 0;
   private locationInfo: String = 'https://maps.googleapis.com/maps/api/staticmap?' +
     'center=lat,long&zoom=13&size=300x300&sensor=false';
 
@@ -46,38 +46,6 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   }
 
   /**
-   * @param {string} brand shop franchise
-   * @returns {string} Path to image for given brand or placeholder   
-   */
-  public resolveImage (brand: string) {
-    let path: string;
-    switch (brand) {
-      case 'EDEKA':  path = '/assets/img/edeka.png'; break;
-      case 'REWE': path = '/assets/img/rewe.png'; break;
-      default: path = '/assets/img/marketPlaceholder.png';
-    }
-    return path;
-  }
-
-  /**
-   * Removes the market with the given Id from the favourites
-   * and makes corresponding api call
-   * @TODO
-   */
-  public remove (marketId: number): void {
-    this.apiService.deleteFavouriteMarket(marketId).subscribe(_ => {
-      const index = this.favouriteMarkets.findIndex(x => x.id === marketId);
-      this.favouriteMarkets.splice(index, 1); });
-  }
-
-  /**
-   * displays container
-   */
-  public toggleAddMenu (): void {
-    this.showAddMenu = !this.showAddMenu;
-  }
-
-  /**
    * Gets qualified markets from ApiService and filters for already favoured markets
    * stores the data into possibleMarkets list
    */
@@ -90,7 +58,7 @@ export class FavouriteMarketSettingsComponent implements OnInit {
         .filter(market => !this.favouriteMarkets
        .find(fav => fav.id === market.id) ));
     }
-    this.showResults
+    this.showResults = true;
   }
 
   /**
@@ -121,6 +89,41 @@ export class FavouriteMarketSettingsComponent implements OnInit {
       const index = this.possibleMarkets.findIndex(x => x.id === newMarket.id);
       this.possibleMarkets.splice(index, 1); },
     );
+  }
+
+  /**
+   * Removes the market with the given Id from the favourites
+   * and makes corresponding api call
+   * 
+   */
+  public remove (marketId: number): void {
+    this.apiService.deleteFavouriteMarket(marketId).subscribe(_ => {
+      const index = this.favouriteMarkets.findIndex(x => x.id === marketId);
+      this.favouriteMarkets.splice(index, 1); });
+  }
+
+  /**
+   * displays container for Add controlls
+   */
+  public toggleAddMenu (): void {
+    if (this.showAddMenu) {
+      this.showResults = false;
+    }
+    this.showAddMenu = !this.showAddMenu;
+  }
+
+  /**
+   * @param {string} brand shop franchise
+   * @returns {string} Path to image for given brand or placeholder   
+   */
+  public resolveImage (brand: string) {
+    let path: string;
+    switch (brand) {
+      case 'EDEKA':  path = '/assets/img/edeka.png'; break;
+      case 'REWE': path = '/assets/img/rewe.png'; break;
+      default: path = '/assets/img/marketPlaceholder.png';
+    }
+    return path;
   }
 
   private setPosition (position: Position): void {
