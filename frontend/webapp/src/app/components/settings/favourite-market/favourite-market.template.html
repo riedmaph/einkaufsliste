@@ -9,14 +9,14 @@
   <!-- Search Results -->
   <div *ngIf="showResults">
     <md-list *ngIf="possibleMarkets.length > 0">
-      <span *ngIf="lat > 0"> Markets around
-        <a
-          color="accent"
-          [href]="this.locationInfo"
-          target="_blank"
-        > your position:
-        </a>
-      </span>
+        <p *ngIf="lat > 0" class="info"> Markets found around
+          <a
+            color="accent"
+            [href]="this.locationInfo"
+            target="_blank"
+          > your position:
+          </a>
+        </p>
       <md-list-item *ngFor="let market of possibleMarkets; let i = index">
         <img
           md-list-avatar
@@ -31,20 +31,30 @@
     <span class="empty" *ngIf="possibleMarkets.length == 0"> no results </span>
   </div>
   <!-- Controlls -->
-  <div *ngIf="lat > 0" class="inputContainer" >
+  <div *ngIf="lat > 0" class="inputContainer">
     <h5> Distance </h5>
-    <md-slider flex md-discrete step="500" min="0" max="20000" [(ngModel)]="distance" id="distance" aria-label="distance" ></md-slider>
+    <md-slider flex md-discrete step="500" min="0" max="20000" [(ngModel)]="distance"></md-slider>
       m
     <md-input flex type="number" [(ngModel)]="distance"></md-input>
     <button md-button (click)="searchByDistance()" class="md-primary searchBtn">Search by Distance</button>
   </div>
-  <div class="inputContainer" >
+  <div class="inputContainer">
     <h5> ZIP Code </h5>
     <md-input flex type="number" [(ngModel)]="zipCode" placeholder="ZIP-code"></md-input>
     <button md-button (click)="searchByZip()" class="md-primary searchBtn">Search via ZIP Code</button>
   </div>
+
+  <div class="expand_less">   
+    <span>
+      <i *ngIf="lat == 0" class="positionHint"> 
+      Use this app with Firefox to enable search for markets around your current position
+      </i>
+      <button md-icon-button (click)="toggleAddMenu()">
+        <i class="material-icons">expand_less</i>
+      </button>
+    </span>
+  </div>
 </div>
-<i *ngIf="showAddMenu" class="expand_less" (click)="toggleAddMenu()">expand_less</i>
 
 <!-- favouriteMarkets-->
 <div *ngIf="error?.length">
