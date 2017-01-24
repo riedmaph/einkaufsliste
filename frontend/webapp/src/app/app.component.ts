@@ -1,7 +1,7 @@
-/*
- * Angular 2 decorators and services
- */
-import { Component, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+} from '@angular/core';
 
 /*
  * App Component
@@ -16,8 +16,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
   ],
   templateUrl: 'app.template.html',
 })
-export class AppComponent {
-
-  public name: string = 'Shopping List';
-
-}
+export class AppComponent { }

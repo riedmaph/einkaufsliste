@@ -6,7 +6,6 @@ import {
   OFFERS_ROUTES,
   REGISTER_ROUTES,
   LOGIN_ROUTES,
-  LIST_OVERVIEW_ROUTES,
 } from './components';
 
 export const ROUTES: Routes = [
@@ -14,6 +13,5 @@ export const ROUTES: Routes = [
   ...OFFERS_ROUTES,
   ...REGISTER_ROUTES,
   ...LOGIN_ROUTES,
-  ...LIST_OVERVIEW_ROUTES,
   { path: '**',    component: NoContentComponent },
 ];

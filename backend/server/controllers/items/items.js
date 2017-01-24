@@ -1,7 +1,7 @@
-var path = require('path');
-var uuid = require('uuid');
+const path = require('path');
+const uuid = require('uuid');
 
-var db = require(path.join('..', 'dbconnector.js'));
+const db = require(path.join('..', 'dbconnector.js'));
 
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
 var sqlCreateItem = db.loadSql(path.join('controllers', 'items', 'createItem.sql'));
@@ -53,7 +53,6 @@ function createItem(req, res, next) {
 function updateItem(req, res, next) {
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
-
   req.body.amount = parseFloat(req.body.amount);
 
   db.conn.none(sqlUpdateItem, req.body)
@@ -96,9 +95,9 @@ function moveItem(req, res, next) {
 }
 
 module.exports = {
-  getListItems,
-  createItem,
-  updateItem,
-  deleteItem,
-  moveItem
+  getListItems: getListItems,
+  createItem: createItem,
+  updateItem: updateItem,
+  deleteItem: deleteItem,
+  moveItem: moveItem
 };
