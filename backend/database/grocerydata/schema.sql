@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Grocerydata.ArticleCategoryTag;
+﻿DROP TABLE IF EXISTS Grocerydata.ArticleCategoryTag;
 DROP TABLE IF EXISTS Grocerydata.CategoryTag;
 DROP TABLE IF EXISTS Grocerydata.Offer;
 DROP TABLE IF EXISTS Grocerydata.ArticleLocation;
@@ -22,14 +22,14 @@ CREATE TABLE Grocerydata.Brand (
 
 CREATE TABLE Grocerydata.Article (
     id SERIAL PRIMARY KEY,
-    name TEXT REFERENCES Grocerydata.ProductName(name) NOT NULL,
-    brand TEXT REFERENCES Grocerydata.Brand,
+    name TEXT REFERENCES Grocerydata.ProductName(name) DEFERRABLE NOT NULL  ,
+    brand TEXT REFERENCES Grocerydata.Brand DEFERRABLE,
     UNIQUE (name,brand)
 );
 
 CREATE TABLE Grocerydata.ArticleVariation (
     id SERIAL PRIMARY KEY,
-    article INTEGER REFERENCES Grocerydata.Article(id),
+    article INTEGER REFERENCES Grocerydata.Article(id) DEFERRABLE,
     title  TEXT,
     SIZE TEXT,
     packagesize INT,
@@ -42,15 +42,13 @@ CREATE TABLE Grocerydata.Shop (
     name TEXT PRIMARY KEY
 );
 
-INSERT INTO Grocerydata.shop VALUES ('EDEKA'),('REWE');
-
 CREATE TABLE Grocerydata.Market (
   id integer primary key,
   name text,
   latitude double precision,
   longitude double precision,
   extid integer,
-  shop TEXT REFERENCES Grocerydata.shop,
+  shop TEXT REFERENCES Grocerydata.shop DEFERRABLE,
   street text,
   zip text,
   city text
@@ -59,21 +57,21 @@ CREATE TABLE Grocerydata.Market (
 
 CREATE TABLE Grocerydata.ArticleLocation (
   id SERIAL PRIMARY KEY,
-  variation INT REFERENCES Grocerydata.Article(id),
-  shop TEXT REFERENCES Grocerydata.shop(name),
-  market INTEGER REFERENCES Grocerydata.market(id),
+  variation INT REFERENCES Grocerydata.Article(id) DEFERRABLE,
+  shop TEXT REFERENCES Grocerydata.shop(name) DEFERRABLE,
+  market INTEGER REFERENCES Grocerydata.market(id) DEFERRABLE,
   price DOUBLE PRECISION
 );
 
 CREATE TABLE Grocerydata.Offer (
   id SERIAL PRIMARY KEY,
-  article INTEGER REFERENCES Grocerydata.ArticleVariation(id),
+  article INTEGER REFERENCES Grocerydata.ArticleVariation(id) DEFERRABLE,
   offerprice double precision,
   discount TEXT,
   minimumquantityfordiscount TEXT,
   offerfrom date,
   offerto date,
-  market INTEGER REFERENCES Grocerydata.Market (id)
+  market INTEGER REFERENCES Grocerydata.Market (id) DEFERRABLE
 );
 
 CREATE TABLE Grocerydata.CategoryTag (
@@ -81,8 +79,8 @@ CREATE TABLE Grocerydata.CategoryTag (
 );
 
 CREATE TABLE Grocerydata.ArticleCategoryTag (
-  article INTEGER REFERENCES Grocerydata.Article (id),
-  tag TEXT REFERENCES Grocerydata.CategoryTag (name),
+  article INTEGER REFERENCES Grocerydata.Article (id) DEFERRABLE,
+  tag TEXT REFERENCES Grocerydata.CategoryTag (name) DEFERRABLE,
   preference INTEGER,
   PRIMARY KEY (article,tag)
 );
