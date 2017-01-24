@@ -84,7 +84,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
         listComp.onRemove.subscribe(item => this.removeItem(item));
         listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
-          this.reorderItems(tuple[0], tuple[1], tuple[2])
+          this.reorderItems(tuple[0], tuple[1], tuple[2]),
         );
       });
     }
