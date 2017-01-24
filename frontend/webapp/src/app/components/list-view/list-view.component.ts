@@ -46,13 +46,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      amount: [ '', Validators.required ],
-      unit: [ '', Validators.required ],
+      amount: '',
+      unit:  '',
       itemName: [ '', Validators.compose([
         Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
       ]) ],
-
     });
   }
 
