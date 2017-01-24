@@ -2,9 +2,8 @@
 <div *ngIf="list">
   <sl-nav-title [title]="list.name"></sl-nav-title>
 
-  <sl-list [items]="completedItems" [dragModelName]="completed" deleteable></sl-list>
-  <sl-list [items]="items" [dragModelName]="open" editable deleteable sortable></sl-list>
-
+  <sl-list [items]="completedItems" deleteable></sl-list>
+  <sl-list [items]="items" editable deleteable sortable></sl-list>
 
   <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
