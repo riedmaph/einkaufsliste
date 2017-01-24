@@ -11,9 +11,9 @@ var logger = require('./logging/logger');
 var app = express();
 
 //use winston for http logging
-/*if(process.env.NODE_ENV != 'test') {
+if(process.env.NODE_ENV != 'test') {
     app.use(morgan("combined", { "stream": logger.stream }));
-}*/
+}
 
 // set the view engine to jade
 app.set('view engine', 'jade');
@@ -26,13 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc/admin', express.static(path.join(__dirname, 'docadmin')));
 app.use('/doc', express.static(path.join(__dirname, 'doc')));
 
-if(process.env.NODE_ENV != 'dev') {
-   console.log("admin");
-   app.use('/api/admin', adminrouter);
-}
-
 //set router
 app.use('/api', apirouter);
+
+app.use('/api/admin', adminrouter);
 
 //redirect root to doc
 app.get('/', function(req, res) {
