@@ -659,8 +659,8 @@
                     },
                     {
                         "in": "query",
-                        "name": "longditude",
-                        "description": "Longditude of the given position.",
+                        "name": "longitude",
+                        "description": "Longitude of the given position.",
                         "required": true,
                         "type": "number",
                         "format": "decimal"
@@ -986,10 +986,10 @@
                     "format": "decimal",
                     "description": "Latitude of market."
                 },
-                "longditude": {
+                "longitude": {
                     "type": "number",
                     "format": "decimal",
-                    "description": "Longditude of market."
+                    "description": "Longitude of market."
                 },
                 "street": {
                     "type": "string",
@@ -1014,6 +1014,23 @@
                     "$ref": "#/definitions/MarketValues"
                 }
             ]
+        },
+        "Article": {
+            "type": "object",
+            "required": [
+                "name",
+                "brand"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of article."
+                },
+                "brand": {
+                    "type": "string",
+                    "description": "Brand of article."
+                }
+            }
         },
         "Offer": {
             "type": "object",
@@ -1044,7 +1061,7 @@
                     "description": "Enddate of offer."
                 },
                 "product": {
-                    "$ref": "#/definitions/Product"
+                    "$ref": "#/definitions/Article"
                 }
             }
         },

@@ -35,10 +35,9 @@ function getOffers(req, res, next) {
                         offerfrom: offer.offerfrom, 
                         offerto: offer.offerto, 
                         discount: offer.discount, 
-                        product:{
-                          name: offer.name, 
-                          brand: offer.brand, 
-                          price: offer.price
+                        article:{
+                          name: offer.articlename, 
+                          brand: offer.articlebrand
                         }
                       }
             }
