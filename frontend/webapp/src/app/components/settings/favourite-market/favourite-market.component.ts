@@ -119,9 +119,9 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public resolveImage (brand: string) {
     let path: string;
     switch (brand) {
-      case 'EDEKA':  path = '/assets/img/edeka.png'; break;
-      case 'REWE': path = '/assets/img/rewe.png'; break;
-      default: path = '/assets/img/marketPlaceholder.png';
+      case 'EDEKA':  path = '/assets/img/brands/edeka.png'; break;
+      case 'REWE': path = '/assets/img/brands/rewe.png'; break;
+      default: path = '/assets/img/brands/marketPlaceholder.png';
     }
     return path;
   }
