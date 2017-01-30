@@ -55,7 +55,6 @@ _Note:_ The backend expects to find a `config.json` in `backend/config`. See `ba
 _Note:_ `docker-compose.yml` defines the conatiners `backend` (nodejs) and `webserver` (nginx) as used in production. `docker-compose.localdb.yml` defines an additional container `postgres-db` for the local test database and modifies the `backend` conatiner to connect it with `postgres-db`.
 
 
-
 ## Code-Style
 ### Git-Workflow
 - No commits to `master`

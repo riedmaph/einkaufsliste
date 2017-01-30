@@ -24,17 +24,20 @@ import {
   AuthService,
   AuthGuard,
   ApiMapperService,
+  NavigationService,
 } from './services';
 
 // Components
 import {
-  ListViewComponent,
-  NoContentComponent,
-  NavigationComponent,
+  ConfirmComponent,
   ListComponent,
   ListOverviewComponent,
-  RegisterComponent,
+  ListViewComponent,
   LoginComponent,
+  NoContentComponent,
+  NavigationComponent,
+  NavTitleComponent,
+  RegisterComponent,
   SettingsComponent,
   SettingsOverviewComponent,
   FavouriteMarketSettingsComponent,
@@ -66,6 +69,7 @@ type StoreType = {
     ListViewComponent,
     NoContentComponent,
     NavigationComponent,
+    NavTitleComponent,
     ListComponent,
     ListOverviewComponent,
     AutoCompletionComponent,
@@ -75,9 +79,11 @@ type StoreType = {
     SettingsComponent,
     SettingsOverviewComponent,
     FavouriteMarketSettingsComponent,
+    ConfirmComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,6 +105,7 @@ type StoreType = {
     AuthService,
     ApiMapperService,
     AuthGuard,
+    NavigationService,
   ],
 })
 export class AppModule {

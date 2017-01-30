@@ -30,10 +30,11 @@ $column-gap-v: 1em;
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
-main {
-    margin-top: 64px;
+md-sidenav-layout {
+    height: 100%;
 }
 
 .container-wrapper {
@@ -116,7 +117,7 @@ md-card.container {
     display: none;
 }
 
-@include breakpoint(phone) {
+@include breakpoint(mobile) {
     .phone-hidden { display: none !important; }
     .phone-mg-top { margin-top: 1em; }
     .phone-mg-bottom { margin-bottom: 1em; }

@@ -595,7 +595,54 @@
                 }
             }
         },
-        "/markets": {
+        "/products/search": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Find products by their name non case sensitiv.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "q",
+                        "description": "String to search for.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "products": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Product"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/markets/search": {
             "get": {
                 "tags": [
                     "Markets"
@@ -1028,6 +1075,18 @@
                 }
             ]
         },
+        "Product": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of product."
+                }
+            }
+        },
         "MoveItem": {
             "type": "object",
             "required": [
@@ -1123,24 +1182,6 @@
                 },
                 "product": {
                     "$ref": "#/definitions/Product"
-                }
-            }
-        },
-        "Product": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Productname of offer."
-                },
-                "brand": {
-                    "type": "string",
-                    "description": "Brand of offer."
-                },
-                "price": {
-                    "type": "number",
-                    "format": "double",
-                    "description": "Original price of product."
                 }
             }
         },

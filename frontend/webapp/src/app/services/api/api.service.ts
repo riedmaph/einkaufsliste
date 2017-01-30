@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
+import {
+  RequestOptionsArgs,
+  URLSearchParams,
+} from '@angular/http';
 import { Observable } from 'rxjs';
-import { RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 
 import {
   List,
   ListItem,
   Market,
+  Product,
 } from '../../models';
 
 import { API_ROUTES } from './routes';
@@ -16,8 +20,31 @@ export class ApiService {
 
   constructor (
     private authHttp: AuthHttp,
-  ) {}
+  ) { }
 
+  /**
+   * Makes API call to retrieve auto completion suggestions for given input
+   *
+   * @param {string} input Current user input
+   * @return {Observable<Product[]>} List of auto completion suggestions
+   */
+  public getAutoCompletion (input: string): Observable<Product[]> {
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('q', input);
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+
+    return this.authHttp.get(API_ROUTES.products.search, options)
+      .map(res => res.json().products.map(p => p.name));
+  }
+
+  /**
+   * Gets all lists for an authenticated user
+   *
+   * @return {Observable<List[]>} Observable list of the user's lists
+   */
   public getAllLists (): Observable<List[]> {
     return this.authHttp.get(API_ROUTES.lists.all)
       .map(res => res.json().lists);
@@ -35,20 +62,27 @@ export class ApiService {
   }
 
   /**
-   * Makes API call to retrieve auto completion suggestions for given input
+   * Make API call to delete a list from the list view
    *
-   * @param {string} input Current user input
-   * @return {Observable<string[]>} List of auto completion suggestions
-   * @TODO
+   * @param {string} listId of the deleted list
    */
-  public getAutoCompletion (input: string): Observable<string[]> {
-    return Observable.of([ 'Apple', 'Orange', 'Banana', 'Pear', 'Peach', 'Pineapple' ]);
-    // return this.http
-      // .get(API_ROUTES.autoCompletion')
-      // .map(response => <string[]> response.json())
+  public deleteList (listId: string): Observable<any> {
+    return this.authHttp.delete(
+      API_ROUTES.lists.single.replace(':listId', listId)
+    );
   }
 
-
+  /**
+   * Make API call to update a list and change its name
+   *
+   * @param {string} listId id of the renamed list
+   * @param {string} newName new name of the renamed list
+   */
+  public renameList (listId: string, newName: string): Observable<any> {
+    return this.authHttp.put(
+      API_ROUTES.lists.single.replace(':listId', listId),
+      { name: newName }).map( res => res.json());
+  }
 
   /**
    * Make the API call to add a given item to a given list
