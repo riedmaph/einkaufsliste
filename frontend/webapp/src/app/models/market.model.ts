@@ -10,5 +10,5 @@ export interface Market {
   zip: string;
   city: string;
 
-  colour?: string;
+  shop?: string;
 }
