@@ -1,11 +1,28 @@
-SELECT 
-    list.id as id, 
-    list.name as name, 
-    CAST((SELECT COUNT(*) FROM ${schemaname:raw}.Item item WHERE item.list = list.id) as int) as count,
-    CAST((SELECT COUNT(*) FROM ${schemaname:raw}.Item item WHERE item.list = list.id AND item.checked is not null) as int) as completed 
+WITH 
+	lists as (
+		select 
+			id, 
+			"name", 
+			0 as shared 
+		from ${schemaname:raw}.list 
+		where enduser=${userid}
+		
+		union
+		
+		select 
+			l.id, 
+			concat('⿻ ',l."name") as "name", 
+			1 as shared 
+		from ${schemaname:raw}.listshare s inner join ${schemaname:raw}.list l on s.list = l.id 
+		where s.enduser=${userid}
+	)
+	
+SELECT
+	l.id, 
+    l."name", 
+    CAST((SELECT COUNT(*) FROM ${schemaname:raw}.Item i WHERE i.list = l.id) as int) as "count",
+    CAST((SELECT COUNT(*) FROM ${schemaname:raw}.Item i WHERE i.list = l.id AND i.checked is not null) as int) as completed 
 FROM 
-    ${schemaname:raw}.List list
-WHERE 
-    list.enduser = ${userid}
+	lists l
 ORDER BY 
-	list.name
+	l.shared, l."name";
