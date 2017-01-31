@@ -7,3 +7,5 @@ FROM
     ${schemaname:raw}.List list
 WHERE 
     list.enduser = ${userid}
+ORDER BY 
+	list.name
