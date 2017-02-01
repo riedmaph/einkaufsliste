@@ -642,7 +642,7 @@
                 }
             }
         },
-        "/markets/search": {
+        "/markets": {
             "get": {
                 "tags": [
                     "Markets"
@@ -1139,6 +1139,10 @@
                 "city": {
                     "type": "string",
                     "description": "City of market."
+                },
+                "distance": {
+                    "type": "number",
+                    "description": "Distance in meter (airline). Only present if search was by position."
                 }
             }
         },
