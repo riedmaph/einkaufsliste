@@ -127,14 +127,13 @@ export class ListComponent {
 
   /**
    * Commits the edit on an item and propagates the changes
-   * Items without a name or amount = 0 are removed
    *
    * @param {ListItem} item Item to update
    * @return {void}
    */
   public commitEdit (item: ListItem): void {
     if (this.editable) {
-      if (item.name && item.amount) {
+      if (item.name) {
         this.onEdit.emit(item);
       } else {
         this.removeItem(item);

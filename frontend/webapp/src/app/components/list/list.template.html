@@ -17,8 +17,8 @@
       class="item"
       *ngIf="!editable || itemMenuIndex !== i"
     >
-      <span class="item-amount">{{ item.amount }}</span>
-      <span class="item-unit">{{ item.unit }}</span>
+      <span *ngIf="item.amount" class="item-amount">{{ item.amount }}</span>
+      <span *ngIf="item.unit" class="item-unit">{{ item.unit }}</span>
       <span class="item-name">{{ item.name }}</span>
     </span>
     <div class="list-item-form item" *ngIf="editable && itemMenuIndex === i">
