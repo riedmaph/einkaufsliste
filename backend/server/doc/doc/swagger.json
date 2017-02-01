@@ -647,39 +647,46 @@
                 "tags": [
                     "Markets"
                 ],
-                "summary": "Find markets, located within a given radius around the provided position.",
+                "summary": "Find markets, located within a given radius around the provided position or by zip-code.",
                 "description": "",
                 "parameters": [
                     {
                         "name": "x-access-token",
                         "in": "header",
                         "description": "JWT for user authorization.",
-                        "required": true,
+                        "required": false,
                         "type": "string"
                     },
                     {
                         "in": "query",
                         "name": "longditude",
-                        "description": "Longditude of the given position.",
-                        "required": true,
+                        "description": "Longditude of the given position (search by position).",
+                        "required": false,
                         "type": "number",
                         "format": "decimal"
                     },
                     {
                         "in": "query",
                         "name": "latitude",
-                        "description": "Latitude of the given position.",
-                        "required": true,
+                        "description": "Latitude of the given position (search by position).",
+                        "required": false,
                         "type": "number",
                         "format": "decimal"
                     },
                     {
                         "in": "query",
                         "name": "max-distance",
-                        "description": "Maximum distance (airline) between user and market in meters.",
-                        "required": true,
+                        "description": "Maximum distance (airline) between the given position and market in meters (search by position).",
+                        "required": false,
                         "type": "number",
                         "format": "integer"
+                    },
+                    {
+                        "in": "query",
+                        "name": "zip",
+                        "description": "Zip-code to search markets within. (search by zip-code)",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -695,6 +702,12 @@
                                     }
                                 }
                             }
+                        }
+                    },
+                    "400": {
+                        "description": "No search query.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "403": {
@@ -750,6 +763,130 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/markets/favourites": {
+            "get": {
+                "tags": [
+                    "Markets"
+                ],
+                "summary": "Get all favourite markets for the user.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "markets": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Market"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/markets/favourites/{marketid}": {
+            "post": {
+                "tags": [
+                    "Markets"
+                ],
+                "summary": "Add a new market to user's favourite markets.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "marketid",
+                        "description": "ID of market to be removed.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Markets"
+                ],
+                "summary": "Remove a market from user's favourite markets.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "marketid",
+                        "description": "ID of market to be removed.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
                     },
                     "403": {
                         "description": "Failed to authenticate token.",

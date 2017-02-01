@@ -27,6 +27,7 @@
       "webpack"
     ]
   },
+  
   "exclude": [
     "node_modules",
     "dist"
@@ -37,5 +38,6 @@
   },
   "compileOnSave": false,
   "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  "atom": { "rewriteTsconfig": false },
+  "typeRoots": [ "../node_modules/@types" ]
 }

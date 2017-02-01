@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS Transformed.ArticleTag;
 DROP TABLE IF EXISTS Transformed.Tag;
 DROP TABLE IF EXISTS Transformed.Article;
-DROP TABLE IF EXISTS Transformed.Offer;
 DROP TABLE IF EXISTS Transformed.Market;
+DROP TABLE IF EXISTS Transformed.Offer;
 
 DROP SCHEMA IF EXISTS Transformed;
 
@@ -63,4 +63,3 @@ CREATE TABLE IF NOT EXISTS Transformed.Offer
   market integer,
   description text
 );
-
