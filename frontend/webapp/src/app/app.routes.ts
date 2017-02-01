@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import {
   NoContentComponent,
-  LIST_OVERVIEW_ROUTES,
   LIST_VIEW_ROUTES,
   LOGIN_ROUTES,
   REGISTER_ROUTES,
