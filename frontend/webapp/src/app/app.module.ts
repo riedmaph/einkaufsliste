@@ -30,15 +30,18 @@ import {
 // Components
 import {
   ConfirmComponent,
+  FavouriteMarketSettingsComponent,
   ListComponent,
   ListOverviewComponent,
   ListViewComponent,
   LoginComponent,
   NoContentComponent,
   NavigationComponent,
-  OffersComponent,
   NavTitleComponent,
+  OffersComponent,
   RegisterComponent,
+  SettingsComponent,
+  SettingsOverviewComponent,
 } from './components';
 
 // Directives
@@ -64,18 +67,21 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
+    AutoCompletionComponent,
+    AutoCompletionDirective,
+    ConfirmComponent,
+    FavouriteMarketSettingsComponent,
     ListViewComponent,
     NoContentComponent,
     NavigationComponent,
     NavTitleComponent,
     ListComponent,
     ListOverviewComponent,
-    OffersComponent,
-    AutoCompletionComponent,
-    AutoCompletionDirective,
-    RegisterComponent,
     LoginComponent,
-    ConfirmComponent,
+    OffersComponent,
+    RegisterComponent,
+    SettingsComponent,
+    SettingsOverviewComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
