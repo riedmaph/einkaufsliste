@@ -24,7 +24,11 @@
           [src]="resolveImage(market.shop)"
         >
         <h4 md-line>{{ market.name }}</h4>
-        <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }} <span *ngIf="market.distance > 0">- Distance (airline): <b>{{ market.distance | number:'.0-0' }} m</b> </span></p>
+        <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }} 
+          <span *ngIf="market.distance > 0"> - 
+            <b>{{ market.distance | number:'.0-0' }} m</b>
+          </span>
+        </p>
         <button md-icon-button (click)="add(market)"><md-icon>star_border</md-icon></button>
       </md-list-item>
     </md-list>
