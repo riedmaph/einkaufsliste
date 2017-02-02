@@ -8,6 +8,7 @@ import {
   ApiService,
 } from '../../services';
 import { Offer } from '../../models';
+import { NavigationService } from '../../services';
 
 @Component({
   selector: 'sl-offers',
@@ -25,14 +26,17 @@ export class OffersComponent implements OnInit {
   constructor (
     private apiService: ApiService,
     private offerService: OfferService,
+    private navigationService: NavigationService,
   ) { }
 
   /**
-   * Loads favorite markets and the according offers on init.
+   * Sets the navigation title and loads favorite markets 
+   * as well as the according offers on init.
    *
    * @memberof OnInit
    */
   public ngOnInit () {
+    this.navigationService.title = 'Current Offers';
     this.apiService.getFavouriteMarkets().subscribe(markets =>
       this.loadOffers(markets.map(market => market.id))
     );
