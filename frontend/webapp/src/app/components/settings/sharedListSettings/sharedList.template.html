@@ -1,0 +1,53 @@
+<div class="subtitle-area">
+  <a [routerLink]="[ '..' ]" md-icon-button><md-icon>arrow_back</md-icon></a>
+  <h3>List Management</h3>
+</div>
+
+  <md-list>
+    <md-list-item *ngFor="let list of lists; let i = index">
+        <!--img
+          md-list-avatar
+          [alt]="list.name"
+          [src]="a cool icon"
+      -->
+      <h4 md-line>{{ list.name }}</h4>
+      <p md-line>{{ list.completed }} of {{ list.count }}</p>
+    </md-list-item>
+  </md-list>
+  <div>
+    <span class="empty" *ngIf="lists.length == 0"> no lists </span>
+  </div>
+
+  <span *ngIf="error.length == 0"> {{ this.error }} </span>
+  
+  <!--seapartor plus evtl second list>> 
+  <div class="expand_less"> 
+      </i>
+      <button md-icon-button>
+        <i class="material-icons">expand_less</i>
+      </button>
+    </span>
+  </div>
+</div>
+
+<!-- favouriteMarkets->
+<div *ngIf="error?.length">
+  <span class="error">{{ error }}</span>
+</div>
+<md-list *ngIf="favouriteMarkets?.length">
+  <md-list-item *ngFor="let market of favouriteMarkets; let i = index">
+    <img
+      md-list-avatar
+      [alt]="market.name"
+      [src]="resolveImage(market.shop)"
+    >
+    <h4 md-line>{{ market.name }}</h4>
+    <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }}</p>
+    <button md-icon-button (click)="remove(market.id)"><md-icon>star</md-icon></button>
+  </md-list-item>
+</md-list>
+<div *ngIf="!favouriteMarkets.length" class="empty"><span>No entries</span></div>
+<button md-fab class="add-btn" *ngIf="!showAddMenu" (click)=toggleAddMenu()>
+  <md-icon class="md-24">add</md-icon>
+</button>
+-->
