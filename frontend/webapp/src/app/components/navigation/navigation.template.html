@@ -1,8 +1,6 @@
 <div *ngIf="authService.loggedIn">
 
-  <md-sidenav
-    #sidenav
-  >
+  <md-sidenav #sidenav (open)="listOverview.reloadLists()">
     <md-toolbar color="primary">
       <span class="fill-remaining">Your Lists</span>
       <button md-icon-button (click)="sidenav.close()">
