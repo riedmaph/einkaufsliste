@@ -14,3 +14,16 @@ md-toolbar {
 .toolbar-title {
   padding: 0 .5em;
 }
+
+.offers-list-item {
+  cursor: pointer;
+
+  &:hover {
+    background: #eee;
+  }
+}
+
+.offers-label {
+  padding-left: 2.5em;
+  color: #555;
+}
