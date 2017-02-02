@@ -1,12 +1,23 @@
 <div *ngIf="authService.loggedIn">
 
   <md-sidenav #sidenav (open)="listOverview.reloadLists()">
-    <md-toolbar color="primary">
-      <span class="fill-remaining">Your Lists</span>
-      <button md-icon-button (click)="sidenav.close()">
-        <i class="material-icons">close</i>
-      </button>
-    </md-toolbar>
+    <nav>
+      <md-toolbar color="primary">
+        <span class="fill-remaining">Your Lists</span>
+        <button md-icon-button (click)="sidenav.close()">
+          <i class="material-icons">close</i>
+        </button>
+      </md-toolbar>
+    </nav>
+    <md-list>
+      <md-list-item
+        class="offers-list-item"
+        routerLink="/offers"
+        (click)="sidenav.close()"
+      >
+        <span class="offers-label">Current Offers</span>
+      </md-list-item>
+    </md-list>
     <sl-list-overview
       #listOverview
       (onListSelect)="sidenav.close()"
@@ -14,22 +25,11 @@
   </md-sidenav>
 
   <md-toolbar color="primary">
-    <button
-      md-icon-button
-      (click)="sidenav.open()"
-    >
+    <button md-icon-button (click)="sidenav.open()">
       <i class="material-icons">menu</i>
     </button>
 
     <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
-
-    <button
-      *ngIf="authService.loggedIn"
-      md-icon-button
-      routerLink="/offers"
-    >
-      <i class="material-icons">local_offer</i>
-    </button>
 
     <md-menu x-position="before" #menu="mdMenu">
       <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
