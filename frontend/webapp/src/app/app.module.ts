@@ -38,6 +38,7 @@ import {
   NavigationComponent,
   NavTitleComponent,
   RegisterComponent,
+  SharedListsSettingsComponent,
 } from './components';
 
 // Directives
@@ -74,6 +75,7 @@ type StoreType = {
     RegisterComponent,
     LoginComponent,
     ConfirmComponent,
+    SharedListsSettingsComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
