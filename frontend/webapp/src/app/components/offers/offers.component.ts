@@ -19,12 +19,17 @@ export class OffersComponent implements OnInit {
   /** Current offers at the user's favourite markets */
   private offers: Offer[] = [ ];
 
+  /**
+   * Constructor of the offers component.
+   */
   constructor (
     private apiService: ApiService,
     private offerService: OfferService,
   ) { }
 
   /**
+   * Loads favorite markets and the according offers on init.
+   *
    * @memberof OnInit
    */
   public ngOnInit () {
@@ -37,11 +42,11 @@ export class OffersComponent implements OnInit {
    * Loads the offers for a given list of market identifiers and
    * appends them to the current list of offers.
    *
-   * @param {string[]} marketUuids The list of market identifiers.
+   * @param {number[]} marketIds The list of market identifiers.
    * @return {void}
    */
-  private loadOffers (marketUuids: number[]): void {
-    marketUuids.map(marketUuid =>
+  private loadOffers (marketIds: number[]): void {
+    marketIds.map(marketUuid =>
       this.offerService.getOffers(marketUuid).subscribe(offers =>
         this.offers = this.offers.concat(offers)
       )

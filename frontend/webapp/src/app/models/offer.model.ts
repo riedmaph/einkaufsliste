@@ -9,7 +9,10 @@ export class Offer {
   discount: number;
 
   /**
-   * Return offer from an offer API representation.
+   * Parses an offer from an offer API representation.
+   *
+   * @param {OfferApiRepresentation} apiRepresentation The API representation to parse.
+   * @return {Offer} The parsed offer.
    */
   public static fromApi (apiRepresentation: OfferApiRepresentation): Offer {
     return new Offer({
@@ -34,5 +37,5 @@ export interface OfferApiRepresentation {
   offerfrom: string;
   offerto: string;
   discount: string;
-  product: { name: string; brand: string; price: number};
+  product: { name: string; brand: string; price: number };
 }

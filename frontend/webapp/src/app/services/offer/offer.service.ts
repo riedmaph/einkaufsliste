@@ -22,11 +22,11 @@ export class OfferService {
   /**
    * Gets all offers for a given market identifier.
    *
-   * @param {string} marketUuid The market identifier.
+   * @param {number} marketId The market identifier.
    * @return {Observable<Offer[]>} Observable containing a list of offers.
    */
-  public getOffers (marketUuid: number): Observable<Offer[]> {
-    return this.authHttp.get(API_ROUTES.markets.offers.replace(':marketId', marketUuid.toString()))
+  public getOffers (marketId: number): Observable<Offer[]> {
+    return this.authHttp.get(API_ROUTES.markets.offers.replace(':marketId', marketId.toString()))
       .map(res => res.json())
       .map(list => list.offers.map(this.mapper.offerApiToLocal));
   }
