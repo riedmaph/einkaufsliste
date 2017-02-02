@@ -25,11 +25,14 @@ import {
   AuthGuard,
   ApiMapperService,
   NavigationService,
+  OfferService,
+  OfferMapperService,
 } from './services';
 
 // Components
 import {
   ConfirmComponent,
+  FavouriteMarketSettingsComponent,
   ListComponent,
   ListOverviewComponent,
   ListViewComponent,
@@ -37,10 +40,10 @@ import {
   NoContentComponent,
   NavigationComponent,
   NavTitleComponent,
+  OffersComponent,
   RegisterComponent,
   SettingsComponent,
   SettingsOverviewComponent,
-  FavouriteMarketSettingsComponent,
 } from './components';
 
 // Directives
@@ -66,20 +69,21 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
+    AutoCompletionComponent,
+    AutoCompletionDirective,
+    ConfirmComponent,
+    FavouriteMarketSettingsComponent,
     ListViewComponent,
     NoContentComponent,
     NavigationComponent,
     NavTitleComponent,
     ListComponent,
     ListOverviewComponent,
-    AutoCompletionComponent,
-    AutoCompletionDirective,
-    RegisterComponent,
     LoginComponent,
+    OffersComponent,
+    RegisterComponent,
     SettingsComponent,
     SettingsOverviewComponent,
-    FavouriteMarketSettingsComponent,
-    ConfirmComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
@@ -106,6 +110,8 @@ type StoreType = {
     ApiMapperService,
     AuthGuard,
     NavigationService,
+    OfferService,
+    OfferMapperService,
   ],
 })
 export class AppModule {

@@ -23,6 +23,14 @@
 
     <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
 
+    <button
+      *ngIf="authService.loggedIn"
+      md-icon-button
+      routerLink="/offers"
+    >
+      <i class="material-icons">local_offer</i>
+    </button>
+
     <md-menu x-position="before" #menu="mdMenu">
       <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
       <button md-menu-item (click)="authService.logout()"> Sign Out </button>
@@ -32,20 +40,12 @@
       <i class="material-icons">more_vert</i>
     </button>
   </md-toolbar>
-
 </div>
 
 <div *ngIf="!authService.loggedIn">
-
   <md-toolbar color="primary">
     <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
-
-    <a routerLink="/register" routerLinkActive="active">
-      Register
-    </a>
-    <a routerLink="/login" routerLinkActive="active">
-      Login
-    </a>
+    <a routerLink="/register" routerLinkActive="active">Register</a>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
   </md-toolbar>
-
 </div>

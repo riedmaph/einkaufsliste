@@ -75,6 +75,17 @@ export class ListOverviewComponent implements OnInit {
   }
 
   /**
+   * Reloads the lists of the overview
+   *
+   * @return {void}
+   */
+  public reloadLists (): void {
+    this.apiService.getAllLists().subscribe(lists => {
+      this.lists = lists;
+    });
+  }
+
+  /**
    * Triggers closing the sidenav and setting focus back to the main area
    *
    * @return {void}
