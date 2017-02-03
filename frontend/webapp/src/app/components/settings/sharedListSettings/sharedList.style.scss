@@ -19,29 +19,16 @@ h4 {
     font-weight: bold;
 }
 
-.add-btn {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    color: #fff;
-    z-index: 999;
+.avatar {
+    line-height: 2;
 }
 
-.inputContainer {
-    flex-direction: row;
-    align-items: center;
-    display: flex;
-    padding: 0 2em;
+md-list-item:hover {
+    background: #eee;
 }
 
-md-slider {
-    width: 80%;
-}
-
-md-input {
-    margin: 1em;
-    text-align: center;
-    max-width: 6em;
+md-progress-bar {
+    max-width: 15rem;
 }
 
 .empty {
@@ -54,31 +41,13 @@ md-input {
     padding: 1em;
 }
 
-md-list-item:hover {
-    background: #fafafa;
+.add-control {
+  padding: .5em 1em 0 1em;
 }
 
-.expand_less {
-    border-bottom-style: solid;
-    border-bottom-color: #AAA;
-    text-align: right;
-    width: 100%;
+.mail-input {
+  padding: 0 0 0 .5em;
 }
-
-a {
-    color: #8e8e8e;
-}
-
-.info {
-    min-height: 2em;
-    text-align: center;
-    color: #8e8e8e;
-    padding: 1em;
-    padding: 0;
-    margin: 0;
-}
-
-.positionHint {
-    font-size: 0.5em;
-    color: #8e8e8e;
+md-input {
+  width: calc(100% - 3rem);
 }

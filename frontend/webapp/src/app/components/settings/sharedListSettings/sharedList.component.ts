@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 import { List } from '../../../models';
 import { ApiService } from '../../../services';
+import { FormValidators } from '../../../util';
 
 @Component({
   selector: 'sl-settings',
@@ -10,29 +16,41 @@ import { ApiService } from '../../../services';
   styleUrls: [ './sharedList.style.scss' ],
 })
 export class SharedListsSettingsComponent {
+
+  public shareForm: FormGroup;
+
   private lists: List[] = [ ];
   private error: string = '';
+  private expandedList: List;
 
   constructor (
     private route: ActivatedRoute,
     private apiService: ApiService,
+    private formBuilder: FormBuilder,
   ) {
     this.apiService.getAllLists().subscribe(lists => {
       this.lists = lists; },
     );
+    this.shareForm = this.formBuilder.group({
+      mail: [ '', Validators.compose([
+        Validators.required,
+        FormValidators.validateEmail,
+        ]),
+      ],
+    });
   }
 /**
  * method to share a list with a users email
- * @param {string} ListId list to be shared
- * @param {string} mail mail of the user to share with
+ * @param {string} listId list to be shared
+ * @see mail adress of whom to share with resolved from form group
  */
-  public shareList (ListId: string, mail: string): void {
-    if (this.userExists(mail)) {
+  public shareList (listId: string): void {
+    if (this.userExists('TODO')) {
       this.error = '';
       // make api call
     }
     else {
-      this.error = 'User ' + mail + 'could not be found';
+      this.error = 'User ' + 'TODO' + 'could not be found';
     }
   }
   /**
@@ -41,5 +59,12 @@ export class SharedListsSettingsComponent {
    */
  private userExists (mail: string): boolean {
    return true;
+ }
+
+ private isExpanded(list: List): boolean {
+   return list === this.expandedList;
+ }
+ private setExpandedList(list: List): void {
+   this.expandedList = list;
  }
 }
