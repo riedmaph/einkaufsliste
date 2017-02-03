@@ -3,6 +3,10 @@ import {
   OnInit,
 } from '@angular/core';
 
+import {
+  OfferService,
+  ApiService,
+} from '../../services';
 import { Offer } from '../../models';
 import { NavigationService } from '../../services';
 
@@ -19,14 +23,38 @@ export class OffersComponent implements OnInit {
   /**
    * Constructor of the offers component.
    */
-  constructor(
+  constructor (
+    private apiService: ApiService,
+    private offerService: OfferService,
     private navigationService: NavigationService,
   ) { }
 
   /**
+   * Sets the navigation title and loads favorite markets 
+   * as well as the according offers on init.
+   *
    * @memberof OnInit
    */
-  public ngOnInit (): void {
+  public ngOnInit () {
     this.navigationService.title = 'Current Offers';
+    this.apiService.getFavouriteMarkets().subscribe(markets =>
+      this.loadOffers(markets.map(market => market.id))
+    );
   }
+
+  /**
+   * Loads the offers for a given list of market identifiers and
+   * appends them to the current list of offers.
+   *
+   * @param {number[]} marketIds The list of market identifiers.
+   * @return {void}
+   */
+  private loadOffers (marketIds: number[]): void {
+    marketIds.map(marketUuid =>
+      this.offerService.getOffers(marketUuid).subscribe(offers =>
+        this.offers = this.offers.concat(offers)
+      )
+    );
+  }
+
 }
