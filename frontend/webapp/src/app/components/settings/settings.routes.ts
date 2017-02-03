@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
 import { SettingsComponent } from './settings.component';
-import { SettingsOverviewComponent } from './overview';
 import { FavouriteMarketSettingsComponent } from './favourite-market';
+import { SettingsOverviewComponent } from './overview';
 import { SharedListsSettingsComponent } from './sharedListSettings';
 
 import {

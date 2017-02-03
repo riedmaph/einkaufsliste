@@ -1,5 +1,6 @@
 var path = require('path');
 
+
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
@@ -10,10 +11,12 @@ chai.use(chaiHttp);
 
 var dbhandler = require(path.join('..', 'test', 'dbhandler', 'dbhandler'));
 
-describe('Markets', () => {
+
+//clear the test schema before testing
+describe('Favourite-Markets', () => {
   var token;
 
-  before((done) => {    
+  before((done) => {
     dbhandler.deleteUsers((err) => {
       var user = {
         email: "newuser",
@@ -28,14 +31,14 @@ describe('Markets', () => {
               res.body.should.have.property('token');
               token = res.body.token;
             done();
-          });
+          }); 
     });
   });
 
-  describe('/GET markets for Franz Wolter Strasse in 100m', () => {
+  describe('/GET empty DB', () => {
     it('it should return no markets', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets/favourites')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -49,7 +52,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets/favourites')
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -60,7 +63,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets/favourites')
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);
@@ -71,60 +74,20 @@ describe('Markets', () => {
     });
   });
 
-  describe('/GET markets for Franz Wolter Strasse in 240m', () => {
-    it('it should return one market', (done) => {
+  describe('/POST', () => {
+    it('it should add a market to favourites', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=240')
+          .post('/api/markets/favourites/1')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
-              res.body.should.be.a('object');
-              res.body.should.have.property('markets');
-              res.body.markets.should.be.a('array');
-              res.body.markets.length.should.be.eql(1);
-              res.body.markets[0].should.be.a('object');
-              res.body.markets[0].should.have.property('name');
-              res.body.markets[0].name.should.be.eql('EDEKA Häfner');
-            done();
-          });
-    });
-  });
-
-  describe('/GET markets for Franz Wolter Strasse in 250m', () => {
-    it('it should return two markets', (done) => {
-      chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=250')
-          .set('x-access-token', token)
-          .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
-              res.body.should.have.property('markets');
-              res.body.markets.should.be.a('array');
-              res.body.markets.length.should.be.eql(2);
-              res.body.markets.map(function(a) {return a.name;}).should.have.members(['EDEKA Häfner', 'Marktkauf Unterföhring']);
-            done();
-          });
-    });
-  });
-
-  describe('/GET markets for ZIP 123', () => {
-    it('it should return no markets', (done) => {
-      chai.request(app)
-          .get('/api/markets?zip=123')
-          .set('x-access-token', token)
-          .end((err, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
-              res.body.should.have.property('markets');
-              res.body.markets.should.be.a('array');
-              res.body.markets.length.should.be.eql(0);
             done();
           });
     });
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .get('/api/markets?zip=123')
+          .post('/api/markets/favourites/1')
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -135,7 +98,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .get('/api/markets?zip=123')
+          .post('/api/markets/favourites/1')
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);
@@ -146,18 +109,73 @@ describe('Markets', () => {
     });
   });
 
-  describe('/GET markets for ZIP 77731', () => {
-    it('it should return two markets', (done) => {
+  describe('/GET 3 markets', () => {
+   it('it should add a market to favourites', (done) => {
       chai.request(app)
-          .get('/api/markets?zip=77731')
+          .post('/api/markets/favourites/2')
+          .set('x-access-token', token)
+          .end((err, res) => {
+              res.should.have.status(200);
+            done();
+          });
+    });
+
+    it('it should add a market to favourites', (done) => {
+      chai.request(app)
+          .post('/api/markets/favourites/3')
+          .set('x-access-token', token)
+          .end((err, res) => {
+              res.should.have.status(200);
+            done();
+          });
+    });
+
+    it('it should return 3 lists', (done) => {
+      chai.request(app)
+          .get('/api/markets/favourites')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('markets');
               res.body.markets.should.be.a('array');
-              res.body.markets.length.should.be.eql(2);
-              res.body.markets.map(function(a) {return a.name;}).should.have.members(['nah und gut Oberle', 'EDEKA Oberle']);
+              res.body.markets.length.should.be.eql(3);
+            done();
+          });
+    });
+  });
+
+  describe('/DELETE', () => {
+    it('it should delete an existing list', (done) => {
+      chai.request(app)
+          .delete('/api/markets/favourites/2')
+          .set('x-access-token', token)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+            done();
+          });
+    });
+
+    it('it should return 403 if no token provided', (done) => {
+      chai.request(app)
+          .delete('/api/markets/favourites/2')
+          .end((err, res) => {
+              res.should.have.status(403);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message').eql('Failed to authenticate token.');
+            done();
+          });
+    });
+
+    it('it should return 403 if no valid token provided', (done) => {
+      chai.request(app)
+          .delete('/api/markets/favourites/2')
+          .set('x-access-token', "xyz")
+          .end((err, res) => {
+              res.should.have.status(403);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message').eql('Failed to authenticate token.');
             done();
           });
     });

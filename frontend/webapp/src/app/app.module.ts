@@ -38,6 +38,9 @@ import {
   NavigationComponent,
   NavTitleComponent,
   RegisterComponent,
+  SettingsComponent,
+  SettingsOverviewComponent,
+  FavouriteMarketSettingsComponent,
   SharedListsSettingsComponent,
 } from './components';
 
@@ -74,6 +77,9 @@ type StoreType = {
     AutoCompletionDirective,
     RegisterComponent,
     LoginComponent,
+    SettingsComponent,
+    SettingsOverviewComponent,
+    FavouriteMarketSettingsComponent,
     ConfirmComponent,
     SharedListsSettingsComponent,
   ],
