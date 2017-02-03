@@ -22,31 +22,38 @@
         <md-icon>expand_less</md-icon>
       </button>
     </md-list-item>
-      <!-- controls-->
-<div *ngIf="isExpanded(list)" class="add-control">
-    <form [formGroup]="shareForm" (ngSubmit)="shareList(list.id)">
-      <md-input
-        formControlName="mail"
-        type="text"
-        placeholder="mail adress"
-        dividerColor="primary"
-        class="mail-input"
-      >
-        <md-hint align="end">Who do you want to share {{ list.name }} with?</md-hint>
-      </md-input>
-      <button
-        md-icon-button
-        type="submit"
-        class="list-overview-button"
-      >
-        <i class="material-icons">person_add</i>
-      </button>
-      <span *ngIf="error.length == 0"> {{ this.error }} </span>
-    </form>
-    
 
-  </div>
+      <!-- add contributor-->
+    <div *ngIf="isExpanded(list)" class="add-control">
+      <form [formGroup]="shareForm" (ngSubmit)="shareList(list)">
+        <md-input
+          formControlName="mail"
+          type="text"
+          placeholder="mail adress"
+          dividerColor="primary"
+          class="mail-input"
+        >
+          <md-hint align="end">Who do you want to share {{ list.name }} with?</md-hint>
+        </md-input>
+        <button
+          md-icon-button
+          type="submit"
+          class="list-overview-button"
+        >
+          <i class="material-icons">person_add</i>
+        </button>
+        <span *ngIf="error.length == 0"> {{ this.error }} </span>
+      </form>
+    </div>
 
+<!-- remove controls
+
+
+ul mit sharedWidth. horizontal layout
+li wie bei emails: Button mit name und 'X'-icon
+
+Methode zum aufrufen: removeContributor(list, user)
+-->
 
 
   

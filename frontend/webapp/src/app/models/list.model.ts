@@ -7,6 +7,5 @@ export interface List {
   items?: ListItem[];
   count?: number;
   completed?: number;
-  shared?: boolean; // make obligatory after backend update
-  sharedWith?: string[]; // update to persons (TODO person.model) when backend is updated 
+  sharedWith?: string[]; // change to obligatory attribute when backend is updated 
 }

@@ -40,24 +40,44 @@ export class SharedListsSettingsComponent {
     });
   }
 /**
- * method to share a list with a users email
- * @param {string} listId list to be shared
+ * method to share a list with a user
+ * @param {List} list list to be shared
  * @see mail adress of whom to share with resolved from form group
  */
-  public shareList (listId: string): void {
-    if (this.userExists('TODO')) {
-      this.error = '';
-      // make api call
-    }
-    else {
-      this.error = 'User ' + 'TODO' + 'could not be found';
+  public shareList (list: List): void {
+    const user = this.shareForm.value;
+    if (this.shareForm.valid) {
+      if (this.userExists(user)) {
+        this.error = '';
+       /* this.apiService.addContributor(list.id, user).subscribe(_ => 
+          list.sharedWith.push(user)
+        );*/
+      }
+      else {
+        this.error = 'User ' + this.shareForm.value + 'could not be found';
+      }
     }
   }
+
+/**
+ * remove a contributor from a shared list
+ * @param {List} list list to be shared
+ * @param {string} user mail adress of the user to be removed
+ */
+  public removeContributor (list: List, user: string): void {
+  /* this.apiService.removeContributor(list.id, user).subscribe(_ => {
+      const index = list.sharedWith.findIndex(users => user === user);
+      list.sharedWith.splice(index, 1); });
+    */
+  }
+
+
   /**
    * method to check if an user to share with exists
    * @return {boolean} true if user was found
    */
  private userExists (mail: string): boolean {
+   // @TODO make api call
    return true;
  }
 
