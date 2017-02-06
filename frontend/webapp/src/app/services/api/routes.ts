@@ -17,6 +17,15 @@ export const API_ROUTES = {
       move: `${API_BASE_URL}/lists/:listId/items/:itemId`,
     },
   },
+  markets: {
+    favourites: {
+      get: `${API_BASE_URL}/markets/favourites`,
+      add: `${API_BASE_URL}/markets/favourites/:marketId`,
+      remove: `${API_BASE_URL}/markets/favourites/:marketId`,
+    },
+    search: `${API_BASE_URL}/markets`,
+    zip: `/assets/mock/favourite-markets.json`,
+    },
   products: {
     search: `${API_BASE_URL}/products/search`,
   },

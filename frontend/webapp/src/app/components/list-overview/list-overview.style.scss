@@ -1,0 +1,32 @@
+md-list-item span {
+  cursor: pointer;
+  margin: 0 0 0 .5em;
+  width: 12em;
+}
+
+md-list-item:hover {
+  background: #eee;
+}
+
+.expanded-list-item {
+  height: 6em;
+}
+
+.list-overview-button {
+  color: #777;
+}
+
+.list-detail-text {
+  margin: 1em 1em 1em 8em;
+  font-size: .8em;
+  color: #777;
+}
+
+.new-list {
+  padding: .5em 1em 0 1em;
+}
+
+.new-list-input {
+  padding: 0 0 0 .5em;
+  width: 14em;
+}

@@ -6,6 +6,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import {
   FormGroup,
   FormBuilder,
@@ -15,6 +16,7 @@ import { Observable } from 'rxjs';
 
 import { ListComponent } from '../list';
 import { ApiService } from '../../services/api';
+
 import {
   ListItem,
   List,
@@ -40,19 +42,18 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   constructor (
     private apiService: ApiService,
     private route: ActivatedRoute,
+    private dialog: MdDialog,
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
-      amount: [ '', Validators.required ],
-      unit: [ '', Validators.required ],
+      amount: '',
+      unit:  '',
       itemName: [ '', Validators.compose([
         Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
       ]) ],
-
     });
   }
-
   /** Getter for unchecked items */
   public get items (): ListItem[] {
     return this.list.items.filter(i => !i.checked);
@@ -77,13 +78,15 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @memberOf AfterViewInit
    */
   public ngAfterViewInit (): void {
-    this.listComponents.forEach(listComp => {
-      listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
-      listComp.onRemove.subscribe(item => this.removeItem(item));
-      listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
-        this.reorderItems(tuple[0], tuple[1], tuple[2])
-      );
-    });
+    if (this.list && this.listComponents) {
+      this.listComponents.forEach(listComp => {
+        listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
+        listComp.onRemove.subscribe(item => this.removeItem(item));
+        listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
+          this.reorderItems(tuple[0], tuple[1], tuple[2])
+        );
+      });
+    }
   }
 
   /**
@@ -164,5 +167,19 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public get autoCompletionFn (): (_: string) => Observable<Product[]> {
     return (str: string) => this.apiService.getAutoCompletion(str);
+  }
+
+  public onEditHandler (event: KeyboardEvent, keyCode: number, elem: HTMLElement) {
+     if (keyCode === 13) {
+        elem.contentEditable = 'false';
+        this.commitEdit(elem);
+     }
+  }
+
+  public commitEdit (elem: HTMLElement) {
+    if (elem.textContent){
+      this.list.name = elem.textContent.replace(/[\r\n\t]/g, '');
+      this.apiService.renameList(this.list.id, this.list.name);
+    }
   }
 }

@@ -42,7 +42,7 @@ export class LoginComponent {
   public onSubmit (data: { email: string, password: string }): void {
     this.authService.login(data).subscribe(
       (res: Response) => {
-        this.router.navigate([ '' ]);
+        this.router.navigate([ 'list' ]);
       },
       (res: Response) => {
         if (res.status === 401) {

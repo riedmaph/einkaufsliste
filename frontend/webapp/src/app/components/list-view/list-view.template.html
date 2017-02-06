@@ -1,47 +1,49 @@
-<sl-nav-title [title]="list.name"></sl-nav-title>
+<div *ngIf="!list"><h2>No list selected</h2></div>
+<div *ngIf="list">
+  <sl-nav-title [title]="list.name"></sl-nav-title>
 
-<sl-list [items]="completedItems" deleteable></sl-list>
+  <sl-list [items]="completedItems" deleteable></sl-list>
+  <sl-list [items]="items" editable deleteable sortable></sl-list>
 
-<sl-list [items]="items" editable deleteable sortable></sl-list>
+  <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
-<div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
-
-<form [formGroup]="form" class="list-item-form">
-  <span
-    *ngIf="!form.controls['itemName'].pristine && form.controls['itemName'].errors && form.controls['itemName'].errors.maxlength"
-    class="form-error"
-  >
-    Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
-  </span>
-  <input
-    type="number"
-    formControlName="amount"
-    name="amount"
-    class="form-field--sm"
-    placeholder="1"
-  >
-  <input
-    type="text"
-    formControlName="unit"
-    name="unit"
-    class="form-field--sm"
-    placeholder="kg"
-  >
-  <input
-    [autoCompletion]="autoCompletionFn"
-    (onSelect)="addItem($event)"
-    (onValueChange)="updateValue($event)"
-    type="text"
-    placeholder="Apples"
-    formControlName="itemName"
-    name="itemName"
-    class="form-field--lg"
-  >
-  <button
-    md-fab color="accent"
-    (click)="addItem($event)"
-    [disabled]="!form.pristine && form.invalid"
-  >
-    <md-icon>add</md-icon>
-  </button>
-</form>
+  <form [formGroup]="form" class="list-item-form">
+    <span
+      *ngIf="!form.controls['itemName'].pristine && form.controls['itemName'].errors && form.controls['itemName'].errors.maxlength"
+      class="form-error"
+    >
+      Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
+    </span>
+    <input
+      type="number"
+      formControlName="amount"
+      name="amount"
+      class="form-field--sm"
+      placeholder="1"
+    >
+    <input
+      type="text"
+      formControlName="unit"
+      name="unit"
+      class="form-field--sm"
+      placeholder="kg"
+    >
+    <input
+      [autoCompletion]="autoCompletionFn"
+      (onSelect)="addItem($event)"
+      (onValueChange)="updateValue($event)"
+      type="text"
+      placeholder="Apples"
+      formControlName="itemName"
+      name="itemName"
+      class="form-field--lg"
+    >
+    <button
+      md-fab color="accent"
+      (click)="addItem($event)"
+      [disabled]="!form.pristine && form.invalid"
+    >
+      <md-icon>add</md-icon>
+    </button>
+  </form>
+</div>

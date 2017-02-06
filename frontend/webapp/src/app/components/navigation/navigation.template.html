@@ -1,28 +1,51 @@
-<nav>
+<div *ngIf="authService.loggedIn">
+
+  <md-sidenav #sidenav (open)="listOverview.reloadLists()">
+    <md-toolbar color="primary">
+      <span class="fill-remaining">Your Lists</span>
+      <button md-icon-button (click)="sidenav.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </md-toolbar>
+    <sl-list-overview
+      #listOverview
+      (onListSelect)="sidenav.close()"
+    ></sl-list-overview>
+  </md-sidenav>
+
   <md-toolbar color="primary">
-    <button class="toolbar-button">
+    <button
+      md-icon-button
+      (click)="sidenav.open()"
+    >
       <i class="material-icons">menu</i>
     </button>
 
-    <span class="toolbar-title toolbar-fill-remaining">{{ navigation.title }}</span>
+    <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
 
-    <span *ngIf="!authService.loggedIn">
-      <a routerLink="/register" routerLinkActive="active">
-        Register
-      </a>
-      <a routerLink="/login" routerLinkActive="active">
-        Login
-      </a>
-    </span>
+    <md-menu x-position="before" #menu="mdMenu">
+      <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
+      <button md-menu-item (click)="authService.logout()"> Sign Out </button>
+    </md-menu>
 
-    <div *ngIf="authService.loggedIn">
-      <md-menu x-position="before" #menu="mdMenu">
-          <button md-menu-item (click)="authService.logout()"> Sign Out </button>
-      </md-menu>
-
-      <button md-icon-button [md-menu-trigger-for]="menu">
-        <i class="material-icons">more_vert</i>
-      </button>
-    </div>
+    <button md-icon-button [md-menu-trigger-for]="menu">
+      <i class="material-icons">more_vert</i>
+    </button>
   </md-toolbar>
-</nav>
+
+</div>
+
+<div *ngIf="!authService.loggedIn">
+
+  <md-toolbar color="primary">
+    <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
+
+    <a routerLink="/register" routerLinkActive="active">
+      Register
+    </a>
+    <a routerLink="/login" routerLinkActive="active">
+      Login
+    </a>
+  </md-toolbar>
+
+</div>
