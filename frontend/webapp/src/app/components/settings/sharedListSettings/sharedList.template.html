@@ -7,8 +7,8 @@
     <md-list-item>
 
       <!--general information-->
-      <md-icon *ngIf="!list.shared" md-list-avatar class="avatar">people</md-icon>
-      <md-icon *ngIf="list.shared" md-list-avatar class="avatar">person</md-icon>
+      <md-icon *ngIf="list.sharedWith.length > 0" md-list-avatar class="avatar">people</md-icon>
+      <md-icon *ngIf="list.sharedWith.length == 0" md-list-avatar class="avatar">person</md-icon>
       <h4 md-line>{{ list.name }}</h4>
       <p md-line>{{ list.completed }} of {{ list.count }} completed
         <md-progress-bar mode="determinate" value="{{ list.completed / list.count * 100}}"></md-progress-bar>
@@ -24,7 +24,7 @@
     </md-list-item>
 
       <!-- add contributor-->
-    <div *ngIf="isExpanded(list)" class="add-control">
+    <div *ngIf="isExpanded(list)" class="control-container">
       <form [formGroup]="shareForm" (ngSubmit)="shareList(list)">
         <md-input
           formControlName="mail"
@@ -38,21 +38,28 @@
         </md-input>
         <button
           md-icon-button
-          type="button"
+          type="submit"
         >
           <i class="material-icons">person_add</i>
         </button>
       </form>
     </div>
 
-<!-- remove controls
-
-
-ul mit sharedWidth. horizontal layout
-li wie bei emails: Button mit name und 'X'-icon
-
-Methode zum aufrufen: removeContributor(list, user)
--->
+<!-- remove controls-->
+    <div *ngIf="isExpanded(list)" class="control-container">
+      <ul>
+        <li *ngFor="let user of list.sharedWith">
+          <button 
+           md-button
+           class="removeBtn"
+           (click)="removeContributor(list,user)"
+          >
+            {{ user }}
+            <md-icon class="removeX">clear</md-icon>
+          </button> 
+        </li>
+      </ul>
+    </div>
 
 
   

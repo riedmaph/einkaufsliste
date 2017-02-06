@@ -41,7 +41,7 @@ md-progress-bar {
     padding: 1em;
 }
 
-.add-control {
+.control-container {
   padding: .5em 1em 0 1em;
 }
 
@@ -50,4 +50,30 @@ md-progress-bar {
 }
 md-input {
   width: calc(100% - 3rem);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.removeBtn {
+    border-color: rgba(0, 0, 0, 0.12);
+    border-style: solid;
+    border-width: thin;
+    border-radius: 1rem;
+}
+
+.removeX {
+    color: #ff0000;
 }

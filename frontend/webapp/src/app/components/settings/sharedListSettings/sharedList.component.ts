@@ -47,7 +47,12 @@ export class SharedListsSettingsComponent {
  */
   public shareList (list: List): void {
     const newUser = this.shareForm.value.mail;
-    if (this.shareForm.valid) {
+    const alreadyParticipating: boolean = list.sharedWith.findIndex(user =>
+      user === newUser) > -1;
+
+    if (alreadyParticipating) {
+        this.error = 'User ' + newUser + ' is already participating';
+    } else if (this.shareForm.valid) {
       this.userExists(newUser).subscribe( response => {
         if (response) {
           this.error = '';
