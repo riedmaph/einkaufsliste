@@ -23,7 +23,7 @@ h4 {
     line-height: 2;
 }
 
-md-list-item:hover {
+md-list:hover {
     background: #eee;
 }
 
@@ -42,7 +42,10 @@ md-progress-bar {
 }
 
 .control-container {
-  padding: .5em 1em 0 1em;
+  padding: .5em 1em 1em 1em;
+  border-width: thin;
+  border-bottom-style: solid;
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 .mail-input {

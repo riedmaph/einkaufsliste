@@ -23,8 +23,8 @@
       </button>
     </md-list-item>
 
+    <div  *ngIf="isExpanded(list)" class="control-container">
       <!-- add contributor-->
-    <div *ngIf="isExpanded(list)" class="control-container">
       <form [formGroup]="shareForm" (ngSubmit)="shareList(list)">
         <md-input
           formControlName="mail"
@@ -43,10 +43,8 @@
           <i class="material-icons">person_add</i>
         </button>
       </form>
-    </div>
 
-<!-- remove controls-->
-    <div *ngIf="isExpanded(list)" class="control-container">
+      <!-- remove controls-->
       <ul>
         <li *ngFor="let user of list.sharedWith">
           <button 
@@ -60,9 +58,6 @@
         </li>
       </ul>
     </div>
-
-
-  
   </md-list>
   
   <div>
