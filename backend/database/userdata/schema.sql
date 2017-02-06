@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS :schemaname.FavouriteMarket;
+DROP TABLE IF EXISTS :schemaname.Admin;
 DROP TABLE IF EXISTS :schemaname.Item;
 DROP TABLE IF EXISTS :schemaname.List;
 DROP TABLE IF EXISTS :schemaname.Enduser;
@@ -31,6 +33,12 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     checked TIMESTAMP DEFAULT NULL,
     list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (
+    enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE,
+    market INTEGER NOT NULL REFERENCES Grocerydata.Market(id) ON DELETE CASCADE,
+    UNIQUE(enduser, market)
 );
 
 

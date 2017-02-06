@@ -35,7 +35,7 @@ describe('Markets', () => {
   describe('/GET markets for Franz Wolter Strasse in 100m', () => {
     it('it should return no markets', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=100')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -49,7 +49,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=100')
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -60,7 +60,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=100')
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);
@@ -74,7 +74,7 @@ describe('Markets', () => {
   describe('/GET markets for Franz Wolter Strasse in 240m', () => {
     it('it should return one market', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=240')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=240')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -90,10 +90,10 @@ describe('Markets', () => {
     });
   });
 
-  describe('/GET markets for Franz Wolter Strasse in 250m', () => {
+  describe('/GET markets for Franz Wolter Strasse in 400m', () => {
     it('it should return two markets', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longditude=11.633389&max-distance=250')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=400')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
