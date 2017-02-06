@@ -16,6 +16,11 @@ export const API_ROUTES = {
       update: `${API_BASE_URL}/lists/:listId/items/:itemId`,
       move: `${API_BASE_URL}/lists/:listId/items/:itemId`,
     },
+    sharing: {
+      addContributor: `${API_BASE_URL}/share/:listid/:mail`,
+      removeContributor: `${API_BASE_URL}/share/:listid/:mail`,
+      checkEmail: `${API_BASE_URL}/share/:mail`,
+    },
   },
   markets: {
     favourites: {

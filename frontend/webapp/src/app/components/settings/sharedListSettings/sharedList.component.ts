@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { List } from '../../../models';
 import { ApiService } from '../../../services';
@@ -45,17 +46,18 @@ export class SharedListsSettingsComponent {
  * @see mail adress of whom to share with resolved from form group
  */
   public shareList (list: List): void {
-    const user = this.shareForm.value;
+    const newUser = this.shareForm.value.mail;
     if (this.shareForm.valid) {
-      if (this.userExists(user)) {
-        this.error = '';
-       /* this.apiService.addContributor(list.id, user).subscribe(_ => 
-          list.sharedWith.push(user)
-        );*/
-      }
-      else {
-        this.error = 'User ' + this.shareForm.value + 'could not be found';
-      }
+      this.userExists(newUser).subscribe( response => {
+        if (response) {
+          this.error = '';
+          this.apiService.addContributor(list.id, newUser).subscribe(_ =>
+            list.sharedWith.push(newUser),
+          );
+        } else {
+        this.error = 'User ' + newUser + ' could not be found';
+        }
+      });
     }
   }
 
@@ -65,10 +67,9 @@ export class SharedListsSettingsComponent {
  * @param {string} user mail adress of the user to be removed
  */
   public removeContributor (list: List, user: string): void {
-  /* this.apiService.removeContributor(list.id, user).subscribe(_ => {
+   this.apiService.removeContributor(list.id, user).subscribe(_ => {
       const index = list.sharedWith.findIndex(users => user === user);
       list.sharedWith.splice(index, 1); });
-    */
   }
 
 
@@ -76,15 +77,20 @@ export class SharedListsSettingsComponent {
    * method to check if an user to share with exists
    * @return {boolean} true if user was found
    */
- private userExists (mail: string): boolean {
-   // @TODO make api call
-   return true;
+ private userExists (newUser: string): Observable<boolean> {
+   return this.apiService.checkContributor(newUser);
  }
 
- private isExpanded(list: List): boolean {
+/**
+ * method called from html template
+ */
+ private isExpanded (list: List): boolean {
    return list === this.expandedList;
  }
- private setExpandedList(list: List): void {
+ /**
+  * method called from html template
+  */
+ private setExpandedList (list: List): void {
    this.expandedList = list;
  }
 }

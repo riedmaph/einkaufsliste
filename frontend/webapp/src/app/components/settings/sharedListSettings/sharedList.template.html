@@ -33,16 +33,15 @@
           dividerColor="primary"
           class="mail-input"
         >
-          <md-hint align="end">Who do you want to share {{ list.name }} with?</md-hint>
+          <md-hint *ngIf="error.length == 0" align="end">Who do you want to share <b>{{ list.name }}</b> with?</md-hint>
+          <md-hint *ngIf="error.length > 0" align="end">{{ this.error }}</md-hint>
         </md-input>
         <button
           md-icon-button
-          type="submit"
-          class="list-overview-button"
+          type="button"
         >
           <i class="material-icons">person_add</i>
         </button>
-        <span *ngIf="error.length == 0"> {{ this.error }} </span>
       </form>
     </div>
 
