@@ -54,27 +54,21 @@ export class OffersComponent implements OnInit {
   }
 
   /**
-   * TODO: SC - Doc Comment
-   */
-  public addOffer (offer: Offer): void {
-    const availableLists = this.listCommunicationService.lists;
-    if (availableLists.length) {
-      this.addOfferToList(offer, availableLists[0]);
-    }
-  }
-
-  /**
-   * TODO: SC - Doc comments
+   * Adds an offer to a given list.
+   *
+   * @param {Offer} offer The offer to add to the given list.
+   * @param {List} list The list to add the offer to.
+   * @return {void}
    */
   private addOfferToList (offer: Offer, list: List): void {
     const offerItem: ListItem = {
         name: offer.name,
-        unit: "stk",
-        amount: 1,
+        unit: null,
+        amount: null,
         onSale: true,
         checked: false,
       };
-    this.apiService.addItem(list.id, offerItem);
+    this.apiService.addItem(list.id, offerItem).subscribe();
   }
 
   /**
