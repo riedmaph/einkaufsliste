@@ -62,7 +62,7 @@ export class OffersComponent implements OnInit {
    */
   private addOfferToList (offer: Offer, list: List): void {
     const offerItem: ListItem = {
-        name: offer.name,
+        name: offer.brand + ' ' + offer.name,
         unit: null,
         amount: null,
         onSale: true,

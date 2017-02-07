@@ -25,7 +25,7 @@
         <span class="offer-price-label">{{ offer.price }} €</span>
         <span *ngIf="offer.discount && offer.discount != '0'" class="offer-discount-label">{{ offer.discount }}</span>
       </div>
-      <h4 md-line>{{ offer.name }}</h4>
+      <h4 md-line>{{ offer.brand }} {{ offer.name }}</h4>
       <p class="offer-market-label" md-line> {{ market.name }} </p>
 
     </md-list-item>
