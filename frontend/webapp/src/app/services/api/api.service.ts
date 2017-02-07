@@ -171,7 +171,7 @@ export class ApiService {
    */
   public getMarketsByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
     const queryParams: URLSearchParams = new URLSearchParams();
-    queryParams.set('longditude', long.toString());
+    queryParams.set('longitude', long.toString());
     queryParams.set('latitude', lat.toString());
     queryParams.set('max-distance', distance.toString());
 
@@ -208,19 +208,19 @@ export class ApiService {
    * @return {Observable<any>}
    *
    */
-  public addFavouriteMarket (marketId: Number): Observable<any> {
     return this.authHttp.post(API_ROUTES.markets.favourites.add
       .replace(':marketId', marketId.toString()),
       { marketid: marketId });
   }
   /**
+
    * Makes API call to remove a market from the favourite markets
    *
    * @param The Id of the favourite market to delete
    * @return {Observable<any>}
    *
    */
-  public deleteFavouriteMarket (marketId: Number): Observable<any> {
+  public deleteFavouriteMarket(marketId: Number): Observable<any> {
     return this.authHttp.delete(API_ROUTES.markets.favourites.remove
       .replace(':marketId', marketId.toString()));
   }

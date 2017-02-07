@@ -24,7 +24,7 @@ function getMarkets(req, res, next) {
         return next(err);
       });
   } 
-  else if(req.query.latitude && req.query.longditude && req.query['max-distance'])
+  else if(req.query.latitude && req.query.longitude && req.query['max-distance'])
   {
     req.query.maxdistance = req.query['max-distance'];
     db.conn.any(sqlGetMarketsByPositionAndRadius, req.query)
@@ -63,10 +63,9 @@ function getOffers(req, res, next) {
                         offerfrom: offer.offerfrom, 
                         offerto: offer.offerto, 
                         discount: offer.discount, 
-                        product:{
-                          name: offer.name, 
-                          brand: offer.brand, 
-                          price: offer.price
+                        article:{
+                          name: offer.articlename, 
+                          brand: offer.articlebrand
                         }
                       }
             }

@@ -654,14 +654,14 @@
                         "name": "x-access-token",
                         "in": "header",
                         "description": "JWT for user authorization.",
-                        "required": false,
+                        "required": true,
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "name": "longditude",
-                        "description": "Longditude of the given position (search by position).",
-                        "required": false,
+                        "name": "longitude",
+                        "description": "Longitude of the given position.",
+                        "required": true,
                         "type": "number",
                         "format": "decimal"
                     },
@@ -669,7 +669,7 @@
                         "in": "query",
                         "name": "latitude",
                         "description": "Latitude of the given position (search by position).",
-                        "required": false,
+                        "required": true,
                         "type": "number",
                         "format": "decimal"
                     },
@@ -677,7 +677,7 @@
                         "in": "query",
                         "name": "max-distance",
                         "description": "Maximum distance (airline) between the given position and market in meters (search by position).",
-                        "required": false,
+                        "required": true,
                         "type": "number",
                         "format": "integer"
                     },
@@ -1123,10 +1123,10 @@
                     "format": "decimal",
                     "description": "Latitude of market."
                 },
-                "longditude": {
+                "longitude": {
                     "type": "number",
                     "format": "decimal",
-                    "description": "Longditude of market."
+                    "description": "Longitude of market."
                 },
                 "street": {
                     "type": "string",
@@ -1142,7 +1142,11 @@
                 },
                 "distance": {
                     "type": "number",
+<<<<<<< HEAD
                     "description": "Distance in meter (airline). Only present if search was by position."
+=======
+                    "description": "Distance in meters (airline)."
+>>>>>>> master
                 }
             }
         },
@@ -1155,6 +1159,23 @@
                     "$ref": "#/definitions/MarketValues"
                 }
             ]
+        },
+        "Article": {
+            "type": "object",
+            "required": [
+                "name",
+                "brand"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of article."
+                },
+                "brand": {
+                    "type": "string",
+                    "description": "Brand of article."
+                }
+            }
         },
         "Offer": {
             "type": "object",
@@ -1185,7 +1206,7 @@
                     "description": "Enddate of offer."
                 },
                 "product": {
-                    "$ref": "#/definitions/Product"
+                    "$ref": "#/definitions/Article"
                 }
             }
         },
