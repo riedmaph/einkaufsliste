@@ -9,6 +9,5 @@ SELECT
   (CASE WHEN LOWER(market.name)LIKE'%rewe%'THEN 'REWE' ELSE 'EDEKA' END) as shop,
   earth_distance(ll_to_earth(${latitude}, ${longitude}), ll_to_earth(market.latitude, market.longitude)) as distance
 FROM Grocerydata.Market market
-WHERE earth_box(ll_to_earth(${latitude}, ${longitude}), ${maxdistance}) @> ll_to_earth(market.latitude, market.longitude)
+WHERE earth_distance(ll_to_earth(${latitude}, ${longitude}), ll_to_earth(market.latitude, market.longitude)) <  ${maxdistance}
 ORDER BY  distance;
-
