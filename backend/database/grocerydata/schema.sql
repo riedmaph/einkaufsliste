@@ -84,3 +84,5 @@ CREATE TABLE Grocerydata.ArticleCategoryTag (
   preference INTEGER,
   PRIMARY KEY (article,tag)
 );
+
+CREATE INDEX Grocerydata_Market_Geo_Index on Grocerydata.Market USING gist(ll_to_earth(latitude, longitude));
