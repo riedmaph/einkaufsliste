@@ -71,10 +71,10 @@ describe('Markets', () => {
     });
   });
 
-  describe('/GET markets for Franz Wolter Strasse in 240m', () => {
+  describe('/GET markets for Franz Wolter Strasse in 280m', () => {
     it('it should return one market', (done) => {
       chai.request(app)
-          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=240')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=280')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
