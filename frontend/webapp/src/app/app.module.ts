@@ -49,6 +49,9 @@ import {
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
 
+// Pipes
+import { OfferFilterPipe } from './pipes';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -81,6 +84,7 @@ type StoreType = {
     ListOverviewComponent,
     LoginComponent,
     OffersComponent,
+    OfferFilterPipe,
     RegisterComponent,
     SettingsComponent,
     SettingsOverviewComponent,

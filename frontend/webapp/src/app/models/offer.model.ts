@@ -19,6 +19,7 @@ export class Offer {
       id: apiRepresentation.id,
       name: apiRepresentation.product.name,
       brand: apiRepresentation.product.brand,
+      market: apiRepresentation.market,
       price: apiRepresentation.product.price,
       discount: apiRepresentation.discount,
     });
