@@ -78,7 +78,7 @@ INSERT INTO transformed.unit_translation (alias,unit) VALUES ('Ml','ml');
 INSERT INTO transformed.unit_translation (alias,unit) VALUES ('M','m');
 INSERT INTO transformed.unit_translation (alias,unit) VALUES ('ST','Stk');
 INSERT INTO transformed.unit_translation (alias,unit) VALUES ('L','l');
-
+INSERT INTO transformed.unit_translation (alias,unit) VALUES ('WL','Anwendungen');
 
 CREATE TABLE brandl (
     brand text

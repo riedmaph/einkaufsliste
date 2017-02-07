@@ -105,6 +105,17 @@ export class ListOverviewComponent implements OnInit {
     return this.expandedLists[list.id];
   }
 
+  /**
+   * Reloads the lists in the list overview.
+   *
+   * @return {void}
+   */
+  public reloadLists (): void {
+    this.apiService.getAllLists().subscribe(lists => {
+      this.lists = lists;
+    });
+  }
+
   private confirmDeletionOfList (list: List): void {
     const dialogRef = this.dialog.open(ConfirmComponent, {
        disableClose: false,
@@ -119,9 +130,4 @@ export class ListOverviewComponent implements OnInit {
     });
   }
 
-  private reloadLists (): void {
-    this.apiService.getAllLists().subscribe(lists => {
-      this.lists = lists;
-    });
-  }
 }
