@@ -171,7 +171,7 @@ export class ApiService {
    */
   public getMarketsByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
     const queryParams: URLSearchParams = new URLSearchParams();
-    queryParams.set('longditude', long.toString());
+    queryParams.set('longitude', long.toString());
     queryParams.set('latitude', lat.toString());
     queryParams.set('max-distance', distance.toString());
 
