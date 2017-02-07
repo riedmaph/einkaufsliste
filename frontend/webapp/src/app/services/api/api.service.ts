@@ -9,6 +9,7 @@ import { AuthHttp } from 'angular2-jwt';
 import {
   List,
   ListItem,
+  Market,
   Product,
 } from '../../models';
 
@@ -111,7 +112,7 @@ export class ApiService {
     return this.authHttp.delete(
       API_ROUTES.lists.entries.remove
         .replace(':listId', listUuid)
-        .replace(':itemId', item.id)
+        .replace(':itemId', item.id),
     );
   }
 
@@ -145,7 +146,121 @@ export class ApiService {
       API_ROUTES.lists.entries.move
         .replace(':listId', item.listUuid)
         .replace(':itemId', item.id),
-      { targetposition: newPosition }
+      { targetposition: newPosition },
     );
+  }
+
+  /**
+   * Makes API call to get favourite markets of the user
+   *
+   * @return {Observable<Market>}
+   *
+   */
+  public getFavouriteMarkets (): Observable<Market[]> {
+    return this.authHttp.get(API_ROUTES.markets.favourites.get)
+      .map(res => res.json().markets);
+  }
+
+  /**
+   * Makes API call to get markets by Distance
+   *
+   * 
+   * @param @TODO
+   * @return {Observable<Market>}
+   *
+   */
+  public getMarketsByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('longditude', long.toString());
+    queryParams.set('latitude', lat.toString());
+    queryParams.set('max-distance', distance.toString());
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+    return this.authHttp.get(API_ROUTES.markets.search, options)
+      .map(res => res.json().markets);
+  }
+
+  /**
+   * Makes API call to get markets for the user by ZIP
+   *
+   * 
+   * @param {Number} zip Zip Code 
+   * @return {Observable<Market>}
+   *
+   */
+  public getMarketsByZip (zip: Number): Observable<Market[]> {
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('zip', zip.toString());
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+    return this.authHttp.get(API_ROUTES.markets.search, options)
+      .map(res => res.json().markets);
+  }
+
+  /**
+   * Makes API call to add a market to the favourite markets
+   *
+   * @TODO Parameter, @TODO json.new -> json.markets
+   * @param The Id of the new favourite market
+   * @return {Observable<any>}
+   *
+   */
+  public addFavouriteMarket (marketId: Number): Observable<any> {
+    return this.authHttp.post(API_ROUTES.markets.favourites.add
+      .replace(':marketId', marketId.toString()),
+      { marketid: marketId });
+  }
+  /**
+   * Makes API call to remove a market from the favourite markets
+   *
+   * @param The Id of the favourite market to delete
+   * @return {Observable<any>}
+   *
+   */
+  public deleteFavouriteMarket (marketId: Number): Observable<any> {
+    return this.authHttp.delete(API_ROUTES.markets.favourites.remove
+      .replace(':marketId', marketId.toString()));
+  }
+/**
+ * makes api call to add a new contributor to the list contributors
+ * 
+ * @param {string} ListId id of the list
+ * @param {string} newUser email adress of the new user
+ */
+  public addContributor (listId: string, newUser: string): Observable<any> {
+  /*  return this.authHttp.put(API_ROUTES.lists.sharing.addContributor
+      .replace(':listid', listId)
+      .replace(':mail', newUser),
+      { mail: newUser });*/
+
+      return Observable.of('MockedAPIcall');
+  }
+
+/**
+ * makes api call to remove a contributor to the list contributors
+ * 
+ * @param {string} ListId id of the list
+ * @param {string} newUser email adress of the new user
+ */
+  public removeContributor (listId: string, newUser: string): Observable<any> {
+  /*  return this.authHttp.delete(API_ROUTES.lists.sharing.addContributor
+      .replace(':listid', listId)
+      .replace(':mail', newUser));*/
+      return Observable.of('MockedAPIcall');
+  }
+
+/**
+ * makes api call to check if user to share a list with actually exists
+ * 
+ * @param {string} user email adress of the new user
+ */
+  public checkContributor (user: string): Observable<any> {
+   /* return this.authHttp.put(API_ROUTES.lists.sharing.checkEmail
+      .replace(':mail', user),
+      { mail: user });*/
+      return Observable.of ((user.indexOf('yes') !== -1));
   }
 }
