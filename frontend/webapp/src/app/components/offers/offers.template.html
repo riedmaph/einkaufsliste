@@ -1,5 +1,21 @@
 <md-list>
-  <md-list-item *ngFor="let offer of offers">
-    {{ offer.name }}
-  </md-list-item>
+  <div
+    class="market-offers-container"
+    *ngFor="let market of markets"
+  >
+    <h3 md-subheader>{{ market.name }} - {{ market.street }}</h3>
+    <md-list-item *ngFor="let offer of offers | OfferFilter: market.id">
+      <button color="accent" md-icon-button md-list-avatar class="add-offer-to-list-button">
+        <i class="material-icons">add</i>
+      </button>
+
+      <div class="offer-detail-labels">
+        <span class="offer-price-label">{{ offer.price }} €</span>
+        <span *ngIf="offer.discount && offer.discount != '0'" class="offer-discount-label">{{ offer.discount }} off</span>
+      </div>
+      <h4 md-line>{{ offer.name }}</h4>
+      <p class="offer-market-label" md-line> {{ market.name }} </p>
+
+    </md-list-item>
+  </div>
 </md-list>

@@ -1,14 +1,12 @@
 <div *ngIf="authService.loggedIn">
 
   <md-sidenav #sidenav (open)="listOverview.reloadLists()">
-    <nav>
-      <md-toolbar color="primary">
-        <span class="fill-remaining">Your Lists</span>
-        <button md-icon-button (click)="sidenav.close()">
-          <i class="material-icons">close</i>
-        </button>
-      </md-toolbar>
-    </nav>
+    <md-toolbar color="primary">
+      <span class="fill-remaining">Your Lists</span>
+      <button md-icon-button (click)="sidenav.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </md-toolbar>
     <md-list>
       <md-list-item
         class="offers-list-item"
