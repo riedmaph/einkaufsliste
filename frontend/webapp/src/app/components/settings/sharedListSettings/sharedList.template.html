@@ -7,7 +7,7 @@
     <md-list-item>
 
       <!--general information-->
-      <md-icon *ngIf="list.sharedWith.length > 0" md-list-avatar class="avatar">people</md-icon>
+      <md-icon *ngIf="list.sharedWith.length > 0" md-list-avatar class="avatar sharedList">people</md-icon>
       <md-icon *ngIf="list.sharedWith.length == 0" md-list-avatar class="avatar">person</md-icon>
       <h4 md-line>{{ list.name }}</h4>
       <p md-line>{{ list.completed }} of {{ list.count }} completed
