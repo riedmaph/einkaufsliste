@@ -1142,11 +1142,8 @@
                 },
                 "distance": {
                     "type": "number",
-<<<<<<< HEAD
                     "description": "Distance in meter (airline). Only present if search was by position."
-=======
-                    "description": "Distance in meters (airline)."
->>>>>>> master
+
                 }
             }
         },

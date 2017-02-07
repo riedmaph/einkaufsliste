@@ -208,6 +208,7 @@ export class ApiService {
    * @return {Observable<any>}
    *
    */
+   public addFavouriteMarket (marketId: Number): Observable<any> {
     return this.authHttp.post(API_ROUTES.markets.favourites.add
       .replace(':marketId', marketId.toString()),
       { marketid: marketId });
