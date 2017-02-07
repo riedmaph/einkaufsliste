@@ -5,13 +5,24 @@
   >
     <h3 md-subheader>{{ market.name }} - {{ market.street }}</h3>
     <md-list-item *ngFor="let offer of offers | OfferFilter: market.id">
-      <button color="accent" md-icon-button md-list-avatar class="add-offer-to-list-button">
+      <button
+        md-icon-button
+        md-list-avatar class="add-offer-to-list-button"
+        (click)="addOffer(offer)"
+      >
+        <!--[mdMenuTriggerFor]="listMenu"-->
+
         <i class="material-icons">add</i>
       </button>
 
+      <!--<md-menu #listMenu="mdMenu">
+        <button md-menu-item>Item 1</button>
+        <button md-menu-item>Item 2</button>
+      </md-menu>-->
+
       <div class="offer-detail-labels">
         <span class="offer-price-label">{{ offer.price }} €</span>
-        <span *ngIf="offer.discount && offer.discount != '0'" class="offer-discount-label">{{ offer.discount }} off</span>
+        <span *ngIf="offer.discount && offer.discount != '0'" class="offer-discount-label">{{ offer.discount }}</span>
       </div>
       <h4 md-line>{{ offer.name }}</h4>
       <p class="offer-market-label" md-line> {{ market.name }} </p>

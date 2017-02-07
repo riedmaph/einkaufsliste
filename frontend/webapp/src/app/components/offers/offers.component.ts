@@ -6,11 +6,14 @@ import {
 import {
   OfferService,
   ApiService,
+  ListCommunicationService,
   NavigationService,
 } from '../../services';
 import {
   Market,
   Offer,
+  List,
+  ListItem,
 } from '../../models';
 
 @Component({
@@ -32,6 +35,7 @@ export class OffersComponent implements OnInit {
   constructor (
     private apiService: ApiService,
     private offerService: OfferService,
+    private listCommunicationService: ListCommunicationService,
     private navigationService: NavigationService,
   ) { }
 
@@ -47,6 +51,30 @@ export class OffersComponent implements OnInit {
       this.markets = markets;
       this.loadOffers(markets.map(market => market.id));
     });
+  }
+
+  /**
+   * TODO: SC - Doc Comment
+   */
+  public addOffer (offer: Offer): void {
+    const availableLists = this.listCommunicationService.lists;
+    if (availableLists.length) {
+      this.addOfferToList(offer, availableLists[0]);
+    }
+  }
+
+  /**
+   * TODO: SC - Doc comments
+   */
+  private addOfferToList (offer: Offer, list: List): void {
+    const offerItem: ListItem = {
+        name: offer.name,
+        unit: "stk",
+        amount: 1,
+        onSale: true,
+        checked: false,
+      };
+    this.apiService.addItem(list.id, offerItem);
   }
 
   /**
