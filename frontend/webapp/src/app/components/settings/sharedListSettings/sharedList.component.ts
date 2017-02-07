@@ -73,7 +73,7 @@ export class SharedListsSettingsComponent {
  */
   public removeContributor (list: List, user: string): void {
    this.apiService.removeContributor(list.id, user).subscribe(_ => {
-      const index = list.sharedWith.findIndex(users => user === user);
+      const index = list.sharedWith.findIndex(users => users === user);
       list.sharedWith.splice(index, 1); });
   }
 
