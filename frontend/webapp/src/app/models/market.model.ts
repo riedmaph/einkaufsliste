@@ -11,4 +11,6 @@ export interface Market {
   city: string;
 
   shop?: string;
+
+  distance?: number;
 }
