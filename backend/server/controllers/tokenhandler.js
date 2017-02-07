@@ -1,4 +1,9 @@
+const path = require('path');
 var jwt = require('jsonwebtoken');
+
+const db = require(path.resolve(__dirname, './dbconnector.js'));
+var sqlCheckAdminUser = db.loadSql(path.join('controllers', 'users', 'checkAdminUser.sql'));
+
 
 const config = {
   tokenSecret: 'supersicher',
@@ -49,8 +54,26 @@ function verifyToken(req, res, next) {
   }
 };
 
+//middleware function to verify token
+function verifyAdminToken(req, res, next) {
+  verifyToken(req,res,() => {
+    db.conn.one(sqlCheckAdminUser,req.body)
+      .then(() => {
+        req.body.isAdmin = true;
+        next();
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(403)
+          .json({
+            message: 'Failed to authenticate as admin.'
+          });
+      });
+  });
+};
 
 module.exports = {
 	createToken,
+  verifyAdminToken,
   verifyToken
 };
