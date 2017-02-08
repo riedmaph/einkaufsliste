@@ -102,7 +102,9 @@ describe('Items', () => {
           position: 0,
           checked: false,
           amount: 10.00,
-          unit: 'stk'
+          unit: 'stk',
+          product: null,
+          article: null
       }
       chai.request(app)
           .post('/api/lists/'+listid+'/items')
@@ -147,7 +149,9 @@ describe('Items', () => {
           name: "newitem2",
           checked: false,
           amount: 15.00,
-          unit: 'stk'
+          unit: 'stk',
+          product: 'Absinth',
+          article: null
       }
       chai.request(app)
           .post('/api/lists/'+listid+'/items')
@@ -166,7 +170,9 @@ describe('Items', () => {
           name: "newitem3",
           checked: false,
           amount: 1.50,
-          unit: 'kg'
+          unit: 'kg',
+          product: null,
+          article: 1
       }
       chai.request(app)
           .post('/api/lists/'+listid+'/items')
@@ -220,7 +226,9 @@ describe('Items', () => {
           name: "newitem1Updated",
           checked: true,
           amount: 10.00,
-          unit: 'stk'
+          unit: 'stk',
+          product: null,
+          article: 1
       }
       chai.request(app)
           .put('/api/lists/'+listid+'/items/'+id1)

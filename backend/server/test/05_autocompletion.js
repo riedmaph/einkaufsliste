@@ -34,9 +34,9 @@ describe('Products/Search', () => {
   });
 
   describe('/GET', () => {
-    it('it should return no products for xyz', (done) => {
+    it('it should return no products or articles for xyz', (done) => {
       chai.request(app)
-          .get('/api/products/search?q=xyz')
+          .get('/api/autocompletion?q=xyz')
           .set('x-access-token', token)
           .end((err, res) => {
             res.should.have.status(200);
@@ -49,12 +49,15 @@ describe('Products/Search', () => {
     });
     it('it should return products for kokos', (done) => {
       chai.request(app)
-          .get('/api/products/search?q=kokos')
+          .get('/api/autocompletion?q=kokos')
           .set('x-access-token', token)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.should.have.property('products');
+            res.body.products.should.be.a('array');
+            res.body.products.length.should.be.least(1);
+            res.body.should.have.property('articles');
             res.body.products.should.be.a('array');
             res.body.products.length.should.be.least(1);
             done();

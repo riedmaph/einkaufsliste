@@ -4,5 +4,5 @@ WITH NextPosition AS (
   WHERE list = ${listid}
 )
 
-INSERT INTO ${schemaname:raw}.Item(id, list, name, position, amount, unit) 
-VALUES(${id}, ${listid}, ${name}, (SELECT newposition FROM NextPosition), ${amount}, ${unit})
+INSERT INTO ${schemaname:raw}.Item(id, list, name, position, amount, unit, categorytag, articlevariation) 
+VALUES(${id}, ${listid}, ${name}, (SELECT newposition FROM NextPosition), ${amount}, ${unit}, ${product}, ${article})
