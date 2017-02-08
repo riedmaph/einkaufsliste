@@ -1,8 +1,6 @@
 <div *ngIf="authService.loggedIn">
 
-  <md-sidenav
-    #sidenav
-  >
+  <md-sidenav #sidenav (open)="listOverview.reloadLists()">
     <md-toolbar color="primary">
       <span class="fill-remaining">Your Lists</span>
       <button md-icon-button (click)="sidenav.close()">
@@ -25,9 +23,9 @@
 
     <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
 
-
     <md-menu x-position="before" #menu="mdMenu">
-        <button md-menu-item (click)="authService.logout()"> Sign Out </button>
+      <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
+      <button md-menu-item (click)="authService.logout()"> Sign Out </button>
     </md-menu>
 
     <button md-icon-button [md-menu-trigger-for]="menu">

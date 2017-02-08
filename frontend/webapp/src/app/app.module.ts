@@ -38,6 +38,9 @@ import {
   NavigationComponent,
   NavTitleComponent,
   RegisterComponent,
+  SettingsComponent,
+  SettingsOverviewComponent,
+  FavouriteMarketSettingsComponent,
 } from './components';
 
 // Directives
@@ -73,6 +76,9 @@ type StoreType = {
     AutoCompletionDirective,
     RegisterComponent,
     LoginComponent,
+    SettingsComponent,
+    SettingsOverviewComponent,
+    FavouriteMarketSettingsComponent,
     ConfirmComponent,
   ],
   entryComponents: [

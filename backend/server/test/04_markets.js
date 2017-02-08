@@ -35,7 +35,7 @@ describe('Markets', () => {
   describe('/GET markets for Franz Wolter Strasse in 100m', () => {
     it('it should return no markets', (done) => {
       chai.request(app)
-          .get('/api/markets/search?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=100')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -49,7 +49,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no token provided', (done) => {
       chai.request(app)
-          .get('/api/markets/search?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=100')
           .end((err, res) => {
               res.should.have.status(403);
               res.body.should.be.a('object');
@@ -60,7 +60,7 @@ describe('Markets', () => {
 
     it('it should return 403 if no valid token provided', (done) => {
       chai.request(app)
-          .get('/api/markets/search?latitude=48.174805&longditude=11.633389&max-distance=100')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=100')
           .set('x-access-token', "xyz")
           .end((err, res) => {
               res.should.have.status(403);
@@ -71,10 +71,10 @@ describe('Markets', () => {
     });
   });
 
-  describe('/GET markets for Franz Wolter Strasse in 240m', () => {
+  describe('/GET markets for Franz Wolter Strasse in 280m', () => {
     it('it should return one market', (done) => {
       chai.request(app)
-          .get('/api/markets/search?latitude=48.174805&longditude=11.633389&max-distance=240')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=280')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -90,10 +90,10 @@ describe('Markets', () => {
     });
   });
 
-  describe('/GET markets for Franz Wolter Strasse in 250m', () => {
+  describe('/GET markets for Franz Wolter Strasse in 400m', () => {
     it('it should return two markets', (done) => {
       chai.request(app)
-          .get('/api/markets/search?latitude=48.174805&longditude=11.633389&max-distance=250')
+          .get('/api/markets?latitude=48.174805&longitude=11.633389&max-distance=400')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -102,6 +102,62 @@ describe('Markets', () => {
               res.body.markets.should.be.a('array');
               res.body.markets.length.should.be.eql(2);
               res.body.markets.map(function(a) {return a.name;}).should.have.members(['EDEKA Häfner', 'Marktkauf Unterföhring']);
+            done();
+          });
+    });
+  });
+
+  describe('/GET markets for ZIP 123', () => {
+    it('it should return no markets', (done) => {
+      chai.request(app)
+          .get('/api/markets?zip=123')
+          .set('x-access-token', token)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('markets');
+              res.body.markets.should.be.a('array');
+              res.body.markets.length.should.be.eql(0);
+            done();
+          });
+    });
+
+    it('it should return 403 if no token provided', (done) => {
+      chai.request(app)
+          .get('/api/markets?zip=123')
+          .end((err, res) => {
+              res.should.have.status(403);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message').eql('Failed to authenticate token.');
+            done();
+          });
+    });
+
+    it('it should return 403 if no valid token provided', (done) => {
+      chai.request(app)
+          .get('/api/markets?zip=123')
+          .set('x-access-token', "xyz")
+          .end((err, res) => {
+              res.should.have.status(403);
+              res.body.should.be.a('object');
+              res.body.should.have.property('message').eql('Failed to authenticate token.');
+            done();
+          });
+    });
+  });
+
+  describe('/GET markets for ZIP 77731', () => {
+    it('it should return two markets', (done) => {
+      chai.request(app)
+          .get('/api/markets?zip=77731')
+          .set('x-access-token', token)
+          .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('markets');
+              res.body.markets.should.be.a('array');
+              res.body.markets.length.should.be.eql(2);
+              res.body.markets.map(function(a) {return a.name;}).should.have.members(['nah und gut Oberle', 'EDEKA Oberle']);
             done();
           });
     });

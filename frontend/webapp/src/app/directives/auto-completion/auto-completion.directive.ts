@@ -96,12 +96,14 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
     });
   }
 
-  /** Repeatedly updates the size and positin of the suggestion-list */
+  /** Repeatedly updates the size and position of the suggestion-list */
   public resizeAutoCompletion (): void {
     if (this && this.autoCompletionComponent) {
       const inputBB = this.element.nativeElement.getBoundingClientRect();
       this.autoCompletionComponent.location.nativeElement.style.bottom = inputBB.height + 'px';
       this.autoCompletionComponent.location.nativeElement.style.width = inputBB.width + 'px';
+      const alignLeft = 'calc(' + inputBB.left + 'px - 1rem)';
+      this.autoCompletionComponent.location.nativeElement.style.left = alignLeft;
     }
     window.requestAnimationFrame(() => this.resizeAutoCompletion());
   }

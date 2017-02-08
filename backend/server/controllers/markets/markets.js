@@ -2,22 +2,50 @@ var path = require('path');
 
 var db = require(path.join('..', 'dbconnector.js'));
 
-var sqlGetMarkets = db.loadSql(path.join('controllers', 'markets', 'getMarketsByPositionAndRadius.sql'));
+var sqlGetMarketsByPositionAndRadius = db.loadSql(path.join('controllers', 'markets', 'getMarketsByPositionAndRadius.sql'));
+var sqlGetMarketsByZip = db.loadSql(path.join('controllers', 'markets', 'getMarketsByZip.sql'));
 var sqlReadOffers = db.loadSql(path.join('controllers', 'markets', 'readOffers.sql'));
+var sqlReadFavouriteMarkets = db.loadSql(path.join('controllers', 'markets', 'readFavouriteMarkets.sql'));
+var sqlAddFavouriteMarket = db.loadSql(path.join('controllers', 'markets', 'addFavouriteMarket.sql'));
+var sqlRemoveFavouriteMarket = db.loadSql(path.join('controllers', 'markets', 'removeFavouriteMarket.sql'));
 
-function getMarketsByPositionAndRadius(req, res, next) {
-  req.query.maxdistance = req.query['max-distance'];
-  db.conn.any(sqlGetMarkets, req.query)
-    .then(function (data) {
-      res.status(200)
-        .json({
-          markets: data
-        });
-    })
-    .catch(function (err) {
-      err.message = 'controllers.markets.getMarketsByPositionAndRadius: ' + err.message;
-      return next(err);
-    });
+function getMarkets(req, res, next) {
+  if(req.query.zip)
+  {
+    db.conn.any(sqlGetMarketsByZip, req.query)
+      .then(function (data) {
+        res.status(200)
+          .json({
+            markets: data
+          });
+      })
+      .catch(function (err) {
+        err.message = 'controllers.markets.getMarkets.Zip: ' + err.message;
+        return next(err);
+      });
+  } 
+  else if(req.query.latitude && req.query.longitude && req.query['max-distance'])
+  {
+    req.query.maxdistance = req.query['max-distance'];
+    db.conn.any(sqlGetMarketsByPositionAndRadius, req.query)
+      .then(function (data) {
+        res.status(200)
+          .json({
+            markets: data
+          });
+      })
+      .catch(function (err) {
+        err.message = 'controllers.markets.getMarkets.PositionAndRadius: ' + err.message;
+        return next(err);
+      });
+  }
+  else
+  {
+    res.status(400)
+      .json({
+        message: 'No search query.'
+      });
+  }
 }
 
 function getOffers(req, res, next) {
@@ -35,10 +63,9 @@ function getOffers(req, res, next) {
                         offerfrom: offer.offerfrom, 
                         offerto: offer.offerto, 
                         discount: offer.discount, 
-                        product:{
-                          name: offer.name, 
-                          brand: offer.brand, 
-                          price: offer.price
+                        article:{
+                          name: offer.articlename, 
+                          brand: offer.articlebrand
                         }
                       }
             }
@@ -51,7 +78,51 @@ function getOffers(req, res, next) {
     });
 }
 
+function getFavouriteMarkets(req, res, next) {
+  db.conn.any(sqlReadFavouriteMarkets, req.body)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          markets: data
+        });
+    })
+    .catch(function (err) {
+      err.message = 'controllers.markets.getFavouriteMarkets: ' + err.message;
+      return next(err);
+    });
+}
+
+function addToFavouriteMarkets(req, res, next) {
+  req.body.id = req.params.marketid;
+
+  db.conn.any(sqlAddFavouriteMarket, req.body)
+    .then(function (data) {
+      res.sendStatus(200);
+    })
+    .catch(function (err) {
+      err.message = 'controllers.markets.addToFavouriteMarkets: ' + err.message;
+      return next(err);
+    });
+}
+
+function removeFromFavouriteMarkets(req, res, next) {
+  req.body.id = req.params.marketid;
+
+  db.conn.any(sqlRemoveFavouriteMarket, req.body)
+    .then(function (data) {
+      res.sendStatus(200);
+    })
+    .catch(function (err) {
+      err.message = 'controllers.markets.removeFromFavouriteMarkets: ' + err.message;
+      return next(err);
+    });
+}
+
 module.exports = {
-  getMarketsByPositionAndRadius: getMarketsByPositionAndRadius,
-  getOffers: getOffers
+  getMarkets,
+  getOffers,
+  getFavouriteMarkets,
+  addToFavouriteMarkets,
+  removeFromFavouriteMarkets  
  }
+
