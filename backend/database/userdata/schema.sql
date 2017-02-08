@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.Admin (
     userid UUID PRIMARY KEY REFERENCES :schemaname.Enduser(id)
 );
 
-CREATE TABLE IF NOT EXISTS :schemaname    .List (
+CREATE TABLE IF NOT EXISTS :schemaname.List (
     id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE
