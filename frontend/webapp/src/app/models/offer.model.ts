@@ -17,6 +17,7 @@ export class Offer {
   public static fromApi (apiRepresentation: OfferApiRepresentation): Offer {
     return new Offer({
       id: apiRepresentation.id,
+      title: apiRepresentation.title,
       name: apiRepresentation.article.name,
       brand: apiRepresentation.article.brand,
       market: apiRepresentation.market,
@@ -32,6 +33,7 @@ export class Offer {
 
 export interface OfferApiRepresentation {
   id: string;
+  title: string;
   market: string;
   offerprice: number;
   offerfrom: string;
