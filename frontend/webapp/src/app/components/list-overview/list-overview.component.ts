@@ -13,8 +13,11 @@ import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 
 import { ConfirmComponent } from '../ui-elements/confirm';
-import { ApiService } from 'app/services';
 import { List } from 'app/models';
+import {
+  ApiService,
+  ListCommunicationService,
+} from 'app/services';
 
 @Component({
   selector: 'sl-list-overview',
@@ -34,6 +37,7 @@ export class ListOverviewComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
+    private listCommunicationService: ListCommunicationService,
     private router: Router,
     private formBuilder: FormBuilder,
     private dialog: MdDialog,
@@ -81,6 +85,7 @@ export class ListOverviewComponent implements OnInit {
    */
   public reloadLists (): void {
     this.apiService.getAllLists().subscribe(lists => {
+      this.listCommunicationService.lists = lists;
       this.lists = lists;
     });
   }
@@ -114,17 +119,6 @@ export class ListOverviewComponent implements OnInit {
    */
   public isExpanded (list: List): boolean {
     return this.expandedLists[list.id];
-  }
-
-  /**
-   * Reloads the lists in the list overview.
-   *
-   * @return {void}
-   */
-  public reloadLists (): void {
-    this.apiService.getAllLists().subscribe(lists => {
-      this.lists = lists;
-    });
   }
 
   private confirmDeletionOfList (list: List): void {

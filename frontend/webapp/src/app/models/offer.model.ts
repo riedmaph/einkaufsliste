@@ -17,10 +17,10 @@ export class Offer {
   public static fromApi (apiRepresentation: OfferApiRepresentation): Offer {
     return new Offer({
       id: apiRepresentation.id,
-      name: apiRepresentation.product.name,
-      brand: apiRepresentation.product.brand,
+      name: apiRepresentation.article.name,
+      brand: apiRepresentation.article.brand,
       market: apiRepresentation.market,
-      price: apiRepresentation.product.price,
+      price: apiRepresentation.offerprice,
       discount: apiRepresentation.discount,
     });
   }
@@ -28,7 +28,6 @@ export class Offer {
   constructor (data: any) {
     _.merge(this, data);
   }
-
 }
 
 export interface OfferApiRepresentation {
@@ -38,5 +37,5 @@ export interface OfferApiRepresentation {
   offerfrom: string;
   offerto: string;
   discount: string;
-  product: { name: string; brand: string; price: number };
+  article: { name: string; brand: string };
 }
