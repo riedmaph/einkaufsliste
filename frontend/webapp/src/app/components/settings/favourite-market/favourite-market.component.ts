@@ -60,7 +60,6 @@ export class FavouriteMarketSettingsComponent implements OnInit {
     }
     this.showResults = true;
     this.showPosition = true;
-    console.log("show position: " + this.showPosition)
   }
 
   /**
