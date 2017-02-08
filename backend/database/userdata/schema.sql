@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.Admin (
     userid UUID PRIMARY KEY REFERENCES :schemaname.Enduser(id)
 );
 
-CREATE TABLE IF NOT EXISTS :schemaname.List (
+CREATE TABLE IF NOT EXISTS :schemaname    .List (
     id UUID PRIMARY KEY,
     name TEXT NOT NULL,
     enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE
@@ -32,7 +32,9 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
     unit TEXT,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     checked TIMESTAMP DEFAULT NULL,
-    list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE
+    list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE,
+    categorytag TEXT REFERENCES Grocerydata.CategoryTag(name),
+    articlevariation INTEGER REFERENCES Grocerydata.ArticleVariation(id)
 );
 
 CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (

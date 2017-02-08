@@ -9,7 +9,7 @@ var tokenhandler = require(path.join('..', 'controllers', 'tokenhandler'));
 var users = require(path.join('..', 'controllers', 'users', 'users'));
 var lists = require(path.join('..', 'controllers', 'lists', 'lists'));
 var items = require(path.join('..', 'controllers', 'items', 'items'));
-var products = require(path.join('..', 'controllers', 'products', 'products'));
+var autocompletion = require(path.join('..', 'controllers', 'autocompletion', 'autocompletion'));
 var markets = require(path.join('..', 'controllers', 'markets', 'markets'));
 
 // redirect root to doc
@@ -47,9 +47,9 @@ router.route('/lists/:listid/items/:itemid')
   .delete(items.deleteItem)
   .patch(items.moveItem);
 
-/* products */
-router.route('/products/search')
-  .get(products.findProducts)
+/* autocompletion */
+router.route('/autocompletion')
+  .get(autocompletion.findItems)
 
 /* markets */
 router.route('/markets')
