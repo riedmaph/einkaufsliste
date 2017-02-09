@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 
 export class Offer {
   id: string;
+  title: string;
   name: string;
   brand: string;
   market: string;

@@ -1,3 +1,14 @@
+<md-card class="offer-search">
+    <md-input
+      type="search"
+      class="offer-search-field"
+      placeholder="Search an offer..."
+      floatingPlaceholder="false"
+      [(ngModel)]="filterQuery"
+      (input)="filter()"
+    ></md-input>
+</md-card>
+
 <md-list>
   <div
     class="market-offers-container"
@@ -5,7 +16,7 @@
   >
     <h3 md-subheader>{{ market.name }} - {{ market.street }}</h3>
 
-    <md-list-item *ngFor="let offer of offers | OfferFilter: market.id">
+    <md-list-item *ngFor="let offer of selectedOffers | OfferFilter: market.id">
       <button
         md-icon-button
         [md-menu-trigger-for]="menu"
