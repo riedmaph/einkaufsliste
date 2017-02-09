@@ -41,4 +41,28 @@ CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (
     UNIQUE(enduser, market)
 );
 
+CREATE TABLE IF NOT EXISTS :schemaname.OptimisedList {
+    id UUID PRIMARY KEY,
+    list UUID NOT NULL REFERENCES :schemaname.List(id),
+    startDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    endDate TIMESTAMP DEFAULT NULL,
+    savings double precision,
+    distance double precision
+}
 
+CREATE TABLE IF NOT EXISTS :schemaname.OptimisedListMarket {
+    optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE,
+    market INTEGER NOT NULL REFERENCES Grocerydata.Market(id) ON DELETE CASCADE,
+    UNIQUE(enduser, market)
+}
+
+CREATE TABLE IF NOT EXISTS :schemaname.OptimisedItem (
+    id UUID PRIMARY KEY,
+    name TEXT,
+    amount REAL,
+    unit TEXT,
+    offerByAlgorithm INTEGER REFERENCES Grocerydata.Offer(id),
+    offerByUser INTEGER REFERENCES Grocerydata.Offer(id),
+    optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE,
+    item UUID NOT NULL REFERENCES :schemaname.Item(id) ON DELETE CASCADE 
+);

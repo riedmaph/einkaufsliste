@@ -65,6 +65,13 @@ router.route('/markets/favourites/:marketid')
   .post(markets.addToFavouriteMarkets)
   .delete(markets.removeFromFavouriteMarkets);
 
+/* optimization */
+router.route('/lists/:listid/optimised')
+  .get(markets.getOffers);
+
+router.route('/lists/:listid/optimised/:itemid')
+  .put(markets.getOffers);
+
 // error handler
 router.use(function(err, req, res, next) {
   logger.log('error', err.message);
