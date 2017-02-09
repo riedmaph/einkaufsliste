@@ -318,7 +318,7 @@
         "/lists/{listid}/optimised": {
             "get": {
                 "tags": [
-                    "Optimization"
+                    "Optimisation"
                 ],
                 "summary": "Retrieve a list in optimised state.",
                 "parameters": [
@@ -385,9 +385,9 @@
         "/lists/{listid}/optimised/{itemid}": {
             "put": {
                 "tags": [
-                    "Optimization"
+                    "Optimisation"
                 ],
-                "summary": "Update an item in optimization mode.",
+                "summary": "Update an item in optimisation mode.",
                 "description": "",
                 "parameters": [
                     {
@@ -427,7 +427,7 @@
                     "200": {
                         "description": "Successful operation.",
                         "schema": {
-                            "$ref": "#/definitions/OptimizationResult"
+                            "$ref": "#/definitions/OptimisationResult"
                         }
                     },
                     "403": {
@@ -1368,7 +1368,7 @@
                     "properties": {
                         "isOptimum": {
                             "type": "boolean",
-                            "description": "Indicates if this offer was selected by the optimization algorithm."
+                            "description": "Indicates if this offer was selected by the optimisation algorithm."
                         }
                     }
                 }
@@ -1388,7 +1388,7 @@
                 }
             }
         },
-        "OptimizationResult": {
+        "OptimisationResult": {
             "type": "object",
             "required": [
                 "savings",
@@ -1399,15 +1399,15 @@
                 "savings": {
                     "type": "number",
                     "format": "float",
-                    "description": "Savings of the optimization."
+                    "description": "Savings of the optimisation."
                 },
                 "distance": {
                     "type": "number",
                     "format": "flaot",
-                    "description": "Distance of the used markets of the optimization."
+                    "description": "Distance of the used markets of the optimisation."
                 },
                 "markets": {
-                    "description": "Used markets of the optimization.",
+                    "description": "Used markets of the optimisation.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Market"
