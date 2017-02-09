@@ -5,43 +5,40 @@
       "name": "einfuege tests",
       "count": 8,
       "completed": 3,
-      "sharedWith": [
-        "Peter"
-      ]
+      "shared": false,
+      "owner": "Markus"
     },
     {
       "id": "9af0dbb0-ec4a-11e6-acbe-692eff596d80",
       "name": "guckst du",
       "count": 4,
       "completed": 0,
-      "sharedWith": []
+      "shared": true,
+      "owner": "Markus"
     },
     {
       "id": "5e6962a0-e927-11e6-ade0-4d61e958d459",
       "name": "präsentation",
       "count": 14,
       "completed": 0,
-      "sharedWith": [
-        "Peter",
-        "Maria",
-        "Paul"
-      ]
+      "shared": false,
+      "owner": "Markus"
     },
     {
       "id": "65e7b9e0-cd03-11e6-b44e-c745762d3947",
       "name": "reorder testing",
       "count": 4,
       "completed": 1,
-      "sharedWith": [
-        "Matthias"
-      ]
+      "shared": false,
+      "owner": "Philipp"
     },
     {
       "id": "1ed810f0-e7f1-11e6-bafc-a365ef551b58",
       "name": "⿻ Philipp",
       "count": 5,
       "completed": 0,
-      "sharedWith": []
+      "shared": true,
+      "owner": "Philipp"
     }
   ]
 }
