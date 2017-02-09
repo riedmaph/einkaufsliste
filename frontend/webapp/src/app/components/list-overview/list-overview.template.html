@@ -46,8 +46,11 @@
       class="new-list-input"
       #listName
     >
-      <md-hint align="end">{{ 24 - listName.characterCount }}</md-hint>
+      <md-hint *ngIf="listName.characterCount >= 24" align="end">
+        List names are limited to 24 characters
+      </md-hint>
     </md-input>
+
     <button
       md-icon-button
       type="submit"
