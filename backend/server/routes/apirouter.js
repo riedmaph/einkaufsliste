@@ -11,6 +11,7 @@ var lists = require(path.join('..', 'controllers', 'lists', 'lists'));
 var items = require(path.join('..', 'controllers', 'items', 'items'));
 var products = require(path.join('..', 'controllers', 'products', 'products'));
 var markets = require(path.join('..', 'controllers', 'markets', 'markets'));
+var optimisation = require(path.join('..', 'controllers', 'optimisation', 'optimisation'));
 
 // redirect root to doc
 router.get('/', function(req, res, next) {
@@ -67,10 +68,10 @@ router.route('/markets/favourites/:marketid')
 
 /* optimization */
 router.route('/lists/:listid/optimised')
-  .get(markets.getOffers);
+  .get(optimisation.getOptimisedList);
 
 router.route('/lists/:listid/optimised/:itemid')
-  .put(markets.getOffers);
+  .put(optimisation.updateItem);
 
 // error handler
 router.use(function(err, req, res, next) {
