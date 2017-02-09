@@ -229,14 +229,16 @@ export class ApiService {
  * 
  * @param {string} ListId id of the list
  * @param {string} newUser email adress of the new user
+ * @return {Observable<boolean>} true if user could be added 
+ * i.e. user exists and isn't already participating
  */
-  public addContributor (listId: string, newUser: string): Observable<any> {
+  public addContributor (listId: string, newUser: string): Observable<boolean> {
   /*  return this.authHttp.put(API_ROUTES.lists.sharing.addContributor
       .replace(':listid', listId)
       .replace(':mail', newUser),
       { mail: newUser });*/
 
-      return Observable.of('MockedAPIcall');
+    return Observable.of ((newUser.indexOf('yes') !== -1));
   }
 
 /**
@@ -253,14 +255,13 @@ export class ApiService {
   }
 
 /**
- * makes api call to check if user to share a list with actually exists
+ * makes api call to retrieve the list contributors
  * 
- * @param {string} user email adress of the new user
+ * @param {string} listId id of the list
  */
-  public checkContributor (user: string): Observable<any> {
-   /* return this.authHttp.put(API_ROUTES.lists.sharing.checkEmail
-      .replace(':mail', user),
-      { mail: user });*/
-      return Observable.of ((user.indexOf('yes') !== -1));
+  public getContributors (listId: string): Observable<string[]> {
+   /* return this.authHttp.get(API_ROUTES.lists.sharing.contributors
+      .replace(':listId', listId)*/
+      return Observable.of (['Philipp', 'Markus', 'Stefan']);
   }
 }
