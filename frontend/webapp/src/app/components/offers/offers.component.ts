@@ -60,7 +60,7 @@ export class OffersComponent implements OnInit {
    * @param {List} list The list to add the offer to.
    * @return {void}
    */
-  private addOfferToList (offer: Offer, list: List): void {
+  public addOfferToList (offer: Offer, list: List): void {
     const offerItem: ListItem = {
         name: offer.brand + ' ' + offer.name,
         unit: null,

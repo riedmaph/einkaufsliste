@@ -27,7 +27,6 @@ import {
   ListCommunicationService,
   NavigationService,
   OfferService,
-  OfferMapperService,
 } from './services';
 
 // Components
@@ -117,7 +116,6 @@ type StoreType = {
     ListCommunicationService,
     NavigationService,
     OfferService,
-    OfferMapperService,
   ],
 })
 export class AppModule {

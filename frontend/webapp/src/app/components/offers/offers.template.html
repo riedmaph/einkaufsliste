@@ -4,6 +4,7 @@
     *ngFor="let market of markets"
   >
     <h3 md-subheader>{{ market.name }} - {{ market.street }}</h3>
+
     <md-list-item *ngFor="let offer of offers | OfferFilter: market.id">
       <button
         md-icon-button
@@ -26,8 +27,18 @@
         <span *ngIf="offer.discount && offer.discount != '0'" class="offer-discount-label">{{ offer.discount }}</span>
       </div>
       <h4 md-line>{{ offer.title }}</h4>
-      <p class="offer-market-label" md-line> {{ market.name }} </p>
-
+      <p class="offer-market-label" md-line> {{ market.name }} - {{ market.street }} </p>
     </md-list-item>
+
+    <div *ngIf="!(offers | OfferFilter: market.id).length" class="no-offers-info">
+      <p>There are no offers for the selected market</p>
+    </div>
+  </div>
+
+  <div *ngIf="!markets.length" class="no-markets-info">
+    <h3>There are no favourite markets selected</h3>
+    <p>You can select your favourite markets under
+      <br><em>Settings -> Favourite Markets</em>
+    </p>
   </div>
 </md-list>
