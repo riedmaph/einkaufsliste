@@ -1356,6 +1356,24 @@
                 }
             ]
         },
+        "OptimisedOffer": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Offer"
+                },
+                {
+                    "required": [
+                        "isOptimum"
+                    ],
+                    "properties": {
+                        "isOptimum": {
+                            "type": "boolean",
+                            "description": "Indicates if this offer was selected by the optimization algorithm."
+                        }
+                    }
+                }
+            ]
+        },
         "ItemWithOffers": {
             "type": "object",
             "properties": {
@@ -1365,7 +1383,7 @@
                 "offers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Offer"
+                        "$ref": "#/definitions/OptimisedOffer"
                     }
                 }
             }
