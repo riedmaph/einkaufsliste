@@ -89,7 +89,9 @@ export class SharedListsSettingsComponent {
    */
   private setExpandedList (list: List): void {
     this.expandedList = list;
-    this.apiService.getContributors(list.id).subscribe(contributors =>
-      this.sharedWith = contributors);
+    if (!list === null) {
+      this.apiService.getContributors(list.id).subscribe(contributors =>
+        this.sharedWith = contributors);
+    }
   }
 }
