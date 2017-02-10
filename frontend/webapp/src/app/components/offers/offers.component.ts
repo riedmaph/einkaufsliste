@@ -23,11 +23,17 @@ import {
 })
 export class OffersComponent implements OnInit {
 
+  /** Current filter query */
+  public filterQuery: string = '';
+
   /** Favourite markets of the user */
   private markets: Market[] = [ ];
 
   /** Current offers at the user's favourite markets */
   private offers: Offer[] = [ ];
+
+  /** Subset of all offers */
+  private selectedOffers: Offer[] = [ ];
 
   /**
    * Constructor of the offers component.
@@ -62,13 +68,29 @@ export class OffersComponent implements OnInit {
    */
   public addOfferToList (offer: Offer, list: List): void {
     const offerItem: ListItem = {
-        name: offer.brand + ' ' + offer.name,
+        name: offer.title,
         unit: null,
         amount: null,
         onSale: true,
         checked: false,
       };
     this.apiService.addItem(list.id, offerItem).subscribe();
+  }
+
+  /**
+   * Sets selectedOffers to all offers matching the query text
+   *
+   * @return {void}
+   */
+  public filter (): void {
+    if (this.filterQuery.length) {
+      const query = this.filterQuery.toLowerCase();
+      this.selectedOffers = this.offers.filter(offer =>
+        offer.title.toLowerCase().includes(query)
+      );
+    } else {
+      this.selectedOffers = this.offers;
+    }
   }
 
   /**
@@ -80,9 +102,10 @@ export class OffersComponent implements OnInit {
    */
   private loadOffers (marketIds: number[]): void {
     marketIds.map(marketUuid =>
-      this.offerService.getOffers(marketUuid).subscribe(offers =>
-        this.offers = this.offers.concat(offers)
-      )
+      this.offerService.getOffers(marketUuid).subscribe(offers => {
+        this.offers = this.offers.concat(offers);
+        this.filter();
+      })
     );
   }
 
