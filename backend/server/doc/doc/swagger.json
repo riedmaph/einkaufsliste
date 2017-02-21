@@ -315,7 +315,53 @@
                 }
             }
         },
-        "/lists/{listid}/share/{email}": {
+        "/lists/{listid}/contributors": {
+            "get": {
+                "tags": [
+                    "Shared Lists"
+                ],
+                "summary": "Gets all contributors of the list.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of List to be shared.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "contributors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Contributor"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Shared Lists"
@@ -339,11 +385,13 @@
                         "format": "int64"
                     },
                     {
-                        "in": "path",
-                        "name": "email",
+                        "in": "body",
+                        "name": "body",
                         "description": "Email address of the user the list should be shared with.",
                         "required": true,
-                        "type": "string"
+                        "schema": {
+                            "$ref": "#/definitions/Contributor"
+                        }
                     }
                 ],
                 "responses": {
@@ -352,6 +400,12 @@
                     },
                     "403": {
                         "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Unkonwn email address.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -387,11 +441,13 @@
                         "format": "int64"
                     },
                     {
-                        "in": "path",
-                        "name": "email",
+                        "in": "body",
+                        "name": "body",
                         "description": "Email address of the user that should be removed.",
                         "required": true,
-                        "type": "string"
+                        "schema": {
+                            "$ref": "#/definitions/Contributor"
+                        }
                     }
                 ],
                 "responses": {
@@ -1200,6 +1256,18 @@
                 "targetposition": {
                     "type": "integer",
                     "description": "Target position of the moved item."
+                }
+            }
+        },
+        "Contributor": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "Email address of a registered user."
                 }
             }
         },
