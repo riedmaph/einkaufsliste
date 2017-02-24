@@ -15,7 +15,10 @@ import {
 import { Observable } from 'rxjs';
 
 import { ListComponent } from '../list';
-import { ApiService } from '../../services/api';
+import {
+  ApiService,
+  NavigationService,
+} from '../../services';
 
 import {
   ListItem,
@@ -41,6 +44,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   constructor (
     private apiService: ApiService,
+    private navigationService: NavigationService,
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private formBuilder: FormBuilder,
@@ -71,6 +75,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   public ngOnInit (): void {
     this.route.data.subscribe((data: { list: List }) => {
       this.list = data.list;
+      if (this.list) {
+        this.navigationService.title = this.list.name;
+      }
     });
   }
 

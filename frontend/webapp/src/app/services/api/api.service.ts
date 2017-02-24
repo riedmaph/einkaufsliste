@@ -164,7 +164,7 @@ export class ApiService {
   /**
    * Makes API call to get markets by Distance
    *
-   * 
+   *
    * @param @TODO
    * @return {Observable<Market>}
    *
@@ -185,8 +185,8 @@ export class ApiService {
   /**
    * Makes API call to get markets for the user by ZIP
    *
-   * 
-   * @param {Number} zip Zip Code 
+   *
+   * @param {Number} zip Zip Code
    * @return {Observable<Market>}
    *
    */
@@ -213,7 +213,8 @@ export class ApiService {
       .replace(':marketId', marketId.toString()),
       { marketid: marketId });
   }
-   /**
+
+  /**
    * Makes API call to remove a market from the favourite markets
    *
    * @param The Id of the favourite market to delete
