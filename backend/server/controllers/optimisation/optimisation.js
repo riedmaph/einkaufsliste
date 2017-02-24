@@ -7,6 +7,7 @@ const async = require('async');
 const waterfall = require('async-waterfall');
 
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
+var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOffers.sql'));
 
 //var sql = db.loadSql(path.join('optimization', 'optimization', '.sql'));
 
@@ -15,10 +16,12 @@ function updateItem(req, res, next) {
 }
 
 function getOptimisedList(req, res, next) {
-  var listId = req.params.listid;
+  var options = {};
+  options.listid = req.params.listid;
+  options.userid = req.body.userid
 
   waterfall([
-    async.apply(initialize, listId)
+    async.apply(initialize, options)
     //executeOptimisation(oList),
     //persistOptimisedList(oList)
   ], function (err, oList) {
@@ -31,53 +34,50 @@ function getOptimisedList(req, res, next) {
       else {
         console.log('errorhandling');
         next(err);    
-
-      }
-  });
-
-}
-
-function initialize(listId, callback) {
-   waterfall([
-     async.apply(_loadList, listId),
-    _loadOffers,
-    _loadMarkets
-  ], function (err, oList) {
-      if(!err) {
-        callback(null, oList);
-      }
-      else {
-        callback(err);        
       }
   });
 }
 
-function _loadList(listId, callback) {
-  var options = {};
-  options.listid = listId;
-
-  db.conn.any(sqlReadItems, options)
-  .then(function (data) {
-    var oList = {};
-    oList = {
-        items: data
-      };
-    callback(null, oList);
+function initialize(options, callback) {
+   db.conn.task(function (t) {
+    return t.map(sqlReadItems, options, function(item) { //load all items for list
+      options.name = item.name;
+      return t.any(sqlFindOffers, options)  //load offers for each item
+        .then(function(offers) {
+          offers = offers.map(
+            function(offer) 
+            {
+              return {
+                        id: offer.id, 
+                        market: offer.market, 
+                        offerprice: offer.offerprice, 
+                        offerfrom: offer.offerfrom, 
+                        offerto: offer.offerto, 
+                        discount: offer.discount, 
+                        isOptimium: false,
+                        article:{
+                          name: offer.articlename, 
+                          brand: offer.articlebrand
+                        }
+                      }
+            }
+          );
+          item.offers = offers;
+          return item;
+        });
+    }).then(t.batch)
+   })
+   .then(function (data) {
+      var itemList = {};
+      itemList = {
+          items: data
+        };
+    callback(null, itemList);
   })
   .catch(function (err) {
     err.message = 'controllers.optimisation.loadList: ' + err.message;
     callback(err);
   });
-}
-
-function _loadOffers(oList, callback) {
-  console.log("_loadOffers");
-  callback(null, oList);
-}
-
-function _loadMarkets(oList, callback) {
-  console.log("_loadMarkets");
-  callback(null, oList);
 }
 
 function executeOptimisation(oList, method, callback) {
