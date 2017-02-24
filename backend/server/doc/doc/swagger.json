@@ -380,6 +380,55 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Optimisation"
+                ],
+                "summary": "Save or drop selected offers for list",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authentication and authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of list to optimise.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Value whether offers should be saved or dropped.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OptimisationFinishCommand"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
             }
         },
         "/lists/{listid}/optimised/{itemid}": {
@@ -1412,6 +1461,18 @@
                     "items": {
                         "$ref": "#/definitions/Market"
                     }
+                }
+            }
+        },
+        "OptimisationFinishCommand": {
+            "type": "object",
+            "required": [
+                "save"
+            ],
+            "properties": {
+                "save": {
+                    "type": "boolean",
+                    "description": "True if offers should be saved, False if not."
                 }
             }
         },
