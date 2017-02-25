@@ -8,6 +8,8 @@ const waterfall = require('async-waterfall');
 
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
 var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOffers.sql'));
+var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
+var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));
 
 //var sql = db.loadSql(path.join('optimization', 'optimization', '.sql'));
 
@@ -27,12 +29,12 @@ function getOptimisedList(req, res, next) {
   waterfall([
     async.apply(initialize, options), //async.apply to hand over parameter to first method
     executeOptimisation,
-    createOptimisedList
-  ], function (err, itemList) {
+    createOptimisedData
+  ], function (err, result) {
       if(!err) {
         res.status(200)
         .json(
-          itemList
+          result
         );
       }
       else {
@@ -52,18 +54,18 @@ function initialize(options, callback) {
               function(offer) 
               {
                 return {
-                          id: offer.id, 
-                          market: offer.market, 
-                          offerprice: offer.offerprice, 
-                          offerfrom: offer.offerfrom, 
-                          offerto: offer.offerto, 
-                          discount: offer.discount, 
-                          isOptimium: false,
-                          article:{
-                            name: offer.articlename, 
-                            brand: offer.articlebrand
-                          }
-                        }
+                  id: offer.id, 
+                  market: offer.market, 
+                  offerprice: offer.offerprice, 
+                  offerfrom: offer.offerfrom, 
+                  offerto: offer.offerto, 
+                  discount: offer.discount, 
+                  isOptimium: false,
+                  article:{
+                    name: offer.articlename, 
+                    brand: offer.articlebrand
+                  }
+                }
               }
             );
             item.offers = offers;
@@ -72,11 +74,11 @@ function initialize(options, callback) {
     }).then(t.batch)
    })
    .then(function (data) {
-      var itemList = {};
-      itemList = {
+      var result = {};
+      result = {
           items: data
         };
-    callback(null, itemList, options);
+    callback(null, result, options);
   })
   .catch(function (err) {
     err.message = 'controllers.optimisation.loadList: ' + err.message;
@@ -85,18 +87,51 @@ function initialize(options, callback) {
 }
 
 //select the right optimisation-method
-function executeOptimisation(itemList, options, callback) {
+function executeOptimisation(result, options, callback) {
   //call right optimisation
-  callback(null, itemList, options);
+  callback(null, result, options);
 }
 
-function _optimiseByPrice(itemList) {
+function _optimiseByPrice(result) {
 
 }
 
-function createOptimisedList(itemList, options, callback) {
+function createOptimisedData(result, options, callback) {
   //write optimsed list to db 
-  callback(null, itemList);
+  var sqlOtimisedListOptions = {};
+  sqlOtimisedListOptions.id = uuid.v1();
+  sqlOtimisedListOptions.listid = options.listid;
+
+  var sqlOtimisedItemOptions = {}
+
+  db.conn.none(sqlCreateOptimisedList, sqlOtimisedListOptions)  //create db-entry for optimisedlist
+    .then(function (data) {
+      db.conn.task(function (t) {
+          var queries = result.items.map(function (item) {
+            sqlOtimisedItemOptions.id = uuid.v1();
+            sqlOtimisedItemOptions.optimisedlistid = sqlOtimisedListOptions.id;
+            sqlOtimisedItemOptions.position = item.position;
+            sqlOtimisedItemOptions.name = item.name;
+            sqlOtimisedItemOptions.amount = item.amount;
+            sqlOtimisedItemOptions.unit = item.unit;
+            sqlOtimisedItemOptions.offerAlgorithm = null;
+
+            return t.none(sqlCreateOptimisedItem, sqlOtimisedItemOptions);
+          });
+          return t.batch(queries);
+        })
+        .then(function (data) {          
+          callback(null, result);
+        })
+        .catch(function (err) {
+          err.message = 'controllers.createOptimisedData.createOptimisedItems: ' + err.message;
+          callback(err);
+        });  
+    })
+    .catch(function (err) {
+      err.message = 'controllers.createOptimisedData.createOptimisedList: ' + err.message;
+      callback(err);
+    });  
 }
 
 module.exports = {
