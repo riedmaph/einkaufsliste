@@ -1,1 +1,2 @@
 export const LIST_ITEM_NAME_MAX_LENGTH = 140;
+export const AUTO_COMPLETION_TRIGGER_LENGTH = 3;

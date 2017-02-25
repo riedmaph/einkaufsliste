@@ -26,7 +26,10 @@ import {
   Product,
 } from 'app/models';
 
-import { LIST_ITEM_NAME_MAX_LENGTH } from '../../constants';
+import {
+  AUTO_COMPLETION_TRIGGER_LENGTH,
+  LIST_ITEM_NAME_MAX_LENGTH,
+} from '../../constants';
 
 
 @Component({
@@ -173,7 +176,14 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @see ApiService.getAutoCompletion
    */
   public get autoCompletionFn (): (_: string) => Observable<Product[]> {
-    return (str: string) => this.apiService.getAutoCompletion(this.listItemParser.parse(str).name);
+    return (str: string) => {
+      const queryString = this.listItemParser.parse(str).name;
+      if (queryString.length >= AUTO_COMPLETION_TRIGGER_LENGTH) {
+        return this.apiService.getAutoCompletion(queryString);
+      } else {
+        return Observable.of(null);
+      }
+    };
   }
 
   /**
