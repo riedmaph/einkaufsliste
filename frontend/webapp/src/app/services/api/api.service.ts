@@ -81,7 +81,7 @@ export class ApiService {
   public renameList (listId: string, newName: string): Observable<any> {
     return this.authHttp.put(
       API_ROUTES.lists.single.replace(':listId', listId),
-      { name: newName }).map( res => res.json());
+      { name: newName }).map(res => res.json());
   }
 
   /**
@@ -203,7 +203,6 @@ export class ApiService {
   /**
    * Makes API call to add a market to the favourite markets
    *
-   * @TODO Parameter, @TODO json.new -> json.markets
    * @param The Id of the new favourite market
    * @return {Observable<any>}
    *

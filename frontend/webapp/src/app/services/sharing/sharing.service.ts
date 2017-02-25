@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  RequestOptionsArgs,
-  URLSearchParams,
 } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AuthHttp } from 'angular2-jwt';
@@ -43,13 +41,7 @@ export class SharingService {
  * makes api call to remove a contributor to the list contributors
  * 
  * @param {string} ListId id of the list
- * @param {string} newUser email adress of the new user
  */
-  public removeContributor (listId: string, newUser: string): Observable<any> {
-  /*  return this.authHttp.delete(API_ROUTES.lists.sharing.addContributor
-      .replace(':listid', listId)
-      .replace(':mail', newUser));*/
-      return Observable.of('MockedAPIcall');
   }
 
 /**
@@ -58,8 +50,5 @@ export class SharingService {
  * @param {string} listId id of the list
  */
   public getContributors (listId: string): Observable<string[]> {
-   /* return this.authHttp.get(API_ROUTES.lists.sharing.contributors
-      .replace(':listId', listId)*/
-      return Observable.of (['Philipp', 'Markus', 'Stefan']);
   }
 }

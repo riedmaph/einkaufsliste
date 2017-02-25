@@ -7,7 +7,10 @@ import {
 } from '@angular/forms';
 
 import { List } from '../../../models';
-import { ApiService } from '../../../services';
+import {
+  SharingService,
+  ApiService,
+ } from '../../../services';
 import { FormValidators } from '../../../util';
 
 @Component({
@@ -20,11 +23,13 @@ export class SharedListsSettingsComponent {
   public shareForm: FormGroup;
 
   private lists: List[] = [ ];
+  private sharedWith: string[] = [ ];
   private error: string = '';
   private expandedList: List;
 
   constructor (
     private route: ActivatedRoute,
+    private sharingService: SharingService,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
   ) {
@@ -47,13 +52,13 @@ export class SharedListsSettingsComponent {
    */
   public shareList (list: List): void {
     const newUser = this.shareForm.value.mail;
-    const alreadyParticipating: boolean = list.sharedWith.findIndex(user =>
+    const alreadyParticipating: boolean = this.sharedWith.findIndex(user =>
       user === newUser) > -1 || newUser === list.owner;
 
     if (alreadyParticipating) {
         this.error = 'User ' + newUser + ' is already participating';
     } else if (this.shareForm.valid) {
-      this.apiService.addContributor(list.id, newUser).subscribe(response => {
+      this.sharingService.addContributor(list.id, newUser).subscribe(response => {
         if (response) {
           this.error = '';
           this.sharedWith.push(newUser);
@@ -70,7 +75,7 @@ export class SharedListsSettingsComponent {
    * @param {string} user mail adress of the user to be removed
    */
   public removeContributor (list: List, user: string): void {
-   this.apiService.removeContributor(list.id, user).subscribe(_ => {
+   this.sharingService.removeContributor(list.id, user).subscribe(_ => {
       const index = this.sharedWith.findIndex(users => users === user);
       this.sharedWith.splice(index, 1); });
   }
@@ -88,9 +93,10 @@ export class SharedListsSettingsComponent {
    */
   private setExpandedList (list: List): void {
     this.expandedList = list;
-    if (!list === null) {
-      this.apiService.getContributors(list.id).subscribe(contributors =>
-        this.sharedWith = contributors);
+    if (! (list === null)) {
+      this.sharingService.getContributors(list.id).subscribe(contributors =>
+        this.sharedWith = contributors
+      );
     }
   }
 }
