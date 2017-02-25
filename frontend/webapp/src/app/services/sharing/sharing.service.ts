@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
+   RequestOptions,
+   Response
 } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AuthHttp } from 'angular2-jwt';
-
-import {
-  List,
-  ListItem,
-  Market,
-  Product,
-} from '../../models';
 
 import { API_ROUTES } from '../api/routes';
 
@@ -25,24 +20,32 @@ export class SharingService {
  * 
  * @param {string} ListId id of the list
  * @param {string} newUser email adress of the new user
- * @return {Observable<boolean>} true if user could be added 
- * i.e. user exists and isn't already participating
+ * @return {Observable<any>} todo update
  */
-  public addContributor (listId: string, newUser: string): Observable<boolean> {
-  /*  return this.authHttp.put(API_ROUTES.lists.sharing.addContributor
-      .replace(':listid', listId)
-      .replace(':mail', newUser),
-      { mail: newUser });*/
-
-    return Observable.of ((newUser.indexOf('yes') !== -1));
+  public addContributor (listId: string, newUser: string): Observable<any> {
+     return this.authHttp.post(API_ROUTES.lists.sharing
+      .replace(':listId', listId), {
+        email: newUser,
+      });
   }
 
 /**
  * makes api call to remove a contributor to the list contributors
  * 
  * @param {string} ListId id of the list
+ * @param {string} removedUser email adress of the user to be removed
  */
+  public removeContributor (listId: string, removedUser: string): Observable<any> {
+    const options = new RequestOptions({
+      body: { email: removedUser },
+    });
+
+   return this.authHttp.delete(API_ROUTES.lists.sharing
+      .replace(':listId', listId), options
+   );
   }
+
+
 
 /**
  * makes api call to retrieve the list contributors
@@ -50,5 +53,8 @@ export class SharingService {
  * @param {string} listId id of the list
  */
   public getContributors (listId: string): Observable<string[]> {
+    return this.authHttp.get(API_ROUTES.lists.sharing
+      .replace(':listId', listId))
+      .map(res => res.json().contributors.map(c => c.email));
   }
 }

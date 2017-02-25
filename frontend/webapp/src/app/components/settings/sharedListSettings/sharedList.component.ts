@@ -58,14 +58,11 @@ export class SharedListsSettingsComponent {
     if (alreadyParticipating) {
         this.error = 'User ' + newUser + ' is already participating';
     } else if (this.shareForm.valid) {
-      this.sharingService.addContributor(list.id, newUser).subscribe(response => {
-        if (response) {
+        this.sharingService.addContributor(list.id, newUser).subscribe(_ => {
           this.error = '';
           this.sharedWith.push(newUser);
-        } else {
+        });
         this.error = 'User ' + newUser + ' could not be found';
-        }
-      });
     }
   }
 
@@ -98,5 +95,12 @@ export class SharedListsSettingsComponent {
         this.sharedWith = contributors
       );
     }
+  }
+
+  /**
+   * method called in the html to hide the email provider
+   */
+  private trimMail (mail: string): string {
+    return mail.substring(0, mail.indexOf('@'));
   }
 }
