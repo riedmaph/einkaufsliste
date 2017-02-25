@@ -13,10 +13,16 @@
 
   <form [formGroup]="form" class="list-item-form">
     <span
-      *ngIf="!form.controls['itemName'].pristine && form.controls['itemName'].errors && form.controls['itemName'].errors.maxlength"
+      *ngIf="!form.controls['newItem'].pristine && form.controls['newItem'].errors?.maxlength"
       class="form-error"
     >
       Please limit new entries to 1 - {{ MAX_LENGTH }} characters.
+    </span>
+    <span
+      *ngIf="!form.controls['newItem'].pristine && form.controls['newItem'].errors?.unparseable"
+      class="form-error"
+    >
+      Could not parse the given input
     </span>
     <input
       [autoCompletion]="autoCompletionFn"
@@ -25,8 +31,8 @@
       (onKeyup)="updateHighlighting($event, inputElem)"
       type="text"
       placeholder="Apples"
-      formControlName="itemName"
-      name="itemName"
+      formControlName="newItem"
+      name="newItem"
       class="form-field--lg"
       [maxLength]="MAX_LENGTH"
       #inputElem

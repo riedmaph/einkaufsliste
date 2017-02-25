@@ -8,6 +8,13 @@ import { PegParser } from './parser.peg';
 @Injectable()
 export class ListItemParser implements Parser<ListItem> {
   public parse (input: string): ListItem {
-    return <ListItem> PegParser.parse(input);
+    try {
+      return PegParser.parse(input);
+    } catch (err) {
+      if (ENV === 'development') {
+        console.error(err);
+        return null;
+      }
+    }
   }
 }

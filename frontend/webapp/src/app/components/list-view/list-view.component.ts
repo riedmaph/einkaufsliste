@@ -24,7 +24,7 @@ import {
   ListItem,
   List,
   Product,
-} from '../../models';
+} from 'app/models';
 
 import { LIST_ITEM_NAME_MAX_LENGTH } from '../../constants';
 
@@ -51,10 +51,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private listItemParser: ListItemParser,
   ) {
     this.form = this.formBuilder.group({
-      amount: '',
-      unit:  '',
-      itemName: [ '', Validators.compose([
-        Validators.maxLength(LIST_ITEM_NAME_MAX_LENGTH),
+      newItem: [ '', Validators.compose([
+        Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
       ]) ],
     });
@@ -106,7 +104,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @param {Product} value New value
    */
   public updateValue (value: Product): void {
-    this.form.controls['itemName'].setValue(value);
+    const parsedCurrentValue = this.listItemParser.parse(this.form.controls['newItem'].value);
+    const completedValue: string = this.form.controls['newItem'].value
+      .replace(parsedCurrentValue.name, value);
+    this.form.controls['newItem'].setValue(completedValue);
   }
 
   /**
@@ -114,17 +115,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public addItem (): void {
     if (this.form.valid) {
-      const newItem: ListItem = {
-        name: this.form.value.itemName,
-        unit: this.form.value.unit,
-        amount: this.form.value.amount,
-        checked: false,
-      };
+      const newItem: ListItem = this.listItemParser.parse(this.form.value.newItem);
 
       this.apiService.addItem(this.list.id, newItem).subscribe(res => {
         newItem.id = res.id;
         this.list.items.push(newItem);
-        this.form.controls['itemName'].setValue('');
+        this.form.controls['newItem'].setValue('');
       });
 
       window.scrollTo(0, document.body.getBoundingClientRect().height);
@@ -227,11 +223,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     */
   }
 }
-
-const colorScheme = new Map<string, string>();
-colorScheme.set('NameToken', '#F00');
-colorScheme.set('AmountToken', '#0F0');
-colorScheme.set('UnitToken', '#00F');
 
 function getCaretPosition(elem: HTMLElement): number {
   const selection: Selection = window.getSelection();
