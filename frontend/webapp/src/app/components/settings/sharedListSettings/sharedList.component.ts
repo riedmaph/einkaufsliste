@@ -58,11 +58,16 @@ export class SharedListsSettingsComponent {
     if (alreadyParticipating) {
         this.error = 'User ' + newUser + ' is already participating';
     } else if (this.shareForm.valid) {
-        this.sharingService.addContributor(list.id, newUser).subscribe(_ => {
-          this.error = '';
-          this.sharedWith.push(newUser);
-        });
-        this.error = 'User ' + newUser + ' could not be found';
+        this.sharingService.addContributor(list.id, newUser).subscribe(
+          res => {
+           this.error = '';
+           this.sharedWith.push(newUser);
+           list.shared = true;
+          },
+         (err) => {
+           this.error = 'User ' + newUser + ' could not be found';
+         },
+       );
     }
   }
 
@@ -90,9 +95,10 @@ export class SharedListsSettingsComponent {
    */
   private setExpandedList (list: List): void {
     this.expandedList = list;
+    this.sharedWith = [ ];
     if (! (list === null)) {
       this.sharingService.getContributors(list.id).subscribe(contributors =>
-        this.sharedWith = contributors
+        this.sharedWith = contributors,
       );
     }
   }
