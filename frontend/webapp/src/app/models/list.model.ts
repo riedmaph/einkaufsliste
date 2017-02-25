@@ -9,4 +9,5 @@ export interface List {
   items?: ListItem[];
   count?: number;
   completed?: number;
+  sharedWith?: string[]; // change to obligatory attribute when backend is updated 
 }

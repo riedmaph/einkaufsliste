@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { Observable } from 'rxjs';
+
 import { List } from '../../../models';
 import { ApiService } from '../../../services';
 import { FormValidators } from '../../../util';
@@ -59,7 +61,7 @@ export class SharedListsSettingsComponent {
           this.error = '';
           this.sharedWith.push(newUser);
         } else {
-        this.error = 'User ' + newUser + ' could not be found';
+          this.error = 'User ' + newUser + ' could not be found';
         }
       });
     }
@@ -83,7 +85,7 @@ export class SharedListsSettingsComponent {
   private isExpanded (list: List): boolean {
     return list === this.expandedList;
   }
-
+  
   /**
    * method called from html template
    */
