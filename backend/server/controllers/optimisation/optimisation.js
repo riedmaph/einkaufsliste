@@ -11,23 +11,24 @@ var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOff
 var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
 var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));
 
-//var sql = db.loadSql(path.join('optimization', 'optimization', '.sql'));
-
+//takes the user's selection and persists it to Userdata.OptimisedItem
 function updateItem(req, res, next) {
 
 }
 
+//takes the values from Userdata.OptimisedItem and updates Userdata.Item
 function saveOptimisedList(req, res, next) {
 
 }
 
+//returns the optimised list
 function getOptimisedList(req, res, next) {
   var options = {};
   options.listid = req.params.listid;
   options.userid = req.body.userid
 
-  waterfall([
-    async.apply(initialize, options), //async.apply to hand over parameter to first method
+  waterfall([                                      //use waterfall to be able to call error method in an easy way
+    async.apply(initializeOptimisedList, options), //async.apply to hand over parameter to first method
     executeOptimisation,
     createOptimisedData
   ], function (err, result) {
@@ -44,7 +45,7 @@ function getOptimisedList(req, res, next) {
 }
 
 //load items for given list and suitable offers for each item
-function initialize(options, callback) {
+function initializeOptimisedList(options, callback) {
     db.conn.task(function (t) {
       return t.map(sqlReadItems, options, function(item) { //load all items for list
         options.name = item.name;
@@ -81,7 +82,7 @@ function initialize(options, callback) {
     callback(null, result, options);
   })
   .catch(function (err) {
-    err.message = 'controllers.optimisation.loadList: ' + err.message;
+    err.message = 'controllers.initializeOptimisedList: ' + err.message;
     callback(err);
   });
 }
@@ -97,16 +98,15 @@ function _optimiseByPrice(result) {
 }
 
 function createOptimisedData(result, options, callback) {
-  //write optimsed list to db 
   var sqlOtimisedListOptions = {};
   sqlOtimisedListOptions.id = uuid.v1();
   sqlOtimisedListOptions.listid = options.listid;
 
   var sqlOtimisedItemOptions = {}
 
-  db.conn.none(sqlCreateOptimisedList, sqlOtimisedListOptions)  //create db-entry for optimisedlist
+  db.conn.none(sqlCreateOptimisedList, sqlOtimisedListOptions)  //create db-entry for optimisedList
     .then(function (data) {
-      db.conn.task(function (t) {
+      db.conn.task(function (t) {                               //create db-entries for each optimsedItem
           var queries = result.items.map(function (item) {
             sqlOtimisedItemOptions.id = uuid.v1();
             sqlOtimisedItemOptions.optimisedlistid = sqlOtimisedListOptions.id;
