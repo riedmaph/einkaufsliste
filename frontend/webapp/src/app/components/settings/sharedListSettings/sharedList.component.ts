@@ -20,7 +20,6 @@ export class SharedListsSettingsComponent {
   public shareForm: FormGroup;
 
   private lists: List[] = [ ];
-  private sharedWith: string[];
   private error: string = '';
   private expandedList: List;
 
@@ -48,7 +47,7 @@ export class SharedListsSettingsComponent {
    */
   public shareList (list: List): void {
     const newUser = this.shareForm.value.mail;
-    const alreadyParticipating: boolean = this.sharedWith.findIndex(user =>
+    const alreadyParticipating: boolean = list.sharedWith.findIndex(user =>
       user === newUser) > -1 || newUser === list.owner;
 
     if (alreadyParticipating) {
