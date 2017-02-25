@@ -11,6 +11,8 @@ var transformation = require(path.join('..', 'controllers', 'admin', 'transforma
 // check if a valid token is provided
 router.use(tokenhandler.verifyAdminToken);
 
+router.route('/products/blacklist')
+  .post(transformation.postProductBlacklist)
 
 router.route('/transformation/articles')
   .post(transformation.postArticleRaw)

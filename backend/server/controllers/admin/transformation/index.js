@@ -182,8 +182,19 @@ function postArticleRaw(req, res, next) {
         .json(newArticle);
     })
     .catch(err => {
-      console.log(err);
       err.message = 'controllers.admin.transformation.postArticle: ' + err.message;
+      return next(err);
+    });
+}
+
+function postProductBlacklist(req, res, next) {
+  productNameTransformation.postProductBlacklist(req.body.userid,req.body.entry)
+    .then(() => {
+      res.status(201).send();
+    })
+    .catch(err => {
+      err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
+      console.log(err.message);
       return next(err);
     });
 }
@@ -194,6 +205,7 @@ module.exports = {
   getMineProductName,
   getTransformedUnitBySize,
   postArticleRaw,
+  postProductBlacklist,
   putArticleTransformation,
   putMineBrand,
   putMineProductName,

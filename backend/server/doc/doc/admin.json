@@ -13,6 +13,58 @@
         "application/json"
     ],
     "paths": {
+        "/admin/products/blacklist": {
+            "post": {
+                "tags": [
+                    "Admin",
+                    "Blacklist",
+                    "Product"
+                ],
+                "summary": "blackliste an article",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Black list string",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/BlackListString"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation. TODO: Describe output to much workd for now"
+                     },
+                    "400": {
+                        "description": "Item does not exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/transformation/articles": {
             "post": {
                 "tags": [
@@ -534,20 +586,15 @@
         }
     },
     "definitions": {
-        "User": {
+        "BlackListString": {
             "type": "object",
             "required": [
-                "email",
-                "password"
+                "entry"
             ],
             "properties": {
-                "email": {
+                "entry": {
                     "type": "string",
-                    "description": "Email-address of the user."
-                },
-                "password": {
-                    "type": "string",
-                    "description": "Password of the user."
+                    "description": "Black list entry"
                 }
             }
         },
