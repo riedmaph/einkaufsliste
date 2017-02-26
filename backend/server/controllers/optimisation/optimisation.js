@@ -10,10 +10,28 @@ var sqlReadItems = db.loadSql(path.join('controllers', 'optimisation', 'readItem
 var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOffers.sql'));
 var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
 var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));
+var sqlUpdateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'updateOptimisedItem.sql'));
 
 //takes the user's selection and persists it to Userdata.OptimisedItem
 function updateItem(req, res, next) {
+  var options = {};
+  options.listid = req.params.listid;
+  options.itemid = req.params.itemid;
+  options.name = req.body.name;
+  options.amount = parseFloat(req.body.amount);
+  options.unit = req.body.unit;
+  options.offerUser = req.body.offerUser;
 
+  console.log(req.body);
+
+  db.conn.none(sqlUpdateOptimisedItem, options)
+    .then(function () {
+      res.sendStatus(200);
+    })
+    .catch(function (err) {
+      err.message = 'controllers.optimise.updateItem: ' + err.message;
+      return next(err);
+    });
 }
 
 //takes the values from Userdata.OptimisedItem and updates Userdata.Item
@@ -23,6 +41,7 @@ function saveOptimisedList(req, res, next) {
 
 //returns the optimised list
 function getOptimisedList(req, res, next) {
+  //TODO close old list (set enddate)
   var options = {};
   options.listid = req.params.listid;
   options.userid = req.body.userid
@@ -110,12 +129,13 @@ function createOptimisedData(result, options, callback) {
       db.conn.task(function (t) {                               //create db-entries for each optimsedItem
           var queries = result.items.map(function (item) {
             sqlOtimisedItemOptions.id = uuid.v1();
+            sqlOtimisedItemOptions.item = item.id;
             sqlOtimisedItemOptions.optimisedlistid = sqlOtimisedListOptions.id;
             sqlOtimisedItemOptions.position = item.position;
             sqlOtimisedItemOptions.name = item.name;
             sqlOtimisedItemOptions.amount = item.amount;
             sqlOtimisedItemOptions.unit = item.unit;
-            sqlOtimisedItemOptions.offerAlgorithm = null;
+            sqlOtimisedItemOptions.offerAlgorithm = null; //TODO
 
             return t.none(sqlCreateOptimisedItem, sqlOtimisedItemOptions);
           });
