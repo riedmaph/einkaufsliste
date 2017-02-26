@@ -42,7 +42,7 @@ export class ListComponent {
     private dragulaService: DragulaService,
   ) {
     this.dragulaService.dragend.subscribe(
-      draggedElement => this.reorderItems(draggedElement[1])
+      draggedElement => this.reorderItems(draggedElement[1]),
     );
     dragulaService.drag.subscribe((value) => {
       this.saveMovedItem(value.slice(1));

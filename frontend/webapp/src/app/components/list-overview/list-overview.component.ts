@@ -16,6 +16,7 @@ import { ConfirmComponent } from '../ui-elements/confirm';
 import { List } from 'app/models';
 import {
   ApiService,
+  ListApiService,
   ListCommunicationService,
 } from 'app/services';
 
@@ -26,8 +27,6 @@ import {
 })
 export class ListOverviewComponent implements OnInit {
 
-  public lists: List[] = [ ];
-
   @Output()
   public onListSelect: EventEmitter<any> = new EventEmitter<any>();
 
@@ -37,6 +36,7 @@ export class ListOverviewComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
+    private listApiService: ListApiService,
     private listCommunicationService: ListCommunicationService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -45,6 +45,15 @@ export class ListOverviewComponent implements OnInit {
     this.newListForm = this.formBuilder.group({
       listName: [ '', Validators.required ],
     });
+  }
+
+  /** Getter for listCommunicationService.lists */
+  public get lists (): List[] {
+    return this.listCommunicationService.lists;
+  }
+  /** Setter for listCommunicationService.lists */
+  public set lists (lists: List[]) {
+    this.listCommunicationService.lists = lists;
   }
 
   /**
@@ -71,7 +80,7 @@ export class ListOverviewComponent implements OnInit {
    */
   public addNewList (): void {
     if (this.newListForm.valid) {
-      this.apiService.createList(this.newListForm.value.listName).subscribe(_ => {
+      this.listApiService.create(this.newListForm.value.listName).subscribe(_ => {
         this.newListForm.reset();
         this.reloadLists();
       });
@@ -84,8 +93,7 @@ export class ListOverviewComponent implements OnInit {
    * @return {void}
    */
   public reloadLists (): void {
-    this.apiService.getAllLists().subscribe(lists => {
-      this.listCommunicationService.lists = lists;
+    this.listApiService.getAll().subscribe(lists => {
       this.lists = lists;
     });
   }
@@ -127,7 +135,7 @@ export class ListOverviewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.apiService.deleteList(list.id).subscribe(_ => {
+        this.listApiService.delete(list.id).subscribe(_ => {
           this.reloadLists();
           this.router.navigate([ 'list' ]);
         });

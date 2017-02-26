@@ -6,7 +6,6 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MdDialog } from '@angular/material';
 import {
   FormGroup,
   FormBuilder,
@@ -17,6 +16,7 @@ import { Observable } from 'rxjs';
 import { ListComponent } from '../list';
 import {
   ApiService,
+  ListApiService,
   NavigationService,
 } from '../../services';
 
@@ -44,9 +44,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   constructor (
     private apiService: ApiService,
+    private listApiService: ListApiService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-    private dialog: MdDialog,
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
@@ -58,6 +58,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       ]) ],
     });
   }
+
   /** Getter for unchecked items */
   public get items (): ListItem[] {
     return this.list.items.filter(i => !i.checked);
@@ -90,7 +91,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
         listComp.onEdit.subscribe(newItem => this.updateItem(newItem));
         listComp.onRemove.subscribe(item => this.removeItem(item));
         listComp.onReorder.subscribe((tuple: [ ListItem, number, number ]) =>
-          this.reorderItems(tuple[0], tuple[1], tuple[2])
+          this.reorderItems(tuple[0], tuple[1], tuple[2]),
         );
       });
     }
@@ -176,6 +177,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     return (str: string) => this.apiService.getAutoCompletion(str);
   }
 
+  /**
+   * Event handler for editing. Ends editing on hitting the return key.
+   * @param {KeyboardEvent} event
+   * @param {number} keyCode
+   * @param {HTMLElement} elem Element edited in
+   */
   public onEditHandler (event: KeyboardEvent, keyCode: number, elem: HTMLElement) {
      if (keyCode === 13) {
         elem.contentEditable = 'false';
@@ -183,10 +190,15 @@ export class ListViewComponent implements OnInit, AfterViewInit {
      }
   }
 
+  /**
+   * Commits a list item edit
+   * @param {HTMLElement} elem Input element edited in
+   * @returns {void}
+   */
   public commitEdit (elem: HTMLElement) {
     if (elem.textContent){
       this.list.name = elem.textContent.replace(/[\r\n\t]/g, '');
-      this.apiService.renameList(this.list.id, this.list.name);
+      this.listApiService.rename(this.list.id, this.list.name);
     }
   }
 }

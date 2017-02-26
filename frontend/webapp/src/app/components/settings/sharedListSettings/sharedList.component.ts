@@ -9,7 +9,7 @@ import {
 import { List } from '../../../models';
 import {
   SharingService,
-  ApiService,
+  ListApiService,
  } from '../../../services';
 import { FormValidators } from '../../../util';
 
@@ -30,12 +30,10 @@ export class SharedListsSettingsComponent {
   constructor (
     private route: ActivatedRoute,
     private sharingService: SharingService,
-    private apiService: ApiService,
+    private listApiService: ListApiService,
     private formBuilder: FormBuilder,
   ) {
-    this.apiService.getAllLists().subscribe(lists => {
-      this.lists = lists; },
-    );
+    this.listApiService.getAll().subscribe(lists => this.lists = lists);
     this.shareForm = this.formBuilder.group({
       mail: [ '', Validators.compose([
         Validators.required,

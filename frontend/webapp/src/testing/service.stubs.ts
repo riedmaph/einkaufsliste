@@ -13,3 +13,7 @@ export class AuthServiceStub {
 export class ApiServiceStub {
   // nothing yet
 }
+
+export class ListApiServiceStub {
+  // nothing yet
+}

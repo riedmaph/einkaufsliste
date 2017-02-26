@@ -46,8 +46,8 @@ describe('RegisterComponent', () => {
       [ RegisterComponent ],
       (register: RegisterComponent) => {
         expect(register.globalErrors).toEqual([ ]);
-      }
-    )
+      },
+    ),
   );
 
   describe('form Submission', () => {
@@ -72,7 +72,7 @@ describe('RegisterComponent', () => {
           );
           expect(register.globalErrors).toEqual([ ]);
         },
-      )
+      ),
     );
 
     it(
@@ -91,8 +91,8 @@ describe('RegisterComponent', () => {
           expect(register.globalErrors).toContain({
             message: 'An error occured. Please make sure all fields are filled out correctly.',
           });
-        }
-      )
+        },
+      ),
     );
 
     it(
@@ -111,8 +111,8 @@ describe('RegisterComponent', () => {
           expect(register.globalErrors).toContain({
             message: 'An error occured. Please make sure all fields are filled out correctly.',
           });
-        }
-      )
+        },
+      ),
     );
 
     // @TODO password confirmation

@@ -20,11 +20,17 @@ import { AppState, InternalStateType } from './app.service';
 
 // Services
 import {
+  ListApiService,
+  MarketApiService,
+
+  ApiMapperService,
   ApiService,
   AuthService,
   AuthGuard,
-  ApiMapperService,
+  FavouriteMarketResolver,
   ListCommunicationService,
+  ListResolver,
+  ListsResolver,
   NavigationService,
   OfferService,
   SharingService,
@@ -64,7 +70,7 @@ const APP_PROVIDERS = [
 type StoreType = {
   state: InternalStateType,
   restoreInputValues: () => void,
-  disposeOldHosts: () => void
+  disposeOldHosts: () => void,
 };
 
 /**
@@ -112,11 +118,17 @@ type StoreType = {
       headerName: 'x-access-token',
       noTokenScheme: true,
     }),
+    ListApiService,
+    MarketApiService,
+
     ApiService,
+    AuthGuard,
     AuthService,
     ApiMapperService,
-    AuthGuard,
+    FavouriteMarketResolver,
     ListCommunicationService,
+    ListResolver,
+    ListsResolver,
     NavigationService,
     OfferService,
     SharingService,

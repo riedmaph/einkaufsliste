@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class ApiMapperService {
 
   public registerDataLocalToApi (
-    data: { email: string, password: string, passwordConfirmation: string }
+    data: { email: string, password: string, passwordConfirmation: string },
   ): { email: string, password: string, password_confirmation: string } {
     return {
       email: data.email,
