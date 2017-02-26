@@ -468,7 +468,7 @@
                         "description": "Values of item to be updated.",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ItemValuesWithList"
+                            "$ref": "#/definitions/OptimisedItemWithOfferByUser"
                         }
                     }
                 ],
@@ -1386,24 +1386,64 @@
             }
         },
         "OptimisedList": {
-            "allOf": [
-                {
-                    "$ref": "#/definitions/List"
-                },
-                {
-                    "required": [
-                        "items"
-                    ],
-                    "properties": {
-                        "items": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/ItemWithOffers"
-                            }
-                        }
+            "type": "object",
+            "required": [
+                "items"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OptimisedItemWithOffers"
                     }
                 }
-            ]
+            }
+        },
+        "OptimisedItem": {
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "amount",
+                "unit"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identifer of item."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of item."
+                },
+                "position": {
+                    "type": "integer",
+                    "description": "Zero-based position if item within its list."
+                },
+                "amount": {
+                    "type": "number",
+                    "description": "Amount of item."
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Unit of item."
+                }
+            }
+        },
+        "OptimisedItemWithOffers": {
+            "type": "object",
+            "properties": {
+                "item": {
+                    "$ref": "#/definitions/OptimisedItem"
+                },
+                "offers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OptimisedOffer"
+                    }
+                }
+            }
         },
         "OptimisedOffer": {
             "allOf": [
@@ -1422,20 +1462,6 @@
                     }
                 }
             ]
-        },
-        "ItemWithOffers": {
-            "type": "object",
-            "properties": {
-                "item": {
-                    "$ref": "#/definitions/Item"
-                },
-                "offers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/OptimisedOffer"
-                    }
-                }
-            }
         },
         "OptimisationResult": {
             "type": "object",
@@ -1463,6 +1489,21 @@
                     }
                 }
             }
+        },
+        "OptimisedItemWithOfferByUser": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/OptimisedItem"
+                },
+                {
+                    "properties": {
+                        "offerUser": {
+                            "type": "integer",
+                            "description": "Unique identifer of offer selected by user (only required selection is an offer)."
+                        }
+                    }
+                }
+            ]
         },
         "OptimisationFinishCommand": {
             "type": "object",
