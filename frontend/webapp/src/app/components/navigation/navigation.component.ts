@@ -37,6 +37,7 @@ export class NavTitleComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'sl-navigation',
   templateUrl: './navigation.template.html',
+  styleUrls: [ './navigation.style.scss' ],
 })
 export class NavigationComponent {
 
