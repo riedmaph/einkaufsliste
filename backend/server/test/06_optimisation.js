@@ -15,10 +15,12 @@ var token;
 
 //IDs hardcoded according to setUpMoveItems.sql
 var listid = '5c7397aa-b249-11e6-b98b-000c29c17dad';
+var itemid1 = '5c7397aa-b249-11e6-b98b-001c29c17dad';
+var itemid5 = '5c7397aa-b249-11e6-b98b-005c29c17dad';
 
 describe('Optimise', () => {
 
-  beforeEach((done) => {
+  before((done) => {
     var user = {
                 email: "test@test.de",
                 password: "testpass"
@@ -46,7 +48,7 @@ describe('Optimise', () => {
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
-              res.sbody.should.have.property('items');
+              res.body.should.have.property('items');
               res.body.items.should.be.a('array');
               res.body.items.length.should.be.eql(5);
               res.body.items.should.deep.equal(
@@ -173,6 +175,43 @@ describe('Optimise', () => {
                     ]
                   }
                 ]);
+            done();
+          });
+    });
+  });
+   
+  describe('/PUT update item without offer', () => {
+    it('it should update an item', (done) => {
+      var item = {
+          name: "newitem1Updated",
+          amount: 10.00,
+          unit: 'stk'
+      }
+      chai.request(app)
+          .put('/api/lists/'+listid+'/optimised/'+itemid1)
+          .set('x-access-token', token)
+          .send(item)
+          .end((err, res) => {
+              res.should.have.status(200);
+            done();
+          });
+    });
+  });
+
+  describe('/PUT update item with offer', () => {
+    it('it should update an item', (done) => {
+      var item = {
+          name: "newitem1Updated",
+          amount: 10.00,
+          unit: 'stk',
+          offerUser: 812365
+      }
+      chai.request(app)
+          .put('/api/lists/'+listid+'/optimised/'+itemid5)
+          .set('x-access-token', token)
+          .send(item)
+          .end((err, res) => {
+              res.should.have.status(200);
             done();
           });
     });

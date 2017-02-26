@@ -22,8 +22,6 @@ function updateItem(req, res, next) {
   options.unit = req.body.unit;
   options.offerUser = req.body.offerUser;
 
-  console.log(req.body);
-
   db.conn.none(sqlUpdateOptimisedItem, options)
     .then(function () {
       res.sendStatus(200);
