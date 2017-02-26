@@ -25,6 +25,7 @@ import {
   AuthGuard,
   ApiMapperService,
   NavigationService,
+  SharingService,
 } from './services';
 
 // Components
@@ -108,6 +109,7 @@ type StoreType = {
     ApiMapperService,
     AuthGuard,
     NavigationService,
+    SharingService,
   ],
 })
 export class AppModule {

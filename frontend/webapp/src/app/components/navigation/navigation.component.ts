@@ -19,12 +19,18 @@ export class NavTitleComponent implements OnInit, OnDestroy {
   @Input()
   public title: string = '';
 
+  @Input()
+  public shared: Boolean;
+
   constructor (
     public navigationService: NavigationService,
   ) { }
 
   /** @memberOf OnInit */
   public ngOnInit () {
+    if (this.shared) {
+      this.title += ' (shared)';
+    }
     this.navigationService.title = this.title;
   }
 
@@ -37,6 +43,7 @@ export class NavTitleComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'sl-navigation',
   templateUrl: './navigation.template.html',
+  styleUrls: [ './navigation.style.scss' ],
 })
 export class NavigationComponent {
 

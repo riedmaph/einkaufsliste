@@ -7,11 +7,12 @@
     <md-list-item>
 
       <!--general information-->
-      <md-icon *ngIf="list.sharedWith.length > 0" md-list-avatar class="avatar sharedList">people</md-icon>
-      <md-icon *ngIf="list.sharedWith.length == 0" md-list-avatar class="avatar">person</md-icon>
+      <md-icon *ngIf="list.shared" md-list-avatar class="avatar sharedList">people</md-icon>
+      <md-icon *ngIf="!list.shared" md-list-avatar class="avatar">person</md-icon>
       <h4 md-line>{{ list.name }}</h4>
       <p md-line>{{ list.completed }} of {{ list.count }} completed
-        <md-progress-bar mode="determinate" value="{{ list.completed / list.count * 100}}"></md-progress-bar>
+        <i *ngIf="list.shared" class="sharedList"> shared by {{ trimMail(list.owner) }} </i>
+        <md-progress-bar mode="determinate" value="{{ list.completed / list.count * 100 }}"></md-progress-bar>
       </p>
       <button *ngIf="!isExpanded(list)" md-button (click)="setExpandedList(list)">
         Share
@@ -46,13 +47,13 @@
 
       <!-- remove controls-->
       <ul>
-        <li *ngFor="let user of list.sharedWith">
+        <li *ngFor="let user of this.sharedWith">
           <button 
            md-button
            class="removeBtn"
            (click)="removeContributor(list,user)"
           >
-            {{ user }}
+            {{ trimMail(user) }}
             <md-icon class="removeX">clear</md-icon>
           </button> 
         </li>

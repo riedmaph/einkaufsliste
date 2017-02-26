@@ -9,18 +9,14 @@ export const API_ROUTES = {
   lists: {
     create: `${API_BASE_URL}/lists`,
     single: `${API_BASE_URL}/lists/:listId`,
-    all: `${API_BASE_URL}/lists`, // `assets/mockedData/sharedLists.json`,
+    all: `${API_BASE_URL}/lists`,
     entries: {
       add: `${API_BASE_URL}/lists/:listId/items`,
       remove: `${API_BASE_URL}/lists/:listId/items/:itemId`,
       update: `${API_BASE_URL}/lists/:listId/items/:itemId`,
       move: `${API_BASE_URL}/lists/:listId/items/:itemId`,
     },
-    sharing: {
-      addContributor: `${API_BASE_URL}/share/:listid/:mail`,
-      removeContributor: `${API_BASE_URL}/share/:listid/:mail`,
-      checkEmail: `${API_BASE_URL}/share/:mail`,
-    },
+    sharing: `${API_BASE_URL}/lists/:listId/contributors`,
   },
   markets: {
     favourites: {
