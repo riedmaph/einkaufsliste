@@ -3,23 +3,26 @@ WITH
 		select 
 			id, 
 			"name", 
-			0 as shared,
+			exists (select enduser from ${schemaname:raw}.listshare s where s.list=l.id ) as shared,
 			NULL as owner
-		from ${schemaname:raw}.list 
-		where enduser=${userid}
+		from 
+			${schemaname:raw}.list l
+		where 
+			enduser=${userid}
 		
 		union
 		
 		select 
 			l.id, 
 			"name", 
-			1 as shared,
+			true as shared,
 			u.email as owner
 		from 
 			${schemaname:raw}.listshare s 
 			inner join ${schemaname:raw}.list l on s.list = l.id 
 			inner join ${schemaname:raw}.enduser u on l.enduser=u.id
-		where s.enduser=${userid}
+		where 
+			s.enduser=${userid}
 	)
 	
 SELECT
@@ -32,4 +35,4 @@ SELECT
 FROM 
 	lists l
 ORDER BY 
-	l.shared, l."name";
+	l.shared, l.owner is not null, l.owner, l."name";
