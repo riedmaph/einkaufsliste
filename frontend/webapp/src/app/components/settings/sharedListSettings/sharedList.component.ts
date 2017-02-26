@@ -63,6 +63,7 @@ export class SharedListsSettingsComponent {
            this.error = '';
            this.sharedWith.push(newUser);
            list.shared = true;
+           this.shareForm.reset();
           },
          (err) => {
            this.error = 'User ' + newUser + ' could not be found';
