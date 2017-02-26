@@ -77,9 +77,13 @@ export class SharedListsSettingsComponent {
    * @param {string} user mail adress of the user to be removed
    */
   public removeContributor (list: List, user: string): void {
-   this.sharingService.removeContributor(list.id, user).subscribe(_ => {
+    this.sharingService.removeContributor(list.id, user).subscribe(_ => {
       const index = this.sharedWith.findIndex(users => users === user);
-      this.sharedWith.splice(index, 1); });
+      this.sharedWith.splice(index, 1);
+      if (this.sharedWith.length === 0) {
+        list.shared = false;
+      }
+    });
   }
 
 
@@ -107,6 +111,10 @@ export class SharedListsSettingsComponent {
    * method called in the html to hide the email provider
    */
   private trimMail (mail: string): string {
-    return mail.substring(0, mail.indexOf('@'));
+    if (mail == null) {
+      return 'yourself';
+    } else {
+      return mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+    }
   }
 }
