@@ -41,7 +41,6 @@ CREATE TABLE IF NOT EXISTS :schemaname.ListShare (
     list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE,
     enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE,
     UNIQUE(list, enduser)
-
 );
 
 CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (
