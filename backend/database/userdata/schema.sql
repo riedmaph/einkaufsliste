@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (
 
 CREATE TABLE IF NOT EXISTS :schemaname.OptimisedList (
     id UUID PRIMARY KEY,
-    list UUID NOT NULL REFERENCES :schemaname.List(id),
+    enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE SET NULL ON UPDATE CASCADE,
     startDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     endDate TIMESTAMP DEFAULT NULL,
     saved boolean DEFAULT NULL,
@@ -55,9 +56,9 @@ CREATE TABLE IF NOT EXISTS :schemaname.OptimisedList (
 );
 
 CREATE TABLE IF NOT EXISTS :schemaname.OptimisedListMarket (
-    optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE,
-    market INTEGER NOT NULL REFERENCES Grocerydata.Market(id) ON DELETE CASCADE,
-    UNIQUE(optimisedlist, market)
+    optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    market INTEGER NOT NULL REFERENCES Grocerydata.Market(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    PRIMARY KEY(optimisedlist, market)
 );
 
 CREATE TABLE IF NOT EXISTS :schemaname.OptimisedItem (
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.OptimisedItem (
     name TEXT,
     amount REAL,
     unit TEXT,
-    offerAlgorithm INTEGER REFERENCES Grocerydata.Offer(id),
-    offerUser INTEGER REFERENCES Grocerydata.Offer(id),
-    optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE
+    offerAlgorithm INTEGER REFERENCES Grocerydata.Offer(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    offerUser INTEGER REFERENCES Grocerydata.Offer(id)  ON DELETE SET NULL ON UPDATE CASCADE,
+    optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

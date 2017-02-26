@@ -100,6 +100,7 @@ function _optimiseByPrice(result) {
 function createOptimisedData(result, options, callback) {
   var sqlOtimisedListOptions = {};
   sqlOtimisedListOptions.id = uuid.v1();
+  sqlOtimisedListOptions.userid = options.userid;
   sqlOtimisedListOptions.listid = options.listid;
 
   var sqlOtimisedItemOptions = {}
