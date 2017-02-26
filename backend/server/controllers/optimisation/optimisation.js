@@ -6,7 +6,7 @@ const db = require(path.join('..', 'dbconnector.js'));
 const async = require('async');
 const waterfall = require('async-waterfall');
 
-var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
+var sqlReadItems = db.loadSql(path.join('controllers', 'optimisation', 'readItems.sql'));
 var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOffers.sql'));
 var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
 var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));

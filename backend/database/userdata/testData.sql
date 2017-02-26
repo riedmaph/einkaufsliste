@@ -1,3 +1,6 @@
+DELETE FROM userdata.OptimisedItem;
+DELETE FROM userdata.OptimisedListMarket;
+DELETE FROM userdata.OptimisedList;
 DELETE FROM userdata.Item;
 DELETE FROM userdata.List;
 DELETE FROM userdata.Enduser;
