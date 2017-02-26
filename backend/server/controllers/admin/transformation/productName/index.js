@@ -8,6 +8,7 @@ var sqlInsertMineLogProductName = db.loadSqlTransform(path.join('controllers', '
 
 var sqlInsertProductBlacklist = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertProductBlacklist.sql'));
 var sqlUpdateSourceBlacklist = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','updateSourceBlacklist.sql'));
+var sqlInsertProductForce = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertProductForce.sql'));
 
 function transformMineProductName(t, id) {
   return t.any(sqlMineProductName, { id });
@@ -38,8 +39,18 @@ function postProductBlacklist(userid, string){
     .catch(err => { reject({message: err}); });
   });
 }
+
+function postProductForce(userid,title, target){
+  return new Promise((fullfill, reject) => {
+    db.connTransform.any(sqlInsertProductForce,{ userid: userid, title: title, target: target })
+    .then(() => fullfill())
+    .catch(err => { reject({message: err}); });
+  });
+}
+
 module.exports = {
   transformMineProductName,
   insertMineLogProductName,
   postProductBlacklist,
+  postProductForce,
 };

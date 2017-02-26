@@ -199,6 +199,18 @@ function postProductBlacklist(req, res, next) {
     });
 }
 
+function postProductForce(req, res, next) {
+  productNameTransformation.postProductForce(req.body.userid,req.body.title,req.body.target)
+    .then(() => {
+      res.status(201).send();
+    })
+    .catch(err => {
+      err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
+      console.log(err.message);
+      return next(err);
+    });
+}
+
 module.exports = {
   getArticleTransformation,
   getMineBrand,
@@ -206,6 +218,7 @@ module.exports = {
   getTransformedUnitBySize,
   postArticleRaw,
   postProductBlacklist,
+  postProductForce,
   putArticleTransformation,
   putMineBrand,
   putMineProductName,

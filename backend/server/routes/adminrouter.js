@@ -14,6 +14,9 @@ router.use(tokenhandler.verifyAdminToken);
 router.route('/products/blacklist')
   .post(transformation.postProductBlacklist)
 
+  router.route('/products/force')
+  .post(transformation.postProductForce)
+
 router.route('/transformation/articles')
   .post(transformation.postArticleRaw)
 
