@@ -121,7 +121,7 @@ CREATE TABLE Transformed.BrandBlacklist (
 );
 
 CREATE TABLE Transformed.BrandForce (
-    tite TEXT PRIMARY KEY,
+    title TEXT PRIMARY KEY,
     brand TEXT REFERENCES Transformed.BrandDictionary(name) ON UPDATE CASCADE ON DELETE SET NULL,
     userid UUID,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -172,7 +172,7 @@ CREATE TABLE Transformed.ProductNameBlacklist (
 );
 
 CREATE TABLE Transformed.ProductNameForce (
-    tite TEXT PRIMARY KEY,
+    title TEXT PRIMARY KEY,
     ProductName TEXT REFERENCES Transformed.ProductNameDictionary(name) ON UPDATE CASCADE ON DELETE SET NULL,
     userid UUID,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
