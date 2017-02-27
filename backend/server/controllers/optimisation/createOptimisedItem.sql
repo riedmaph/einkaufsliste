@@ -1,0 +1,2 @@
+INSERT INTO ${schemaname:raw}.OptimisedItem(id, optimisedlist, position, name, amount, unit, offerAlgorithm) 
+VALUES(${id}, ${optimisedlistid}, ${position}, ${name}, ${amount}, ${unit}, ${offerAlgorithm})
