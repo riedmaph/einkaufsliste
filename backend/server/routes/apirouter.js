@@ -68,7 +68,8 @@ router.route('/markets/favourites/:marketid')
 
 /* optimization */
 router.route('/lists/:listid/optimised')
-  .get(optimisation.getOptimisedList);
+  .get(optimisation.getOptimisedList)
+  .put(optimisation.saveOptimisedList);
 
 router.route('/lists/:listid/optimised/:itemid')
   .put(optimisation.updateItem);

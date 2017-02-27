@@ -216,4 +216,17 @@ describe('Optimise', () => {
           });
     });
   });
+
+  describe('/PUT save optimisation', () => {
+    it('it should update an item', (done) => {
+      chai.request(app)
+          .put('/api/lists/'+listid+'/optimised')
+          .set('x-access-token', token)
+          .send()
+          .end((err, res) => {
+              res.should.have.status(200);
+            done();
+          });
+    });
+  });
 });

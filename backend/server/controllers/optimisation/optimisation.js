@@ -11,6 +11,7 @@ var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOff
 var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
 var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));
 var sqlUpdateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'updateOptimisedItem.sql'));
+var sqlSaveOptimisation = db.loadSql(path.join('controllers', 'optimisation', 'saveOptimisation.sql'));
 
 //takes the user's selection and persists it to Userdata.OptimisedItem
 function updateItem(req, res, next) {
@@ -34,7 +35,17 @@ function updateItem(req, res, next) {
 
 //takes the values from Userdata.OptimisedItem and updates Userdata.Item
 function saveOptimisedList(req, res, next) {
+  var options = {};
+  options.listid = req.params.listid;
 
+  db.conn.none(sqlSaveOptimisation, options)
+    .then(function () {
+      res.sendStatus(200);
+    })
+    .catch(function (err) {
+      err.message = 'controllers.optimise.saveOptimisedList: ' + err.message;
+      return next(err);
+    });
 }
 
 //returns the optimised list
@@ -155,5 +166,6 @@ function createOptimisedData(result, options, callback) {
 
 module.exports = {
   getOptimisedList: getOptimisedList,
-  updateItem: updateItem
+  updateItem: updateItem,
+  saveOptimisedList: saveOptimisedList
 };
