@@ -1,1 +1,2 @@
-DELETE FROM ${schemaname:raw}.Enduser
+DELETE FROM ${schemaname:raw}.OptimisedList;
+DELETE FROM ${schemaname:raw}.Enduser;

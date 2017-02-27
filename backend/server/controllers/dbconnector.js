@@ -57,7 +57,8 @@ conn.connect()
 module.exports.conn = conn;
 // Helper for linking to external query files: 
 module.exports.loadSql = function (file) {
-  return new pgp.QueryFile(file, {minify: true, params:loadSqlSettings});
+  var fullPath = path.join(__dirname, '..//', file); //start in server folder
+  return new pgp.QueryFile(fullPath, {minify: true, params:loadSqlSettings});
 }
 
 var cn = {

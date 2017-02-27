@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "async-waterfall": "^0.1.5",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -11,7 +12,7 @@
     "jsonwebtoken": "^7.1.9",
     "morgan": "~1.7.0",
     "password-hash-and-salt": "^0.1.4",
-    "pg-promise": "^3.2.3",
+    "pg-promise": "^5.5.8",
     "uuid": "^3.0.0",
     "winston": "^2.3.0"
   },
