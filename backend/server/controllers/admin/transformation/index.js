@@ -211,12 +211,25 @@ function postProductForce(req, res, next) {
     });
 }
 
+function postProduct(req, res, next) {
+  productNameTransformation.postProduct(req.body.userid,req.body.entry)
+    .then(() => {
+      res.status(201).send();
+    })
+    .catch(err => {
+      err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
+      console.log(err.message);
+      return next(err);
+    });
+}
+
 module.exports = {
   getArticleTransformation,
   getMineBrand,
   getMineProductName,
   getTransformedUnitBySize,
   postArticleRaw,
+  postProduct,
   postProductBlacklist,
   postProductForce,
   putArticleTransformation,

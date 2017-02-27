@@ -11,10 +11,13 @@ var transformation = require(path.join('..', 'controllers', 'admin', 'transforma
 // check if a valid token is provided
 router.use(tokenhandler.verifyAdminToken);
 
+router.route('/products')
+  .post(transformation.postProduct)
+
 router.route('/products/blacklist')
   .post(transformation.postProductBlacklist)
 
-  router.route('/products/force')
+router.route('/products/force')
   .post(transformation.postProductForce)
 
 router.route('/transformation/articles')
