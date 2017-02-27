@@ -38,15 +38,15 @@ describe('Optimise', () => {
     });
   });
 
-  describe('/Get optimised list', () => {
+  describe('/Get optimised list by price', () => {
     it('it should return 5 items with 3 having offers', (done) => {
       chai.request(app)
-          .get('/api/lists/'+listid+'/optimised')
+          .get('/api/lists/'+listid+'/optimised?by=price')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
-              res.sbody.should.have.property('items');
+              res.body.should.have.property('items');
               res.body.items.should.be.a('array');
               res.body.items.length.should.be.eql(5);
               res.body.items.should.deep.equal(
@@ -81,7 +81,7 @@ describe('Optimise', () => {
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-30%",
-                        "isOptimium": false,
+                        "isOptimium": true,
                         "article": {
                           "name": "Weissbier",
                           "brand": "Franziskaner"
@@ -116,7 +116,7 @@ describe('Optimise', () => {
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": null,
-                        "isOptimium": false,
+                        "isOptimium": true,
                         "article": {
                           "name": "Eierspätzle",
                           "brand": "ja!"
@@ -151,7 +151,7 @@ describe('Optimise', () => {
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-38%",
-                        "isOptimium": false,
+                        "isOptimium": true,
                         "article": {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
@@ -172,7 +172,7 @@ describe('Optimise', () => {
                       }
                     ]
                   }
-                ]);
+                  ]);
             done();
           });
     });
