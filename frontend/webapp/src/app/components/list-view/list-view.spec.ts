@@ -12,6 +12,7 @@ import { List } from '../../models';
 import {
   ApiService,
   ListApiService,
+  ListItemParser,
   NavigationService,
 } from '../../services';
 
@@ -31,6 +32,7 @@ describe('ListViewComponent', () => {
         NavigationService,
         { provide: ActivatedRoute, useValue: null },
         { provide: FormBuilder, useValue: { group: () => null } },
+        ListItemParser,
       ],
       imports: [
         HttpModule,

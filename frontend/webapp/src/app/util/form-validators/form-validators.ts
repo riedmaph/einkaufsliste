@@ -52,9 +52,9 @@ export class FormValidators {
    * @returns {ValidatorFn} Validation function
    */
   public static validateParseable (parser: Parser<any>): ValidatorFn {
-    return (formControl: FormControl) => parser.parse(formControl.value) !== undefined ? null : {
+    return (formControl: FormControl) => !parser.parse(formControl.value) ? {
       unparseable: true,
-    };
+    } : null;
   }
 
 }

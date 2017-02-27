@@ -1,5 +1,6 @@
 import { FormControl } from '@angular/forms';
 import { FormValidators } from './form-validators';
+import { ListItemParser } from '../../services';
 
 describe('FormValidators', () => {
   describe('validateEmail', () => {
@@ -56,5 +57,25 @@ describe('FormValidators', () => {
         expect(() => FormValidators.validateEquality(<any> { })(fc)).toThrow();
       });
     });
+  });
+
+  describe('validateParseable', () => {
+
+    it('should return null when the input is parseable', () => {
+      const INPUT = '1 L Milch';
+      const FC = new FormControl(INPUT);
+      const VALIDATOR_FN = FormValidators.validateParseable(new ListItemParser);
+      expect(VALIDATOR_FN(FC)).toBeNull();
+    });
+
+    it('should return an error / not null when the input is not parseable', () => {
+      const INPUT = '';
+      const FC = new FormControl(INPUT);
+      const VALIDATOR_FN = FormValidators.validateParseable(new ListItemParser);
+      const RESULT = VALIDATOR_FN(FC);
+      expect(RESULT).not.toBeNull();
+      expect(RESULT).toEqual({ unparseable: true });
+    });
+
   });
 });

@@ -5,7 +5,7 @@
 Start
   = u:Unit ' '* a:Amount ' '* n:Name { return { name: n, unit: u,     amount: a }; }
   / a:Amount ' '* u:Unit ' '* n:Name { return { name: n, unit: u,     amount: a }; }
-  / a:Amount ' '* 'x' ' '* n:Name   { return { name: n, unit: 'stk', amount: a }; }
+  / a:Amount ' '* 'x' ' '* n:Name    { return { name: n, unit: 'stk', amount: a }; }
   / a:Amount ' '* n:Name             { return { name: n, unit: 'stk', amount: a }; }
   / u:Unit ' '* n:Name               { return { name: n, unit: u,     amount: 1 }; }
   / n:Name                           { return { name: n, unit: 'stk', amount: 1 }; }
@@ -24,7 +24,7 @@ Unit
   / 'ml'i'.'?  { return 'ml';  }
 
 Amount
-  = amountNumber:[0-9.,]+ { return parseFloat(amountNumber.join('').replace(/,/g, '.'), 10); }
+  = amountNumber:[0-9.,]+ { return parseFloat(amountNumber.join('').replace(/,/g, '.')); }
 
 Name
   = any:.+ { return any.join('').replace(/\s/g, ' ').trim(); }

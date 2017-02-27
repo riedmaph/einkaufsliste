@@ -24,7 +24,7 @@ import {
   ListItem,
   List,
   Product,
-} from 'app/models';
+} from '../../models';
 
 import {
   AUTO_COMPLETION_TRIGGER_LENGTH,
@@ -211,42 +211,4 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public updateHighlighting (event: KeyboardEvent, inputElem: HTMLElement) {
-    event.preventDefault();
-
-    // const value = inputElem.textContent;
-    // inputElem.innerText = value;
-
-    // const originCursorPos = getCaretPosition(inputElem);
-
-    // const parsedResult = this.listItemParser.parse(value);
-
-    /*
-    if (originCursorPos > -1) {
-      const caretPosRange = document.createRange();
-      caretPosRange.setStart(inputElem, originCursorPos);
-      caretPosRange.setEnd(inputElem, originCursorPos);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(caretPosRange);
-    }
-    */
-  }
-}
-
-function getCaretPosition(elem: HTMLElement): number {
-  const selection: Selection = window.getSelection();
-  if (selection.rangeCount) {
-    const range: Range = selection.getRangeAt(0);
-    if (range.commonAncestorContainer.parentNode === elem) {
-      return range.endOffset;
-    }
-  }
-  return -1;
-}
-
-function setSelection(elem, start, length) {
-  const range: Range = document.createRange();
-  range.setStart(elem, start);
-  range.setEnd(elem, start + length);
 }

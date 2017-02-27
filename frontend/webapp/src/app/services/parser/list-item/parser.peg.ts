@@ -27,7 +27,7 @@ export const PegParser = (function() {
 
   peg$subclass(peg$SyntaxError, Error);
 
-  peg$SyntaxError.buildMessage = function(expected, found) {
+  function peg$SyntaxError$buildMessage (expected, found) {
     var DESCRIBE_EXPECTATION_FNS = {
           literal: function(expectation) {
             return "\"" + literalEscape(expectation.text) + "\"";
@@ -134,7 +134,7 @@ export const PegParser = (function() {
     return "Expected " + describeExpected(expected) + " but " + describeFound(found) + " found.";
   };
 
-  function peg$parse(input, options) {
+  function peg$parse(input, options?) {
     options = options !== void 0 ? options : {};
 
     var peg$FAILED = {},
@@ -170,7 +170,7 @@ export const PegParser = (function() {
         peg$c25 = function() { return 'ml';  },
         peg$c26 = /^[0-9.,]/,
         peg$c27 = peg$classExpectation([["0", "9"], ".", ","], false, false),
-        peg$c28 = function(amountNumber) { return parseFloat(amountNumber.join('').replace(/,/g, '.'), 10); },
+        peg$c28 = function(amountNumber) { return parseFloat(amountNumber.join('').replace(/,/g, '.')); },
         peg$c29 = peg$anyExpectation(),
         peg$c30 = function(any) { return any.join('').replace(/\s/g, ' ').trim(); },
 
@@ -303,7 +303,7 @@ export const PegParser = (function() {
 
     function peg$buildStructuredError(expected, found, location) {
       return new peg$SyntaxError(
-        peg$SyntaxError.buildMessage(expected, found),
+        peg$SyntaxError$buildMessage(expected, found),
         expected,
         found,
         location
