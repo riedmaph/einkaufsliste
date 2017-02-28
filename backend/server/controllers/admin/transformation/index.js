@@ -223,6 +223,18 @@ function postProduct(req, res, next) {
     });
 }
 
+function putForceProductName(req, res, next) {
+  productNameTransformation.putForceProduct(req.body.userid,req.body.id)
+    .then(() => {
+      res.status(201).send();
+    })
+    .catch(err => {
+      err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
+      console.log(err.message);
+      return next(err);
+    });
+}
+
 module.exports = {
   getArticleTransformation,
   getMineBrand,
@@ -235,5 +247,6 @@ module.exports = {
   putArticleTransformation,
   putMineBrand,
   putMineProductName,
+  putForceProductName,
   putTransformedUnitBySize,
 };

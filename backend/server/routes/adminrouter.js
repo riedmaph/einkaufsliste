@@ -35,6 +35,9 @@ router.route('/transformation/articles/productName/mine/:id')
   .get(transformation.getMineProductName)
   .put(transformation.putMineProductName)
 
+router.route('/transformation/articles/productName/force/:id')
+  .put(transformation.putForceProductName)
+  
 router.route('/transformation/articles/:id/:end')
 //  .get(transformation.getArticleTransformation)
   .put(transformation.putArticleTransformation)
@@ -42,6 +45,7 @@ router.route('/transformation/articles/:id/:end')
 router.route('/transformation/articles/:id')
 //  .get(transformation.getArticleTransformation)
   .put(transformation.putArticleTransformation)
+
 
 // error handler
 router.use(function(err, req, res, next) {

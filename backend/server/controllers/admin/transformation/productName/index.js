@@ -17,6 +17,7 @@ var sqlUpdateUserToSource = db.loadSqlTransform(path.join('controllers', 'admin'
 var sqlUpsertProductName = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertProductName.sql'));
 var sqlInsertProductNameSource = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertProductNameSource.sql'));
 
+var sqlUpdateTransformationProductForce = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','updateTransformationProductForce.sql'));
 
 function transformMineProductName(t, id) {
   return t.any(sqlMineProductName, { id });
@@ -78,6 +79,14 @@ function postProduct(userid, productName){
     })
     .then(() => fullfill())
     .catch(err => { reject({message: err.error.error}); });
+  });
+}
+
+function putForceProduct(userid, id){
+  return new Promise((fullfill, reject) => {
+    db.connTransform.any(sqlUpdateTransformationProductForce,{ userid: userid, id: id })
+    .then(() => fullfill())
+    .catch(err => { reject({message: err}); });
   });
 }
 

@@ -479,6 +479,59 @@
                 }
             }
         },
+        "/admin/transformation/articles/productName/force/{id}": {
+            "put": {
+                "tags": [
+                    "Admin",
+                    "Transformation"
+                ],
+                "summary": "Perform a force transformation and overwrite",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "ID of the transformed.article raw",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/BrandTransformedList"
+                        }
+                    },
+                    "400": {
+                        "description": "Item does not exist.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/transformation/articles/productName/mine/{id}": {
             "get": {
                 "tags": [
