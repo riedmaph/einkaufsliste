@@ -184,6 +184,12 @@ function _createOptimisedItems(result, options, callback) {
   });
 }
 
+function _createOptimisedListMarket(result, options, callback) {
+
+  
+}
+
+
 module.exports = {
   getOptimisedList: getOptimisedList,
   updateItem: updateItem,
