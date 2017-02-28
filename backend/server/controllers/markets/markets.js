@@ -57,7 +57,8 @@ function getOffers(req, res, next) {
             function(offer) 
             {
               return {
-                        id: offer.id, 
+                        id: offer.id,
+                        title: offer.title, 
                         market: offer.market, 
                         offerprice: offer.offerprice, 
                         offerfrom: offer.offerfrom, 

@@ -22,10 +22,10 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public zipCode: Number;
   private showAddMenu = false;
   private showResults = false;
+  private showPosition = false;
   private lat: Number = 0;
   private long: Number = 0;
-  private locationInfo: String = 'https://maps.googleapis.com/maps/api/staticmap?' +
-    'center=lat,long&zoom=13&size=300x300&sensor=false';
+  private locationInfo: String = 'https://www.google.de/maps/@lat,long,15z';
 
   constructor (
     private route: ActivatedRoute,
@@ -59,6 +59,7 @@ export class FavouriteMarketSettingsComponent implements OnInit {
        .find(fav => fav.id === market.id) ));
     }
     this.showResults = true;
+    this.showPosition = true;
   }
 
   /**
@@ -66,12 +67,15 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    * stores the data into possibleMarkets list
    */
   public searchByZip (): void {
-    this.apiService.getMarketsByZip(this.zipCode)
-      .subscribe(response => this.possibleMarkets = response
-      .filter(market => !this.favouriteMarkets
-      .find(fav => fav.id === market.id) ));
+    if ( this.zipCode > 0) {
+      this.apiService.getMarketsByZip(this.zipCode)
+        .subscribe(response => this.possibleMarkets = response
+        .filter(market => !this.favouriteMarkets
+        .find(fav => fav.id === market.id) ));
 
-    this.showResults = true;
+      this.showResults = true;
+      this.showPosition = false;
+    }
   }
 
   /**
@@ -110,6 +114,7 @@ export class FavouriteMarketSettingsComponent implements OnInit {
       this.showResults = false;
     }
     this.showAddMenu = !this.showAddMenu;
+    this.showPosition = false;
   }
 
   /**

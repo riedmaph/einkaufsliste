@@ -26,7 +26,8 @@ export const API_ROUTES = {
     },
     search: `${API_BASE_URL}/markets`,
     zip: `/assets/mock/favourite-markets.json`,
-    },
+    offers: `${API_BASE_URL}/markets/:marketId/offers`,
+  },
   products: {
     search: `${API_BASE_URL}/products/search`,
   },

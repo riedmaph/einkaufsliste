@@ -7,6 +7,15 @@
         <i class="material-icons">close</i>
       </button>
     </md-toolbar>
+    <md-list>
+      <md-list-item
+        class="offers-list-item"
+        routerLink="/offers"
+        (click)="sidenav.close()"
+      >
+        <span class="offers-label">Current Offers</span>
+      </md-list-item>
+    </md-list>
     <sl-list-overview
       #listOverview
       (onListSelect)="sidenav.close()"
@@ -14,10 +23,7 @@
   </md-sidenav>
 
   <md-toolbar color="primary">
-    <button
-      md-icon-button
-      (click)="sidenav.open()"
-    >
+    <button md-icon-button (click)="sidenav.open()">
       <i class="material-icons">menu</i>
     </button>
 
@@ -32,20 +38,12 @@
       <i class="material-icons">more_vert</i>
     </button>
   </md-toolbar>
-
 </div>
 
 <div *ngIf="!authService.loggedIn">
-
   <md-toolbar color="primary">
     <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
-
-    <a routerLink="/register" routerLinkActive="active">
-      Register
-    </a>
-    <a routerLink="/login" routerLinkActive="active">
-      Login
-    </a>
+    <a routerLink="/register" routerLinkActive="active">Register</a>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
   </md-toolbar>
-
 </div>
