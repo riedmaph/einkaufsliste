@@ -52,7 +52,8 @@ export class ApiService {
 
   public getList (listUuid: string): Observable<List> {
     return this.authHttp.get(API_ROUTES.lists.single.replace(':listId', listUuid))
-      .map(res => res.json());
+      .map(res => res.json())
+      .catch(err => Observable.of(null));
   }
 
   public createList (listName: string): Observable<{ id: string }> {

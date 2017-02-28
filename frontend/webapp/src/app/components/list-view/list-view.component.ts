@@ -73,7 +73,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @memberOf OnInit
    */
   public ngOnInit (): void {
-    this.route.data.subscribe((data: { list: List }) => {
+    this.route.data
+    .subscribe((data: { list: List }) => {
       this.list = data.list;
       if (this.list) {
         this.navigationService.title = this.list.name;

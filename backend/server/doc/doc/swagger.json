@@ -178,6 +178,38 @@
                 }
             }
         },
+        "/lists/default": {
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Get details and all items of the user's default list.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/ListWithItems"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/lists/{listid}": {
             "get": {
                 "tags": [
