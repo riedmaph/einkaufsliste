@@ -126,42 +126,62 @@ function _optimiseByPrice(result) {
 }
 
 function createOptimisedData(result, options, callback) {
-  var sqlOtimisedListOptions = {};
-  sqlOtimisedListOptions.id = uuid.v1();
-  sqlOtimisedListOptions.userid = options.userid;
-  sqlOtimisedListOptions.listid = options.listid;
+   waterfall([
+    async.apply(_createOptimisedList, result, options),
+    _createOptimisedItems
+  ], function (err, result) {
+      if(!err) {
+        callback(null, result);
+      }
+      else {
+        callback(err);   
+      }
+  });
+}
 
-  var sqlOtimisedItemOptions = {}
+function _createOptimisedList(result, options, callback) {
+  var sqlParams = {};
+  sqlParams.id = uuid.v1();
+  sqlParams.userid = options.userid;
+  sqlParams.listid = options.listid;
 
-  db.conn.none(sqlCreateOptimisedList, sqlOtimisedListOptions)  //create db-entry for optimisedList
+  options.optimisedListId = sqlParams.id;
+
+  db.conn.none(sqlCreateOptimisedList, sqlParams)  //create db-entry for optimisedList
     .then(function (data) {
-      db.conn.task(function (t) {                               //create db-entries for each optimsedItem
-          var queries = result.items.map(function (item) {
-            sqlOtimisedItemOptions.id = uuid.v1();
-            sqlOtimisedItemOptions.item = item.id;
-            sqlOtimisedItemOptions.optimisedlistid = sqlOtimisedListOptions.id;
-            sqlOtimisedItemOptions.position = item.position;
-            sqlOtimisedItemOptions.name = item.name;
-            sqlOtimisedItemOptions.amount = item.amount;
-            sqlOtimisedItemOptions.unit = item.unit;
-            sqlOtimisedItemOptions.offerAlgorithm = null; //TODO
-
-            return t.none(sqlCreateOptimisedItem, sqlOtimisedItemOptions);
-          });
-          return t.batch(queries);
-        })
-        .then(function (data) {          
-          callback(null, result);
-        })
-        .catch(function (err) {
-          err.message = 'controllers.createOptimisedData.createOptimisedItems: ' + err.message;
-          callback(err);
-        });  
+      callback(null, result, options);
     })
     .catch(function (err) {
-      err.message = 'controllers.createOptimisedData.createOptimisedList: ' + err.message;
+      err.message = 'controllers.createOptimisedDataList: ' + err.message;
       callback(err);
-    });  
+    });
+}
+
+function _createOptimisedItems(result, options, callback) {
+  var sqlParams = {}
+
+  db.conn.task(function (t) {                               //create db-entries for each optimsedItem
+    var queries = result.items.map(function (item) {
+      sqlParams.id = uuid.v1();
+      sqlParams.item = item.id;
+      sqlParams.optimisedlistid = options.optimisedListId;
+      sqlParams.position = item.position;
+      sqlParams.name = item.name;
+      sqlParams.amount = item.amount;
+      sqlParams.unit = item.unit;
+      sqlParams.offerAlgorithm = null;
+
+      return t.none(sqlCreateOptimisedItem, sqlParams);
+    });
+    return t.batch(queries);
+  })
+  .then(function (data) {          
+    callback(null, result);
+  })
+  .catch(function (err) {
+    err.message = 'controllers.createOptimisedData.createOptimisedItems: ' + err.message;
+    callback(err);
+  });
 }
 
 module.exports = {
