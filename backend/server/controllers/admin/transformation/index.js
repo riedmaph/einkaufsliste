@@ -111,7 +111,6 @@ function putMineProductName(req, res, next) {
       res.status(200).send(returnData);
     })
     .catch(err => {
-      console.log(JSON.stringify(err));
       err.message = 'controllers.admin.transformation.putMineProductName ' + JSON.stringify(err);
       return next(err);
     });
@@ -134,7 +133,6 @@ function putArticleTransformation(req, res, next) {
   var id = parseInt(req.params.id);
   var end = parseInt(req.params.end || req.params.id);
   if (end < id) {
-    console.error(end,id,end < id);
     res.status(400).send();
     return;
   }
@@ -169,7 +167,6 @@ function putArticleTransformation(req, res, next) {
       res.status(200).send(returnData);
     })
     .catch(err => {
-      console.log(JSON.stringify(err));
       err.message = 'controllers.admin.transformation.putMineProductName ' + JSON.stringify(err);
       return next(err);
     });
@@ -194,7 +191,6 @@ function postProductBlacklist(req, res, next) {
     })
     .catch(err => {
       err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
-      console.log(err.message);
       return next(err);
     });
 }
@@ -206,7 +202,6 @@ function postProductForce(req, res, next) {
     })
     .catch(err => {
       err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
-      console.log(err.message);
       return next(err);
     });
 }
@@ -218,7 +213,6 @@ function postProduct(req, res, next) {
     })
     .catch(err => {
       err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
-      console.log(err.message);
       return next(err);
     });
 }
@@ -230,7 +224,6 @@ function putForceProductName(req, res, next) {
     })
     .catch(err => {
       err.message = 'controllers.admin.transformation.' + arguments.callee.toString().slice("function ".length,arguments.callee.toString().indexOf('(')) + ': ' + (err.message?err.message:"");
-      console.log(err.message);
       return next(err);
     });
 }
