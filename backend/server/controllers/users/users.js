@@ -6,8 +6,13 @@ const password = require('password-hash-and-salt');
 const db = require(path.join('..', 'dbconnector.js'));
 const tokenhandler = require(path.join('..', 'tokenhandler'));
 
+const logger = require(path.join('..', '..', 'logging', 'logger'));
+
 var sqlRegisterCheckUser = db.loadSql(path.join('controllers', 'users', 'registerCheckUser.sql'));
 var sqlRegisterInsertUser = db.loadSql(path.join('controllers', 'users', 'registerInsertUser.sql'));
+
+var sqlCreateListReturning = db.loadSql(path.join('controllers', 'lists', 'createListRet.sql'));
+var sqlUpdateRecentList = db.loadSql(path.join('controllers', 'lists', 'updateRecentList.sql'));
 
 function validatePassword(password) {
   return password.length >= 7;
@@ -31,9 +36,27 @@ function register(req, res, next) {
 
             db.conn.none(sqlRegisterInsertUser, req.body)
               .then(function () {
+                // the user does not want to know about default list generation, thus send the response first
                 res.status(200)
                   .json({
                     token: tokenhandler.createToken(req.body.id)
+                  });
+                const newList = {
+                  id: uuid.v1(),
+                  userid: req.body.id,
+                  name: 'Einkaufsliste',
+                };
+                db.conn.one(sqlCreateListReturning, newList)
+                  .then(function (list) {
+                    db.conn.any(sqlUpdateRecentList, { userid: newList.userid, listid: newList.id })
+                      .then(function () { })
+                      .catch(function (err) {
+                        // the user does not want to know about this
+                        logger.log('error','controllers.users.register.sqlUpdateRecentList: ' + err.message);
+                    });
+                  })
+                  .catch(function (err) {
+                    logger.log('error','controllers.users.register.sqlCreateListReturning: ' + err.message);
                   });
               })
               .catch(function (err) {
