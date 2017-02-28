@@ -15,19 +15,11 @@ var token;
 
 //IDs hardcoded according to setUpMoveItems.sql
 var listid = '5c7397aa-b249-11e6-b98b-000c29c17dad';
-<<<<<<< HEAD
 var itemid1 = '5c7397aa-b249-11e6-b98b-001c29c17dad';
 var itemid5 = '5c7397aa-b249-11e6-b98b-005c29c17dad';
 
 describe('Optimise', () => {
-
   before((done) => {
-=======
-
-describe('Optimise', () => {
-
-  beforeEach((done) => {
->>>>>>> story-41
     var user = {
                 email: "test@test.de",
                 password: "testpass"
@@ -47,17 +39,10 @@ describe('Optimise', () => {
     });
   });
 
-<<<<<<< HEAD
-  describe('/Get optimised list', () => {
-    it('it should return 5 items with 3 having offers', (done) => {
-      chai.request(app)
-          .get('/api/lists/'+listid+'/optimised')
-=======
   describe('/Get optimised list by price', () => {
     it('it should return 5 items with 3 having offers', (done) => {
       chai.request(app)
           .get('/api/lists/'+listid+'/optimised?by=price')
->>>>>>> story-41
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
