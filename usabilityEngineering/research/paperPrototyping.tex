@@ -26,12 +26,12 @@ Each station had four to eight items usually found unter that category.
 
 \subsection{Scenario}
 The user was then given a shopping list of twelve or more items. 
-He was instructed to ''buy'' the items on that list while describing aloud his actions, goals and thought process.
+He was instructed to ``buy'' the items on that list while describing aloud his actions, goals and thought process.
 
 \subsection{Variables}
 While varying the different list types as described above \ref{sec:list-types}, we observed the following parameters:
 \begin{itemize}
-    \item Number of times on the shopping list looked at
+    \item Number of times on the shopping list was looked at
     \item Number of items picked up between each look at the list
     \item Number of errors / corrections
     \item Distance walked
@@ -45,7 +45,142 @@ The interviews were conducted semi-structured, using the following questions as 
     \item How were the items partitioned / sorted? I.e. did they understand the implicit sorting.
     \item TODO
 \end{itemize}
- 
+
 \subsection{Results}
- Results will be discussed after further study. This document is currently in an intermediate state and will be adapted further on.
+
+% TODO
+
+\section{Heuristic evaluation of Hi-Fi Prototypes}
+
+In a subsequent iteration we rebuilt the prototypes in higher fidelity using the Proto.io platform.
+The prototypes created were variations of the simple list described above. The map-variant was droped due to implementation complexity.
+\begin{itemize}
+    \item \textbf{Variation 1:} Roughly equivalent to variation one of the paper prototype iteration. 
+        The list is unsorted, items are simply listed beneath one another.
+    \item \textbf{Variation 2:} As with paper prototype variation 2, lists are sorted according to their categories. 
+        They are still shown directly beneath on another with no hints as to the sorting.
+    \item \textbf{Variation 3:} The high fidelity implementation of paper prototype variation 3 shows list items grouped by category.
+        The grouping is explicitly given with titles for and a larger gap between the categories.
+    \item \textbf{Variation 4:} A fourth variation was added that too shows the list items grouped into categories with title.
+        This variant however puts the categories on different pages. Swiping left and right on a list allows switching between list.
+        A page indicator shows that there are more pages available and which page is currently shown in the viewport.
+\end{itemize}
+
+Using the ten Usability Heuristics by Nielsen, we evaluated these improved iterations.
+
+    \subsection{Results}
+
+\section{User study with Hi-Fi Prototypes}
+
+The results of the Heuristic Evaluation we then incorporated into the original Hi Fi Prototypes in another iteration.
+These prototypes are the basis for a user study to assess their usability and general support for grocery shopping.
+
+\subsection{Evaluation}
+    \subsubsection{Hypotheses}
+        Varying only prototype used:
+        \begin{itemize}
+            \item Random requires the highest number of interactions
+            \item Random requires the longest distance walked 
+            \item Random requires the longest time
+            \item Random produces the highest error rate
+
+            \item Grouped requires the lowest number of interactions
+
+            \item Grouped+Swipe requires the shortest distance walked 
+            \item Grouped+Swipe requires the shortest time
+            \item Grouped+Swipe produces the lowest error rate
+        \end{itemize}
+        \begin{itemize}
+
+            \item With Undo: Fewer errors / forgotten items
+            \item Without hiding: Fewer errors / forgotten items
+            \item With hiding: Faster
+
+            \item Very small categories or very large categories: Slow and more errors
+
+            \item Many interactions correlate with long time
+            \item Long distance correlates with long time
+
+            \item Errors impairs the fun
+
+        \end{itemize}
+    \subsubsection{Variables}
+        \subsubsubsection{Independent variables}
+            \begin{itemize}
+                \item Prototype used
+                    \item With or without Undo
+                    \item Hide checked items or not
+                \item Granularity of categories / number of categories 
+                \item Total list length
+            \end{itemize}
+        \subsubsubsection{Dependent variables}
+            \begin{itemize}
+                \item Fun / Preference (Questionaire) % TODO find questionare
+                \item Ease of Use (SUS + awesome Questionaire)
+                \item Interaction frequency (how often does a user interact with the list) (counted by examiners || device (eyetracking?))
+                \item Error rate (counted by examiners)
+                \item Total time / Time saved (measured by examiners)
+                \item Total distance walked (measured by step counter)
+            \end{itemize}
+
+    \subsubsection{Scenario/Setting + Setup}   
+        siehe Bauer-Raum, nur halt echter Supermarkt, ne
+
+        Within subject, everyone tries every prototyp in different Order.
+
+        Latin Squared
+    \subsubsection{Challenges / External factors / T2Valid}
+        \begin{itemize}
+            \item Order of categories
+            \item Users usual shopping behaviour (items the user actually buys a lot might be easier to remember or vice versa)
+            \item 
+        \end{itemize}
+
+    \subsubsection{Questionare}
+        \textbf{Part 1: Usability (SUS)} % https://www.usability.gov/how-to-and-tools/methods/system-usability-scale.html
+        \begin{itemize}
+            \item I think that I would like to use this system frequently.
+            \item I found the system unnecessarily complex.
+            \item I thought the system was easy to use.
+            \item I think that I would need the support of a technical person to be able to use this system.
+            \item I found the various functions in this system were well integrated.
+            \item I thought there was too much inconsistency in this system.
+            \item I would imagine that most people would learn to use this system very quickly.
+            \item I found the system very cumbersome to use.
+            \item I felt very confident using the system.
+            \item I needed to learn a lot of things before I could get going with this system.
+        \end{itemize}
+        \textbf{Part 1b: USE Questionaire} % garyperlman.com/quest/quest.cgi?form=USE
+
+        \textbf{Part 2: Fun} % http://dare.ubvu.vu.nl/handle/1871/9782
+        \begin{itemize}
+            \item Do you work with the program without someone telling you to?
+            \item Would you like to work with the program when other children can decide for themselves what to do?
+            \item Do you think it is boring to work with the program?
+            \item When you started working with the program, did you want to continue working with it?
+            \item Do you think your friends would like the program?
+            \item Do you think the program is childish?
+            \item Is the program is too difficult to play with?
+            \item When you have worked with the program once, does it remain fun?
+            \item Do you enjoy yourself when you are working with the program?
+            \item Does the program contain many surprises?
+            \item Would you like to work with the program more often?
+            \item Do you perform well on the exercises in the program?
+            \item Would you like to have the program at home?
+            \item Do you make many mistakes while you are working with the program?
+        \end{itemize}
+        \textbf{Part 3: Tech Affinity & Shopping behaviour}
+
+        \textbf{Part 4: Demographics}
+        \begin{itemize}
+            \item Age
+            \item Gender
+            \item Marital status
+            \item Household size
+            \item (Household-)Income
+
+        \end{itemize}
+% TODO
+
 \end{document}
+

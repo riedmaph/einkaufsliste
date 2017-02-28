@@ -8,15 +8,16 @@
   <h4>  Search for Markets </h4>
   <!-- Search Results -->
   <div *ngIf="showResults">
+    <p *ngIf="showPosition" class="info"> Markets found around
+      <a
+        color="accent"
+        [href]="this.locationInfo"
+        target="_blank"
+      > your position:
+      </a>
+    </p>
     <md-list *ngIf="possibleMarkets.length > 0">
-        <p *ngIf="lat > 0" class="info"> Markets found around
-          <a
-            color="accent"
-            [href]="this.locationInfo"
-            target="_blank"
-          > your position:
-          </a>
-        </p>
+       
       <md-list-item *ngFor="let market of possibleMarkets; let i = index">
         <img
           md-list-avatar

@@ -6,7 +6,7 @@
         "version": "1.0.0"
     },
     "schemes": [
-        "http"
+        "http", "https"
     ],
     "basePath": "/api",
     "produces": [
@@ -422,7 +422,7 @@
                 "tags": [
                     "Shared Lists"
                 ],
-                "summary": "Remove a user from the group of users a list is shared with.",
+                "summary": "Remove a list contributor.",
                 "description": "",
                 "parameters": [
                     {
@@ -1119,7 +1119,7 @@
                 }
             }
         },
-        "List": {
+        "ListShort": {
             "allOf": [
                 {
                     "$ref": "#/definitions/ListID"
@@ -1129,12 +1129,40 @@
                 },
                 {
                     "required": [
-                        "count"
+                        "count",
+                        "shared"
                     ],
                     "properties": {
                         "count": {
                             "type": "integer",
                             "description": "Number of items in list."
+                        },
+                         "shared": {
+                            "type": "boolean",
+                            "description": "True iif number of contributors is greater than 0."
+                        }
+                    }
+                }
+            ]
+        },
+        "List": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ListShort"
+                },
+                {
+                    "required": [
+                        "completed",
+                        "owner"
+                    ],
+                    "properties": {
+                        "completed": {
+                            "type": "integer",
+                            "description": "Number of checked items in list."
+                        },
+                        "owner": {
+                            "type": "string",
+                            "description": "Null if the current user is the owner of the list, else the email address if the owner of the list."
                         }
                     }
                 }
@@ -1149,7 +1177,7 @@
         "ListWithItems": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/List"
+                    "$ref": "#/definitions/ListShort"
                 },
                 {
                     "required": [

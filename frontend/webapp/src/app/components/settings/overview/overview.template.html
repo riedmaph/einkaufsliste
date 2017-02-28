@@ -1,12 +1,39 @@
 <md-list>
   <md-list-item>
+    <button
+        md-icon-button
+        class="list-overview-button"
+        (click)="toggleFavMarketsDetails()"
+    >
+      <i *ngIf="!showFavMarketDetails" class="material-icons">expand_more</i>
+      <i *ngIf="showFavMarketDetails" class="material-icons">expand_less</i>
+    </button>
     <a [routerLink]="[ 'favourite-markets' ]">
       Favourite Markets
     </a>
   </md-list-item>
+  <div *ngIf="showFavMarketDetails">
+      <p class="list-detail-text">
+        You can find, add, or delete your favourite markets. 
+        This affects the presented offers as well as the markets respected in the optimization.
+      </p>
+  </div>
   <md-list-item>
+    <button
+        md-icon-button
+        class="list-overview-button"
+        (click)="toggleSharedListDetails()"
+    >
+      <i *ngIf="!showSharedListsDetails" class="material-icons">expand_more</i>
+      <i *ngIf="showSharedListsDetails" class="material-icons">expand_less</i>
+    </button>
     <a [routerLink]="[ 'shared-lists' ]">
       Shared Lists
     </a>
   </md-list-item>
+  <div *ngIf="showSharedListsDetails">
+      <p class="list-detail-text">
+        You can share your lists (or lists you are participating in) with other users or remove their access.
+      </p>
+  </div>
 </md-list>

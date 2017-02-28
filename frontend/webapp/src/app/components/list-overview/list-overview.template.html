@@ -12,6 +12,7 @@
         <i *ngIf="!isExpanded(list)" class="material-icons">expand_more</i>
         <i *ngIf="isExpanded(list)" class="material-icons">expand_less</i>
       </button>
+      <i *ngIf="list.shared" class="material-icons sharedIndicator">people</i>
       <a
         [routerLink]="[ '/list', list.id ]"
         [href]="'/list/' + list.id"
@@ -30,7 +31,7 @@
     </md-list-item>
     <div *ngIf="isExpanded(list)">
       <p class="list-detail-text">{{ list.completed }} of {{ list.count }} completed</p>
-      <md-progress-bar mode="determinate" value="{{ list.completed / list.count * 100}}"></md-progress-bar>
+      <md-progress-bar mode="determinate" value="{{ list.completed / list.count * 100 }}"></md-progress-bar>
     </div>
   </div>
 </md-list>
@@ -46,8 +47,11 @@
       class="new-list-input"
       #listName
     >
-      <md-hint align="end">{{ 24 - listName.characterCount }}</md-hint>
+      <md-hint *ngIf="listName.characterCount >= 24" align="end">
+        List names are limited to 24 characters
+      </md-hint>
     </md-input>
+
     <button
       md-icon-button
       type="submit"

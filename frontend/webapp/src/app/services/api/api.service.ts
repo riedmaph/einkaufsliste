@@ -81,7 +81,7 @@ export class ApiService {
   public renameList (listId: string, newName: string): Observable<any> {
     return this.authHttp.put(
       API_ROUTES.lists.single.replace(':listId', listId),
-      { name: newName }).map( res => res.json());
+      { name: newName }).map(res => res.json());
   }
 
   /**
@@ -164,7 +164,7 @@ export class ApiService {
   /**
    * Makes API call to get markets by Distance
    *
-   * 
+   *
    * @param @TODO
    * @return {Observable<Market>}
    *
@@ -185,8 +185,8 @@ export class ApiService {
   /**
    * Makes API call to get markets for the user by ZIP
    *
-   * 
-   * @param {Number} zip Zip Code 
+   *
+   * @param {Number} zip Zip Code
    * @return {Observable<Market>}
    *
    */
@@ -203,65 +203,25 @@ export class ApiService {
   /**
    * Makes API call to add a market to the favourite markets
    *
-   * @TODO Parameter, @TODO json.new -> json.markets
    * @param The Id of the new favourite market
    * @return {Observable<any>}
    *
    */
-   public addFavouriteMarket (marketId: Number): Observable<any> {
+  public addFavouriteMarket (marketId: Number): Observable<any> {
     return this.authHttp.post(API_ROUTES.markets.favourites.add
       .replace(':marketId', marketId.toString()),
       { marketid: marketId });
   }
-  /**
 
+  /**
    * Makes API call to remove a market from the favourite markets
    *
    * @param The Id of the favourite market to delete
    * @return {Observable<any>}
    *
    */
-  public deleteFavouriteMarket(marketId: Number): Observable<any> {
+  public deleteFavouriteMarket (marketId: Number): Observable<any> {
     return this.authHttp.delete(API_ROUTES.markets.favourites.remove
       .replace(':marketId', marketId.toString()));
-  }
-/**
- * makes api call to add a new contributor to the list contributors
- * 
- * @param {string} ListId id of the list
- * @param {string} newUser email adress of the new user
- */
-  public addContributor (listId: string, newUser: string): Observable<any> {
-  /*  return this.authHttp.put(API_ROUTES.lists.sharing.addContributor
-      .replace(':listid', listId)
-      .replace(':mail', newUser),
-      { mail: newUser });*/
-
-      return Observable.of('MockedAPIcall');
-  }
-
-/**
- * makes api call to remove a contributor to the list contributors
- * 
- * @param {string} ListId id of the list
- * @param {string} newUser email adress of the new user
- */
-  public removeContributor (listId: string, newUser: string): Observable<any> {
-  /*  return this.authHttp.delete(API_ROUTES.lists.sharing.addContributor
-      .replace(':listid', listId)
-      .replace(':mail', newUser));*/
-      return Observable.of('MockedAPIcall');
-  }
-
-/**
- * makes api call to check if user to share a list with actually exists
- * 
- * @param {string} user email adress of the new user
- */
-  public checkContributor (user: string): Observable<any> {
-   /* return this.authHttp.put(API_ROUTES.lists.sharing.checkEmail
-      .replace(':mail', user),
-      { mail: user });*/
-      return Observable.of ((user.indexOf('yes') !== -1));
   }
 }

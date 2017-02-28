@@ -1,16 +1,26 @@
-nav {
-  box-shadow: 0 .2em .4em rgba(0, 0, 0, 0.3);
-  z-index: 2;
-}
-
 md-toolbar {
-  padding: 0 .5em;
+    box-shadow: 0 .2em .4em rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    padding: 0 .5em;
 }
 
 .fill-remaining {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .toolbar-title {
-  padding: 0 .5em;
+    padding: 0 .5em;
+}
+
+.offers-list-item {
+    cursor: pointer;
+
+    &:hover {
+        background: #eee;
+    }
+}
+
+.offers-label {
+    padding-left: 2.5em;
+    color: #555;
 }

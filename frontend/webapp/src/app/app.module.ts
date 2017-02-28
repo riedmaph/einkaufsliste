@@ -24,12 +24,16 @@ import {
   AuthService,
   AuthGuard,
   ApiMapperService,
+  ListCommunicationService,
   NavigationService,
+  OfferService,
+  SharingService,
 } from './services';
 
 // Components
 import {
   ConfirmComponent,
+  FavouriteMarketSettingsComponent,
   ListComponent,
   ListOverviewComponent,
   ListViewComponent,
@@ -37,15 +41,18 @@ import {
   NoContentComponent,
   NavigationComponent,
   NavTitleComponent,
+  OffersComponent,
   RegisterComponent,
   SettingsComponent,
   SettingsOverviewComponent,
-  FavouriteMarketSettingsComponent,
   SharedListsSettingsComponent,
 } from './components';
 
 // Directives
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
+
+// Pipes
+import { OfferFilterPipe } from './pipes';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -67,20 +74,22 @@ type StoreType = {
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
+    AutoCompletionComponent,
+    AutoCompletionDirective,
+    ConfirmComponent,
+    FavouriteMarketSettingsComponent,
     ListViewComponent,
     NoContentComponent,
     NavigationComponent,
     NavTitleComponent,
     ListComponent,
     ListOverviewComponent,
-    AutoCompletionComponent,
-    AutoCompletionDirective,
-    RegisterComponent,
     LoginComponent,
+    OffersComponent,
+    OfferFilterPipe,
+    RegisterComponent,
     SettingsComponent,
     SettingsOverviewComponent,
-    FavouriteMarketSettingsComponent,
-    ConfirmComponent,
     SharedListsSettingsComponent,
   ],
   entryComponents: [
@@ -107,7 +116,10 @@ type StoreType = {
     AuthService,
     ApiMapperService,
     AuthGuard,
+    ListCommunicationService,
     NavigationService,
+    OfferService,
+    SharingService,
   ],
 })
 export class AppModule {
