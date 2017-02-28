@@ -3,6 +3,8 @@ const uuid = require('uuid');
 
 const db = require(path.join('..', 'dbconnector.js'));
 
+const LIST_ITEM_NAME_MAX_LENGTH = 140;
+
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
 var sqlCreateItem = db.loadSql(path.join('controllers', 'items', 'createItem.sql'));
 var sqlGetIdItem = db.loadSql(path.join('controllers', 'items', 'getIdItem.sql'));
@@ -32,6 +34,9 @@ function getListItems(req, res, next) {
 }
 
 function createItem(req, res, next) {
+  if(req.body.name && req.body.name.length>LIST_ITEM_NAME_MAX_LENGTH) {
+    return next({ message: 'input name is too long '});
+  }
   req.body.listid = req.params.listid;
   req.body.amount = parseFloat(req.body.amount);
   req.body.id = uuid.v1();
@@ -51,6 +56,9 @@ function createItem(req, res, next) {
 }
 
 function updateItem(req, res, next) {
+  if(req.body.name && req.body.name.length>LIST_ITEM_NAME_MAX_LENGTH) {
+    return next({ message: 'input name is too long '});
+  }
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
   req.body.amount = parseFloat(req.body.amount);
