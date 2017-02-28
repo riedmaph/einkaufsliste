@@ -1,5 +1,6 @@
 const path = require('path');
 var uuid = require('uuid');
+const logger = require(path.join('..', '..', 'logging', 'logger'));
 
 const db = require(path.join('..', 'dbconnector.js'));
 
@@ -43,7 +44,7 @@ function getListWithItems(req, res, next) {
               .then(function (data) { })
               .catch(function (err) {
                 // the user does not want to know about this
-                console.info('controllers.lists.getListWithItems.sqlUpdateRecentList: ' + err.message);
+                logger.log('error', 'controllers.lists.getListWithItems.sqlUpdateRecentList: ' + err.message);
               });
           })
           .catch(function (err) {
