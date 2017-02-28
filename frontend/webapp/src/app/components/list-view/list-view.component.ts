@@ -5,7 +5,10 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
 import { MdDialog } from '@angular/material';
 import {
   FormGroup,
@@ -46,6 +49,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
+    private router: Router,
     private dialog: MdDialog,
     private formBuilder: FormBuilder,
   ) {
@@ -164,8 +168,7 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     // insert the moved Item at new position
     this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
     movedItem.listUuid = this.list.id;
-    this.apiService.reorderItem(movedItem, newPosition)
-      .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
+    this.apiService.reorderItem(movedItem, newPosition).subscribe();
   }
 
   /**
@@ -189,4 +192,5 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       this.apiService.renameList(this.list.id, this.list.name);
     }
   }
+
 }

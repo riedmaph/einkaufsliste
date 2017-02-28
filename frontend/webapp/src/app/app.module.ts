@@ -27,6 +27,7 @@ import {
   ListCommunicationService,
   NavigationService,
   OfferService,
+  OptimisationService,
 } from './services';
 
 // Components
@@ -41,6 +42,7 @@ import {
   NavigationComponent,
   NavTitleComponent,
   OffersComponent,
+  OptimisationComponent,
   RegisterComponent,
   SettingsComponent,
   SettingsOverviewComponent,
@@ -85,6 +87,7 @@ type StoreType = {
     LoginComponent,
     OffersComponent,
     OfferFilterPipe,
+    OptimisationComponent,
     RegisterComponent,
     SettingsComponent,
     SettingsOverviewComponent,
@@ -116,6 +119,7 @@ type StoreType = {
     ListCommunicationService,
     NavigationService,
     OfferService,
+    OptimisationService,
   ],
 })
 export class AppModule {

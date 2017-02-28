@@ -1,9 +1,13 @@
 import { Routes } from '@angular/router';
 
-import { ListViewComponent } from './list-view.component';
+import {
+  ListViewComponent,
+  OptimisationComponent,
+} from 'app/components';
 import {
   AuthGuard,
   ListResolver,
+  OptimisationResolver,
 } from 'app/services';
 
 export const LIST_VIEW_ROUTES: Routes = [
@@ -21,6 +25,15 @@ export const LIST_VIEW_ROUTES: Routes = [
         resolve: {
           list: ListResolver,
         },
+        children: [
+          {
+            path: 'optimisation',
+            component: OptimisationComponent,
+            resolve: {
+              optimisedList: OptimisationResolver,
+            },
+          },
+        ],
       },
     ],
   },
