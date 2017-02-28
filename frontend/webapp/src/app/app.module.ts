@@ -27,6 +27,7 @@ import {
   ListCommunicationService,
   NavigationService,
   OfferService,
+  SharingService,
 } from './services';
 
 // Components
@@ -44,6 +45,7 @@ import {
   RegisterComponent,
   SettingsComponent,
   SettingsOverviewComponent,
+  SharedListsSettingsComponent,
 } from './components';
 
 // Directives
@@ -88,6 +90,7 @@ type StoreType = {
     RegisterComponent,
     SettingsComponent,
     SettingsOverviewComponent,
+    SharedListsSettingsComponent,
   ],
   entryComponents: [
     AutoCompletionComponent,
@@ -116,6 +119,7 @@ type StoreType = {
     ListCommunicationService,
     NavigationService,
     OfferService,
+    SharingService,
   ],
 })
 export class AppModule {

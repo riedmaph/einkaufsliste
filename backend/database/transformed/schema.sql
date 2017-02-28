@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS transformed.categorytagforce;
 DROP TABLE IF EXISTS transformed.categorytagsdictionary;
 
 DROP TABLE IF EXISTS Transformed.Article;
+
 DROP TABLE IF EXISTS transformed.TransformationPhase;
 DROP TABLE IF EXISTS transformed.UnitDictionary;
 DROP TABLE IF EXISTS Transformed.UnitTranslation;
