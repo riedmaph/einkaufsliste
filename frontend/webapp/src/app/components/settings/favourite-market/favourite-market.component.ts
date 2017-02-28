@@ -82,28 +82,29 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    *  Adds a possible Market to favouriteMarkets
    *  removes the market from the possibleMarkets
    *  escalates the update to the api
-   * 
+   *
    * @param {Market} newMarket the new Market
-   *   
+   *
    */
   public add (newMarket: Market): void {
     this.apiService.addFavouriteMarket(newMarket.id).subscribe(_ => {
       this.favouriteMarkets.push(newMarket);
       // delete from possible Market list
       const index = this.possibleMarkets.findIndex(x => x.id === newMarket.id);
-      this.possibleMarkets.splice(index, 1); },
-    );
+      this.possibleMarkets.splice(index, 1);
+    });
   }
 
   /**
    * Removes the market with the given Id from the favourites
    * and makes corresponding api call
-   * 
+   *
    */
   public remove (marketId: number): void {
     this.apiService.deleteFavouriteMarket(marketId).subscribe(_ => {
       const index = this.favouriteMarkets.findIndex(x => x.id === marketId);
-      this.favouriteMarkets.splice(index, 1); });
+      this.favouriteMarkets.splice(index, 1);
+    });
   }
 
   /**
@@ -119,7 +120,7 @@ export class FavouriteMarketSettingsComponent implements OnInit {
 
   /**
    * @param {string} brand shop franchise
-   * @returns {string} Path to image for given brand or placeholder   
+   * @returns {string} Path to image for given brand or placeholder
    */
   public resolveImage (brand: string) {
     let path: string;
