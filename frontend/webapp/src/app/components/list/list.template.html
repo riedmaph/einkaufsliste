@@ -28,6 +28,7 @@
         name="amount"
         class="item-amount form-field--sm"
         placeholder="1"
+        (keydown)="handleKeydown($event.keyCode)"
       >
       <input
         type="text"
@@ -35,6 +36,7 @@
         name="unit"
         class="item-unit form-field--sm"
         placeholder="kg"
+        (keydown)="handleKeydown($event.keyCode)"
       >
       <input
         type="text"
@@ -42,6 +44,8 @@
         [(ngModel)]="item.name"
         name="itemName"
         class="item-name form-field--lg"
+        [maxlength]="MAX_LENGTH"
+        (keydown)="handleKeydown($event.keyCode, item)"
       >
     </div>
 
