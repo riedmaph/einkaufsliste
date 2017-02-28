@@ -76,7 +76,11 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     this.route.data.subscribe((data: { list: List }) => {
       this.list = data.list;
       if (this.list) {
-        this.navigationService.title = this.list.name;
+        this.navigationService.list = this.list;
+        console.log('this.list')
+        console.log(this.list)
+        console.log('data.list: ')
+        console.log(data.list)
       }
     });
   }

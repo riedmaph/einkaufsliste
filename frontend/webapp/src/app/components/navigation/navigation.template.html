@@ -27,7 +27,10 @@
       <i class="material-icons">menu</i>
     </button>
 
-    <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
+    <span class="toolbar-title fill-remaining">
+      <i *ngIf="navigation.shared" class="material-icons sharedIndicator">people</i>
+      {{ navigation.title }}
+    </span>
 
     <md-menu x-position="before" #menu="mdMenu">
       <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
