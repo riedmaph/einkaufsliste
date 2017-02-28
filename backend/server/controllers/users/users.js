@@ -11,7 +11,7 @@ const logger = require(path.join('..', '..', 'logging', 'logger'));
 var sqlRegisterCheckUser = db.loadSql(path.join('controllers', 'users', 'registerCheckUser.sql'));
 var sqlRegisterInsertUser = db.loadSql(path.join('controllers', 'users', 'registerInsertUser.sql'));
 
-var sqlCreateListReturning = db.loadSql(path.join('controllers', 'lists', 'createListRet.sql'));
+var sqlCreateList = db.loadSql(path.join('controllers', 'lists', 'createList.sql'));
 var sqlUpdateRecentList = db.loadSql(path.join('controllers', 'lists', 'updateRecentList.sql'));
 
 function validatePassword(password) {
@@ -46,8 +46,8 @@ function register(req, res, next) {
                   userid: req.body.id,
                   name: 'Einkaufsliste',
                 };
-                db.conn.one(sqlCreateListReturning, newList)
-                  .then(function (list) {
+                db.conn.none(sqlCreateList, newList)
+                  .then(function () {
                     db.conn.any(sqlUpdateRecentList, { userid: newList.userid, listid: newList.id })
                       .then(function () { })
                       .catch(function (err) {
