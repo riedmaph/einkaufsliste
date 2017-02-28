@@ -1129,12 +1129,17 @@
                 },
                 {
                     "required": [
-                        "count"
+                        "count",
+                        "shared"
                     ],
                     "properties": {
                         "count": {
                             "type": "integer",
                             "description": "Number of items in list."
+                        },
+                         "shared": {
+                            "type": "boolean",
+                            "description": "True iif number of contributors is greater than 0."
                         }
                     }
                 }
@@ -1148,17 +1153,12 @@
                 {
                     "required": [
                         "completed",
-                        "shared",
                         "owner"
                     ],
                     "properties": {
                         "completed": {
                             "type": "integer",
                             "description": "Number of checked items in list."
-                        },
-                        "shared": {
-                            "type": "boolean",
-                            "description": "True iif number of contributors is greater than 0."
                         },
                         "owner": {
                             "type": "string",
