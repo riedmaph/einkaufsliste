@@ -55,7 +55,7 @@ export class OffersComponent implements OnInit {
     this.navigationService.list = {
       name: 'Current Offers',
       id: null, shared: false, owner: null,
-    }
+    };
     this.apiService.getFavouriteMarkets().subscribe(markets => {
       this.markets = markets;
       this.loadOffers(markets.map(market => market.id));

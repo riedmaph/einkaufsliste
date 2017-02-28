@@ -77,10 +77,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       this.list = data.list;
       if (this.list) {
         this.navigationService.list = this.list;
-        console.log('this.list')
-        console.log(this.list)
-        console.log('data.list: ')
-        console.log(data.list)
       }
     });
   }
