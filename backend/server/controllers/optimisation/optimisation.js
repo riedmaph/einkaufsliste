@@ -54,6 +54,7 @@ function getOptimisedList(req, res, next) {
   var options = {};
   options.listid = req.params.listid;
   options.userid = req.body.userid
+  options.optimiseBy = req.query.by;
 
   waterfall([                                      //use waterfall to be able to call error method in an easy way
     async.apply(initializeOptimisedList, options), //async.apply to hand over parameter to first method
@@ -117,12 +118,43 @@ function initializeOptimisedList(options, callback) {
 
 //select the right optimisation-method
 function executeOptimisation(result, options, callback) {
-  //call right optimisation
+  if(options.optimiseBy == 'price') 
+  {
+    _optimiseByPrice(result, options, callback);
+  }
+  else
+  {
+    var err = {};
+    err.message = 'controllers.initializeOptimisedList: ' + options.optimiseBy + ' not supported';
+    callback(err);
+  }
+}
+
+function _optimiseByPrice(result, options, callback) {
+  var optimalOffer;
+  result.items.forEach(function(item) {
+    if(item.offers.length >= 1)
+    {
+      var optimalOffer = item.offers.reduce(function(prev, current) {
+        return (_parseDiscount(prev.discount) < _parseDiscount(current.discount)) ? prev : current
+      });
+
+      optimalOffer.isOptimium = true;
+    }
+  });
   callback(null, result, options);
 }
 
-function _optimiseByPrice(result) {
-
+function _parseDiscount(discount)
+{
+  if(discount == null)
+  {
+    return 0.0;
+  }
+  else
+  {
+    return parseFloat(discount);
+  }
 }
 
 function createOptimisedData(result, options, callback) {
@@ -188,7 +220,6 @@ function _createOptimisedListMarket(result, options, callback) {
 
   
 }
-
 
 module.exports = {
   getOptimisedList: getOptimisedList,
