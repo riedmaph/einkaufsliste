@@ -56,7 +56,7 @@ function register(req, res, next) {
                     });
                   })
                   .catch(function (err) {
-                    logger.log('error','controllers.users.register.sqlCreateListReturning: ' + err.message);
+                    logger.log('error','controllers.users.register.sqlCreateList: ' + err.message);
                   });
               })
               .catch(function (err) {
