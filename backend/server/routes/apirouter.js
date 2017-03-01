@@ -36,7 +36,8 @@ router.route('/lists')
 router.route('/lists/:listid')
   .get(lists.getListWithItems)
   .put(lists.updateList)
-  .delete(lists.deleteList);
+  .delete(lists.deleteList)
+  .post(optimisation.saveOptimisedList);
 
 /* items */
 router.route('/lists/:listid/items')
@@ -71,7 +72,7 @@ router.route('/lists/:listid/optimised')
   .get(optimisation.getOptimisedList);
 
 router.route('/lists/:listid/optimised/:itemid')
-  .put(optimisation.updateItem);
+  .put(optimisation.saveUserselection);
 
 // error handler
 router.use(function(err, req, res, next) {
