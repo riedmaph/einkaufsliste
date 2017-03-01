@@ -25,7 +25,8 @@ export class OptimisationService {
    * @return {Observable<OptimisedList>} Observable containing an optimised list.
    */
   public getOptimisedList(listUuid: string): Observable<OptimisedList> {
-    return this.authHttp.get(API_ROUTES.optimisation.get.replace(':listId', listUuid))
+    return this.authHttp.get(API_ROUTES.optimisation.get
+      .replace(':listId', listUuid).replace(':optimisationMethod', 'price'))
       .map(res => res.json())
       .map(list => {
         return { items: list.items.map(item => OptimisedListItem.fromApi(item)) };
