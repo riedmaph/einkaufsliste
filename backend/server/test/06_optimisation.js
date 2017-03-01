@@ -16,6 +16,9 @@ var token;
 //IDs hardcoded according to setUpMoveItems.sql
 var listid = '5c7397aa-b249-11e6-b98b-000c29c17dad';
 var itemid1 = '5c7397aa-b249-11e6-b98b-001c29c17dad';
+var itemid2 = '5c7397aa-b249-11e6-b98b-002c29c17dad';
+var itemid3 = '5c7397aa-b249-11e6-b98b-003c29c17dad';
+var itemid1 = '5c7397aa-b249-11e6-b98b-004c29c17dad';
 var itemid5 = '5c7397aa-b249-11e6-b98b-005c29c17dad';
 
 describe('Optimise', () => {
@@ -80,12 +83,13 @@ describe('Optimise', () => {
                     "offers": [
                       {
                         "id": 738388,
+                        "title": "Franziskaner Weissbier",
                         "market": 13395,
                         "offerprice": 10.99,
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-30%",
-                        "isOptimium": true,
+                        "isOptimum": true,
                         "article": {
                           "name": "Weissbier",
                           "brand": "Franziskaner"
@@ -93,12 +97,13 @@ describe('Optimise', () => {
                       },
                       {
                         "id": 812347,
+                        "title": "Mönchshof Original, Kellerbier oder Landbier",
                         "market": 13395,
                         "offerprice": 11.49,
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-17%",
-                        "isOptimium": false,
+                        "isOptimum": false,
                         "article": {
                           "name": "Kellerbier",
                           "brand": "Mönchshof"
@@ -116,12 +121,13 @@ describe('Optimise', () => {
                     "offers": [
                       {
                         "id": 802001,
+                        "title": "ja! Eierspätzle",
                         "market": 16119,
                         "offerprice": 0.95,
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": null,
-                        "isOptimium": true,
+                        "isOptimum": true,
                         "article": {
                           "name": "Eierspätzle",
                           "brand": "ja!"
@@ -139,12 +145,13 @@ describe('Optimise', () => {
                     "offers": [
                       {
                         "id": 802005,
+                        "title": "Mövenpick Kaffee",
                         "market": 16119,
                         "offerprice": 3.88,
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-38%",
-                        "isOptimium": false,
+                        "isOptimum": false,
                         "article": {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
@@ -152,12 +159,13 @@ describe('Optimise', () => {
                       },
                       {
                         "id": 812359,
+                        "title": "Mövenpick Kaffee",
                         "market": 13395,
                         "offerprice": 3.88,
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-38%",
-                        "isOptimium": true,
+                        "isOptimum": true,
                         "article": {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
@@ -165,12 +173,13 @@ describe('Optimise', () => {
                       },
                       {
                         "id": 812365,
+                        "title": "Dallmayr Kaffee-Pads",
                         "market": 13395,
                         "offerprice": 1.59,
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": "-20%",
-                        "isOptimium": false,
+                        "isOptimum": false,
                         "article": {
                           "name": "Kaffee",
                           "brand": "Dallmayr"
@@ -203,7 +212,7 @@ describe('Optimise', () => {
                   "zip": "81671",
                   "city": "München",
                   "shop": "EDEKA"
-                }
+                }                
               ]}
             );
 
@@ -215,16 +224,44 @@ describe('Optimise', () => {
   describe('/PUT update item without offer', () => {
     it('it should update an item', (done) => {
       var item = {
-          name: "newitem1Updated",
-          amount: 10.00,
+          name: "Bier",
+          amount: 3.00,
           unit: 'stk'
       }
       chai.request(app)
-          .put('/api/lists/'+listid+'/optimised/'+itemid1)
+          .put('/api/lists/'+listid+'/optimised/'+itemid3)
           .set('x-access-token', token)
           .send(item)
           .end((err, res) => {
-              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.deep.equal(
+                {
+                  "savings": 2.38,
+                  "distance": 0,
+                  "markets": [
+                    {
+                      "id": 13395,
+                      "name": "Rewe-Markt GmbH",
+                      "latitude": 48.54623,
+                      "longitude": 12.1799,
+                      "street": "Ritter-von-Schoch-Straße 19",
+                      "zip": "84036",
+                      "city": "Landshut",
+                      "shop": "REWE"
+                    },
+                    {
+                      "id": 16119,
+                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                      "latitude": 48.12059,
+                      "longitude": 11.6125,
+                      "street": "Melusinenstr. 2",
+                      "zip": "81671",
+                      "city": "München",
+                      "shop": "EDEKA"
+                    }                                       
+                  ]
+                }
+              );
             done();
           });
     });
@@ -233,10 +270,10 @@ describe('Optimise', () => {
   describe('/PUT update item with offer', () => {
     it('it should update an item', (done) => {
       var item = {
-          name: "newitem1Updated",
-          amount: 10.00,
-          unit: 'stk',
-          offerUser: 812365
+          name: "Kaffe Mövenpick",
+          amount: 150.00,
+          unit: 'g',
+          offerUser: 802005
       }
       chai.request(app)
           .put('/api/lists/'+listid+'/optimised/'+itemid5)
@@ -244,12 +281,31 @@ describe('Optimise', () => {
           .send(item)
           .end((err, res) => {
               res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.deep.equal(
+                {
+                  "savings": 2.38,
+                  "distance": 0,
+                  "markets": [
+                    {
+                      "id": 16119,
+                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                      "latitude": 48.12059,
+                      "longitude": 11.6125,
+                      "street": "Melusinenstr. 2",
+                      "zip": "81671",
+                      "city": "München",
+                      "shop": "EDEKA"
+                    }                 
+                  ]
+                }
+              );
             done();
           });
     });
   });
 
-  describe('/PUT save optimisation', () => {
+  describe('/POST save optimisation', () => {
     it('it should update an item', (done) => {
       chai.request(app)
           .post('/api/lists/'+listid)

@@ -1361,7 +1361,7 @@
                     "type": "integer",
                     "description": "Unique identifer of market."
                 },
-                "offerPrice": {
+                "offerprice": {
                     "type": "number",
                     "format": "double",
                     "description": "Price of offer."
@@ -1378,7 +1378,7 @@
                     "type": "string",
                     "description": "Enddate of offer."
                 },
-                "product": {
+                "article": {
                     "$ref": "#/definitions/Article"
                 }
             }

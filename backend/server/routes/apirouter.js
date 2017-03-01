@@ -72,7 +72,7 @@ router.route('/lists/:listid/optimised')
   .get(optimisation.getOptimisedList);
 
 router.route('/lists/:listid/optimised/:itemid')
-  .put(optimisation.updateItem);
+  .put(optimisation.saveUserselection);
 
 // error handler
 router.use(function(err, req, res, next) {

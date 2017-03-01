@@ -6,35 +6,128 @@ const db = require(path.join('..', 'dbconnector.js'));
 const async = require('async');
 const waterfall = require('async-waterfall');
 
+var sqlCloseUnsavedOptimisations = db.loadSql(path.join('controllers', 'optimisation', 'closeUnsavedOptimisations.sql'));
+
 var sqlReadItems = db.loadSql(path.join('controllers', 'optimisation', 'readItems.sql'));
 var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOffers.sql'));
 var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
 var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));
-var sqlCreateOptimisedListMarket = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedListMarket.sql'));
+var sqlRefreshOptimisedListMarket = db.loadSql(path.join('controllers', 'optimisation', 'refreshOptimisedListMarket.sql'));
 
 var sqlReadOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'readOptimisedList.sql'));
 var sqlReadOptimisedMarkets = db.loadSql(path.join('controllers', 'optimisation', 'readOptimisedMarkets.sql'));
+
+var sqlReadOptimisedListID = db.loadSql(path.join('controllers', 'optimisation', 'readOptimisedListID.sql'));
+
+var sqlReadUserOfferOfOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'readUserOfferOfOptimisedItem.sql'));
+var sqlReadOfferById = db.loadSql(path.join('controllers', 'optimisation', 'readOfferById.sql'));
+var sqlUpdateOptimsedList = db.loadSql(path.join('controllers', 'optimisation', 'updateOptimsedList.sql'));
 
 var sqlUpdateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'updateOptimisedItem.sql'));
 var sqlSaveOptimisation = db.loadSql(path.join('controllers', 'optimisation', 'saveOptimisation.sql'));
 
 //takes the user's selection and persists it to Userdata.OptimisedItem
-function updateItem(req, res, next) {
-  var sqlParams = {};
-  sqlParams.listid = req.params.listid;
-  sqlParams.itemid = req.params.itemid;
-  sqlParams.name = req.body.name;
-  sqlParams.amount = parseFloat(req.body.amount);
-  sqlParams.unit = req.body.unit;
-  sqlParams.offerUser = req.body.offerUser;
+function saveUserselection(req, res, next) {
+  var options = {};
+  options.listid = req.params.listid;
+  options.itemid = req.params.itemid;
+  options.name = req.body.name;
+  options.amount = parseFloat(req.body.amount);
+  options.unit = req.body.unit;
+  options.offeruser = req.body.offerUser;
 
-  db.conn.none(sqlUpdateOptimisedItem, sqlParams)
-    .then(function () {
-      res.sendStatus(200);
+  var result={};
+
+  waterfall([                                      //use waterfall to be able to call error method in an easy way
+    async.apply(_getOptimisedListID, result, options), //async.apply to hand over parameter to first method
+    _updateSavings,
+    _updateItem,
+    _refreshOptimisedListMarket,
+    _getOptimisationResult
+  ], function (err, result, options) {
+      if(!err) {
+        res.status(200)
+        .json(
+          result.optimisationResult
+        );
+      }
+      else {
+        next(err);
+      }
+  });  
+}
+
+//find the acutal optimisedlist by listid and last startdate
+function _getOptimisedListID(result, options, callback) {
+  var sqlParams = {};
+  sqlParams.listid = options.listid;
+
+  db.conn.oneOrNone(sqlReadOptimisedListID, sqlParams)
+  .then(function (olist) {
+      options.optimisedlistid = olist.id;   //save optimsedlistid for further operations
+      callback(null,  result, options);
     })
     .catch(function (err) {
-      err.message = 'controllers.optimise.updateItem: ' + err.message;
-      return next(err);
+      err.message = 'controllers.optimise._getOptimisedListID: ' + err.message;
+      callback(err);
+    });
+}
+
+function _updateSavings(result, options, callback) {
+  var savingOld=0;
+  var savingNew=0;
+
+  var sqlParams = {};
+  sqlParams.itemid = options.itemid;
+  sqlParams.optimisedlistid = options.optimisedlistid;
+
+   db.conn.oneOrNone(sqlReadUserOfferOfOptimisedItem, sqlParams)  //get savings from old offer
+    .then(function (offerOld) {
+      if(offerOld != null) {
+        savingOld =_getSaving(offerOld);
+      }
+
+      sqlParams = {};
+      sqlParams.offerid =  options.offeruser;
+
+      db.conn.oneOrNone(sqlReadOfferById, sqlParams) //get savings from new offer
+        .then(function (offerNew) {
+          if(offerNew != null) {
+            savingNew =_getSaving(offerNew);
+          }
+
+          sqlParams = {};
+          sqlParams.optimisedlistid = options.optimisedlistid;
+          sqlParams.savingschange = (savingNew - savingOld);
+
+          db.conn.none(sqlUpdateOptimsedList, sqlParams)
+            .then(function () {
+              callback(null, result, options);
+            })
+            .catch(function (err) {
+              err.message = 'controllers.optimise._updateSavings.updateOfferList ' + err.message;
+              callback(err);
+            });        
+        })
+        .catch(function (err) {
+          err.message = 'controllers.optimise._updateSavings.loadNewOffer: ' + err.message;
+          callback(err);
+        });
+    })
+    .catch(function (err) {
+      err.message = 'controllers.optimise._updateSavings.loadOldOffer: ' + err.message;
+      callback(err);
+    });
+}
+
+function _updateItem(result, options, callback) {
+  db.conn.none(sqlUpdateOptimisedItem, options)
+    .then(function () {
+      callback(null, result, options);
+    })
+    .catch(function (err) {
+      err.message = 'controllers.optimise._updateItem: ' + err.message;
+      callback(err);
     });
 }
 
@@ -55,17 +148,17 @@ function saveOptimisedList(req, res, next) {
 
 //returns the optimised list
 function getOptimisedList(req, res, next) {
-  //TODO close old list (set enddate)
   var options = {};
   options.listid = req.params.listid;
   options.userid = req.body.userid
   options.optimiseBy = req.query.by;
 
   waterfall([                                      //use waterfall to be able to call error method in an easy way
-    async.apply(initializeOptimisedList, options), //async.apply to hand over parameter to first method
+    async.apply(closeOldOptimisations, options), //async.apply to hand over parameter to first method
+    initializeOptimisedList,
     executeOptimisation,
     createOptimisedData,
-    getOptimisationResult
+    _getOptimisationResult
   ], function (err, result, options) {
       if(!err) {
         res.status(200)
@@ -77,6 +170,18 @@ function getOptimisedList(req, res, next) {
         next(err);    
       }
   });
+}
+
+//sets endate and saved=false for not saved optimisations
+function closeOldOptimisations(options, callback) {
+  db.conn.none(sqlCloseUnsavedOptimisations, options)
+    .then(function () {
+      callback(null, options);
+    })
+    .catch(function (err) {
+      err.message = 'controllers.optimise.closeOldOptimisations: ' + err.message;
+      return next(err);
+    });
 }
 
 //load items for given list and suitable offers for each item
@@ -93,13 +198,14 @@ function initializeOptimisedList(options, callback) {
             function(offer) 
             {
               return {
-                id: offer.id, 
+                id: offer.id,
+                title: offer.title,
                 market: offer.market, 
                 offerprice: offer.offerprice, 
                 offerfrom: offer.offerfrom, 
                 offerto: offer.offerto, 
                 discount: offer.discount, 
-                isOptimium: false,
+                isOptimum: false,
                 article:{
                   name: offer.articlename, 
                   brand: offer.articlebrand
@@ -126,9 +232,10 @@ function initializeOptimisedList(options, callback) {
   });
 }
 
-function getOptimisationResult(result, options, callback) {
+//load saving distance(TODO) and markets for finished optimisation
+function _getOptimisationResult(result, options, callback) {
   var sqlParams = {}
-  sqlParams.optimisedlistid = options.optimisedListId;
+  sqlParams.optimisedlistid = options.optimisedlistid;
 
   db.conn.oneOrNone(sqlReadOptimisedList, sqlParams)
     .then(function (olist) {
@@ -142,13 +249,13 @@ function getOptimisationResult(result, options, callback) {
           callback(null, result, options);
         })
         .catch(function (err) {
-          err.message = 'controllers.optimise.getOptimisationResult.sqlReadOptimisedMarkets: ' + err.message;
+          err.message = 'controllers.optimise._getOptimisationResult.sqlReadOptimisedMarkets: ' + err.message;
           callback(err);
       });
 
     })
     .catch(function (err) {
-      err.message = 'controllers.optimise.getOptimisationResult.: ' + err.message;
+      err.message = 'controllers.optimise._getOptimisationResult.: ' + err.message;
       callback(err);
     });
 }
@@ -180,7 +287,7 @@ function _optimiseByPrice(result, options, callback) {
         return (_parseDiscount(prev.discount) < _parseDiscount(current.discount)) ? prev : current
       });
 
-      optimalOffer.isOptimium = true;
+      optimalOffer.isOptimum = true;
       item.offerAlgorithm = optimalOffer.id;
       options.optimisationResult.savings += _getSaving(optimalOffer);
     }
@@ -205,12 +312,12 @@ function _getSaving(offer)
   return parseFloat(((offer.offerprice / (1 + _parseDiscount(offer.discount)/100)) - offer.offerprice).toFixed(2));
 }
 
-
+//persists optimisation data
 function createOptimisedData(result, options, callback) {
    waterfall([
     async.apply(_createOptimisedList, result, options),
     _createOptimisedItems,
-    _createOptimisedListMarket
+    _refreshOptimisedListMarket
   ], function (err, result, options) {
       if(!err) {
         callback(null, result, options);
@@ -229,7 +336,7 @@ function _createOptimisedList(result, options, callback) {
   sqlParams.savings = options.optimisationResult.savings;  //TODOGB
   sqlParams.distance = 0; //TODOGB
 
-  options.optimisedListId = sqlParams.id; //for further opterations
+  options.optimisedlistid = sqlParams.id; //for further opterations
 
   db.conn.none(sqlCreateOptimisedList, sqlParams)  //create db-entry for optimisedList
     .then(function (data) {
@@ -248,7 +355,7 @@ function _createOptimisedItems(result, options, callback) {
     var queries = result.items.map(function (item) {
       sqlParams.id = uuid.v1();
       sqlParams.item = item.id;
-      sqlParams.optimisedlistid = options.optimisedListId;
+      sqlParams.optimisedlistid = options.optimisedlistid;
       sqlParams.position = item.position;
       sqlParams.name = item.name;
       sqlParams.amount = item.amount;
@@ -268,22 +375,12 @@ function _createOptimisedItems(result, options, callback) {
   });
 }
 
-function _createOptimisedListMarket(result, options, callback) {   
+function _refreshOptimisedListMarket(result, options, callback) {   
   var sqlParams = {}
-  sqlParams.optimisedlistid = options.optimisedListId;
+  sqlParams.optimisedlistid = options.optimisedlistid;
 
-  db.conn.task(function (t) {                            
-    var queries = result.items.map(function (item) {
-      if(item.offerAlgorithm) {
-        sqlParams.offerid = item.offerAlgorithm;
-        return t.none(sqlCreateOptimisedListMarket, sqlParams); //create db-entries for each optimisedListMarket    
-      }
-      else {
-        return null;
-      }
-    });
-    return t.batch(queries);
-  })
+  //TODO use only db data
+  db.conn.none(sqlRefreshOptimisedListMarket, sqlParams)                            
   .then(function (data) {          
     callback(null, result, options);
   })
@@ -295,6 +392,6 @@ function _createOptimisedListMarket(result, options, callback) {
 
 module.exports = {
   getOptimisedList: getOptimisedList,
-  updateItem: updateItem,
+  saveUserselection: saveUserselection,
   saveOptimisedList: saveOptimisedList
 };
