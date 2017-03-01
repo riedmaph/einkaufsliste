@@ -1386,7 +1386,8 @@
         "OptimisedList": {
             "type": "object",
             "required": [
-                "items"
+                "items",
+                "optimisationResult"
             ],
             "properties": {
                 "items": {
@@ -1394,6 +1395,9 @@
                     "items": {
                         "$ref": "#/definitions/OptimisedItemWithOffers"
                     }
+                },
+                "optimisationResult": {
+                    "$ref": "#/definitions/OptimisationResult"
                 }
             }
         },

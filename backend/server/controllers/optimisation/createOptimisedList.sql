@@ -1,2 +1,2 @@
-INSERT INTO ${schemaname:raw}.OptimisedList(id, enduser, list) 
-VALUES(${id}, ${userid}, ${listid})
+INSERT INTO ${schemaname:raw}.OptimisedList(id, enduser, list, savings, distance) 
+VALUES(${id}, ${userid}, ${listid}, ${savings}, ${distance})

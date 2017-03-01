@@ -56,6 +56,7 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-001c29c17dad",
                     "position": 0,
                     "name": "Bananen",
+                    "offerAlgorithm": null,
                     "amount": 10,
                     "unit": "Stk",
                     "offers": []
@@ -64,6 +65,7 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-002c29c17dad",
                     "position": 1,
                     "name": "Hühnerfilet",
+                    "offerAlgorithm": null,
                     "amount": 350,
                     "unit": "g",
                     "offers": []
@@ -72,6 +74,7 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-003c29c17dad",
                     "position": 2,
                     "name": "Bier",
+                    "offerAlgorithm": 738388,
                     "amount": 3,
                     "unit": "Stk",
                     "offers": [
@@ -107,6 +110,7 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-004c29c17dad",
                     "position": 3,
                     "name": "Eier",
+                    "offerAlgorithm": 802001,
                     "amount": 10,
                     "unit": "Stk",
                     "offers": [
@@ -129,6 +133,7 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-005c29c17dad",
                     "position": 4,
                     "name": "Kaffee",
+                    "offerAlgorithm": 812359,
                     "amount": 150,
                     "unit": "g",
                     "offers": [
@@ -174,6 +179,34 @@ describe('Optimise', () => {
                     ]
                   }
                 ]);
+            res.body.should.have.property('optimisationResult');
+            res.body.optimisationResult.should.deep.equal(
+              {"savings": 7.09,
+              "distance": 0,
+              "markets": [
+                {
+                  "id": 13395,
+                  "name": "Rewe-Markt GmbH",
+                  "latitude": 48.54623,
+                  "longitude": 12.1799,
+                  "street": "Ritter-von-Schoch-Straße 19",
+                  "zip": "84036",
+                  "city": "Landshut",
+                  "shop": "REWE"
+                },
+                {
+                  "id": 16119,
+                  "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                  "latitude": 48.12059,
+                  "longitude": 11.6125,
+                  "street": "Melusinenstr. 2",
+                  "zip": "81671",
+                  "city": "München",
+                  "shop": "EDEKA"
+                }
+              ]}
+            );
+
             done();
           });
     });
