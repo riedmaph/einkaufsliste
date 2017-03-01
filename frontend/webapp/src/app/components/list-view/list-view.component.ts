@@ -26,6 +26,9 @@ import {
   Product,
 } from '../../models';
 
+import { LIST_ITEM_NAME_MAX_LENGTH } from '../../constants';
+
+
 @Component({
   selector: 'sl-list-view',
   templateUrl: './list-view.template.html',
@@ -36,8 +39,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   public list: List = null;
 
   public form: FormGroup;
-
-  public MAX_LENGTH: number = 140;
 
   @ViewChildren(ListComponent)
   private listComponents: QueryList<ListComponent>;
@@ -53,10 +54,15 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       amount: '',
       unit:  '',
       itemName: [ '', Validators.compose([
-        Validators.maxLength(this.MAX_LENGTH),
+        Validators.maxLength(LIST_ITEM_NAME_MAX_LENGTH),
         Validators.required,
       ]) ],
     });
+  }
+
+  /** Getter for LIST_ITEM_NAME_MAX_LENGTH */
+  public get MAX_LENGTH (): number {
+    return LIST_ITEM_NAME_MAX_LENGTH;
   }
 
   /** Getter for unchecked items */
