@@ -14,6 +14,8 @@ var sqlUpdateRecentList = db.loadSql(path.join('controllers', 'lists', 'updateRe
 var sqlReadList = db.loadSql(path.join('controllers', 'lists', 'readList.sql'));
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
 
+const DEFAULT_LIST_ID = 'default';
+
 function getAllLists(req, res, next) {
   db.conn.any(sqlReadLists, req.body)
     .then(function (data) {
@@ -82,6 +84,10 @@ function createList(req, res, next) {
 
 function updateList(req, res, next) {
   req.body.id = req.params.listid;
+  if (req.bofy.id === DEFAULT_LIST_ID) {
+    res.sendStatus(500);
+    return;
+  }
   db.conn.none(sqlUpdateList, req.body)
     .then(function () {
       res.sendStatus(200);
@@ -94,6 +100,10 @@ function updateList(req, res, next) {
 
 function deleteList(req, res, next) {
   req.body.id = req.params.listid;
+  if (req.bofy.id === DEFAULT_LIST_ID) {
+    res.sendStatus(500);
+    return;
+  }
   db.conn.none(sqlDeleteList, req.body)
     .then(function () {
       res.sendStatus(200);
