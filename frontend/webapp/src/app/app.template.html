@@ -1,11 +1,41 @@
 <md-sidenav-layout>
+  <md-sidenav
+    *ngIf="authService.loggedIn"
+    (open)="listOverview.reloadLists()"
+    #sidenav
+  >
+    <md-toolbar color="primary">
+      <button md-icon-button (click)="sidenav.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </md-toolbar>
+    <md-list>
+      <md-list-item
+        class="offers-list-item"
+        routerLink="/offers"
+      >
+        <span class="offers-label">Current Offers</span>
+      </md-list-item>
+    </md-list>
+    <sl-list-overview
+      #listOverview
+    ></sl-list-overview>
+  </md-sidenav>
 
-  <nav>
-    <sl-navigation></sl-navigation>
-  </nav>
+
+  <sl-navigation>
+    <button
+      *ngIf="authService.loggedIn"
+      md-icon-button
+      (click)="openSidenav()"
+    >
+      <i class="material-icons">menu</i>
+    </button>
+  </sl-navigation>
+
 
   <main>
     <router-outlet></router-outlet>
   </main>
-
 </md-sidenav-layout>
+
