@@ -1,32 +1,29 @@
-<div class="select-optimisation-container">
+<div class="select-optimisation-container" *ngIf="optimisedList">
   <md-list>
-    <md-list-item *ngFor="let optimisedListItem of optimisedList.items">
-      <!-- Previous offer or item -->
+    <md-list-item *ngFor="let listItem of optimisedList.items">
       <button md-icon-button>
         <i class="material-icons">navigate_before</i>
       </button>
-      <!-- Original list item -->
-      <div class="item-container" *ngIf="currentSelectionIndex == -1">
-        <h4 md-line>{{ optimisedListItem.item.name }}</h4>
+      <div class="item-container" *ngIf="listItem.selectedOfferIndex == -1">
+        <h4 md-line>{{ listItem.item.name }}</h4>
       </div>
-      <!-- Offers -->
-      <div class="offer-container" *ngIf="currentSelectionIndex >= 0">
+      <div class="offer-container" *ngIf="listItem.selectedOfferIndex >= 0">
         <div class="offer-details">
           <span
             class="offer-price-label"
           >
-            {{ optimisedListItem.offers[currentSelectionIndex].price }} €
+            {{ getSelectedOfferForItem(listItem).price }} €
           </span>
           <span
-            *ngIf="offer.discount && offer.discount != '0'"
+            *ngIf="getSelectedOfferForItem(listItem).discount
+              && getSelectedOfferForItem(listItem).discount != '0'"
             class="offer-discount-label"
           >
-            {{ optimisedListItem.offers[currentSelectionIndex].discount }}
+            {{ getSelectedOfferForItem(listItem).discount }}
           </span>
         </div>
-        <h4 md-line>{{ optimisedListItem.offers[currentSelectionIndex].title }}</h4>
+        <h4 md-line>{{ getSelectedOfferForItem(listItem).name }}</h4>
       </div>
-      <!-- Next offer -->
       <button md-icon-button>
         <i class="material-icons">navigate_next</i>
       </button>

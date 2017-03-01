@@ -8,6 +8,7 @@ export class Offer {
   market: string;
   price: number;
   discount: number;
+  isOptimum?: boolean;
 
   /**
    * Parses an offer from an offer API representation.
@@ -24,6 +25,7 @@ export class Offer {
       market: apiRepresentation.market,
       price: apiRepresentation.offerprice,
       discount: apiRepresentation.discount,
+      isOptimum: apiRepresentation.isOptimum,
     });
   }
 
@@ -41,4 +43,5 @@ export interface OfferApiRepresentation {
   offerto: string;
   discount: string;
   article: { name: string; brand: string };
+  isOptimum?: boolean;
 }
