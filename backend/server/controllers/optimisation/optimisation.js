@@ -10,6 +10,7 @@ var sqlReadItems = db.loadSql(path.join('controllers', 'optimisation', 'readItem
 var sqlFindOffers = db.loadSql(path.join('controllers', 'optimisation', 'findOffers.sql'));
 var sqlCreateOptimisedList = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedList.sql'));
 var sqlCreateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedItem.sql'));
+var sqlCreateOptimisedListMarket = db.loadSql(path.join('controllers', 'optimisation', 'createOptimisedListMarket.sql'));
 var sqlUpdateOptimisedItem = db.loadSql(path.join('controllers', 'optimisation', 'updateOptimisedItem.sql'));
 var sqlSaveOptimisation = db.loadSql(path.join('controllers', 'optimisation', 'saveOptimisation.sql'));
 
@@ -140,6 +141,7 @@ function _optimiseByPrice(result, options, callback) {
       });
 
       optimalOffer.isOptimium = true;
+      item.offerAlgorithm = optimalOffer.id;
     }
   });
   callback(null, result, options);
@@ -160,7 +162,8 @@ function _parseDiscount(discount)
 function createOptimisedData(result, options, callback) {
    waterfall([
     async.apply(_createOptimisedList, result, options),
-    _createOptimisedItems
+    _createOptimisedItems,
+    _createOptimisedListMarket
   ], function (err, result) {
       if(!err) {
         callback(null, result);
@@ -184,7 +187,7 @@ function _createOptimisedList(result, options, callback) {
       callback(null, result, options);
     })
     .catch(function (err) {
-      err.message = 'controllers.createOptimisedDataList: ' + err.message;
+      err.message = 'controllers._createOptimisedDataList: ' + err.message;
       callback(err);
     });
 }
@@ -208,17 +211,40 @@ function _createOptimisedItems(result, options, callback) {
     return t.batch(queries);
   })
   .then(function (data) {          
-    callback(null, result);
+    callback(null, result, options);
   })
   .catch(function (err) {
-    err.message = 'controllers.createOptimisedData.createOptimisedItems: ' + err.message;
+    err.message = 'controllers.createOptimisedData._createOptimisedItems: ' + err.message;
     callback(err);
   });
 }
 
-function _createOptimisedListMarket(result, options, callback) {
+function _createOptimisedListMarket(result, options, callback) {   
+  var sqlParams = {}
+  sqlParams.optimisedlistid = options.optimisedListId;
 
-  
+  db.conn.task(function (t) {   
+                              //create db-entries for each optimsedItem
+    var queries = result.items.map(function (item) {
+      if(item.offerAlgorithm) {
+        console.log('has offer' + item);
+        sqlParams.offerid = item.offerAlgorithm;
+        return t.none(sqlCreateOptimisedListMarket, sqlParams);
+      }
+      else {
+        console.log('has no offer' + item);
+        return null;
+      }
+    });
+    return t.batch(queries);
+  })
+  .then(function (data) {          
+    callback(null, result);
+  })
+  .catch(function (err) {
+    err.message = 'controllers.createOptimisedData._createOptimisedListMarket: ' + err.message;
+    callback(err);
+  });
 }
 
 module.exports = {
