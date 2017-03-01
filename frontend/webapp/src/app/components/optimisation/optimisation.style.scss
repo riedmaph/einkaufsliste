@@ -1,0 +1,49 @@
+.item-name-label {
+    max-width: calc(100% - 4em);
+    margin-left: -1em;
+}
+
+.offer-title-label {
+    max-width: calc(100% - 4em);
+    margin-left: -1em;
+}
+
+.offer-market-label {
+    max-width: calc(100% - 4em);
+    margin-left: -1em;
+    color: #777;
+}
+
+.offer-details {
+    position: fixed;
+    right: 3.5em;
+    min-width: 3.5em;
+
+    .offer-price-label {
+        margin: 0;
+        text-align: right;
+    }
+
+    .offer-discount-label {
+        margin: 0;
+        float: right;
+        font-size: .8em;
+        color: #4BAF50;
+    }
+}
+
+.next-offer-button {
+    position: fixed;
+    right: 1em;
+}
+
+#summary {
+    width: 100%;
+    padding: 0;
+    background: #4CAF50;
+    color: #fff;
+
+    button {
+      margin: 0 1em;
+    }
+}

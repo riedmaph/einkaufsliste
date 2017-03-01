@@ -42,7 +42,7 @@
           <span *ngIf="offer.discount && offer.discount != '0'" class="offer-discount-label">{{ offer.discount }}</span>
         </div>
         <h4 md-line>{{ offer.title }}</h4>
-        <p class="offer-market-label" md-line> {{ market.name }} - {{ market.street }} </p>
+        <p md-line class="offer-market-label"> {{ market.name }} - {{ market.street }} </p>
       </md-list-item>
 
       <div *ngIf="!(offers | OfferFilter: market.id).length" class="no-offers-info">

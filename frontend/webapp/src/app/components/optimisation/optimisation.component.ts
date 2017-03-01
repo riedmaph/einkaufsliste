@@ -2,7 +2,10 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  Router,
+  ActivatedRoute,
+} from '@angular/router';
 
 import {
   OptimisedList,
@@ -17,8 +20,12 @@ import {
 export class OptimisationComponent implements OnInit {
 
   public optimisedList: OptimisedList = null;
+  public amountSaved: number = 3.19;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   /**
    * @memberOf OnInit
@@ -31,10 +38,66 @@ export class OptimisationComponent implements OnInit {
   }
 
   /**
+   * Gets the currently selected offer for a given list item.
    *
    */
   public getSelectedOfferForItem(listItem: OptimisedListItem): Offer {
+    if (listItem.selectedOfferIndex >= listItem.offers.length) {
+      return null;
+    }
     return listItem.offers[listItem.selectedOfferIndex];
+  }
+
+  /**
+   * Selects the next offer for a given list item, if it exists.
+   *
+   * @param {OptimisedListItem} listItem The list item to select the offer for.
+   */
+  public selectNextOfferForItem(listItem: OptimisedListItem) {
+    if (this.existsNextOfferForItem(listItem)) {
+      listItem.selectedOfferIndex += 1;
+      // TODO: Call optimisation service to update selection
+    }
+  }
+
+  /**
+   * Selects the previous offer for a given list item, if it exists.
+   *
+   * @param {OptimisedListItem} listItem The list item to select the offer for.
+   */
+  public selectPreviousOfferForItem(listItem: OptimisedListItem) {
+    if (this.existsPreviousOfferForItem(listItem)) {
+      listItem.selectedOfferIndex -= 1;
+      // TODO: Call optimisation service to update selection
+    }
+  }
+
+  /**
+   * Checks whether there exists a next offer for a given list item.
+   *
+   * @param {OptimisedListItem} listItem The list item to check for.
+   * @return {boolean} True if a next offer exists for the list item.
+   */
+  public existsNextOfferForItem(listItem: OptimisedListItem): boolean {
+    return listItem.selectedOfferIndex < listItem.offers.length - 1;
+  }
+
+  /**
+   * Checks whether there exists a previous offer for a given list item.
+   *
+   * @param {OptimisedListItem} listItem The list item to check for.
+   * @return {boolean} True if a previous offer exists for the list item.
+   */
+  public existsPreviousOfferForItem(listItem: OptimisedListItem): boolean {
+    return listItem.selectedOfferIndex >= 0;
+  }
+
+  /**
+   *
+   */
+  public saveOptimisedList() {
+    // TODO: Call optimisation API service to save list
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }

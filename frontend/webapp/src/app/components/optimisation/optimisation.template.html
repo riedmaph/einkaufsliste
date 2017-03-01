@@ -1,30 +1,48 @@
+<md-toolbar color="primary">
+  <button md-button [routerLink]="['../']">CANCEL</button>
+  <button md-button (click)="saveOptimisedList()">SAVE ({{ amountSaved }} €)</button>
+</md-toolbar>
+
 <div class="select-optimisation-container" *ngIf="optimisedList">
   <md-list>
     <md-list-item *ngFor="let listItem of optimisedList.items">
-      <button md-icon-button>
+      <button
+        md-icon-button
+        md-list-avatar
+        class="previous-offer-button"
+        color="primary"
+        [disabled]="!existsPreviousOfferForItem(listItem)"
+        (click)="selectPreviousOfferForItem(listItem)">
         <i class="material-icons">navigate_before</i>
       </button>
-      <div class="item-container" *ngIf="listItem.selectedOfferIndex == -1">
-        <h4 md-line>{{ listItem.item.name }}</h4>
+      <h4 md-line class="item-name-label" *ngIf="listItem.selectedOfferIndex == -1">
+        {{ listItem.item.name }}
+      </h4>
+      <div class="offer-details" *ngIf="listItem.selectedOfferIndex >= 0">
+        <p class="offer-price-label">
+          {{ getSelectedOfferForItem(listItem).price }} €
+        </p>
+        <p
+          *ngIf="getSelectedOfferForItem(listItem).discount
+            && getSelectedOfferForItem(listItem).discount != '0'"
+          class="offer-discount-label"
+        >
+          {{ getSelectedOfferForItem(listItem).discount }}
+        </p>
       </div>
-      <div class="offer-container" *ngIf="listItem.selectedOfferIndex >= 0">
-        <div class="offer-details">
-          <span
-            class="offer-price-label"
-          >
-            {{ getSelectedOfferForItem(listItem).price }} €
-          </span>
-          <span
-            *ngIf="getSelectedOfferForItem(listItem).discount
-              && getSelectedOfferForItem(listItem).discount != '0'"
-            class="offer-discount-label"
-          >
-            {{ getSelectedOfferForItem(listItem).discount }}
-          </span>
-        </div>
-        <h4 md-line>{{ getSelectedOfferForItem(listItem).name }}</h4>
-      </div>
-      <button md-icon-button>
+      <h4 md-line class="offer-title-label" *ngIf="listItem.selectedOfferIndex >= 0">
+        {{ getSelectedOfferForItem(listItem).brand }} {{ getSelectedOfferForItem(listItem).name }}
+      </h4>
+      <p md-line class="offer-market-label" *ngIf="listItem.selectedOfferIndex >= 0">
+        Here goes the market...
+      </p>
+      <button
+        md-icon-button
+        class="next-offer-button"
+        color="primary"
+
+        [disabled]="!existsNextOfferForItem(listItem)"
+        (click)="selectNextOfferForItem(listItem)">
         <i class="material-icons">navigate_next</i>
       </button>
     </md-list-item>
