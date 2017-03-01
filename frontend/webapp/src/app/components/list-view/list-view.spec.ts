@@ -49,6 +49,8 @@ describe('ListViewComponent', () => {
       const list: List = {
         id: 'abc-abc-abc',
         name: 'Test List',
+        shared: false,
+        owner: null,
         items: [
           {
             name: 'entry 01',

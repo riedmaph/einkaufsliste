@@ -22,7 +22,7 @@ export class ListApiService {
       .map(res => res.json().lists);
   }
 
-  public get (listUuid: string): Observable<List> {
+  public getOne (listUuid: string): Observable<List> {
     return this.authHttp.get(API_ROUTES.lists.single.replace(':listId', listUuid))
       .map(res => res.json());
   }

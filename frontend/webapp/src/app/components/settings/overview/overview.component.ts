@@ -10,14 +10,13 @@ export class SettingsOverviewComponent {
   private showFavMarketDetails: Boolean = false;
   private showSharedListsDetails: Boolean = false;
 
-
-/**
- * methods called in the html
- */
-  private toggleFavMarketsDetails (): void {
+  /** Toggle whether fav market details are shown */
+  public toggleFavMarketsDetails (): void {
     this.showFavMarketDetails = !this.showFavMarketDetails;
   }
-  private toggleSharedListDetails (): void {
+
+  /** Toggle whether shared list details are shown */
+  public toggleSharedListDetails (): void {
     this.showSharedListsDetails = !this.showSharedListsDetails;
   }
 }

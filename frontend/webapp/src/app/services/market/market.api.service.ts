@@ -22,7 +22,6 @@ export class MarketApiService {
    * Makes API call to get favourite markets of the user
    *
    * @return {Observable<Market>}
-   *
    */
   public getFavourites (): Observable<Market[]> {
     return this.authHttp.get(API_ROUTES.markets.favourites.get)
@@ -33,11 +32,12 @@ export class MarketApiService {
    * Makes API call to get markets by Distance
    *
    *
-   * @param @TODO
+   * @param {number} lat Latitude
+   * @param {number} long Longitude
+   * @param {number} distance Max. radius
    * @return {Observable<Market>}
-   *
    */
-  public getByDistance (lat: Number, long: Number, distance: Number): Observable<Market[]> {
+  public getByDistance (lat: number, long: number, distance: number): Observable<Market[]> {
     const queryParams: URLSearchParams = new URLSearchParams();
     queryParams.set('longitude', long.toString());
     queryParams.set('latitude', lat.toString());
@@ -53,12 +53,11 @@ export class MarketApiService {
   /**
    * Makes API call to get markets for the user by ZIP
    *
-   *
-   * @param {Number} zip Zip Code
+   * @param {number} zip Zip Code
    * @return {Observable<Market>}
    *
    */
-  public getByZip (zip: Number): Observable<Market[]> {
+  public getByZip (zip: number): Observable<Market[]> {
     const queryParams: URLSearchParams = new URLSearchParams();
     queryParams.set('zip', zip.toString());
     const options: RequestOptionsArgs = {
@@ -71,25 +70,21 @@ export class MarketApiService {
   /**
    * Makes API call to add a market to the favourite markets
    *
-   * @TODO Parameter, @TODO json.new -> json.markets
-   * @param The Id of the new favourite market
+   * @param {number} marketId The Id of the new favourite market
    * @return {Observable<any>}
-   *
    */
-  public addFavourite (marketId: Number): Observable<any> {
+  public addFavourite (marketId: number): Observable<any> {
     return this.authHttp.post(API_ROUTES.markets.favourites.add
-      .replace(':marketId', marketId.toString()),
-      { marketid: marketId });
+      .replace(':marketId', marketId.toString()), { marketid: marketId });
   }
 
   /**
    * Makes API call to remove a market from the favourite markets
    *
-   * @param The Id of the favourite market to delete
+   * @param {number} marketId The Id of the favourite market to delete
    * @return {Observable<any>}
-   *
    */
-  public removeFavourite (marketId: Number): Observable<any> {
+  public removeFavourite (marketId: number): Observable<any> {
     return this.authHttp.delete(API_ROUTES.markets.favourites.remove
       .replace(':marketId', marketId.toString()));
   }

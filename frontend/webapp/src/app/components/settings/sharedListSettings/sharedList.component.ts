@@ -85,21 +85,26 @@ export class SharedListsSettingsComponent {
     });
   }
 
-
-  /*
-   * method called from html template
+  /**
+   * Returns whether a given list is shown expanded
+   *
+   * @param {List} list
+   * @return {boolean}
    */
-  private isExpanded (list: List): boolean {
+  public isExpanded (list: List): boolean {
     return list === this.expandedList;
   }
 
   /**
-   * method called from html template
+   * Sets the expanded state for a given list
+   *
+   * @param {List} list List to expand
+   * @return {void}
    */
-  private setExpandedList (list: List): void {
+  public setExpandedList (list: List): void {
     this.expandedList = list;
     this.sharedWith = [ ];
-    if (! (list === null)) {
+    if (!(list === null)) {
       this.sharingService.getContributors(list.id).subscribe(contributors =>
         this.sharedWith = contributors,
       );
@@ -107,9 +112,12 @@ export class SharedListsSettingsComponent {
   }
 
   /**
-   * method called in the html to hide the email provider
+   * Trims the email providers from a given mail
+   *
+   * @param {string} mail
+   * @return {string} Trimmed mail
    */
-  private trimMail (mail: string): string {
+  public trimMail (mail: string): string {
     if (mail == null) {
       return 'yourself';
     } else {
