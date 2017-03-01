@@ -2,15 +2,23 @@ import {
   inject,
   TestBed,
 } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
 import { FormBuilder } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { ListViewComponent } from './list-view.component';
-import { ApiService } from '../../services/api';
-import { List } from '../../models';
 
-import { ApiServiceStub } from '../../../testing';
+import { List } from '../../models';
+import {
+  ApiService,
+  ListApiService,
+  NavigationService,
+} from '../../services';
+
+import {
+  ApiServiceStub,
+  ListApiServiceStub,
+} from '../../../testing';
 
 describe('ListViewComponent', () => {
 
@@ -18,7 +26,9 @@ describe('ListViewComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: ApiService, useClass: ApiServiceStub },
+        { provide: ListApiService, useClass: ListApiServiceStub },
         ListViewComponent,
+        NavigationService,
         { provide: ActivatedRoute, useValue: null },
         { provide: FormBuilder, useValue: { group: () => null } },
       ],
@@ -39,6 +49,8 @@ describe('ListViewComponent', () => {
       const list: List = {
         id: 'abc-abc-abc',
         name: 'Test List',
+        shared: false,
+        owner: null,
         items: [
           {
             name: 'entry 01',
@@ -77,7 +89,7 @@ describe('ListViewComponent', () => {
           onSale: false,
         },
       ]);
-    })
+    }),
   );
 
 });

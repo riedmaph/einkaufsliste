@@ -5,7 +5,10 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 import { Market } from '../../../models';
-import { ApiService } from '../../../services';
+import {
+  ApiService,
+  MarketApiService,
+} from '../../../services';
 
 @Component({
   selector: 'sl-settings',
@@ -18,21 +21,22 @@ export class FavouriteMarketSettingsComponent implements OnInit {
   public possibleMarkets: Market[] = [ ];
 
   public error: string = '';
-  public distance: Number = 2500;
-  public zipCode: Number;
+  public distance: number = 2500;
+  public zipCode: number;
   private showAddMenu = false;
   private showResults = false;
   private showPosition = false;
-  private lat: Number = 0;
-  private long: Number = 0;
-  private locationInfo: String = 'https://www.google.de/maps/@lat,long,15z';
+  private lat: number = 0;
+  private long: number = 0;
+  private locationInfo: string = 'https://www.google.de/maps/@lat,long,15z';
 
   constructor (
     private route: ActivatedRoute,
     private apiService: ApiService,
+    private marketApiService: MarketApiService,
   ) { }
 
-  /** @memorOf OnInit */
+  /** @memberOf OnInit */
   public ngOnInit (): void {
     this.route.data.subscribe(
       (data: { favourites: Market[] }) => {
@@ -53,10 +57,12 @@ export class FavouriteMarketSettingsComponent implements OnInit {
     navigator.geolocation.getCurrentPosition(pos => this.setPosition(pos));
     if (this.lat > 0) {
       // defensive guard to avoid wrong results before position is set
-      this.apiService.getMarketsByDistance(this.lat, this.long, this.distance)
+      this.marketApiService.getByDistance(this.lat, this.long, this.distance)
         .subscribe(response => this.possibleMarkets = response
-        .filter(market => !this.favouriteMarkets
-       .find(fav => fav.id === market.id) ));
+          .filter(market => !this.favouriteMarkets
+            .find(fav => fav.id === market.id),
+          ),
+        );
     }
     this.showResults = true;
     this.showPosition = true;
@@ -67,12 +73,13 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    * stores the data into possibleMarkets list
    */
   public searchByZip (): void {
-    if ( this.zipCode > 0) {
-      this.apiService.getMarketsByZip(this.zipCode)
+    if (this.zipCode > 0) {
+      this.marketApiService.getByZip(this.zipCode)
         .subscribe(response => this.possibleMarkets = response
-        .filter(market => !this.favouriteMarkets
-        .find(fav => fav.id === market.id) ));
-
+          .filter(market => !this.favouriteMarkets
+            .find(fav => fav.id === market.id),
+          ),
+        );
       this.showResults = true;
       this.showPosition = false;
     }
@@ -82,28 +89,29 @@ export class FavouriteMarketSettingsComponent implements OnInit {
    *  Adds a possible Market to favouriteMarkets
    *  removes the market from the possibleMarkets
    *  escalates the update to the api
-   * 
+   *
    * @param {Market} newMarket the new Market
-   *   
+   *
    */
   public add (newMarket: Market): void {
-    this.apiService.addFavouriteMarket(newMarket.id).subscribe(_ => {
+    this.marketApiService.addFavourite(newMarket.id).subscribe(_ => {
       this.favouriteMarkets.push(newMarket);
       // delete from possible Market list
       const index = this.possibleMarkets.findIndex(x => x.id === newMarket.id);
-      this.possibleMarkets.splice(index, 1); },
-    );
+      this.possibleMarkets.splice(index, 1);
+    });
   }
 
   /**
    * Removes the market with the given Id from the favourites
    * and makes corresponding api call
-   * 
+   *
    */
   public remove (marketId: number): void {
-    this.apiService.deleteFavouriteMarket(marketId).subscribe(_ => {
+    this.marketApiService.removeFavourite(marketId).subscribe(_ => {
       const index = this.favouriteMarkets.findIndex(x => x.id === marketId);
-      this.favouriteMarkets.splice(index, 1); });
+      this.favouriteMarkets.splice(index, 1);
+    });
   }
 
   /**
@@ -119,16 +127,14 @@ export class FavouriteMarketSettingsComponent implements OnInit {
 
   /**
    * @param {string} brand shop franchise
-   * @returns {string} Path to image for given brand or placeholder   
+   * @returns {string} Path to image for given brand or placeholder
    */
   public resolveImage (brand: string) {
-    let path: string;
     switch (brand) {
-      case 'EDEKA':  path = '/assets/img/brands/edeka.png'; break;
-      case 'REWE': path = '/assets/img/brands/rewe.png'; break;
-      default: path = '/assets/img/brands/marketPlaceholder.png';
+      case 'EDEKA': return '/assets/img/brands/edeka.png';
+      case 'REWE': return '/assets/img/brands/rewe.png';
+      default: return '/assets/img/brands/marketPlaceholder.png';
     }
-    return path;
   }
 
   private setPosition (position: Position): void {

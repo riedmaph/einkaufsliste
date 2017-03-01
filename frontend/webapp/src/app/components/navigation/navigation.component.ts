@@ -8,7 +8,7 @@ import {
 import {
   AuthService,
   NavigationService,
-} from 'app/services';
+} from '../../services';
 
 import { List } from '../../models';
 

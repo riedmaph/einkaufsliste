@@ -18,7 +18,7 @@ describe('AutoCompletionComponent', () => {
   it('should be defined',
     inject([ AutoCompletionComponent ], (acComp: AutoCompletionComponent) => {
       expect(acComp instanceof AutoCompletionComponent).toBe(true);
-    })
+    }),
   );
 
 });

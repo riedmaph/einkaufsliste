@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-   RequestOptions,
-   Response
-} from '@angular/http';
+import { RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import { AuthHttp } from 'angular2-jwt';
 
@@ -29,8 +26,6 @@ export class SharingService {
       });
   }
 
-
-
 /**
  * makes api call to remove a contributor to the list contributors
  * 
@@ -43,11 +38,9 @@ export class SharingService {
     });
 
    return this.authHttp.delete(API_ROUTES.lists.sharing
-      .replace(':listId', listId), options
+      .replace(':listId', listId), options,
    );
   }
-
-
 
 /**
  * makes api call to retrieve the list contributors
