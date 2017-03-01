@@ -275,7 +275,7 @@ function _createOptimisedListMarket(result, options, callback) {
   db.conn.task(function (t) {                            
     var queries = result.items.map(function (item) {
       if(item.offerAlgorithm) {
-        sqlParams.offerid = item.offerAlgorithm;s
+        sqlParams.offerid = item.offerAlgorithm;
         return t.none(sqlCreateOptimisedListMarket, sqlParams); //create db-entries for each optimisedListMarket    
       }
       else {
