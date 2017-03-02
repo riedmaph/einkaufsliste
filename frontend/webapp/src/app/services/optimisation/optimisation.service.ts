@@ -31,7 +31,10 @@ export class OptimisationService {
       .replace(':listId', listUuid).replace(':optimisationMethod', 'price'))
       .map(res => res.json())
       .map(list => {
-        return { items: list.items.map(item => OptimisedListItem.fromApi(item)) };
+        return {
+          items: list.items.map(item => OptimisedListItem.fromApi(item)),
+          amountSaved: list.optimisationResult.savings,
+        };
       });
   }
 

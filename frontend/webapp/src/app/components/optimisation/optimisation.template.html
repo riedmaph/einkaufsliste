@@ -1,6 +1,6 @@
 <md-toolbar color="primary">
   <button md-button [routerLink]="['../']">CANCEL</button>
-  <button md-button (click)="saveOptimisedList()">SAVE ({{ amountSaved }} €)</button>
+  <button md-button (click)="saveOptimisedList()">SAVE ({{ optimisedList.amountSaved }} €)</button>
 </md-toolbar>
 
 <div class="select-optimisation-container" *ngIf="optimisedList">

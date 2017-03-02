@@ -26,7 +26,6 @@ import { OptimisationService } from '../../services';
 export class OptimisationComponent implements OnInit {
 
   public optimisedList: OptimisedList = null;
-  public amountSaved: number = 0.0;
 
   private listUuid: string;
 
@@ -69,7 +68,7 @@ export class OptimisationComponent implements OnInit {
     if (this.existsNextOfferForItem(listItem)) {
       listItem.selectedOfferIndex += 1;
       this.updateOptimisedListWithListItem(listItem).subscribe(result =>
-        this.amountSaved = result.savings
+        this.optimisedList.amountSaved = result.savings
       );
     }
   }
@@ -83,7 +82,7 @@ export class OptimisationComponent implements OnInit {
     if (this.existsPreviousOfferForItem(listItem)) {
       listItem.selectedOfferIndex -= 1;
       this.updateOptimisedListWithListItem(listItem).subscribe(result =>
-        this.amountSaved = result.savings
+        this.optimisedList.amountSaved = result.savings
       );
     }
   }
