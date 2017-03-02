@@ -5,6 +5,7 @@
     #sidenav
   >
     <md-toolbar color="primary">
+      <span class="fill-remaining"></span>
       <button md-icon-button (click)="sidenav.close()">
         <i class="material-icons">close</i>
       </button>
@@ -23,8 +24,10 @@
   </md-sidenav>
 
 
+
   <sl-navigation>
     <button
+      class="sl-nav-left-menu-button"
       *ngIf="authService.loggedIn"
       md-icon-button
       (click)="openSidenav()"
@@ -32,7 +35,6 @@
       <i class="material-icons">menu</i>
     </button>
   </sl-navigation>
-
 
   <main>
     <router-outlet></router-outlet>
