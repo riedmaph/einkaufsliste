@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS :schemaname.OptimisedItem (
     name TEXT,
     amount REAL,
     unit TEXT,
+    item UUID REFERENCES :schemaname.Item(id)  ON DELETE SET NULL ON UPDATE CASCADE,
     offerAlgorithm INTEGER REFERENCES Grocerydata.Offer(id) ON DELETE SET NULL ON UPDATE CASCADE,
     offerUser INTEGER REFERENCES Grocerydata.Offer(id)  ON DELETE SET NULL ON UPDATE CASCADE,
     optimisedlist UUID NOT NULL REFERENCES :schemaname.OptimisedList(id) ON DELETE CASCADE ON UPDATE CASCADE
