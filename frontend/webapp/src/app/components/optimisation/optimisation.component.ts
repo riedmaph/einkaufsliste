@@ -133,6 +133,7 @@ export class OptimisationComponent implements OnInit {
         amount: listItem.item.amount,
         onSale: true,
         checked: listItem.item.checked,
+        offerUser: selectedOffer.id,
       };
       return this.optimisationService.updateOptimisedListWithItem(this.listUuid, updatedItem);
     }

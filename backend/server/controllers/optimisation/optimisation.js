@@ -210,7 +210,7 @@ function initializeOptimisedList(options, callback) {
                   name: offer.articlename, 
                   brand: offer.articlebrand
                 },
-                market: {
+                marketInfo: {
                   id: offer.marketid, 
                   name: offer.marketname,
                   street: offer.marketstreet,

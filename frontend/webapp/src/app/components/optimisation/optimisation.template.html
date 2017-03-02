@@ -35,7 +35,7 @@
         {{ getSelectedOfferForItem(listItem).title }}
       </h4>
       <p md-line class="offer-market-label" *ngIf="listItem.selectedOfferIndex >= 0">
-        Here goes the market...
+        {{ getSelectedOfferForItem(listItem).marketInfo.name }} {{ getSelectedOfferForItem(listItem).marketInfo.street }}
       </p>
       <button
         md-icon-button
