@@ -15,14 +15,12 @@ export class OptimisationResolver implements Resolve<OptimisedList> {
   /**
    * Constructor of the optimisation resolver.
    */
-  constructor(
-    private optimisationService: OptimisationService
-  ) { }
+  constructor (private optimisationService: OptimisationService) { }
 
   /**
    * @memberof Resolve
    */
-  public resolve(route: ActivatedRouteSnapshot,
+  public resolve (route: ActivatedRouteSnapshot,
                  state: RouterStateSnapshot): Observable<OptimisedList> {
     return this.optimisationService.getOptimisedList(route.params['listId']);
   }

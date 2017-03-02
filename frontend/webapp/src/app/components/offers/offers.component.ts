@@ -14,7 +14,7 @@ import {
   Offer,
   List,
   ListItem,
-} from '../../models';
+} from '../../models';
 
 @Component({
   selector: 'sl-offers',

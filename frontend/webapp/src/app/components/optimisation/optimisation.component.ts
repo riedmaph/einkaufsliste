@@ -5,6 +5,7 @@ import {
 import {
   Router,
   ActivatedRoute,
+  Params,
 } from '@angular/router';
 
 import {
@@ -13,6 +14,8 @@ import {
   Offer,
 } from '../../models';
 
+import { OptimisationService } from '../../services';
+
 @Component({
   templateUrl: 'optimisation.template.html',
   styleUrls: [ 'optimisation.style.scss' ],
@@ -20,28 +23,34 @@ import {
 export class OptimisationComponent implements OnInit {
 
   public optimisedList: OptimisedList = null;
-  public amountSaved: number = 3.19;
+  public amountSaved: number = 3.19;  // TODO: Use value from optimisation API
+
+  private listUuid: string;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private optimisationService: OptimisationService,
   ) { }
 
   /**
    * @memberOf OnInit
    */
   public ngOnInit (): void {
-    this.route.data.subscribe((data: { optimisedList: OptimisedList }) => {
-      console.dir(data.optimisedList);
-      this.optimisedList = data.optimisedList;
-    });
+    this.route.data.subscribe((data: { optimisedList: OptimisedList }) =>
+      this.optimisedList = data.optimisedList
+    );
+    this.route.params.subscribe((params: Params) =>
+      this.listUuid = params[ 'listId' ]
+    );
   }
 
   /**
    * Gets the currently selected offer for a given list item.
    *
+   * @param {OptimisedListItem} listItem The list item to get the offer for.
    */
-  public getSelectedOfferForItem(listItem: OptimisedListItem): Offer {
+  public getSelectedOfferForItem (listItem: OptimisedListItem): Offer {
     if (listItem.selectedOfferIndex >= listItem.offers.length) {
       return null;
     }
@@ -53,7 +62,7 @@ export class OptimisationComponent implements OnInit {
    *
    * @param {OptimisedListItem} listItem The list item to select the offer for.
    */
-  public selectNextOfferForItem(listItem: OptimisedListItem) {
+  public selectNextOfferForItem (listItem: OptimisedListItem) {
     if (this.existsNextOfferForItem(listItem)) {
       listItem.selectedOfferIndex += 1;
       // TODO: Call optimisation service to update selection
@@ -65,7 +74,7 @@ export class OptimisationComponent implements OnInit {
    *
    * @param {OptimisedListItem} listItem The list item to select the offer for.
    */
-  public selectPreviousOfferForItem(listItem: OptimisedListItem) {
+  public selectPreviousOfferForItem (listItem: OptimisedListItem) {
     if (this.existsPreviousOfferForItem(listItem)) {
       listItem.selectedOfferIndex -= 1;
       // TODO: Call optimisation service to update selection
@@ -78,7 +87,7 @@ export class OptimisationComponent implements OnInit {
    * @param {OptimisedListItem} listItem The list item to check for.
    * @return {boolean} True if a next offer exists for the list item.
    */
-  public existsNextOfferForItem(listItem: OptimisedListItem): boolean {
+  public existsNextOfferForItem (listItem: OptimisedListItem): boolean {
     return listItem.selectedOfferIndex < listItem.offers.length - 1;
   }
 
@@ -88,16 +97,17 @@ export class OptimisationComponent implements OnInit {
    * @param {OptimisedListItem} listItem The list item to check for.
    * @return {boolean} True if a previous offer exists for the list item.
    */
-  public existsPreviousOfferForItem(listItem: OptimisedListItem): boolean {
+  public existsPreviousOfferForItem (listItem: OptimisedListItem): boolean {
     return listItem.selectedOfferIndex >= 0;
   }
 
   /**
-   *
+   * Saves the optimised list and navigates back to the list view.
    */
-  public saveOptimisedList() {
-    // TODO: Call optimisation API service to save list
-    this.router.navigate(['../'], { relativeTo: this.route });
+  public saveOptimisedList () {
+    this.optimisationService.saveOptimisedList(this.listUuid).subscribe(_ => {
+      this.router.navigate([ '../' ], { relativeTo: this.route });
+    });
   }
 
 }
