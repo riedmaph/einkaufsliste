@@ -108,7 +108,7 @@ function takeResults(optimisationResult, distanceMatrix, optimumRoute, callback)
     if(i != (optimumRoute.length-2)) { //if i == (optimumRoute.length-2 --> i+1 is startposition so it can't be set to a market
       actualMarket = optimisationResult.markets[optimumRoute[i+1]-1];//optimumRoute[i+1]-1: write distance in i+1, index has to be decreased, because startposition has index 0 in optimumRoute[]
       actualMarket.distanceTo = actualDistance;
-      actualMarket.routePosition = i;
+      actualMarket.routePosition = i+1;
     }
 
   }

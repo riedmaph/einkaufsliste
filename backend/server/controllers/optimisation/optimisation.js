@@ -274,8 +274,6 @@ function getOptimisationResult(result, options, callback) {
 }
 
 function getDistance(result, options, callback) {
-  console.log(options.startPosition);
-
   distanceHandler.calculateRoute(options.startPosition, result.optimisationResult, function (err) {
       if(!err) {
         callback(null, result, options);

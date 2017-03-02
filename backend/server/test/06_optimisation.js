@@ -204,7 +204,7 @@ describe('Optimise', () => {
                     "city": "München",
                     "shop": "EDEKA",
                     "distanceTo": 362,
-                    "routePosition": 0
+                    "routePosition": 1
                   },
                   {
                     "id": 13395,
@@ -216,7 +216,7 @@ describe('Optimise', () => {
                     "city": "Landshut",
                     "shop": "REWE",
                     "distanceTo": 81318,
-                    "routePosition": 1
+                    "routePosition": 2
                   }
                 ]
               }
@@ -252,7 +252,7 @@ describe('Optimise', () => {
                       "latitude": 48.12059,
                       "longitude": 11.6125,
                       "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
-                      "routePosition": 0,
+                      "routePosition": 1,
                       "shop": "EDEKA",
                       "street": "Melusinenstr. 2",
                       "zip": "81671"
@@ -264,7 +264,7 @@ describe('Optimise', () => {
                       "latitude": 48.54623,
                       "longitude": 12.1799,
                       "name": "Rewe-Markt GmbH",
-                      "routePosition": 1,
+                      "routePosition": 2,
                       "shop": "REWE",
                       "street": "Ritter-von-Schoch-Straße 19",
                       "zip": "84036"
@@ -304,7 +304,7 @@ describe('Optimise', () => {
                       "latitude": 48.12059,
                       "longitude": 11.6125,
                       "street": "Melusinenstr. 2",
-                      "routePosition": 0,
+                      "routePosition": 1,
                       "zip": "81671",
                       "city": "München",
                       "shop": "EDEKA"
