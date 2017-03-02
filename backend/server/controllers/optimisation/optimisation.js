@@ -209,6 +209,13 @@ function initializeOptimisedList(options, callback) {
                 article:{
                   name: offer.articlename, 
                   brand: offer.articlebrand
+                },
+                market: {
+                  id: offer.marketid, 
+                  name: offer.marketname,
+                  street: offer.marketstreet,
+                  zip: offer.marketzip,
+                  city: offer.marketcity,
                 }
               }
             }
