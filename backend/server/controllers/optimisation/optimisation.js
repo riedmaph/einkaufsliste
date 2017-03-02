@@ -3,6 +3,8 @@ const uuid = require('uuid');
 
 const db = require(path.join('..', 'dbconnector.js'));
 
+const distanceHandler = require('./distanceHandler.js');
+
 const async = require('async');
 const waterfall = require('async-waterfall');
 
@@ -36,14 +38,19 @@ function saveUserselection(req, res, next) {
   options.unit = req.body.unit;
   options.offeruser = req.body.offerUser;
 
+  options.startPosition = {};
+  options.startPosition.longitude =req.query.longitude;
+  options.startPosition.latitude =req.query.latitude;
+
   var result={};
 
   waterfall([                                      //use waterfall to be able to call error method in an easy way
-    async.apply(_getOptimisedListID, result, options), //async.apply to hand over parameter to first method
-    _updateSavings,
-    _updateItem,
-    _refreshOptimisedListMarket,
-    _getOptimisationResult
+    async.apply(getOptimisedListID, result, options), //async.apply to hand over parameter to first method
+    updateSavings,
+    updateItem,
+    refreshOptimisedListMarket,
+    getOptimisationResult,
+    getDistance
   ], function (err, result, options) {
       if(!err) {
         res.status(200)
@@ -58,7 +65,7 @@ function saveUserselection(req, res, next) {
 }
 
 //find the acutal optimisedlist by listid and last startdate
-function _getOptimisedListID(result, options, callback) {
+function getOptimisedListID(result, options, callback) {
   var sqlParams = {};
   sqlParams.listid = options.listid;
 
@@ -68,12 +75,12 @@ function _getOptimisedListID(result, options, callback) {
       callback(null,  result, options);
     })
     .catch(function (err) {
-      err.message = 'controllers.optimise._getOptimisedListID: ' + err.message;
+      err.message = 'controllers.optimise.getOptimisedListID: ' + err.message;
       callback(err);
     });
 }
 
-function _updateSavings(result, options, callback) {
+function updateSavings(result, options, callback) {
   var savingOld=0;
   var savingNew=0;
 
@@ -105,28 +112,28 @@ function _updateSavings(result, options, callback) {
               callback(null, result, options);
             })
             .catch(function (err) {
-              err.message = 'controllers.optimise._updateSavings.updateOfferList ' + err.message;
+              err.message = 'controllers.optimise.updateSavings.updateOfferList ' + err.message;
               callback(err);
             });        
         })
         .catch(function (err) {
-          err.message = 'controllers.optimise._updateSavings.loadNewOffer: ' + err.message;
+          err.message = 'controllers.optimise.updateSavings.loadNewOffer: ' + err.message;
           callback(err);
         });
     })
     .catch(function (err) {
-      err.message = 'controllers.optimise._updateSavings.loadOldOffer: ' + err.message;
+      err.message = 'controllers.optimise.updateSavings.loadOldOffer: ' + err.message;
       callback(err);
     });
 }
 
-function _updateItem(result, options, callback) {
+function updateItem(result, options, callback) {
   db.conn.none(sqlUpdateOptimisedItem, options)
     .then(function () {
       callback(null, result, options);
     })
     .catch(function (err) {
-      err.message = 'controllers.optimise._updateItem: ' + err.message;
+      err.message = 'controllers.optimise.updateItem: ' + err.message;
       callback(err);
     });
 }
@@ -153,12 +160,18 @@ function getOptimisedList(req, res, next) {
   options.userid = req.body.userid
   options.optimiseBy = req.query.by;
 
+  options.startPosition = {};
+  options.startPosition.longitude =req.query.longitude;
+  options.startPosition.latitude =req.query.latitude;
+
+
   waterfall([                                      //use waterfall to be able to call error method in an easy way
     async.apply(closeOldOptimisations, options), //async.apply to hand over parameter to first method
     initializeOptimisedList,
     executeOptimisation,
     createOptimisedData,
-    _getOptimisationResult
+    getOptimisationResult,
+    getDistance
   ], function (err, result, options) {
       if(!err) {
         res.status(200)
@@ -233,7 +246,7 @@ function initializeOptimisedList(options, callback) {
 }
 
 //load saving distance(TODO) and markets for finished optimisation
-function _getOptimisationResult(result, options, callback) {
+function getOptimisationResult(result, options, callback) {
   var sqlParams = {}
   sqlParams.optimisedlistid = options.optimisedlistid;
 
@@ -258,6 +271,19 @@ function _getOptimisationResult(result, options, callback) {
       err.message = 'controllers.optimise._getOptimisationResult.: ' + err.message;
       callback(err);
     });
+}
+
+function getDistance(result, options, callback) {
+  console.log(options.startPosition);
+
+  distanceHandler.calculateRoute(options.startPosition, result.optimisationResult, function (err) {
+      if(!err) {
+        callback(null, result, options);
+      }
+      else {
+        callback(err);   
+      }
+  });
 }
 
 //select the right optimisation-method
@@ -317,7 +343,7 @@ function createOptimisedData(result, options, callback) {
    waterfall([
     async.apply(_createOptimisedList, result, options),
     _createOptimisedItems,
-    _refreshOptimisedListMarket
+    refreshOptimisedListMarket
   ], function (err, result, options) {
       if(!err) {
         callback(null, result, options);
@@ -375,7 +401,7 @@ function _createOptimisedItems(result, options, callback) {
   });
 }
 
-function _refreshOptimisedListMarket(result, options, callback) {   
+function refreshOptimisedListMarket(result, options, callback) {   
   var sqlParams = {}
   sqlParams.optimisedlistid = options.optimisedlistid;
 
