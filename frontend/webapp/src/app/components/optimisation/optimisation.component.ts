@@ -40,9 +40,9 @@ export class OptimisationComponent implements OnInit {
    * @memberOf OnInit
    */
   public ngOnInit (): void {
-    this.route.data.subscribe((data: { optimisedList: OptimisedList }) => {
-      this.optimisedList = data.optimisedList;
-    });
+    this.route.data.subscribe((data: { optimisedList: OptimisedList }) =>
+      this.optimisedList = data.optimisedList
+    );
     this.route.params.subscribe((params: Params) =>
       this.listUuid = params[ 'listId' ]
     );
@@ -68,9 +68,9 @@ export class OptimisationComponent implements OnInit {
   public selectNextOfferForItem (listItem: OptimisedListItem) {
     if (this.existsNextOfferForItem(listItem)) {
       listItem.selectedOfferIndex += 1;
-      this.updateOptimisedListWithListItem(listItem).subscribe(result => {
-        this.amountSaved = result.savings;
-      });
+      this.updateOptimisedListWithListItem(listItem).subscribe(result =>
+        this.amountSaved = result.savings
+      );
     }
   }
 
@@ -82,9 +82,9 @@ export class OptimisationComponent implements OnInit {
   public selectPreviousOfferForItem (listItem: OptimisedListItem) {
     if (this.existsPreviousOfferForItem(listItem)) {
       listItem.selectedOfferIndex -= 1;
-      this.updateOptimisedListWithListItem(listItem).subscribe(result => {
-        this.amountSaved = result.savings;
-      });
+      this.updateOptimisedListWithListItem(listItem).subscribe(result =>
+        this.amountSaved = result.savings
+      );
     }
   }
 
@@ -112,9 +112,9 @@ export class OptimisationComponent implements OnInit {
    * Saves the optimised list and navigates back to the list view.
    */
   public saveOptimisedList () {
-    this.optimisationService.saveOptimisedList(this.listUuid).subscribe(_ => {
-      this.router.navigate([ '../' ], { relativeTo: this.route });
-    });
+    this.optimisationService.saveOptimisedList(this.listUuid).subscribe(_ =>
+      this.router.navigate([ '../' ], { relativeTo: this.route })
+    );
   }
 
   /**
