@@ -12,6 +12,7 @@
         class="previous-offer-button"
         color="primary"
         [disabled]="!existsPreviousOfferForItem(listItem)"
+        [ngClass]="{hiddenButton:!existsPreviousOfferForItem(listItem)}"
         (click)="selectPreviousOfferForItem(listItem)">
         <i class="material-icons">navigate_before</i>
       </button>
@@ -31,7 +32,7 @@
         </p>
       </div>
       <h4 md-line class="offer-title-label" *ngIf="listItem.selectedOfferIndex >= 0">
-        {{ getSelectedOfferForItem(listItem).brand }} {{ getSelectedOfferForItem(listItem).name }}
+        {{ getSelectedOfferForItem(listItem).title }}
       </h4>
       <p md-line class="offer-market-label" *ngIf="listItem.selectedOfferIndex >= 0">
         Here goes the market...
@@ -40,8 +41,8 @@
         md-icon-button
         class="next-offer-button"
         color="primary"
-
         [disabled]="!existsNextOfferForItem(listItem)"
+        [ngClass]="{hiddenButton:!existsNextOfferForItem(listItem)}"
         (click)="selectNextOfferForItem(listItem)">
         <i class="material-icons">navigate_next</i>
       </button>

@@ -43,14 +43,9 @@ export class OptimisationService {
    * @return {Observable<any>} Observable containing the response.
    */
   public updateOptimisedListWithItem (listUuid: string, item: ListItem): Observable<any> {
-    const body = {
-      id: item.id,
-      name: item.name,
-      amount: item.amount,
-      unit: item.unit,
-    };
     return this.authHttp.put(API_ROUTES.optimisation.update
-      .replace(':listId', listUuid).replace(':itemId', item.id), body);
+      .replace(':listId', listUuid).replace(':itemId', item.id), item)
+      .map(res => res.json());
   }
 
   /**

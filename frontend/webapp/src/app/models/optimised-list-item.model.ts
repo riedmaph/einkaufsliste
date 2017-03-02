@@ -27,7 +27,7 @@ export class OptimisedListItem {
         position: apiRepresentation.position,
       },
       offers: apiRepresentation.offers.map(Offer.fromApi),
-      selectedOfferIndex: apiRepresentation.offers.length ? 0 : - 1,
+      selectedOfferIndex: - 1,
     });
   }
 
