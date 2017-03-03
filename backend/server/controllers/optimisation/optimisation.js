@@ -34,7 +34,7 @@ function saveUserselection(req, res, next) {
   options.name = req.body.name;
   options.amount = parseFloat(req.body.amount);
   options.unit = req.body.unit;
-  options.offeruser = req.body.offerUser;
+  options.userSelectedOffer = req.body.userSelectedOffer;
 
   var result={};
 
@@ -88,7 +88,7 @@ function _updateSavings(result, options, callback) {
       }
 
       sqlParams = {};
-      sqlParams.offerid =  options.offeruser;
+      sqlParams.offerid =  options.userSelectedOffer;
 
       db.conn.oneOrNone(sqlReadOfferById, sqlParams) //get savings from new offer
         .then(function (offerNew) {

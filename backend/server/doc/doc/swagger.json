@@ -1499,7 +1499,7 @@
                 },
                 {
                     "properties": {
-                        "offerUser": {
+                        "userSelectedOffer": {
                             "type": "integer",
                             "description": "Unique identifer of offer selected by user (only required selection is an offer)."
                         }

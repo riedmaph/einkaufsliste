@@ -273,7 +273,7 @@ describe('Optimise', () => {
           name: "Kaffe Mövenpick",
           amount: 150.00,
           unit: 'g',
-          offerUser: 802005
+          userSelectedOffer: 802005
       }
       chai.request(app)
           .put('/api/lists/'+listid+'/optimised/'+itemid5)

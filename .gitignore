@@ -11,6 +11,9 @@ local.properties
 .loadpath
 .recommenders
 
+#npm log
+npm-debug.log
+
 # Eclipse Core
 .project
 
