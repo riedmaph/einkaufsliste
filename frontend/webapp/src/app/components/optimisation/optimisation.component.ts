@@ -24,7 +24,7 @@ import { OptimisationService } from '../../services';
 })
 export class OptimisationComponent implements OnInit {
 
-  public optimisedList: OptimisedList = null;
+  public optimisedList: OptimisedList;
 
   private listUuid: string;
 

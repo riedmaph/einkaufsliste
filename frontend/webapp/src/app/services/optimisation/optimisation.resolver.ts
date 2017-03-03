@@ -22,7 +22,7 @@ export class OptimisationResolver implements Resolve<OptimisedList> {
    */
   public resolve (
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): Observable<OptimisedList> {
     return this.optimisationService.getOptimisedList(route.params['listId']);
   }

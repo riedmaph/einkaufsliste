@@ -5,10 +5,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import {
   FormGroup,
