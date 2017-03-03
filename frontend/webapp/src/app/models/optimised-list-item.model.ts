@@ -7,9 +7,10 @@ import {
 } from './offer.model';
 
 export class OptimisedListItem {
-  item: ListItem;
-  offers?: Offer[];
-  selectedOfferIndex: number;
+
+  public item: ListItem;
+  public offers: Offer[];
+  public selectedOfferIndex: number;
 
   /**
    * Parses an otpimised list item from the API representation.

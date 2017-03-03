@@ -20,8 +20,10 @@ export class OptimisationResolver implements Resolve<OptimisedList> {
   /**
    * @memberof Resolve
    */
-  public resolve (route: ActivatedRouteSnapshot,
-                 state: RouterStateSnapshot): Observable<OptimisedList> {
+  public resolve (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<OptimisedList> {
     return this.optimisationService.getOptimisedList(route.params['listId']);
   }
 }

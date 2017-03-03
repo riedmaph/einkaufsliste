@@ -33,7 +33,7 @@ export class OptimisationService {
       .map(res => res.json())
       .map(list => {
         return {
-          items: list.items.map(item => OptimisedListItem.fromApi(item)),
+          items: list.items.map(OptimisedListItem.fromApi),
           amountSaved: list.optimisationResult.savings,
         };
       });
@@ -61,7 +61,7 @@ export class OptimisationService {
    */
   public saveOptimisedList (listUuid: string): Observable<any> {
     const headers = new Headers({ 'x-copy-optimised': true });
-    return this.authHttp.post(API_ROUTES.optimisation.save.replace(':listId', listUuid),
-      { }, { headers: headers });
+    return this.authHttp.post(API_ROUTES.optimisation.save
+      .replace(':listId', listUuid), { }, { headers: headers });
   }
 }

@@ -49,7 +49,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-    private router: Router,
     private dialog: MdDialog,
     private formBuilder: FormBuilder,
   ) {

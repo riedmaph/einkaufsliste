@@ -18,7 +18,7 @@
         class="previous-offer-button"
         color="primary"
         [disabled]="!existsPreviousOfferForItem(listItem)"
-        [ngClass]="{hiddenButton:!existsPreviousOfferForItem(listItem)}"
+        [class.disabled-button]="!existsNextOfferForItem(listItem)"
         (click)="selectPreviousOfferForItem(listItem)">
         <i class="material-icons">navigate_before</i>
       </button>
@@ -48,7 +48,7 @@
         class="next-offer-button"
         color="primary"
         [disabled]="!existsNextOfferForItem(listItem)"
-        [ngClass]="{hiddenButton:!existsNextOfferForItem(listItem)}"
+        [class.disabled-button]="!existsNextOfferForItem(listItem)"
         (click)="selectNextOfferForItem(listItem)">
         <i class="material-icons">navigate_next</i>
       </button>

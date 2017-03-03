@@ -42,7 +42,7 @@ export class OptimisationComponent implements OnInit {
       this.optimisedList = data.optimisedList
     );
     this.route.params.subscribe((params: Params) =>
-      this.listUuid = params[ 'listId' ]
+      this.listUuid = params['listId']
     );
   }
 
