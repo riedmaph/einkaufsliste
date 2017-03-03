@@ -17,7 +17,7 @@ export class ListResolver implements Resolve<List> {
   ) {}
 
   public resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<List> {
-    return this.apiService.getList( route.params['listId'] ? route.params['listId'] : 'default' );
+    return this.apiService.getList(route.params['listId'] || 'default');
   }
 
 }

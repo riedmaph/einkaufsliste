@@ -16,6 +16,15 @@ var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql')
 
 const DEFAULT_LIST_ID = 'default';
 
+function updateRecentList(listid, userid) {
+  db.conn.any(sqlUpdateRecentList, { listid: listid, userid: userid })
+    .then(function (data) { })
+    .catch(function (err) {
+      // the user does not want to know about this
+      logger.log('error', 'controllers.lists.getListWithItems.sqlUpdateRecentList: ' + err.message);
+    });
+}
+
 function getAllLists(req, res, next) {
   db.conn.any(sqlReadLists, req.body)
     .then(function (data) {
@@ -42,12 +51,7 @@ function getListWithItems(req, res, next) {
             // send response early and set recent list afterwards as this is not important for the user
             res.status(200)
               .json(list);
-            db.conn.any(sqlUpdateRecentList, req.body)
-              .then(function (data) { })
-              .catch(function (err) {
-                // the user does not want to know about this
-                logger.log('error', 'controllers.lists.getListWithItems.sqlUpdateRecentList: ' + err.message);
-              });
+            updateRecentList(req.body.listid, req.body.userid);
           })
           .catch(function (err) {
             err.message = 'controllers.lists.getListWithItems.sqlReadItems: ' + err.message;
@@ -119,5 +123,6 @@ module.exports = {
   getListWithItems: getListWithItems,
   createList: createList,
   updateList: updateList,
-  deleteList: deleteList
+  deleteList: deleteList,
+  updateRecentList: updateRecentList
 };

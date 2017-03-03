@@ -74,12 +74,13 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public ngOnInit (): void {
     this.route.data
-    .subscribe((data: { list: List }) => {
-      this.list = data.list;
-      if (this.list) {
-        this.navigationService.title = this.list.name;
-      }
-    });
+      .subscribe((data: { list: List }) => {
+        this.list = data.list;
+        if (this.list) {
+          this.navigationService.title = this.list.name;
+        }
+        window.history.pushState('page', 'Title', 'list/' + this.list.id);
+      });
   }
 
   /**
