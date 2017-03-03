@@ -6,5 +6,4 @@ export interface ListItem {
   amount: number;
   onSale?: boolean;
   checked?: boolean;
-  offerUser?: string;
 }

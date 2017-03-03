@@ -28,7 +28,8 @@ export class OptimisationService {
    */
   public getOptimisedList (listUuid: string): Observable<OptimisedList> {
     return this.authHttp.get(API_ROUTES.optimisation.get
-      .replace(':listId', listUuid).replace(':optimisationMethod', 'price'))
+      .replace(':listId', listUuid)
+      .replace(':optimisationMethod', 'price'))
       .map(res => res.json())
       .map(list => {
         return {
@@ -45,9 +46,10 @@ export class OptimisationService {
    * @param {ListItem} itemId The selected item.
    * @return {Observable<any>} Observable containing the response.
    */
-  public updateOptimisedListWithItem (listUuid: string, item: ListItem): Observable<any> {
+  public updateSelectedItem (listUuid: string, item: ListItem): Observable<any> {
     return this.authHttp.put(API_ROUTES.optimisation.update
-      .replace(':listId', listUuid).replace(':itemId', item.id), item)
+      .replace(':listId', listUuid)
+      .replace(':itemId', item.id), item)
       .map(res => res.json());
   }
 

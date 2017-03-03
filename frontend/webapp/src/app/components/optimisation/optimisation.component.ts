@@ -11,7 +11,6 @@ import {
 import { Observable } from 'rxjs';
 
 import {
-  ListItem,
   OptimisedList,
   OptimisedListItem,
   Offer,
@@ -67,7 +66,7 @@ export class OptimisationComponent implements OnInit {
   public selectNextOfferForItem (listItem: OptimisedListItem) {
     if (this.existsNextOfferForItem(listItem)) {
       listItem.selectedOfferIndex += 1;
-      this.updateOptimisedListWithListItem(listItem).subscribe(result =>
+      this.updateSelectionForItem(listItem).subscribe(result =>
         this.optimisedList.amountSaved = result.savings
       );
     }
@@ -81,7 +80,7 @@ export class OptimisationComponent implements OnInit {
   public selectPreviousOfferForItem (listItem: OptimisedListItem) {
     if (this.existsPreviousOfferForItem(listItem)) {
       listItem.selectedOfferIndex -= 1;
-      this.updateOptimisedListWithListItem(listItem).subscribe(result =>
+      this.updateSelectionForItem(listItem).subscribe(result =>
         this.optimisedList.amountSaved = result.savings
       );
     }
@@ -122,10 +121,10 @@ export class OptimisationComponent implements OnInit {
    *
    * @param {OptimisedListItem} listItem The chosen list item to update.
    */
-  private updateOptimisedListWithListItem (listItem: OptimisedListItem): Observable<any> {
+  private updateSelectionForItem (listItem: OptimisedListItem): Observable<any> {
     const selectedOffer = this.getSelectedOfferForItem(listItem);
     if (selectedOffer) {
-      const updatedItem: ListItem = {
+      const updatedItem = {
         id: listItem.item.id,
         name: selectedOffer.title,
         unit: listItem.item.unit,
@@ -134,9 +133,9 @@ export class OptimisationComponent implements OnInit {
         checked: listItem.item.checked,
         offerUser: selectedOffer.id,
       };
-      return this.optimisationService.updateOptimisedListWithItem(this.listUuid, updatedItem);
+      return this.optimisationService.updateSelectedItem(this.listUuid, updatedItem);
     }
-    return this.optimisationService.updateOptimisedListWithItem(this.listUuid, listItem.item);
+    return this.optimisationService.updateSelectedItem(this.listUuid, listItem.item);
   }
 
 }
