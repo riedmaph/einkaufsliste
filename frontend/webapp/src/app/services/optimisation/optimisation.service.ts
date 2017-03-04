@@ -27,7 +27,7 @@ export class OptimisationService {
    * Gets the optimised list for a given list identifier.
    *
    * @param {string} listUuid The list identifier.
-   * @param {string} optimisedBy The optimisation criteria, either 'price' or 'distance'
+   * @param {string} optimisedBy The optimisation criteria - either 'price' or 'distance'
    * @param {number} longitude The user location's longitude.
    * @param {number} latitude The user location's latitude.
    * @return {Observable<OptimisedList>} Observable containing an optimised list.

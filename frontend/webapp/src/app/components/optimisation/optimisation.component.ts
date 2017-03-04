@@ -44,19 +44,10 @@ export class OptimisationComponent implements OnInit {
   public ngOnInit (): void {
     this.route.params.subscribe((params: Params) => {
       this.listUuid = params['listId'];
-
-      // Fetch the user location coordinates
       navigator.geolocation.getCurrentPosition(pos => {
         this.longitude = pos.coords.longitude;
         this.latitude = pos.coords.latitude;
-
-        // Load optimised list with the location coordinates
-        this.optimisationService.getOptimisedList(
-          this.listUuid, 'price' , this.longitude, this.latitude)
-          .subscribe(optimisedList => {
-            this.optimisedList = optimisedList;
-            this.optimisationLoaded = true;
-          });
+        this.loadOptimisedList('price');
       });
     });
   }
@@ -128,6 +119,20 @@ export class OptimisationComponent implements OnInit {
     this.optimisationService.saveOptimisedList(this.listUuid).subscribe(_ =>
       this.router.navigate([ '../' ], { relativeTo: this.route })
     );
+  }
+
+  /**
+   * Loads the optimised list.
+   *
+   * @param {string} optimisedBy The optimisation criteria - either 'price' or 'distance'
+   */
+  private loadOptimisedList (optimisedBy: string) {
+    this.optimisationService.getOptimisedList(
+      this.listUuid, optimisedBy , this.longitude, this.latitude)
+        .subscribe(optimisedList => {
+        this.optimisedList = optimisedList;
+        this.optimisationLoaded = true;
+      });
   }
 
   /**
