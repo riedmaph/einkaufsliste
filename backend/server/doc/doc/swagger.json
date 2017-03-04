@@ -6,7 +6,7 @@
         "version": "1.0.0"
     },
     "schemes": [
-        "http"
+        "http", "https"
     ],
     "basePath": "/api",
     "produces": [
@@ -492,6 +492,166 @@
                 }
             }
         },
+        "/lists/{listid}/contributors": {
+            "get": {
+                "tags": [
+                    "Shared Lists"
+                ],
+                "summary": "Gets all contributors of the list.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of List to be shared.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "contributors": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Contributor"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Shared Lists"
+                ],
+                "summary": "Share a list with another user.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of List to be shared.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Email address of the user the list should be shared with.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Contributor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Unkonwn email address.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Shared Lists"
+                ],
+                "summary": "Remove a list contributor.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of the shared list.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Email address of the user that should be removed.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Contributor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "A list with the requested ID does not exists or the list is not shared with the specified user.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/lists/{listid}/items": {
             "get": {
                 "tags": [
@@ -831,7 +991,7 @@
                         "name": "x-access-token",
                         "in": "header",
                         "description": "JWT for user authorization.",
-                        "required": false,
+                        "required": true,
                         "type": "string"
                     },
                     {
@@ -846,7 +1006,7 @@
                         "in": "query",
                         "name": "latitude",
                         "description": "Latitude of the given position (search by position).",
-                        "required": false,
+                        "required": true,
                         "type": "number",
                         "format": "decimal"
                     },
@@ -854,7 +1014,7 @@
                         "in": "query",
                         "name": "max-distance",
                         "description": "Maximum distance (airline) between the given position and market in meters (search by position).",
-                        "required": false,
+                        "required": true,
                         "type": "number",
                         "format": "integer"
                     },
@@ -1136,7 +1296,7 @@
                 }
             }
         },
-        "List": {
+        "ListShort": {
             "allOf": [
                 {
                     "$ref": "#/definitions/ListID"
@@ -1146,12 +1306,40 @@
                 },
                 {
                     "required": [
-                        "count"
+                        "count",
+                        "shared"
                     ],
                     "properties": {
                         "count": {
                             "type": "integer",
                             "description": "Number of items in list."
+                        },
+                         "shared": {
+                            "type": "boolean",
+                            "description": "True iif number of contributors is greater than 0."
+                        }
+                    }
+                }
+            ]
+        },
+        "List": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ListShort"
+                },
+                {
+                    "required": [
+                        "completed",
+                        "owner"
+                    ],
+                    "properties": {
+                        "completed": {
+                            "type": "integer",
+                            "description": "Number of checked items in list."
+                        },
+                        "owner": {
+                            "type": "string",
+                            "description": "Null if the current user is the owner of the list, else the email address if the owner of the list."
                         }
                     }
                 }
@@ -1166,7 +1354,7 @@
         "ListWithItems": {
             "allOf": [
                 {
-                    "$ref": "#/definitions/List"
+                    "$ref": "#/definitions/ListShort"
                 },
                 {
                     "required": [
@@ -1276,6 +1464,18 @@
                 }
             }
         },
+        "Contributor": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "Email address of a registered user."
+                }
+            }
+        },
         "MarketID": {
             "type": "object",
             "required": [
@@ -1319,7 +1519,8 @@
                 },
                 "distance": {
                     "type": "number",
-                    "description": "Distance in meters (airline)."
+                    "description": "Distance in meter (airline). Only present if search was by position."
+
                 }
             }
         },

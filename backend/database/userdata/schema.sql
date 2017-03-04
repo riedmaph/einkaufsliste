@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS :schemaname.OptimisedList;
 DROP TABLE IF EXISTS :schemaname.Item;
 DROP TABLE IF EXISTS :schemaname.List;
 DROP TABLE IF EXISTS :schemaname.Enduser;
+DROP TABLE IF EXISTS :schemaname.FavouriteMarket;
 
 DROP SCHEMA IF EXISTS :schemaname;
 
@@ -36,6 +37,13 @@ CREATE TABLE IF NOT EXISTS :schemaname.Item (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     checked TIMESTAMP DEFAULT NULL,
     list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS :schemaname.ListShare (
+    list UUID NOT NULL REFERENCES :schemaname.List(id) ON DELETE CASCADE,
+    enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE,
+    UNIQUE(list, enduser)
 );
 
 CREATE TABLE IF NOT EXISTS :schemaname.FavouriteMarket (

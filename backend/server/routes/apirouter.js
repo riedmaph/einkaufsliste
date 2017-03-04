@@ -9,6 +9,7 @@ var tokenhandler = require(path.join('..', 'controllers', 'tokenhandler'));
 var users = require(path.join('..', 'controllers', 'users', 'users'));
 var lists = require(path.join('..', 'controllers', 'lists', 'lists'));
 var items = require(path.join('..', 'controllers', 'items', 'items'));
+var contributors = require(path.join('..', 'controllers', 'contributors', 'contributors'));
 var products = require(path.join('..', 'controllers', 'products', 'products'));
 var markets = require(path.join('..', 'controllers', 'markets', 'markets'));
 var optimisation = require(path.join('..', 'controllers', 'optimisation', 'optimisation'));
@@ -48,6 +49,14 @@ router.route('/lists/:listid/items/:itemid')
   .put(items.updateItem)
   .delete(items.deleteItem)
   .patch(items.moveItem);
+
+
+/* contributors */
+router.route('/lists/:listid/contributors')
+  .get(contributors.getListContributors)
+  .post(contributors.addContributor)
+  .delete(contributors.removeContributor);
+
 
 /* products */
 router.route('/products/search')

@@ -9,6 +9,8 @@ import {
 import { ListItem } from '../../models/list-item.model';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
+import { LIST_ITEM_NAME_MAX_LENGTH } from '../../constants';
+
 @Component({
   selector: 'sl-list',
   templateUrl: './list.template.html',
@@ -42,11 +44,16 @@ export class ListComponent {
     private dragulaService: DragulaService,
   ) {
     this.dragulaService.dragend.subscribe(
-      draggedElement => this.reorderItems(draggedElement[1])
+      draggedElement => this.reorderItems(draggedElement[1]),
     );
     dragulaService.drag.subscribe((value) => {
       this.saveMovedItem(value.slice(1));
     });
+  }
+
+  /** Getter for LIST_ITEM_NAME_MAX_LENGTH */
+  public get MAX_LENGTH (): number {
+    return LIST_ITEM_NAME_MAX_LENGTH;
   }
 
   /** Setter for editableFlag */
@@ -92,9 +99,13 @@ export class ListComponent {
    * @return {void}
    */
   public toggleChecked (item: ListItem): void {
+    if (this.itemMenuIndex > -1 && this.items[this.itemMenuIndex] === item) {
+      this.itemMenuIndex = -1;
+    }
     item.checked = !item.checked;
     this.onEdit.emit(item);
   }
+
 
   /**
    * Removes an item from the items list, after confirmation was successful
@@ -143,8 +154,21 @@ export class ListComponent {
   }
 
   /**
+   * Handles keydown in the edit input fields. Commits changes on enter key pressed
+   *
+   * @param {number} keyCode Code of key pressed
+   * @param {ListItem} item List item edited
+   * @return {void}
+   */
+  public handleKeydown (keyCode: number, item: ListItem): void {
+    if (keyCode === 13) {
+      this.commitEdit(item);
+    }
+  }
+
+  /**
    * Propagets the drag&drop information to the list-view
-   * Reordering the items in this component is misleading, as they 
+   * Reordering the items in this component is misleading, as they
    * are injected by the list-view
    *
    * @param {HTMLElement} movedElem element that was dragged by the user.
@@ -169,7 +193,7 @@ export class ListComponent {
         targetIndex = targetIndex < 0 ? 0 : targetIndex;
         newPosition = targetIndex;
       } else {
-        // new position at end  
+        // new position at end
         targetIndex = this.items.length;
         newPosition = this.items.length - 1;
       }

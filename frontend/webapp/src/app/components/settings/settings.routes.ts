@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { SettingsComponent } from './settings.component';
 import { FavouriteMarketSettingsComponent } from './favourite-market';
 import { SettingsOverviewComponent } from './overview';
+import { SharedListsSettingsComponent } from './sharedListSettings';
 
 import {
   AuthGuard,
@@ -25,6 +26,10 @@ export const SETTINGS_ROUTES: Routes = [
         resolve: {
           favourites: FavouriteMarketResolver,
         },
+      },
+      {
+        path: 'shared-lists',
+        component: SharedListsSettingsComponent,
       },
     ],
   },

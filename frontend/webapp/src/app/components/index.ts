@@ -8,3 +8,4 @@ export * from './offers';
 export * from './optimisation';
 export * from './settings';
 export * from './ui-elements';
+export * from './settings';
