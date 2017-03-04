@@ -12,7 +12,7 @@ const apiPath = '/maps/api/distancematrix/json?';
 
 function calculateRoute(startPosition, optimisationResult, callback)
 {
-   waterfall([                                      //use waterfall to be able to call error method in an easy way
+   waterfall([ //use waterfall to be able to call error method in an easy way
     async.apply(getDistanceMatrix, startPosition, optimisationResult), //async.apply to hand over parameter to first method
     solveTSP,
     takeResults
