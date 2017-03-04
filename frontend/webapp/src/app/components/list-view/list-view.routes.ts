@@ -5,7 +5,6 @@ import { ListViewComponent } from './list-view.component';
 import {
   AuthGuard,
   ListResolver,
-  DefaultListResolver,
 } from 'app/services';
 
 export const LIST_VIEW_ROUTES: Routes = [
@@ -17,7 +16,7 @@ export const LIST_VIEW_ROUTES: Routes = [
         path: '',
         component: DefaultListComponent,
         resolve: {
-          list: DefaultListResolver,
+          list: ListResolver,
         },
       },
       {

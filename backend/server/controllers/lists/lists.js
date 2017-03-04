@@ -53,7 +53,6 @@ function getListWithItems(req, res, next) {
             updateRecentList(req.body.listid, req.body.userid);
           })
           .catch(function (err) {
-            console.log(err);
             err.message = 'controllers.lists.getListWithItems.sqlReadItems: ' + err.message;
             return next(err);
           });

@@ -17,7 +17,7 @@ export class ListResolver implements Resolve<List> {
   ) {}
 
   public resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<List> {
-    return this.listApiService.getOne(route.params['listId']);
+    return this.listApiService.getOne(route.params['listId']).catch(err => Observable.of(null));
   }
 
 }
@@ -35,18 +35,3 @@ export class ListsResolver implements Resolve<List[]> {
   }
 
 }
-
-
-@Injectable()
-export class DefaultListResolver implements Resolve<List> {
-
-  constructor (
-    private listApiService: ListApiService,
-  ) {}
-
-  public resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<List> {
-    return this.listApiService.getDefault().catch(err => Observable.of(null));
-  }
-
-}
-
