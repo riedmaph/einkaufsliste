@@ -32,8 +32,6 @@ export class OptimisationService {
       .replace(':optimisationMethod', 'price'))
       .map(res => res.json())
       .map(list => {
-        console.debug(list.optimisationResult.savings);
-
         return {
           items: list.items.map(OptimisedListItem.fromApi),
           amountSaved: Math.abs(list.optimisationResult.savings),
