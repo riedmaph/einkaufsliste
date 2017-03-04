@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
+import {
+  Headers,
+  RequestOptionsArgs,
+  URLSearchParams,
+} from '@angular/http';
 
 import { AuthHttp } from 'angular2-jwt';
 import { Observable } from 'rxjs';
@@ -35,11 +39,18 @@ export class OptimisationService {
     longitude: number,
     latitude: number,
   ): Observable<OptimisedList> {
+
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('by', optimisedBy);
+    queryParams.set('longitude', longitude.toString());
+    queryParams.set('latitude', latitude.toString());
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+
     return this.authHttp.get(API_ROUTES.optimisation.get
-      .replace(':listId', listUuid)
-      .replace(':by', optimisedBy)
-      .replace(':lon', longitude.toString())
-      .replace(':lat', latitude.toString()))
+      .replace(':listId', listUuid), options)
       .map(res => res.json())
       .map(list => {
         return {
@@ -65,11 +76,18 @@ export class OptimisationService {
     latitude: number,
     item: ListItem,
   ): Observable<any> {
+
+    const queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('longitude', longitude.toString());
+    queryParams.set('latitude', latitude.toString());
+
+    const options: RequestOptionsArgs = {
+      search: queryParams,
+    };
+
     return this.authHttp.put(API_ROUTES.optimisation.update
       .replace(':listId', listUuid)
-      .replace(':itemId', item.id)
-      .replace(':lon', longitude.toString())
-      .replace(':lat', latitude.toString()), item)
+      .replace(':itemId', item.id), item, options)
       .map(res => res.json());
   }
 

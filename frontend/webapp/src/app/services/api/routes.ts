@@ -29,8 +29,8 @@ export const API_ROUTES = {
     offers: `${API_BASE_URL}/markets/:marketId/offers`,
   },
   optimisation: {
-    get: `${API_BASE_URL}/lists/:listId/optimised?by=:by&longitude=:lon&latitude=:lat`,
-    update: `${API_BASE_URL}/lists/:listId/optimised/:itemId?longitude=:lon&latitude=:lat`,
+    get: `${API_BASE_URL}/lists/:listId/optimised`,
+    update: `${API_BASE_URL}/lists/:listId/optimised/:itemId`,
     save: `${API_BASE_URL}/lists/:listId`,
   },
   products: {
