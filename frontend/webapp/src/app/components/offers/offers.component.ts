@@ -26,11 +26,12 @@ export class OffersComponent implements OnInit {
   /** Current filter query */
   public filterQuery: string = '';
 
+  /** Current offers at the user's favourite markets */
+  public offers: Offer[] = [ ];
+
   /** Favourite markets of the user */
   private markets: Market[] = [ ];
 
-  /** Current offers at the user's favourite markets */
-  private offers: Offer[] = [ ];
 
   /**
    * Constructor of the offers component.
