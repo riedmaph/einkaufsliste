@@ -148,9 +148,11 @@ export class OptimisationComponent implements OnInit {
         checked: listItem.item.checked,
         offerUser: selectedOffer.id,
       };
-      return this.optimisationService.updateSelectedItem(this.listUuid, updatedItem);
+      return this.optimisationService.updateSelectedItem(
+        this.listUuid, this.longitude, this.latitude, updatedItem);
     }
-    return this.optimisationService.updateSelectedItem(this.listUuid, listItem.item);
+    return this.optimisationService.updateSelectedItem(
+      this.listUuid, this.longitude, this.latitude, listItem.item);
   }
 
 }

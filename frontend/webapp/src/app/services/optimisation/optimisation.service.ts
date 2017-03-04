@@ -63,9 +63,9 @@ export class OptimisationService {
    */
   public updateSelectedItem (
     listUuid: string,
-    item: ListItem,
     longitude: number,
     latitude: number,
+    item: ListItem,
   ): Observable<any> {
     return this.authHttp.put(API_ROUTES.optimisation.update
       .replace(':listId', listUuid)
