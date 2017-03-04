@@ -1,8 +1,7 @@
 import {
   Component,
-  Input,
   OnDestroy,
-  OnInit,
+  ViewChild,
 } from '@angular/core';
 
 import {
@@ -10,31 +9,30 @@ import {
   NavigationService,
 } from '../../services';
 
-import { List } from '../../models';
+const DEFAULT_TITLE: string = 'Elisa';
 
 @Component({
   selector: 'sl-nav-title',
-  template: '',
+  template: '<template #title><ng-content></ng-content></template>',
 })
-export class NavTitleComponent implements OnInit, OnDestroy {
-
-  @Input()
-  public list: List;
+export class NavTitleComponent implements OnDestroy {
 
   constructor (
-    public navigationService: NavigationService,
+    private navigationService: NavigationService,
   ) { }
 
-  /** @memberOf OnInit */
-  public ngOnInit () {
-    this.navigationService.list = this.list;
+  @ViewChild('title')
+  private set title (templateRef) {
+    this.navigationService.titleTemplate = templateRef;
   }
 
-  /** @memberOf OnDestroy */
+  /** Unset the NavigationService titleTemplate */
   public ngOnDestroy () {
-    this.navigationService.list = null;
+    this.navigationService.titleTemplate = null;
   }
+
 }
+
 
 @Component({
   selector: 'sl-navigation',
@@ -43,27 +41,18 @@ export class NavTitleComponent implements OnInit, OnDestroy {
 })
 export class NavigationComponent {
 
-  private DEFAULT_TITLE: string = 'Elisa';
-  private DEFAULT_SHARED: boolean = false;
-
   constructor (
-    private navigationService: NavigationService,
     public authService: AuthService,
+    private navigationService: NavigationService,
   ) { }
 
-  /** @returns {Object} Navigation meta information title and shared */
-  public get navigation (): { title: string, shared: boolean } {
-    if (this.navigationService.list) {
-      return {
-        title: this.navigationService.list.name || this.DEFAULT_TITLE,
-        shared: this.navigationService.list.shared || this.DEFAULT_SHARED,
-      };
-    } else {
-      return {
-        title: this.DEFAULT_TITLE,
-        shared: this.DEFAULT_SHARED,
-      };
-    }
+  /** Getter for the title template from the NavigationService */
+  public get titleTemplate () {
+    return this.navigationService.titleTemplate;
   }
 
+  /** Getter for constant DEFAULT_TITLE */
+  public get DEFAULT_TITLE (): string {
+    return DEFAULT_TITLE;
+  }
 }

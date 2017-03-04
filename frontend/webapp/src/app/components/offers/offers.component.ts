@@ -7,7 +7,6 @@ import {
   OfferService,
   ApiService,
   ListCommunicationService,
-  NavigationService,
   MarketApiService,
 } from '../../services';
 import {
@@ -33,6 +32,9 @@ export class OffersComponent implements OnInit {
   /** Current offers at the user's favourite markets */
   private offers: Offer[] = [ ];
 
+  /** Subset of all offers */
+  private selectedOffers: Offer[] = [ ];
+
   /**
    * Constructor of the offers component.
    */
@@ -41,16 +43,7 @@ export class OffersComponent implements OnInit {
     private marketApiService: MarketApiService,
     private offerService: OfferService,
     private listCommunicationService: ListCommunicationService,
-    private navigationService: NavigationService,
   ) { }
-
-  /** Subset of all offers */
-  public get selectedOffers (): Offer[] {
-    return this.filterQuery.length ?
-      this.offers
-        .filter(offer => offer.title.toLowerCase().includes(this.filterQuery.toLowerCase())) :
-      this.offers;
-  }
 
   /**
    * Sets the navigation title and loads favorite markets
@@ -59,10 +52,6 @@ export class OffersComponent implements OnInit {
    * @memberof OnInit
    */
   public ngOnInit () {
-    this.navigationService.list = {
-      name: 'Current Offers',
-      id: null, shared: false, owner: null,
-    };
     this.marketApiService.getFavourites().subscribe(markets => {
       this.markets = markets;
       this.loadOffers(markets.map(market => market.id));
@@ -88,6 +77,22 @@ export class OffersComponent implements OnInit {
   }
 
   /**
+   * Sets selectedOffers to all offers matching the query text
+   *
+   * @return {void}
+   */
+  public filter (): void {
+    if (this.filterQuery.length) {
+      const query = this.filterQuery.toLowerCase();
+      this.selectedOffers = this.offers.filter(offer =>
+        offer.title.toLowerCase().includes(query)
+      );
+    } else {
+      this.selectedOffers = this.offers;
+    }
+  }
+
+  /**
    * Loads the offers for a given list of market identifiers and
    * appends them to the current list of offers.
    *
@@ -98,6 +103,7 @@ export class OffersComponent implements OnInit {
     marketIds.map(marketUuid =>
       this.offerService.getOffers(marketUuid).subscribe(offers => {
         this.offers = this.offers.concat(offers);
+        this.filter();
       }),
     );
   }
