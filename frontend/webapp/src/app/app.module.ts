@@ -27,6 +27,7 @@ import {
   ApiService,
   AuthService,
   AuthGuard,
+  DefaultListResolver,
   FavouriteMarketResolver,
   ListCommunicationService,
   ListResolver,
@@ -39,6 +40,7 @@ import {
 // Components
 import {
   ConfirmComponent,
+  DefaultListComponent,
   FavouriteMarketSettingsComponent,
   ListComponent,
   ListOverviewComponent,
@@ -82,6 +84,7 @@ type StoreType = {
     AppComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
+    DefaultListComponent,
     ConfirmComponent,
     FavouriteMarketSettingsComponent,
     ListViewComponent,
@@ -125,6 +128,7 @@ type StoreType = {
     AuthGuard,
     AuthService,
     ApiMapperService,
+    DefaultListResolver,
     FavouriteMarketResolver,
     ListCommunicationService,
     ListResolver,

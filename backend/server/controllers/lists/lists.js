@@ -14,7 +14,6 @@ var sqlUpdateRecentList = db.loadSql(path.join('controllers', 'lists', 'updateRe
 var sqlReadList = db.loadSql(path.join('controllers', 'lists', 'readList.sql'));
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
 
-const DEFAULT_LIST_ID = 'default';
 
 function updateRecentList(listid, userid) {
   db.conn.any(sqlUpdateRecentList, { listid: listid, userid: userid })
@@ -54,7 +53,7 @@ function getListWithItems(req, res, next) {
             updateRecentList(req.body.listid, req.body.userid);
           })
           .catch(function (err) {
-            cpnsole.log(err);
+            console.log(err);
             err.message = 'controllers.lists.getListWithItems.sqlReadItems: ' + err.message;
             return next(err);
           });
@@ -89,9 +88,6 @@ function createList(req, res, next) {
 
 function updateList(req, res, next) {
   req.body.id = req.params.listid;
-  if (req.bofy.id === DEFAULT_LIST_ID) {
-    next({ message: "controllers.lists.updateList: default list is not supported" })
-  }
   db.conn.none(sqlUpdateList, req.body)
     .then(function () {
       res.sendStatus(200);
@@ -104,9 +100,6 @@ function updateList(req, res, next) {
 
 function deleteList(req, res, next) {
   req.body.id = req.params.listid;
-  if (req.bofy.id === DEFAULT_LIST_ID) {
-    next({ message: "controllers.lists.deleteList: default list is not supported" })
-  }
   db.conn.none(sqlDeleteList, req.body)
     .then(function () {
       res.sendStatus(200);

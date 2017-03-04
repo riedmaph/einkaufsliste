@@ -69,7 +69,7 @@ router.route('/markets')
 
 router.route('/markets/:marketid/offers')
   .get(markets.getOffers);
-  
+
 router.route('/markets/favourites')
   .get(markets.getFavouriteMarkets);
 

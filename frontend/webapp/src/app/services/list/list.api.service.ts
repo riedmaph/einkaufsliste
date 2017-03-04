@@ -27,6 +27,14 @@ export class ListApiService {
       .map(res => res.json());
   }
 
+  /**
+   * @returns {Observable<List>} Observable with the default list or none if none is available
+   */
+  public getDefault (): Observable<List> {
+    return this.authHttp.get(API_ROUTES.lists.default)
+      .map(res => res.json());
+  }
+
   public create (listName: string): Observable<{ id: string }> {
     return this.authHttp.post(API_ROUTES.lists.create, {
       name: listName,
