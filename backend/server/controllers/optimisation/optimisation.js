@@ -222,6 +222,13 @@ function initializeOptimisedList(options, callback) {
                 article:{
                   name: offer.articlename, 
                   brand: offer.articlebrand
+                },
+                market: {
+                  id: offer.marketid, 
+                  name: offer.marketname,
+                  street: offer.marketstreet,
+                  zip: offer.marketzip,
+                  city: offer.marketcity,
                 }
               }
             }
@@ -313,6 +320,8 @@ function _optimiseByPrice(result, options, callback) {
 
       optimalOffer.isOptimum = true;
       item.offerAlgorithm = optimalOffer.id;
+      item.name = optimalOffer.title;
+
       options.optimisationResult.savings += _getSaving(optimalOffer);
     }
   });

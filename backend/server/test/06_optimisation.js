@@ -93,7 +93,15 @@ describe('Optimise', () => {
                         "article": {
                           "name": "Weissbier",
                           "brand": "Franziskaner"
+                        },
+                        "market": {
+                          "city": "Landshut",
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036"
                         }
+
                       },
                       {
                         "id": 812347,
@@ -107,6 +115,13 @@ describe('Optimise', () => {
                         "article": {
                           "name": "Kellerbier",
                           "brand": "Mönchshof"
+                        },
+                        "market": {
+                          "city": "Landshut",
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036"
                         }
                       }
                     ]
@@ -131,6 +146,13 @@ describe('Optimise', () => {
                         "article": {
                           "name": "Eierspätzle",
                           "brand": "ja!"
+                        },
+                        "market": {
+                          "city": "München",
+                          "id": 16119,
+                          "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                          "street": "Melusinenstr. 2",
+                          "zip": "81671"
                         }
                       }
                     ]
@@ -155,6 +177,13 @@ describe('Optimise', () => {
                         "article": {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
+                        },
+                        "market": {
+                          "city": "München",
+                          "id": 16119,
+                          "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                          "street": "Melusinenstr. 2",
+                          "zip": "81671",
                         }
                       },
                       {
@@ -169,6 +198,13 @@ describe('Optimise', () => {
                         "article": {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
+                        },
+                        "market": {
+                          "city": "Landshut",
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036"
                         }
                       },
                       {
@@ -183,6 +219,13 @@ describe('Optimise', () => {
                         "article": {
                           "name": "Kaffee",
                           "brand": "Dallmayr"
+                        },
+                        "market": {
+                          "city": "Landshut",
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036"
                         }
                       }
                     ]
