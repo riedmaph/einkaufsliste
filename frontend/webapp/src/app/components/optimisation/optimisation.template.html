@@ -1,0 +1,57 @@
+<md-toolbar color="primary" class="action-toolbar">
+  <button md-button [routerLink]="[ '../' ]" class="cancel-button">Back to list</button>
+  <button md-button (click)="saveOptimisedList()" class="save-button">Save</button>
+</md-toolbar>
+
+<md-card class="savings-info-card">
+  <md-card-subtitle>
+    Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €.
+  </md-card-subtitle>
+</md-card>
+
+<div class="select-optimisation-container" *ngIf="optimisedList">
+  <md-list>
+    <md-list-item *ngFor="let listItem of optimisedList.items">
+      <button
+        md-icon-button
+        md-list-avatar
+        class="previous-offer-button"
+        color="primary"
+        [disabled]="!existsPreviousOfferForItem(listItem)"
+        [class.disabled-button]="!existsPreviousOfferForItem(listItem)"
+        (click)="selectPreviousOfferForItem(listItem)">
+        <i class="material-icons">navigate_before</i>
+      </button>
+      <h4 md-line class="item-name-label" *ngIf="listItem.selectedOfferIndex == -1">
+        {{ listItem.item.name }}
+      </h4>
+      <div class="offer-details" *ngIf="listItem.selectedOfferIndex >= 0">
+        <p class="offer-price-label">
+          {{ getSelectedOfferForItem(listItem).price }} €
+        </p>
+        <p
+          *ngIf="getSelectedOfferForItem(listItem).discount
+            && getSelectedOfferForItem(listItem).discount != '0'"
+          class="offer-discount-label"
+        >
+          {{ getSelectedOfferForItem(listItem).discount }}
+        </p>
+      </div>
+      <h4 md-line class="offer-title-label" *ngIf="listItem.selectedOfferIndex >= 0">
+        {{ getSelectedOfferForItem(listItem).title }}
+      </h4>
+      <p md-line class="offer-market-label" *ngIf="listItem.selectedOfferIndex >= 0">
+        {{ getSelectedOfferForItem(listItem).marketInfo.name }} {{ getSelectedOfferForItem(listItem).marketInfo.street }}
+      </p>
+      <button
+        md-icon-button
+        class="next-offer-button"
+        color="primary"
+        [disabled]="!existsNextOfferForItem(listItem)"
+        [class.disabled-button]="!existsNextOfferForItem(listItem)"
+        (click)="selectNextOfferForItem(listItem)">
+        <i class="material-icons">navigate_next</i>
+      </button>
+    </md-list-item>
+  </md-list>
+</div>

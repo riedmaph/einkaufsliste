@@ -7,6 +7,14 @@
 
   <div *ngIf="!items.length && !completedItems.length" class="empty"><span>No entries</span></div>
 
+  <button
+    md-fab color="primary"
+    class="optimise-button"
+    [routerLink]="[ './optimisation' ]"
+  >
+    <md-icon>euro_symbol</md-icon>
+  </button>
+
   <form [formGroup]="form" class="list-item-form">
     <span
       *ngIf="!form.controls['itemName'].pristine && form.controls['itemName'].errors && form.controls['itemName'].errors.maxlength"
