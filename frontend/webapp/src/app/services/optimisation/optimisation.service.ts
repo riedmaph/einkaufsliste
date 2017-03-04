@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  OnInit,
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Headers } from '@angular/http';
 
 import { AuthHttp } from 'angular2-jwt';
@@ -48,6 +45,7 @@ export class OptimisationService {
         return {
           items: list.items.map(OptimisedListItem.fromApi),
           amountSaved: Math.abs(list.optimisationResult.savings),
+          distance: list.optimisationResult.distance,
         };
       });
   }

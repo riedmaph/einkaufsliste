@@ -4,6 +4,7 @@
 
 <md-toolbar color="primary" class="action-toolbar">
   <button md-button [routerLink]="[ '../' ]" class="cancel-button">Back to list</button>
+  <span class="fill-remaining"></span>
   <button
     md-button
     [disabled]="!optimisationLoaded"
@@ -16,7 +17,8 @@
 
 <md-card class="savings-info-card" *ngIf="optimisedList">
   <md-card-subtitle>
-    Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €.
+    Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €
+    and take a distance of {{ optimisedList.distance / 1000 | formatNumber: 2 }} km.
   </md-card-subtitle>
 </md-card>
 

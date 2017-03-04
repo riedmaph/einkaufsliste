@@ -72,9 +72,10 @@ export class OptimisationComponent implements OnInit {
   public selectNextOfferForItem (listItem: OptimisedListItem) {
     if (this.existsNextOfferForItem(listItem)) {
       listItem.selectedOfferIndex += 1;
-      this.updateSelectionForItem(listItem).subscribe(result =>
-        this.optimisedList.amountSaved = Math.abs(result.savings)
-      );
+      this.updateSelectionForItem(listItem).subscribe(result => {
+        this.optimisedList.amountSaved = Math.abs(result.savings);
+        this.optimisedList.distance = result.distance;
+      });
     }
   }
 
@@ -86,9 +87,10 @@ export class OptimisationComponent implements OnInit {
   public selectPreviousOfferForItem (listItem: OptimisedListItem) {
     if (this.existsPreviousOfferForItem(listItem)) {
       listItem.selectedOfferIndex -= 1;
-      this.updateSelectionForItem(listItem).subscribe(result =>
-        this.optimisedList.amountSaved = Math.abs(result.savings)
-      );
+      this.updateSelectionForItem(listItem).subscribe(result => {
+        this.optimisedList.amountSaved = Math.abs(result.savings);
+        this.optimisedList.distance = result.distance;
+      });
     }
   }
 

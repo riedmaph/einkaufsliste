@@ -5,9 +5,11 @@
         text-transform: uppercase;
     }
 
+    .fill-remaining {
+        flex: 1 1 auto;
+    }
+
     .save-button {
-        position: fixed;
-        right: 1em;
         text-transform: uppercase;
     }
 }
@@ -29,25 +31,24 @@
 }
 
 .item-name-label {
-    max-width: calc(100% - 4em);
+    max-width: calc(100% + 1em);
     margin-left: -1em;
 }
 
 .offer-title-label {
-    max-width: calc(100% - 4em);
+    max-width: calc(100% + 1em);
     margin-left: -1em;
 }
 
 .offer-market-label {
-    max-width: calc(100% - 4em);
+    max-width: calc(100% + 1em);
     margin-left: -1em;
     color: #777;
 }
 
 .offer-details {
-    position: fixed;
-    right: 3.5em;
-    min-width: 3.5em;
+    margin-right: .5em;
+    min-width: 3em;
 
     .offer-price-label {
         margin: 0;
@@ -60,11 +61,6 @@
         font-size: .8em;
         color: #4BAF50;
     }
-}
-
-.next-offer-button {
-    position: fixed;
-    right: 1em;
 }
 
 .disabled-button {

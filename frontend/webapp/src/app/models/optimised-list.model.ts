@@ -4,4 +4,5 @@ export class OptimisedList {
 
   public items: OptimisedListItem[];
   public amountSaved: number;
+  public distance: number;
 }
