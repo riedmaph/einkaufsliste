@@ -315,7 +315,7 @@ function _optimiseByPrice(result, options, callback) {
     if(item.offers.length >= 1)
     {
       var optimalOffer = item.offers.reduce(function(prev, current) {
-        return (_parseDiscount(prev.discount) < _parseDiscount(current.discount)) ? prev : current
+        return (_getSaving(prev) > _getSaving(current)) ? prev : current
       });
 
       optimalOffer.isOptimum = true;
@@ -382,6 +382,7 @@ function _createOptimisedList(result, options, callback) {
 
 function _createOptimisedItems(result, options, callback) {
   var sqlParams = {}
+  var optimumOffer;
 
   db.conn.task(function (t) {                               //create db-entries for each optimsedItem
     var queries = result.items.map(function (item) {
@@ -389,10 +390,21 @@ function _createOptimisedItems(result, options, callback) {
       sqlParams.item = item.id;
       sqlParams.optimisedlistid = options.optimisedlistid;
       sqlParams.position = item.position;
-      sqlParams.name = item.name;
       sqlParams.amount = item.amount;
       sqlParams.unit = item.unit;
       sqlParams.offerAlgorithm = item.offerAlgorithm;
+
+      optimumOffer = item.offers.find(function(offer) {
+        return offer.isOptimum == true;
+      });
+
+      if(optimumOffer){
+        sqlParams.name = optimumOffer.title;
+      }
+      else {
+        sqlParams.name = item.name;
+      }
+      
 
       return t.none(sqlCreateOptimisedItem, sqlParams);
     });
