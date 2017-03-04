@@ -1,12 +1,24 @@
 <md-toolbar color="primary" class="action-toolbar">
   <button md-button [routerLink]="[ '../' ]" class="cancel-button">Back to list</button>
-  <button md-button (click)="saveOptimisedList()" class="save-button">Save</button>
+  <button
+    md-button
+    [disabled]="!optimisationLoaded"
+    (click)="saveOptimisedList()"
+    class="save-button"
+  >
+    Save
+  </button>
 </md-toolbar>
 
-<md-card class="savings-info-card">
+<md-card class="savings-info-card" *ngIf="optimisedList">
   <md-card-subtitle>
     Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €.
   </md-card-subtitle>
+</md-card>
+
+<md-card *ngIf="!optimisationLoaded" class="load-info">
+  <h4>Loading Optimisation Result</h4>
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
 </md-card>
 
 <div class="select-optimisation-container" *ngIf="optimisedList">

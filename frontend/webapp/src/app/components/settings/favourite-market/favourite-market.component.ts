@@ -46,7 +46,7 @@ export class FavouriteMarketSettingsComponent implements OnInit {
         this.error = err.message || 'An error occurred';
       },
     );
-     navigator.geolocation.getCurrentPosition(pos => this.setPosition(pos));
+    navigator.geolocation.getCurrentPosition(pos => this.setPosition(pos));
   }
 
   /**

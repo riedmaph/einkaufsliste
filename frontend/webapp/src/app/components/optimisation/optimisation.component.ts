@@ -26,7 +26,11 @@ export class OptimisationComponent implements OnInit {
 
   public optimisedList: OptimisedList;
 
+  public optimisationLoaded: boolean = false;
+
   private listUuid: string;
+  private longitude: number;
+  private latitude: number;
 
   constructor(
     private router: Router,
@@ -38,12 +42,23 @@ export class OptimisationComponent implements OnInit {
    * @memberOf OnInit
    */
   public ngOnInit (): void {
-    this.route.data.subscribe((data: { optimisedList: OptimisedList }) =>
-      this.optimisedList = data.optimisedList
-    );
-    this.route.params.subscribe((params: Params) =>
-      this.listUuid = params['listId']
-    );
+    this.route.params.subscribe((params: Params) => {
+      this.listUuid = params['listId'];
+
+      // Fetch the user location coordinates
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.longitude = pos.coords.longitude;
+        this.latitude = pos.coords.latitude;
+
+        // Load optimised list with the location coordinates
+        this.optimisationService.getOptimisedList(
+          this.listUuid, 'price' , this.longitude, this.latitude)
+          .subscribe(optimisedList => {
+            this.optimisedList = optimisedList;
+            this.optimisationLoaded = true;
+          });
+      });
+    });
   }
 
   /**
