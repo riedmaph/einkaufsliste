@@ -14,7 +14,7 @@ var sqlInsertProductForce = db.loadSqlTransform(path.join('controllers', 'admin'
 var sqlFindUserInSource = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','findUserInSource.sql'));
 var sqlInsertUserToSource = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertUserToSource.sql'));
 var sqlUpdateUserToSource = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','updateUserToSource.sql'));
-var sqlUpsertProductName = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertProductName.sql'));
+var sqlUpsertProductName = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','upsertProductName.sql'));
 var sqlInsertProductNameSource = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','insertProductNameSource.sql'));
 
 var sqlUpdateTransformationProductForce = db.loadSqlTransform(path.join('controllers', 'admin', 'transformation', 'productName','updateTransformationProductForce.sql'));
