@@ -12,7 +12,6 @@
         <i *ngIf="!isExpanded(list)" class="material-icons">expand_more</i>
         <i *ngIf="isExpanded(list)" class="material-icons">expand_less</i>
       </button>
-      <i *ngIf="list.shared" class="material-icons sharedIndicator">people</i>
       <a
         [routerLink]="[ '/list', list.id ]"
         [href]="'/list/' + list.id"
@@ -21,6 +20,7 @@
       >
         {{ list.name }}
       </a>
+      <i *ngIf="list.shared" class="material-icons shared-indicator shared-indicator--highlight">people</i>
       <button
         md-icon-button
         class="list-overview-button"

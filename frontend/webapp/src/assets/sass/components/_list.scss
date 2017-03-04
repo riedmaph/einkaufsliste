@@ -85,3 +85,11 @@ md-list-item.edit-mode, li.edit-mode {
 .item-name {
     flex: 1;
 }
+
+.shared-indicator {
+    margin: 0 .5rem;
+
+    &.shared-indicator--highlight {
+        color: #536dfe;
+    }
+}
