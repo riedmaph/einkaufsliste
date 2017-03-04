@@ -54,7 +54,7 @@ function createItem(req, res, next) {
       err.message = 'controllers.items.createItem: ' + err.message;
       return next(err);
     });
-        
+
 }
 
 function updateItem(req, res, next) {
@@ -78,7 +78,7 @@ function updateItem(req, res, next) {
 
 function deleteItem(req, res, next) {
   req.body.id = req.params.itemid;
-  
+
   db.conn.none(sqlDeleteItem, req.body)
     .then(function () {
       res.sendStatus(200);
@@ -90,7 +90,7 @@ function deleteItem(req, res, next) {
     });
 }
 
-function moveItem(req, res, next) {  
+function moveItem(req, res, next) {
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
   req.body.targetposition = parseInt(req.body.targetposition);
