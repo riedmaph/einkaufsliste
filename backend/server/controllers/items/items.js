@@ -2,6 +2,7 @@ const path = require('path');
 const uuid = require('uuid');
 
 const db = require(path.join('..', 'dbconnector.js'));
+const lists = require(path.join('..', 'lists', 'lists.js'));
 
 const LIST_ITEM_NAME_MAX_LENGTH = 140;
 
@@ -47,6 +48,7 @@ function createItem(req, res, next) {
       .json({
         id: req.body.id
       });
+      // don't update recentList here, because items could be added through the offer page
     })
     .catch(function (err) {
       err.message = 'controllers.items.createItem: ' + err.message;
@@ -66,6 +68,7 @@ function updateItem(req, res, next) {
   db.conn.none(sqlUpdateItem, req.body)
     .then(function () {
       res.sendStatus(200);
+      lists.updateRecentList(req.body.listid, req.body.userid);
     })
     .catch(function (err) {
       err.message = 'controllers.items.updateItem: ' + err.message;
@@ -79,6 +82,7 @@ function deleteItem(req, res, next) {
   db.conn.none(sqlDeleteItem, req.body)
     .then(function () {
       res.sendStatus(200);
+      lists.updateRecentList(req.body.listid, req.body.userid);
     })
     .catch(function (err) {
       err.message = 'controllers.items.deleteItem: ' + err.message;
@@ -95,6 +99,7 @@ function moveItem(req, res, next) {
   db.conn.none(sqlMoveItem, req.body)
     .then(function () {
       res.sendStatus(200);
+      lists.updateRecentList(req.body.listid, req.body.userid);
     })
     .catch(function (err) {
       err.message = 'controllers.items.moveItem.sqlMoveItem: ' + err.message;

@@ -14,6 +14,9 @@ export const LIST_VIEW_ROUTES: Routes = [
       {
         path: '',
         component: ListViewComponent,
+        resolve: {
+          list: ListResolver,
+        },
       },
       {
         path: ':listId',

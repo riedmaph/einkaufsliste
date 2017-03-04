@@ -33,6 +33,9 @@ router.route('/lists')
   .get(lists.getAllLists)
   .post(lists.createList)
 
+router.route('/lists/default')
+  .get(lists.getListWithItems)
+
 router.route('/lists/:listid')
   .get(lists.getListWithItems)
   .put(lists.updateList)
