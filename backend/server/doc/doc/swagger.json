@@ -394,6 +394,22 @@
                             "price"
                         ],
                         "default": "price"
+                    },
+                    {
+                        "in": "query",
+                        "name": "longitude",
+                        "description": "Longitude of the given position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "latitude",
+                        "description": "Latitude of the given position (search by position).",
+                        "required": false,
+                        "type": "number",
+                        "format": "decimal"
                     }
                 ],
                 "responses": {
@@ -459,6 +475,22 @@
                         "required": true,
                         "type": "integer",
                         "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "longitude",
+                        "description": "Longitude of the given position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "latitude",
+                        "description": "Latitude of the given position (search by position).",
+                        "required": false,
+                        "type": "number",
+                        "format": "decimal"
                     },
                     {
                         "in": "body",
@@ -1688,10 +1720,33 @@
                     "description": "Used markets of the optimisation.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Market"
+                        "$ref": "#/definitions/OptimisedMarket"
                     }
                 }
             }
+        },
+        "OptimisedMarket": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Market"
+                },
+                {
+                    "required": [
+                        "distanceTo",
+                        "routePosition"
+                    ],
+                    "properties": {
+                        "distanceTo": {
+                            "type": "integer",
+                            "description": "Distance from previouse market (or startposition, if this is the first market) to this market in meters."
+                        },
+                        "routePosition": {
+                            "type": "integer",
+                            "description": "Position in the route. (startposition has 0)"
+                        }
+                    }
+                }
+            ]
         },
         "OptimisedItemWithOfferByUser": {
             "allOf": [

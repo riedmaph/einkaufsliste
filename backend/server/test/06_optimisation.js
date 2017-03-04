@@ -45,7 +45,7 @@ describe('Optimise', () => {
   describe('/Get optimised list by price', () => {
     it('it should return 5 items with 3 having offers', (done) => {
       chai.request(app)
-          .get('/api/lists/'+listid+'/optimised?by=price')
+          .get('/api/lists/'+listid+'/optimised?by=price&latitude=48.123320&longitude=11.612062')
           .set('x-access-token', token)
           .end((err, res) => {
               res.should.have.status(200);
@@ -59,27 +59,27 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-001c29c17dad",
                     "position": 0,
                     "name": "Bananen",
-                    "offerAlgorithm": null,
                     "amount": 10,
                     "unit": "Stk",
+                    "offerAlgorithm": null,
                     "offers": []
                   },
                   {
                     "id": "5c7397aa-b249-11e6-b98b-002c29c17dad",
                     "position": 1,
                     "name": "Hühnerfilet",
-                    "offerAlgorithm": null,
                     "amount": 350,
                     "unit": "g",
+                    "offerAlgorithm": null,
                     "offers": []
                   },
                   {
                     "id": "5c7397aa-b249-11e6-b98b-003c29c17dad",
                     "position": 2,
                     "name": "Bier",
-                    "offerAlgorithm": 738388,
                     "amount": 3,
                     "unit": "Stk",
+                    "offerAlgorithm": 738388,
                     "offers": [
                       {
                         "id": 738388,
@@ -130,9 +130,9 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-004c29c17dad",
                     "position": 3,
                     "name": "Eier",
-                    "offerAlgorithm": 802001,
                     "amount": 10,
                     "unit": "Stk",
+                    "offerAlgorithm": 802001,
                     "offers": [
                       {
                         "id": 802001,
@@ -161,9 +161,9 @@ describe('Optimise', () => {
                     "id": "5c7397aa-b249-11e6-b98b-005c29c17dad",
                     "position": 4,
                     "name": "Kaffee",
-                    "offerAlgorithm": 812359,
                     "amount": 150,
                     "unit": "g",
+                    "offerAlgorithm": 812359,
                     "offers": [
                       {
                         "id": 802005,
@@ -233,30 +233,36 @@ describe('Optimise', () => {
                 ]);
             res.body.should.have.property('optimisationResult');
             res.body.optimisationResult.should.deep.equal(
-              {"savings": 7.09,
-              "distance": 0,
-              "markets": [
-                {
-                  "id": 13395,
-                  "name": "Rewe-Markt GmbH",
-                  "latitude": 48.54623,
-                  "longitude": 12.1799,
-                  "street": "Ritter-von-Schoch-Straße 19",
-                  "zip": "84036",
-                  "city": "Landshut",
-                  "shop": "REWE"
-                },
-                {
-                  "id": 16119,
-                  "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
-                  "latitude": 48.12059,
-                  "longitude": 11.6125,
-                  "street": "Melusinenstr. 2",
-                  "zip": "81671",
-                  "city": "München",
-                  "shop": "EDEKA"
-                }                
-              ]}
+              {
+                "savings": 7.09,
+                "distance": 162445,
+                "markets": [
+                  {
+                    "id": 16119,
+                    "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                    "latitude": 48.12059,
+                    "longitude": 11.6125,
+                    "street": "Melusinenstr. 2",
+                    "zip": "81671",
+                    "city": "München",
+                    "shop": "EDEKA",
+                    "distanceTo": 362,
+                    "routePosition": 1
+                  },
+                  {
+                    "id": 13395,
+                    "name": "Rewe-Markt GmbH",
+                    "latitude": 48.54623,
+                    "longitude": 12.1799,
+                    "street": "Ritter-von-Schoch-Straße 19",
+                    "zip": "84036",
+                    "city": "Landshut",
+                    "shop": "REWE",
+                    "distanceTo": 81318,
+                    "routePosition": 2
+                  }
+                ]
+              }
             );
 
             done();
@@ -272,7 +278,7 @@ describe('Optimise', () => {
           unit: 'stk'
       }
       chai.request(app)
-          .put('/api/lists/'+listid+'/optimised/'+itemid3)
+          .put('/api/lists/'+listid+'/optimised/'+itemid3+'?latitude=48.123320&longitude=11.612062')
           .set('x-access-token', token)
           .send(item)
           .end((err, res) => {
@@ -280,28 +286,32 @@ describe('Optimise', () => {
               res.body.should.deep.equal(
                 {
                   "savings": 2.38,
-                  "distance": 0,
-                  "markets": [
+                  "distance": 162445,
+                  "markets": [                    
                     {
-                      "id": 13395,
-                      "name": "Rewe-Markt GmbH",
-                      "latitude": 48.54623,
-                      "longitude": 12.1799,
-                      "street": "Ritter-von-Schoch-Straße 19",
-                      "zip": "84036",
-                      "city": "Landshut",
-                      "shop": "REWE"
-                    },
-                    {
+                      "city": "München",
+                      "distanceTo": 362,
                       "id": 16119,
-                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
                       "latitude": 48.12059,
                       "longitude": 11.6125,
+                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                      "routePosition": 1,
+                      "shop": "EDEKA",
                       "street": "Melusinenstr. 2",
-                      "zip": "81671",
-                      "city": "München",
-                      "shop": "EDEKA"
-                    }                                       
+                      "zip": "81671"
+                    },
+                    {
+                      "city": "Landshut",
+                      "distanceTo": 81318,
+                      "id": 13395,
+                      "latitude": 48.54623,
+                      "longitude": 12.1799,
+                      "name": "Rewe-Markt GmbH",
+                      "routePosition": 2,
+                      "shop": "REWE",
+                      "street": "Ritter-von-Schoch-Straße 19",
+                      "zip": "84036"
+                    },                                     
                   ]
                 }
               );
@@ -319,7 +329,7 @@ describe('Optimise', () => {
           offerUser: 802005
       }
       chai.request(app)
-          .put('/api/lists/'+listid+'/optimised/'+itemid5)
+          .put('/api/lists/'+listid+'/optimised/'+itemid5+'?latitude=48.123320&longitude=11.612062')
           .set('x-access-token', token)
           .send(item)
           .end((err, res) => {
@@ -328,14 +338,16 @@ describe('Optimise', () => {
               res.body.should.deep.equal(
                 {
                   "savings": 2.38,
-                  "distance": 0,
+                  "distance": 773,
                   "markets": [
                     {
                       "id": 16119,
+                      "distanceTo": 362,
                       "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
                       "latitude": 48.12059,
                       "longitude": 11.6125,
                       "street": "Melusinenstr. 2",
+                      "routePosition": 1,
                       "zip": "81671",
                       "city": "München",
                       "shop": "EDEKA"
