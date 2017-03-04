@@ -4,7 +4,7 @@
 </div>
 
 <!-- Possible Markets -->
-<div *ngIf="showAddMenu"> 
+<div *ngIf="showAddMenu">
   <h4>  Search for Markets </h4>
   <!-- Search Results -->
   <div *ngIf="showResults">
@@ -17,7 +17,7 @@
       </a>
     </p>
     <md-list *ngIf="possibleMarkets.length > 0">
-       
+
       <md-list-item *ngFor="let market of possibleMarkets; let i = index">
         <img
           md-list-avatar
@@ -25,9 +25,9 @@
           [src]="resolveImage(market.shop)"
         >
         <h4 md-line>{{ market.name }}</h4>
-        <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }} 
-          <span *ngIf="market.distance > 0"> - 
-            <b>{{ market.distance | number:'.0-0' }} m</b>
+        <p md-line>{{ market.street }}, {{ market.zip }} {{ market.city }}
+          <span *ngIf="market.distance > 0"> -
+            <b>{{ market.distance | number:'.0-0' }} <abbr title="meter">m</abbr></b>
           </span>
         </p>
         <button md-icon-button (click)="add(market)"><md-icon>star_border</md-icon></button>
@@ -39,7 +39,7 @@
   <div *ngIf="lat > 0" class="inputContainer">
     <h5> Distance </h5>
     <md-slider flex md-discrete step="500" min="0" max="20000" [(ngModel)]="distance"></md-slider>
-      m
+      <abbr title="meter">m</abbr>
     <md-input flex type="number" [(ngModel)]="distance"></md-input>
     <button md-button (click)="searchByDistance()" class="md-primary searchBtn">Search by Distance</button>
   </div>
@@ -49,9 +49,9 @@
     <button md-button (click)="searchByZip()" class="md-primary searchBtn">Search via ZIP Code</button>
   </div>
 
-  <div class="expand_less">   
+  <div class="expand_less">
     <span>
-      <i *ngIf="lat == 0" class="positionHint"> 
+      <i *ngIf="lat == 0" class="positionHint">
       Use this app with Firefox to enable search for markets around your current position
       </i>
       <button md-icon-button (click)="toggleAddMenu()">

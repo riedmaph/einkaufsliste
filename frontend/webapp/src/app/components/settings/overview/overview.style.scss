@@ -3,4 +3,20 @@ md-list-item a {
   width: 100%;
   height: 100%;
   line-height: 48px;
+  text-decoration: none;
+  color: #555;
+}
+
+.expanded-list-item {
+    height: 6em;
+}
+
+.list-overview-button {
+    color: #777;
+}
+
+.list-detail-text {
+    margin: 1rem;
+    font-size: .8em;
+    color: #777;
 }

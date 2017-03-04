@@ -12,6 +12,10 @@
     cursor: -webkit-grabbing;
     cursor: grabbing;
     cursor: -moz-grabbing;
+
+    md-checkbox {
+        display: none;
+    }
 }
 .gu-hide {
     display: none !important;

@@ -8,7 +8,9 @@ import {
 import {
   AuthService,
   NavigationService,
-} from 'app/services';
+} from '../../services';
+
+import { List } from '../../models';
 
 @Component({
   selector: 'sl-nav-title',
@@ -17,7 +19,7 @@ import {
 export class NavTitleComponent implements OnInit, OnDestroy {
 
   @Input()
-  public title: string = '';
+  public list: List;
 
   constructor (
     public navigationService: NavigationService,
@@ -25,33 +27,43 @@ export class NavTitleComponent implements OnInit, OnDestroy {
 
   /** @memberOf OnInit */
   public ngOnInit () {
-    this.navigationService.title = this.title;
+    this.navigationService.list = this.list;
   }
 
   /** @memberOf OnDestroy */
   public ngOnDestroy () {
-    this.navigationService.title = '';
+    this.navigationService.list = null;
   }
 }
 
 @Component({
   selector: 'sl-navigation',
   templateUrl: './navigation.template.html',
+  styleUrls: [ './navigation.style.scss' ],
 })
 export class NavigationComponent {
 
   private DEFAULT_TITLE: string = 'Elisa';
+  private DEFAULT_SHARED: boolean = false;
 
   constructor (
     private navigationService: NavigationService,
     public authService: AuthService,
   ) { }
 
-  /** @returns {Object} Navigation meta information */
-  public get navigation (): { title: string } {
-    return {
-      title: this.navigationService.title || this.DEFAULT_TITLE,
-    };
+  /** @returns {Object} Navigation meta information title and shared */
+  public get navigation (): { title: string, shared: boolean } {
+    if (this.navigationService.list) {
+      return {
+        title: this.navigationService.list.name || this.DEFAULT_TITLE,
+        shared: this.navigationService.list.shared || this.DEFAULT_SHARED,
+      };
+    } else {
+      return {
+        title: this.DEFAULT_TITLE,
+        shared: this.DEFAULT_SHARED,
+      };
+    }
   }
 
 }

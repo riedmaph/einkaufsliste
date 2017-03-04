@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { List } from '../../models';
 
 @Injectable()
 export class NavigationService {
-  public title: string = '';
+  public list: List;
 }

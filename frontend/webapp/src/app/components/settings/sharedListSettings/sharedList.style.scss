@@ -1,0 +1,86 @@
+.subtitle-area {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0 0 0;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+    }
+}
+
+h3 {
+    flex: 1;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+.avatar {
+    line-height: 2;
+}
+
+md-list:hover {
+    background: #eee;
+}
+
+md-progress-bar {
+    max-width: 15rem;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 2em;
+    text-align: center;
+    color: #8e8e8e;
+    padding: 1em;
+}
+
+.control-container {
+  padding: .5em 1em 1em 1em;
+  border-width: thin;
+  border-bottom-style: solid;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.mail-input {
+  padding: 0 0 0 .5em;
+}
+md-input {
+  width: calc(100% - 3rem);
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.removeBtn {
+    border-color: rgba(0, 0, 0, 0.12);
+    border-style: solid;
+    border-width: thin;
+    border-radius: 1rem;
+}
+
+.removeX {
+    color: #ff0000;
+}
+
+.sharedList {
+    color: #4caf50;
+}

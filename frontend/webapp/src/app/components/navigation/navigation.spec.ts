@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
 
 import { NavigationComponent } from './navigation.component';
 import { RouterStub, AuthServiceStub } from '../../../testing';
-import { AuthService } from '../../services';
+import {
+  AuthService,
+  NavigationService,
+} from '../../services';
 
 describe('NavigationComponent', () => {
   const mockRouter = new RouterStub();
@@ -16,6 +19,7 @@ describe('NavigationComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         NavigationComponent,
+        NavigationService,
         { provide: AuthService, useValue: mockAuthService },
         { provide: Router, useValue: mockRouter },
       ],

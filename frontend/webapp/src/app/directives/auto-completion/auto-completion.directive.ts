@@ -196,7 +196,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
                   this.autoCompletionComponent.instance.suggestions = suggestions;
                   this.autoCompletionComponent.instance.open();
                 }
-              }
+              },
             );
           }, this.openDelay);
         } else {

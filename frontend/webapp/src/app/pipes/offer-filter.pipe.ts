@@ -8,7 +8,7 @@ export class OfferFilterPipe implements PipeTransform {
   /**
    * @memberof PipeTransform
    */
-  transform (offers: Offer[], market: string): Offer[] {
+  public transform (offers: Offer[], market: string): Offer[] {
     return offers.filter(offer => offer.market === market);
   }
 }

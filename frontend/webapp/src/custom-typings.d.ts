@@ -73,7 +73,7 @@ type AsyncRoutes = {
   [component: string]: Es6PromiseLoader |
                                Function |
                 FactoryEs6PromiseLoader |
-                         FactoryPromise
+                         FactoryPromise,
 };
 
 

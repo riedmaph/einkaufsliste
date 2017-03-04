@@ -11,6 +11,14 @@ var transformation = require(path.join('..', 'controllers', 'admin', 'transforma
 // check if a valid token is provided
 router.use(tokenhandler.verifyAdminToken);
 
+router.route('/products')
+  .post(transformation.postProduct)
+
+router.route('/products/blacklist')
+  .post(transformation.postProductBlacklist)
+
+router.route('/products/force')
+  .post(transformation.postProductForce)
 
 router.route('/transformation/articles')
   .post(transformation.postArticleRaw)
@@ -27,6 +35,9 @@ router.route('/transformation/articles/productName/mine/:id')
   .get(transformation.getMineProductName)
   .put(transformation.putMineProductName)
 
+router.route('/transformation/articles/productName/force/:id')
+  .put(transformation.putForceProductName)
+  
 router.route('/transformation/articles/:id/:end')
 //  .get(transformation.getArticleTransformation)
   .put(transformation.putArticleTransformation)
@@ -34,6 +45,7 @@ router.route('/transformation/articles/:id/:end')
 router.route('/transformation/articles/:id')
 //  .get(transformation.getArticleTransformation)
   .put(transformation.putArticleTransformation)
+
 
 // error handler
 router.use(function(err, req, res, next) {

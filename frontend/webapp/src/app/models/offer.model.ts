@@ -7,7 +7,7 @@ export class Offer {
   brand: string;
   market: string;
   price: number;
-  discount: number;
+  discount: string;
 
   /**
    * Parses an offer from an offer API representation.

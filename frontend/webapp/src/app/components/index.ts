@@ -7,3 +7,4 @@ export * from './no-content';
 export * from './offers';
 export * from './settings';
 export * from './ui-elements';
+export * from './settings';
