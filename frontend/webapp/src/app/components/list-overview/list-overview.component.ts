@@ -137,7 +137,6 @@ export class ListOverviewComponent implements OnInit {
       if (confirmed) {
         this.listApiService.delete(list.id).subscribe(_ => {
           this.reloadLists();
-          this.router.navigate([ 'list' ]);
         });
       }
     });

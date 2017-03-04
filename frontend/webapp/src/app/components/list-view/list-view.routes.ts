@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { DefaultListComponent } from '../default-list';
 import { ListViewComponent } from './list-view.component';
 import {
   AuthGuard,
@@ -13,7 +14,10 @@ export const LIST_VIEW_ROUTES: Routes = [
     children: [
       {
         path: '',
-        component: ListViewComponent,
+        component: DefaultListComponent,
+        resolve: {
+          list: ListResolver,
+        },
       },
       {
         path: ':listId',
