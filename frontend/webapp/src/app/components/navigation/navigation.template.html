@@ -1,34 +1,11 @@
-<div *ngIf="authService.loggedIn">
+<nav>
+  <md-toolbar *ngIf="authService.loggedIn" color="primary">
+    <ng-content select=".sl-nav-left-menu-button"></ng-content>
 
-  <md-sidenav #sidenav (open)="listOverview.reloadLists()">
-    <md-toolbar color="primary">
-      <span class="fill-remaining">Your Lists</span>
-      <button md-icon-button (click)="sidenav.close()">
-        <i class="material-icons">close</i>
-      </button>
-    </md-toolbar>
-    <md-list>
-      <md-list-item
-        class="offers-list-item"
-        routerLink="/offers"
-        (click)="sidenav.close()"
-      >
-        <span class="offers-label">Current Offers</span>
-      </md-list-item>
-    </md-list>
-    <sl-list-overview
-      #listOverview
-      (onListSelect)="sidenav.close()"
-    ></sl-list-overview>
-  </md-sidenav>
-
-  <md-toolbar color="primary">
-    <button md-icon-button (click)="sidenav.open()">
-      <i class="material-icons">menu</i>
-    </button>
-    <span *ngIf="!navigation.shared" class="toolbar-title fill-remaining">{{ navigation.title }}</span>
-    <span *ngIf="navigation.shared" class="toolbar-title">{{ navigation.title }}</span>
-    <i *ngIf="navigation.shared" class="material-icons sharedIndicator fill-remaining">people</i>
+    <span class="toolbar-title fill-remaining">
+      <template [ngTemplateOutlet]="titleTemplate"></template>
+      <span *ngIf="!titleTemplate">{{ DEFAULT_TITLE }}</span>
+    </span>
 
     <md-menu x-position="before" #menu="mdMenu">
       <a md-menu-item [routerLink]="[ 'settings' ]">Settings</a>
@@ -39,12 +16,11 @@
       <i class="material-icons">more_vert</i>
     </button>
   </md-toolbar>
-</div>
 
-<div *ngIf="!authService.loggedIn">
-  <md-toolbar color="primary">
-    <span class="toolbar-title fill-remaining">{{ navigation.title }}</span>
+  <md-toolbar *ngIf="!authService.loggedIn" color="primary">
+    <span class="toolbar-title fill-remaining">Elisa</span>
     <a routerLink="/register" routerLinkActive="active">Register</a>
     <a routerLink="/login" routerLinkActive="active">Login</a>
   </md-toolbar>
-</div>
+</nav>
+

@@ -149,3 +149,13 @@ md-card.container {
 .as-row {
     flex-direction: row;
 }
+
+
+.md-sidenav-content {
+    overflow: hidden;
+}
+
+main {
+    max-height: calc(100vh - 64px);
+    overflow: auto;
+}

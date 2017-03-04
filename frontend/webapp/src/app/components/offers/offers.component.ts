@@ -7,7 +7,6 @@ import {
   OfferService,
   ApiService,
   ListCommunicationService,
-  NavigationService,
   MarketApiService,
 } from '../../services';
 import {
@@ -44,7 +43,6 @@ export class OffersComponent implements OnInit {
     private marketApiService: MarketApiService,
     private offerService: OfferService,
     private listCommunicationService: ListCommunicationService,
-    private navigationService: NavigationService,
   ) { }
 
   /**
@@ -54,10 +52,6 @@ export class OffersComponent implements OnInit {
    * @memberof OnInit
    */
   public ngOnInit () {
-    this.navigationService.list = {
-      name: 'Current Offers',
-      id: null, shared: false, owner: null,
-    };
     this.marketApiService.getFavourites().subscribe(markets => {
       this.markets = markets;
       this.loadOffers(markets.map(market => market.id));

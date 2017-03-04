@@ -1,6 +1,10 @@
 <div *ngIf="!list"><h2>No list selected</h2></div>
 <div *ngIf="list">
-  <sl-nav-title [list]="list"></sl-nav-title>
+
+  <sl-nav-title>
+    {{ list.name }}
+    <i *ngIf="list.shared" class="material-icons shared-indicator">people</i>
+  </sl-nav-title>
 
   <sl-list [items]="completedItems" deleteable></sl-list>
   <sl-list [items]="items" editable deleteable sortable></sl-list>

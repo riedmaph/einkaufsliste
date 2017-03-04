@@ -17,7 +17,6 @@ import { ListComponent } from '../list';
 import {
   ApiService,
   ListApiService,
-  NavigationService,
 } from '../../services';
 
 import {
@@ -46,7 +45,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   constructor (
     private apiService: ApiService,
     private listApiService: ListApiService,
-    private navigationService: NavigationService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
   ) {
@@ -82,9 +80,6 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   public ngOnInit (): void {
     this.route.data.subscribe((data: { list: List }) => {
       this.list = data.list;
-      if (this.list) {
-        this.navigationService.list = this.list;
-      }
     });
   }
 
