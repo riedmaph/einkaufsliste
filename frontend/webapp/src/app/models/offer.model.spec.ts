@@ -5,9 +5,9 @@ describe('Offer model', () => {
     it('should take all values provided by the API', () => {
 
       const API_REP = {
-        id: 'arbi-trar-yid',
+        id: 54321,
         title: 'some title',
-        market: 'some market',
+        market: 12345,
         offerprice: 123.45,
         offerfrom: '2013-02-08 09:30:26',
         offerto: '2017-02-08 09:30:26',
@@ -19,11 +19,11 @@ describe('Offer model', () => {
       };
 
       const EXPECTATION = new Offer({
-        id: 'arbi-trar-yid',
+        id: 54321,
         title: 'some title',
         name: 'something',
         brand: 'some brand',
-        market: 'some market',
+        market: 12345,
         price: 123.45,
         discount: '10%',
       });
@@ -34,9 +34,9 @@ describe('Offer model', () => {
 
     it('should ommit superfluous values', () => {
       const BLOATED_API_REP = {
-        id: 'arbi-trar-yid',
+        id: 54321,
         title: 'some title',
-        market: 'some market',
+        market: 12345,
         offerprice: 123.45,
         offerfrom: '2013-02-08 09:30:26',
         offerto: '2017-02-08 09:30:26',
@@ -50,11 +50,11 @@ describe('Offer model', () => {
       };
 
       const EXPECTATION = new Offer({
-        id: 'arbi-trar-yid',
+        id: 54321,
         title: 'some title',
         name: 'something',
         brand: 'some brand',
-        market: 'some market',
+        market: 12345,
         price: 123.45,
         discount: '10%',
       });
