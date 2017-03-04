@@ -17,6 +17,7 @@ import { ListComponent } from '../list';
 import {
   ApiService,
   ListApiService,
+  ListItemParser,
 } from '../../services';
 
 import {
@@ -25,7 +26,10 @@ import {
   Product,
 } from '../../models';
 
-import { LIST_ITEM_NAME_MAX_LENGTH } from '../../constants';
+import {
+  AUTO_COMPLETION_TRIGGER_LENGTH,
+  LIST_ITEM_NAME_MAX_LENGTH,
+} from '../../constants';
 
 
 @Component({
@@ -47,12 +51,11 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     private listApiService: ListApiService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private listItemParser: ListItemParser,
   ) {
     this.form = this.formBuilder.group({
-      amount: '',
-      unit:  '',
-      itemName: [ '', Validators.compose([
-        Validators.maxLength(LIST_ITEM_NAME_MAX_LENGTH),
+      newItem: [ '', Validators.compose([
+        Validators.maxLength(this.MAX_LENGTH),
         Validators.required,
       ]) ],
     });
@@ -104,7 +107,10 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @param {Product} value New value
    */
   public updateValue (value: Product): void {
-    this.form.controls['itemName'].setValue(value);
+    const parsedCurrentValue = this.listItemParser.parse(this.form.controls['newItem'].value);
+    const completedValue: string = this.form.controls['newItem'].value
+      .replace(parsedCurrentValue.name, value);
+    this.form.controls['newItem'].setValue(completedValue);
   }
 
   /**
@@ -112,17 +118,12 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public addItem (): void {
     if (this.form.valid) {
-      const newItem: ListItem = {
-        name: this.form.value.itemName,
-        unit: this.form.value.unit,
-        amount: this.form.value.amount,
-        checked: false,
-      };
+      const newItem: ListItem = this.listItemParser.parse(this.form.value.newItem);
 
       this.apiService.addItem(this.list.id, newItem).subscribe(res => {
         newItem.id = res.id;
         this.list.items.push(newItem);
-        this.form.controls['itemName'].setValue('');
+        this.form.controls['newItem'].setValue('');
       });
 
       window.scrollTo(0, document.body.getBoundingClientRect().height);
@@ -175,7 +176,14 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    * @see ApiService.getAutoCompletion
    */
   public get autoCompletionFn (): (_: string) => Observable<Product[]> {
-    return (str: string) => this.apiService.getAutoCompletion(str);
+    return (str: string) => {
+      const queryString = this.listItemParser.parse(str).name;
+      if (queryString.length >= AUTO_COMPLETION_TRIGGER_LENGTH) {
+        return this.apiService.getAutoCompletion(queryString);
+      } else {
+        return Observable.of(null);
+      }
+    };
   }
 
   /**
@@ -202,4 +210,5 @@ export class ListViewComponent implements OnInit, AfterViewInit {
       this.listApiService.rename(this.list.id, this.list.name);
     }
   }
+
 }

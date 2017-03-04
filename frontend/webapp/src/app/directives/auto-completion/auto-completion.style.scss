@@ -1,11 +1,13 @@
 :host, .ac-list-wrapper {
   position: absolute;
   display: block;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   text-overflow: ellipsis;
   white-space: nowrap;
   z-index: 100;
   background-color: #fff;
+  max-height: 50vh;
 
   ul {
     border: thin solid #ddd;

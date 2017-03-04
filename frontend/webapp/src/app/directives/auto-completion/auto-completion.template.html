@@ -1,4 +1,4 @@
-<ul *ngIf="isOpen">
+<ul *ngIf="isOpen && suggestions != null">
   <li
     *ngFor="let suggestion of suggestions; let i = index"
     [class.selected]="i === selectedIndex"
@@ -8,5 +8,5 @@
     {{ suggestion }}
   </li>
   <li *ngIf="loading" class="info-text">Loading...</li>
-  <li *ngIf="!suggestions.length && !loading" class="info-text">No suggestions</li>
+  <li *ngIf="suggestions != null && !suggestions.length && !loading" class="info-text">No suggestions</li>
 </ul>

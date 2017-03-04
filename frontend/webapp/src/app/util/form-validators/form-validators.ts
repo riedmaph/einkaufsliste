@@ -3,6 +3,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 
+import { Parser } from 'app/services/parser/parser.interface';
+
 export class FormValidators {
 
   /**
@@ -41,6 +43,18 @@ export class FormValidators {
     } else {
       throw 'Invalid input in validateEquality function';
     }
+  }
+
+  /**
+   * Validates whether a given FormControl is parseable by a given Parser
+   *
+   * @param {Parser<any>} parser Parser that needs to be able to parse the input
+   * @returns {ValidatorFn} Validation function
+   */
+  public static validateParseable (parser: Parser<any>): ValidatorFn {
+    return (formControl: FormControl) => !parser.parse(formControl.value) ? {
+      unparseable: true,
+    } : null;
   }
 
 }

@@ -30,7 +30,7 @@ export class AutoCompletionComponent {
 
   private isOpenFlag: boolean = false;
 
-  private suggestionList: Product[] = [ ];
+  private suggestionList: Product[] = null;
 
   private selectedIndex: number = -1;
 
