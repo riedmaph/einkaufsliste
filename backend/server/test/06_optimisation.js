@@ -94,14 +94,13 @@ describe('Optimise', () => {
                           "name": "Weissbier",
                           "brand": "Franziskaner"
                         },
-                        "market": {
-                          "city": "Landshut",
+                        "marketInfo": {
                           "id": 13395,
                           "name": "Rewe-Markt GmbH",
                           "street": "Ritter-von-Schoch-Straße 19",
-                          "zip": "84036"
+                          "zip": "84036",
+                          "city": "Landshut"
                         }
-
                       },
                       {
                         "id": 812347,
@@ -116,12 +115,12 @@ describe('Optimise', () => {
                           "name": "Kellerbier",
                           "brand": "Mönchshof"
                         },
-                        "market": {
-                          "city": "Landshut",
+                        "marketInfo": {
                           "id": 13395,
                           "name": "Rewe-Markt GmbH",
                           "street": "Ritter-von-Schoch-Straße 19",
-                          "zip": "84036"
+                          "zip": "84036",
+                          "city": "Landshut"
                         }
                       }
                     ]
@@ -132,8 +131,71 @@ describe('Optimise', () => {
                     "name": "Eier",
                     "amount": 10,
                     "unit": "Stk",
-                    "offerAlgorithm": 802001,
+                    "offerAlgorithm": 738375,
                     "offers": [
+                      {
+                        "id": 738267,
+                        "title": "ja! Frische Eier",
+                        "market": 13395,
+                        "offerprice": 1.19,
+                        "offerfrom": "2016-12-03T08:00:00.000Z",
+                        "offerto": "2016-12-10T08:00:00.000Z",
+                        "discount": null,
+                        "isOptimum": false,
+                        "article": {
+                          "name": null,
+                          "brand": null
+                        },
+                        "marketInfo": {
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036",
+                          "city": "Landshut"
+                        }
+                      },
+                      {
+                        "id": 738375,
+                        "title": "Bernbacher Eiernudeln",
+                        "market": 13395,
+                        "offerprice": 0.55,
+                        "offerfrom": "2016-12-03T08:00:00.000Z",
+                        "offerto": "2016-12-10T08:00:00.000Z",
+                        "discount": "-35%",
+                        "isOptimum": true,
+                        "article": {
+                          "name": null,
+                          "brand": null
+                        },
+                        "marketInfo": {
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036",
+                          "city": "Landshut"
+                        }
+                      },
+                      {
+                        "id": 738414,
+                        "title": "Teelichthalter/Eierbecher Elch*",
+                        "market": 13395,
+                        "offerprice": 3.33,
+                        "offerfrom": "2016-12-03T08:00:00.000Z",
+                        "offerto": "2016-12-10T08:00:00.000Z",
+                        "discount": null,
+                        "isOptimum": false,
+                        "article": {
+                          "name": null,
+                          "brand": null
+                        },
+                        "marketInfo": {
+                          "id": 13395,
+                          "name": "Rewe-Markt GmbH",
+                          "street": "Ritter-von-Schoch-Straße 19",
+                          "zip": "84036",
+                          "city": "Landshut"
+                        }
+                      },
                       {
                         "id": 802001,
                         "title": "ja! Eierspätzle",
@@ -142,17 +204,17 @@ describe('Optimise', () => {
                         "offerfrom": "2016-12-03T08:00:00.000Z",
                         "offerto": "2016-12-10T08:00:00.000Z",
                         "discount": null,
-                        "isOptimum": true,
+                        "isOptimum": false,
                         "article": {
                           "name": "Eierspätzle",
                           "brand": "ja!"
                         },
-                        "market": {
-                          "city": "München",
+                        "marketInfo": {
                           "id": 16119,
                           "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
                           "street": "Melusinenstr. 2",
-                          "zip": "81671"
+                          "zip": "81671",
+                          "city": "München"
                         }
                       }
                     ]
@@ -178,12 +240,12 @@ describe('Optimise', () => {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
                         },
-                        "market": {
-                          "city": "München",
+                        "marketInfo": {
                           "id": 16119,
                           "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
                           "street": "Melusinenstr. 2",
                           "zip": "81671",
+                          "city": "München"
                         }
                       },
                       {
@@ -199,12 +261,12 @@ describe('Optimise', () => {
                           "name": "Kaffee",
                           "brand": "Mövenpick"
                         },
-                        "market": {
-                          "city": "Landshut",
+                        "marketInfo": {
                           "id": 13395,
                           "name": "Rewe-Markt GmbH",
                           "street": "Ritter-von-Schoch-Straße 19",
-                          "zip": "84036"
+                          "zip": "84036",
+                          "city": "Landshut"
                         }
                       },
                       {
@@ -220,12 +282,12 @@ describe('Optimise', () => {
                           "name": "Kaffee",
                           "brand": "Dallmayr"
                         },
-                        "market": {
-                          "city": "Landshut",
+                        "marketInfo": {
                           "id": 13395,
                           "name": "Rewe-Markt GmbH",
                           "street": "Ritter-von-Schoch-Straße 19",
-                          "zip": "84036"
+                          "zip": "84036",
+                          "city": "Landshut"
                         }
                       }
                     ]
@@ -234,21 +296,9 @@ describe('Optimise', () => {
             res.body.should.have.property('optimisationResult');
             res.body.optimisationResult.should.deep.equal(
               {
-                "savings": 7.09,
-                "distance": 162445,
+                "savings": 7.39,
+                "distance": 161288,
                 "markets": [
-                  {
-                    "id": 16119,
-                    "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
-                    "latitude": 48.12059,
-                    "longitude": 11.6125,
-                    "street": "Melusinenstr. 2",
-                    "zip": "81671",
-                    "city": "München",
-                    "shop": "EDEKA",
-                    "distanceTo": 362,
-                    "routePosition": 1
-                  },
                   {
                     "id": 13395,
                     "name": "Rewe-Markt GmbH",
@@ -258,8 +308,8 @@ describe('Optimise', () => {
                     "zip": "84036",
                     "city": "Landshut",
                     "shop": "REWE",
-                    "distanceTo": 81318,
-                    "routePosition": 2
+                    "distanceTo": 80523,
+                    "routePosition": 1
                   }
                 ]
               }
@@ -285,33 +335,21 @@ describe('Optimise', () => {
               res.body.should.be.a('object');
               res.body.should.deep.equal(
                 {
-                  "savings": 2.38,
-                  "distance": 162445,
-                  "markets": [                    
+                  "savings": 2.68,
+                  "distance": 161288,
+                  "markets": [
                     {
-                      "city": "München",
-                      "distanceTo": 362,
-                      "id": 16119,
-                      "latitude": 48.12059,
-                      "longitude": 11.6125,
-                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
-                      "routePosition": 1,
-                      "shop": "EDEKA",
-                      "street": "Melusinenstr. 2",
-                      "zip": "81671"
-                    },
-                    {
-                      "city": "Landshut",
-                      "distanceTo": 81318,
                       "id": 13395,
+                      "name": "Rewe-Markt GmbH",
                       "latitude": 48.54623,
                       "longitude": 12.1799,
-                      "name": "Rewe-Markt GmbH",
-                      "routePosition": 2,
-                      "shop": "REWE",
                       "street": "Ritter-von-Schoch-Straße 19",
-                      "zip": "84036"
-                    },                                     
+                      "zip": "84036",
+                      "city": "Landshut",
+                      "shop": "REWE",
+                      "distanceTo": 80523,
+                      "routePosition": 1
+                    }
                   ]
                 }
               );
@@ -337,21 +375,33 @@ describe('Optimise', () => {
               res.body.should.be.a('object');
               res.body.should.deep.equal(
                 {
-                  "savings": 2.38,
-                  "distance": 773,
+                  "savings": 2.68,
+                  "distance": 162445,
                   "markets": [
                     {
-                      "id": 16119,
+                      "city": "München",
                       "distanceTo": 362,
-                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
+                      "id": 16119,
                       "latitude": 48.12059,
                       "longitude": 11.6125,
-                      "street": "Melusinenstr. 2",
+                      "name": "Baecker R. oHG Muenchen/Ramersdorf-Perla",
                       "routePosition": 1,
-                      "zip": "81671",
-                      "city": "München",
-                      "shop": "EDEKA"
-                    }                 
+                      "shop": "EDEKA",
+                      "street": "Melusinenstr. 2",
+                      "zip": "81671"
+                    },
+                    {
+                      "id": 13395,
+                      "name": "Rewe-Markt GmbH",
+                      "latitude": 48.54623,
+                      "longitude": 12.1799,
+                      "street": "Ritter-von-Schoch-Straße 19",
+                      "zip": "84036",
+                      "city": "Landshut",
+                      "shop": "REWE",
+                      "distanceTo": 81318,
+                      "routePosition": 2
+                    }
                   ]
                 }
               );
