@@ -296,7 +296,6 @@ function _optimiseByPrice(result, options, callback) {
 
       optimalOffer.isOptimum = true;
       item.offerAlgorithm = optimalOffer.id;
-      item.name = optimalOffer.title;
 
       options.optimisationResult.savings += _getSaving(optimalOffer);
     }
