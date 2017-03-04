@@ -34,7 +34,7 @@ export class OptimisationService {
       .map(list => {
         return {
           items: list.items.map(OptimisedListItem.fromApi),
-          amountSaved: list.optimisationResult.savings,
+          amountSaved: Math.abs(list.optimisationResult.savings),
         };
       });
   }
