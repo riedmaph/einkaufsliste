@@ -18,6 +18,11 @@ import {
 
 import { OptimisationService } from '../../services';
 
+const NO_GEOLOCATION_ERROR_MESSAGE =
+  'Could not fetch your current location. ' +
+  'Please check your settings and enable geolocation ' +
+  'to use the list optimisation.';
+
 @Component({
   templateUrl: 'optimisation.template.html',
   styleUrls: [ 'optimisation.style.scss' ],
@@ -25,12 +30,12 @@ import { OptimisationService } from '../../services';
 export class OptimisationComponent implements OnInit {
 
   public optimisedList: OptimisedList;
-
-  public optimisationLoaded: boolean = false;
+  public finishedLoading: boolean = false;
 
   private listUuid: string;
   private longitude: number;
   private latitude: number;
+  private errorMessage: string;
 
   constructor(
     private router: Router,
@@ -48,7 +53,11 @@ export class OptimisationComponent implements OnInit {
         this.longitude = pos.coords.longitude;
         this.latitude = pos.coords.latitude;
         this.loadOptimisedList('price');
-      });
+      }, _ => {
+        this.finishedLoading = true;
+        this.errorMessage = NO_GEOLOCATION_ERROR_MESSAGE;
+      }, { timeout: 10000 }
+      );
     });
   }
 
@@ -133,7 +142,7 @@ export class OptimisationComponent implements OnInit {
       this.listUuid, optimisedBy , this.longitude, this.latitude)
         .subscribe(optimisedList => {
         this.optimisedList = optimisedList;
-        this.optimisationLoaded = true;
+        this.finishedLoading = true;
       });
   }
 

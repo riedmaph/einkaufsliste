@@ -7,7 +7,7 @@
   <span class="fill-remaining"></span>
   <button
     md-button
-    [disabled]="!optimisationLoaded"
+    [disabled]="!finishedLoading || errorMessage"
     (click)="saveOptimisedList()"
     class="save-button"
   >
@@ -15,16 +15,20 @@
   </button>
 </md-toolbar>
 
-<md-card class="savings-info-card" *ngIf="optimisedList">
+<md-card *ngIf="!finishedLoading" class="info-card">
+  <md-card-subtitle>Loading Optimisation Result</md-card-subtitle>
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
+</md-card>
+
+<md-card *ngIf="errorMessage" class="info-card">
+  <md-card-subtitle>{{ errorMessage }}</md-card-subtitle>
+</md-card>
+
+<md-card class="info-card" *ngIf="optimisedList">
   <md-card-subtitle>
     Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €
     and take a distance of {{ optimisedList.distance / 1000 | formatNumber: 2 }} km.
   </md-card-subtitle>
-</md-card>
-
-<md-card *ngIf="!optimisationLoaded" class="load-info">
-  <h4>Loading Optimisation Result</h4>
-  <md-progress-bar mode="indeterminate"></md-progress-bar>
 </md-card>
 
 <div class="select-optimisation-container" *ngIf="optimisedList">
