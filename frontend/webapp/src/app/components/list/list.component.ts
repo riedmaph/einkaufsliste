@@ -191,15 +191,13 @@ export class ListComponent {
           targetIndex = nextPosition - 1;
         }
         targetIndex = targetIndex < 0 ? 0 : targetIndex;
-        newPosition = targetIndex;
       } else {
         // new position at end
         targetIndex = this.items.length;
-        newPosition = this.items.length - 1;
       }
-
     this.onReorder.emit([ this.lastMovedItem, newPosition, targetIndex ]);
     this.blink(movedElem);
+    this.lastMovedItem = null;
     }
   }
 

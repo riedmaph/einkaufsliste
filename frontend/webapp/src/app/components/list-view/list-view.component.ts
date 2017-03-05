@@ -166,9 +166,24 @@ export class ListViewComponent implements OnInit, AfterViewInit {
    */
   public reorderItems (movedItem: ListItem, newPosition: number, targetIndex: number): void {
     const movedItemIndex = this.list.items.indexOf(movedItem);
+    // correct target Index
+    let skipped: number = 0;
+    let noticed: number = 0;
+    while ((noticed !== targetIndex) && ((skipped + noticed) < (this.list.items.length - 1))) {
+      if (this.list.items[noticed + skipped].checked === movedItem.checked) {
+        ++noticed;
+      } else {
+        ++skipped;
+      }
+    }
+    newPosition = noticed + skipped;
     // insert the moved Item at new position
-    this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
+    this.list.items.splice(newPosition, 0, ...this.list.items.splice(movedItemIndex, 1));
+    if (newPosition === this.list.items.length) {
+      --newPosition;
+    }
     movedItem.listUuid = this.list.id;
+    console.info('moved item ' + movedItem.name + ' to ' + newPosition);
     this.apiService.reorderItem(movedItem, newPosition).subscribe();
   }
 
