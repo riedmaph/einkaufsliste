@@ -39,6 +39,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
 
   public form: FormGroup;
 
+  private isInAutoCompl: boolean = false;
+
   @ViewChildren(ListComponent)
   private listComponents: QueryList<ListComponent>;
 
@@ -111,10 +113,19 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Note Auto Completion State
+   *
+   * @param {Product} boolean state
+   */
+  public isInAutoComplete (state: boolean) {
+    this.isInAutoCompl = state;
+  }
+
+  /**
    * Adds an item to list. Grabs the values from this.form (thus requires it to be updated)
    */
-  public addItem (): void {
-    if (this.form.valid) {
+  public addItem (event: any): void {
+    if (this.form.valid && (!this.isInAutoCompl || !(event instanceof Object))) {
       const newItem: ListItem = {
         name: this.form.value.itemName,
         unit: this.form.value.unit,
