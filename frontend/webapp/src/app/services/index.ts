@@ -4,4 +4,5 @@ export * from './list';
 export * from './market';
 export * from './navigation';
 export * from './offer';
+export * from './optimisation';
 export * from './sharing';

@@ -1,7 +1,6 @@
 <nav>
   <md-toolbar *ngIf="authService.loggedIn" color="primary">
     <ng-content select=".sl-nav-left-menu-button"></ng-content>
-
     <span class="toolbar-title fill-remaining">
       <template [ngTemplateOutlet]="titleTemplate"></template>
       <span *ngIf="!titleTemplate">{{ DEFAULT_TITLE }}</span>

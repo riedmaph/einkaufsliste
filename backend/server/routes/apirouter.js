@@ -12,6 +12,7 @@ var items = require(path.join('..', 'controllers', 'items', 'items'));
 var contributors = require(path.join('..', 'controllers', 'contributors', 'contributors'));
 var products = require(path.join('..', 'controllers', 'products', 'products'));
 var markets = require(path.join('..', 'controllers', 'markets', 'markets'));
+var optimisation = require(path.join('..', 'controllers', 'optimisation', 'optimisation'));
 
 // redirect root to doc
 router.get('/', function(req, res, next) {
@@ -39,7 +40,8 @@ router.route('/lists/default')
 router.route('/lists/:listid')
   .get(lists.getListWithItems)
   .put(lists.updateList)
-  .delete(lists.deleteList);
+  .delete(lists.deleteList)
+  .post(optimisation.saveOptimisedList);
 
 /* items */
 router.route('/lists/:listid/items')
@@ -76,6 +78,13 @@ router.route('/markets/favourites')
 router.route('/markets/favourites/:marketid')
   .post(markets.addToFavouriteMarkets)
   .delete(markets.removeFromFavouriteMarkets);
+
+/* optimization */
+router.route('/lists/:listid/optimised')
+  .get(optimisation.getOptimisedList);
+
+router.route('/lists/:listid/optimised/:itemid')
+  .put(optimisation.saveUserselection);
 
 // error handler
 router.use(function(err, req, res, next) {

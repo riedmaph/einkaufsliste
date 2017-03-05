@@ -345,6 +345,215 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Optimisation"
+                ],
+                "summary": "Save selected offers for list",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authentication and authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "x-copy-optimised",
+                        "in": "header",
+                        "description": "Field to indicate copy.",
+                        "required": true,
+                        "type": "boolean"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of list to optimise.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation."
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/lists/{listid}/optimised": {
+            "get": {
+                "tags": [
+                    "Optimisation"
+                ],
+                "summary": "Retrieve a list in optimised state.",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authentication and authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of list to optimise.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "by",
+                        "description": "Property to optimise by [price].",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "price"
+                        ],
+                        "default": "price"
+                    },
+                    {
+                        "in": "query",
+                        "name": "longitude",
+                        "description": "Longitude of the given position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "latitude",
+                        "description": "Latitude of the given position (search by position).",
+                        "required": false,
+                        "type": "number",
+                        "format": "decimal"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/OptimisedList"
+                        }
+                    },
+                    "400": {
+                        "description": "Unknown optimisation type.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        },
+                        "headers": {
+                            "WWW-Authenticate": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/lists/{listid}/optimised/{itemid}": {
+            "put": {
+                "tags": [
+                    "Optimisation"
+                ],
+                "summary": "Update an item in optimisation mode.",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "x-access-token",
+                        "in": "header",
+                        "description": "JWT for user authorization.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "listid",
+                        "description": "ID of list of item to be updated.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemid",
+                        "description": "ID of item to be update.",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "name": "longitude",
+                        "description": "Longitude of the given position.",
+                        "required": true,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "query",
+                        "name": "latitude",
+                        "description": "Latitude of the given position (search by position).",
+                        "required": false,
+                        "type": "number",
+                        "format": "decimal"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Values of item to be updated.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OptimisedItemWithOfferByUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation.",
+                        "schema": {
+                            "$ref": "#/definitions/OptimisationResult"
+                        }
+                    },
+                    "403": {
+                        "description": "Failed to authenticate token.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unhandeled error.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
             }
         },
         "/lists/{listid}/contributors": {
@@ -1417,7 +1626,7 @@
                     "type": "integer",
                     "description": "Unique identifer of market."
                 },
-                "offerPrice": {
+                "offerprice": {
                     "type": "number",
                     "format": "double",
                     "description": "Price of offer."
@@ -1434,10 +1643,157 @@
                     "type": "string",
                     "description": "Enddate of offer."
                 },
-                "product": {
+                "article": {
                     "$ref": "#/definitions/Article"
                 }
             }
+        },
+        "OptimisedList": {
+            "type": "object",
+            "required": [
+                "items",
+                "optimisationResult"
+            ],
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OptimisedItemWithOffers"
+                    }
+                },
+                "optimisationResult": {
+                    "$ref": "#/definitions/OptimisationResult"
+                }
+            }
+        },
+        "OptimisedItem": {
+            "type": "object",
+            "required": [
+                "id",
+                "name",
+                "amount",
+                "unit"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identifer of item."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of item."
+                },
+                "position": {
+                    "type": "integer",
+                    "description": "Zero-based position if item within its list."
+                },
+                "amount": {
+                    "type": "number",
+                    "description": "Amount of item."
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Unit of item."
+                }
+            }
+        },
+        "OptimisedItemWithOffers": {
+            "type": "object",
+            "properties": {
+                "item": {
+                    "$ref": "#/definitions/OptimisedItem"
+                },
+                "offers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OptimisedOffer"
+                    }
+                }
+            }
+        },
+        "OptimisedOffer": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Offer"
+                },
+                {
+                    "required": [
+                        "isOptimum"
+                    ],
+                    "properties": {
+                        "isOptimum": {
+                            "type": "boolean",
+                            "description": "Indicates if this offer was selected by the optimisation algorithm."
+                        }
+                    }
+                }
+            ]
+        },
+        "OptimisationResult": {
+            "type": "object",
+            "required": [
+                "savings",
+                "distance",
+                "markets"
+            ],
+            "properties": {
+                "savings": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Savings of the optimisation."
+                },
+                "distance": {
+                    "type": "number",
+                    "format": "flaot",
+                    "description": "Distance of the used markets of the optimisation."
+                },
+                "markets": {
+                    "description": "Used markets of the optimisation.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OptimisedMarket"
+                    }
+                }
+            }
+        },
+        "OptimisedMarket": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Market"
+                },
+                {
+                    "required": [
+                        "distanceTo",
+                        "routePosition"
+                    ],
+                    "properties": {
+                        "distanceTo": {
+                            "type": "integer",
+                            "description": "Distance from previouse market (or startposition, if this is the first market) to this market in meters."
+                        },
+                        "routePosition": {
+                            "type": "integer",
+                            "description": "Position in the route. (startposition has 0)"
+                        }
+                    }
+                }
+            ]
+        },
+        "OptimisedItemWithOfferByUser": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/OptimisedItem"
+                },
+                {
+                    "properties": {
+                        "offerUser": {
+                            "type": "integer",
+                            "description": "Unique identifer of offer selected by user (only required selection is an offer)."
+                        }
+                    }
+                }
+            ]
         },
         "Error": {
             "type": "object",

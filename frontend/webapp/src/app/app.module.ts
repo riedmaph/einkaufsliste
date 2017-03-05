@@ -33,6 +33,7 @@ import {
   ListsResolver,
   NavigationService,
   OfferService,
+  OptimisationService,
   SharingService,
 } from './services';
 
@@ -49,6 +50,7 @@ import {
   NavigationComponent,
   NavTitleComponent,
   OffersComponent,
+  OptimisationComponent,
   RegisterComponent,
   SettingsComponent,
   SettingsOverviewComponent,
@@ -59,7 +61,10 @@ import {
 import { AutoCompletionComponent, AutoCompletionDirective } from './directives/auto-completion';
 
 // Pipes
-import { OfferFilterPipe } from './pipes';
+import {
+  FormatNumberPipe,
+  OfferFilterPipe,
+} from './pipes';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -86,6 +91,7 @@ type StoreType = {
     DefaultListComponent,
     ConfirmComponent,
     FavouriteMarketSettingsComponent,
+    FormatNumberPipe,
     ListViewComponent,
     NoContentComponent,
     NavigationComponent,
@@ -95,6 +101,7 @@ type StoreType = {
     LoginComponent,
     OffersComponent,
     OfferFilterPipe,
+    OptimisationComponent,
     RegisterComponent,
     SettingsComponent,
     SettingsOverviewComponent,
@@ -133,6 +140,7 @@ type StoreType = {
     ListsResolver,
     NavigationService,
     OfferService,
+    OptimisationService,
     SharingService,
   ],
 })
