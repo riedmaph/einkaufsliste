@@ -4,7 +4,7 @@ import { ListViewComponent } from './list-view.component';
 import {
   AuthGuard,
   ListResolver,
-} from 'app/services';
+} from '../../services';
 
 export const LIST_VIEW_ROUTES: Routes = [
   {

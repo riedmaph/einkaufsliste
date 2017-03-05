@@ -1,11 +1,33 @@
+<sl-nav-title>
+  {{ optimisedList?.name || 'Optimization' }}
+</sl-nav-title>
+
 <md-toolbar color="primary" class="action-toolbar">
   <button md-button [routerLink]="[ '../' ]" class="cancel-button">Back to list</button>
-  <button md-button (click)="saveOptimisedList()" class="save-button">Save</button>
+  <span class="fill-remaining"></span>
+  <button
+    md-button
+    [disabled]="!finishedLoading || errorMessage"
+    (click)="saveOptimisedList()"
+    class="save-button"
+  >
+    Save
+  </button>
 </md-toolbar>
 
-<md-card class="savings-info-card">
+<md-card *ngIf="!finishedLoading" class="info-card">
+  <md-card-subtitle>Loading Optimisation Result</md-card-subtitle>
+  <md-progress-bar mode="indeterminate"></md-progress-bar>
+</md-card>
+
+<md-card *ngIf="errorMessage" class="info-card">
+  <md-card-subtitle>{{ errorMessage }}</md-card-subtitle>
+</md-card>
+
+<md-card class="info-card" *ngIf="optimisedList">
   <md-card-subtitle>
-    Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €.
+    Current selection would save you {{ optimisedList.amountSaved | formatNumber: 2 }} €
+    and take a distance of {{ optimisedList.distance / 1000 | formatNumber: 2 }} km.
   </md-card-subtitle>
 </md-card>
 

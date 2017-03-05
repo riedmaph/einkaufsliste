@@ -18,6 +18,11 @@ import {
 
 import { OptimisationService } from '../../services';
 
+const NO_GEOLOCATION_ERROR_MESSAGE =
+  'Could not fetch your current location. ' +
+  'Please check your settings and enable geolocation ' +
+  'to use the list optimisation.';
+
 @Component({
   templateUrl: 'optimisation.template.html',
   styleUrls: [ 'optimisation.style.scss' ],
@@ -25,8 +30,12 @@ import { OptimisationService } from '../../services';
 export class OptimisationComponent implements OnInit {
 
   public optimisedList: OptimisedList;
+  public finishedLoading: boolean = false;
 
   private listUuid: string;
+  private longitude: number;
+  private latitude: number;
+  private errorMessage: string;
 
   constructor(
     private router: Router,
@@ -38,12 +47,18 @@ export class OptimisationComponent implements OnInit {
    * @memberOf OnInit
    */
   public ngOnInit (): void {
-    this.route.data.subscribe((data: { optimisedList: OptimisedList }) =>
-      this.optimisedList = data.optimisedList
-    );
-    this.route.params.subscribe((params: Params) =>
-      this.listUuid = params['listId']
-    );
+    this.route.params.subscribe((params: Params) => {
+      this.listUuid = params['listId'];
+      navigator.geolocation.getCurrentPosition(pos => {
+        this.longitude = pos.coords.longitude;
+        this.latitude = pos.coords.latitude;
+        this.loadOptimisedList('price');
+      }, _ => {
+        this.finishedLoading = true;
+        this.errorMessage = NO_GEOLOCATION_ERROR_MESSAGE;
+      }, { timeout: 10000 }
+      );
+    });
   }
 
   /**
@@ -66,9 +81,10 @@ export class OptimisationComponent implements OnInit {
   public selectNextOfferForItem (listItem: OptimisedListItem) {
     if (this.existsNextOfferForItem(listItem)) {
       listItem.selectedOfferIndex += 1;
-      this.updateSelectionForItem(listItem).subscribe(result =>
-        this.optimisedList.amountSaved = Math.abs(result.savings)
-      );
+      this.updateSelectionForItem(listItem).subscribe(result => {
+        this.optimisedList.amountSaved = Math.abs(result.savings);
+        this.optimisedList.distance = result.distance;
+      });
     }
   }
 
@@ -80,9 +96,10 @@ export class OptimisationComponent implements OnInit {
   public selectPreviousOfferForItem (listItem: OptimisedListItem) {
     if (this.existsPreviousOfferForItem(listItem)) {
       listItem.selectedOfferIndex -= 1;
-      this.updateSelectionForItem(listItem).subscribe(result =>
-        this.optimisedList.amountSaved = Math.abs(result.savings)
-      );
+      this.updateSelectionForItem(listItem).subscribe(result => {
+        this.optimisedList.amountSaved = Math.abs(result.savings);
+        this.optimisedList.distance = result.distance;
+      });
     }
   }
 
@@ -116,6 +133,20 @@ export class OptimisationComponent implements OnInit {
   }
 
   /**
+   * Loads the optimised list.
+   *
+   * @param {string} optimisedBy The optimisation criteria - either 'price' or 'distance'
+   */
+  private loadOptimisedList (optimisedBy: string) {
+    this.optimisationService.getOptimisedList(
+      this.listUuid, optimisedBy , this.longitude, this.latitude)
+        .subscribe(optimisedList => {
+        this.optimisedList = optimisedList;
+        this.finishedLoading = true;
+      });
+  }
+
+  /**
    * Updates the optimised list by choosing either a selected offer,
    * or the original list item.
    *
@@ -133,9 +164,11 @@ export class OptimisationComponent implements OnInit {
         checked: listItem.item.checked,
         offerUser: selectedOffer.id,
       };
-      return this.optimisationService.updateSelectedItem(this.listUuid, updatedItem);
+      return this.optimisationService.updateSelectedItem(
+        this.listUuid, this.longitude, this.latitude, updatedItem);
     }
-    return this.optimisationService.updateSelectedItem(this.listUuid, listItem.item);
+    return this.optimisationService.updateSelectedItem(
+      this.listUuid, this.longitude, this.latitude, listItem.item);
   }
 
 }
