@@ -169,7 +169,8 @@ export class ListViewComponent implements OnInit, AfterViewInit {
     // insert the moved Item at new position
     this.list.items.splice(targetIndex, 0, ...this.list.items.splice(movedItemIndex, 1));
     movedItem.listUuid = this.list.id;
-    this.apiService.reorderItem(movedItem, newPosition)
+    // Persist new Position in the backend. backend has 1-based position indices -> +1
+    this.apiService.reorderItem(movedItem, newPosition + 1)
       .subscribe(() => console.info('moved item ' + movedItem.name + ' to ' + newPosition));
   }
 
