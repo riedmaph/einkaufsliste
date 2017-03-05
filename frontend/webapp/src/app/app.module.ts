@@ -40,6 +40,7 @@ import {
 // Components
 import {
   ConfirmComponent,
+  DefaultListComponent,
   FavouriteMarketSettingsComponent,
   ListComponent,
   ListOverviewComponent,
@@ -87,6 +88,7 @@ type StoreType = {
     AppComponent,
     AutoCompletionComponent,
     AutoCompletionDirective,
+    DefaultListComponent,
     ConfirmComponent,
     FavouriteMarketSettingsComponent,
     FormatNumberPipe,

@@ -22,9 +22,18 @@ export class ListApiService {
       .map(res => res.json().lists);
   }
 
-  public getOne (listUuid: string): Observable<List> {
-    return this.authHttp.get(API_ROUTES.lists.single.replace(':listId', listUuid))
-      .map(res => res.json());
+  /**
+   * Gets a list by UUID from the API.
+   * When no UUID is given it retrieves the default list
+   *
+   * @param {string} listUuid
+   * @returns {Observable} Observable containing requested list
+   */
+  public getOne (listUuid?: string): Observable<List> {
+    return this.authHttp.get(listUuid ?
+      API_ROUTES.lists.single.replace(':listId', listUuid) :
+      API_ROUTES.lists.default
+    ).map(res => res.json());
   }
 
   public create (listName: string): Observable<{ id: string }> {

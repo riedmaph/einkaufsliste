@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 
 export class Offer {
-  id: string;
+  id: number;
   title: string;
   name: string;
   brand: string;
-  market: string;
+  market: number;
   price: number;
   discount: number;
   isOptimum?: boolean;
@@ -37,13 +37,13 @@ export class Offer {
 }
 
 export interface OfferApiRepresentation {
-  id: string;
+  id: number;
   title: string;
+  market: number;
   offerprice: number;
   offerfrom: string;
   offerto: string;
   discount: string;
-  market: string;
   article: { name: string; brand: string };
   isOptimum?: boolean;
   marketInfo?: { name: string; street: string };

@@ -80,6 +80,9 @@ export class ListViewComponent implements OnInit, AfterViewInit {
   public ngOnInit (): void {
     this.route.data.subscribe((data: { list: List }) => {
       this.list = data.list;
+      if (this.list) {
+        window.history.pushState('page', 'Title', 'list/' + this.list.id);
+      }
     });
   }
 

@@ -8,6 +8,7 @@ export const API_ROUTES = {
   },
   lists: {
     create: `${API_BASE_URL}/lists`,
+    default: `${API_BASE_URL}/lists/default`,
     single: `${API_BASE_URL}/lists/:listId`,
     all: `${API_BASE_URL}/lists`,
     entries: {

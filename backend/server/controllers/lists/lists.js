@@ -1,5 +1,6 @@
 const path = require('path');
 var uuid = require('uuid');
+const logger = require(path.join('..', '..', 'logging', 'logger'));
 
 const db = require(path.join('..', 'dbconnector.js'));
 
@@ -8,8 +9,20 @@ var sqlCreateList = db.loadSql(path.join('controllers', 'lists', 'createList.sql
 var sqlUpdateList = db.loadSql(path.join('controllers', 'lists', 'updateList.sql'));
 var sqlDeleteList = db.loadSql(path.join('controllers', 'lists', 'deleteList.sql'));
 
+var sqlUpdateRecentList = db.loadSql(path.join('controllers', 'lists', 'updateRecentList.sql'));
+
 var sqlReadList = db.loadSql(path.join('controllers', 'lists', 'readList.sql'));
 var sqlReadItems = db.loadSql(path.join('controllers', 'items', 'readItems.sql'));
+
+
+function updateRecentList(listid, userid) {
+  db.conn.any(sqlUpdateRecentList, { listid: listid, userid: userid })
+    .then(function (data) { })
+    .catch(function (err) {
+      // the user does not want to know about this
+      logger.log('error', 'controllers.lists.getListWithItems.sqlUpdateRecentList: ' + err.message);
+    });
+}
 
 function getAllLists(req, res, next) {
   db.conn.any(sqlReadLists, req.body)
@@ -30,12 +43,14 @@ function getListWithItems(req, res, next) {
   db.conn.oneOrNone(sqlReadList, req.body)
     .then(function (list) {
       if(list) {
-        req.body.listid = req.params.listid;
-        db.conn.any(sqlReadItems, req.body)
+        req.body.listid = list.id;
+          db.conn.any(sqlReadItems, req.body)
           .then(function (data) {
             list.items=data;
+            // send response early and set recent list afterwards as this is not important for the user
             res.status(200)
               .json(list);
+            updateRecentList(req.body.listid, req.body.userid);
           })
           .catch(function (err) {
             err.message = 'controllers.lists.getListWithItems.sqlReadItems: ' + err.message;
@@ -99,5 +114,6 @@ module.exports = {
   getListWithItems: getListWithItems,
   createList: createList,
   updateList: updateList,
-  deleteList: deleteList
+  deleteList: deleteList,
+  updateRecentList: updateRecentList
 };

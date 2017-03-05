@@ -28,6 +28,9 @@ CREATE TABLE IF NOT EXISTS :schemaname.List (
     enduser UUID NOT NULL REFERENCES :schemaname.Enduser(id) ON DELETE CASCADE
 );
 
+ALTER TABLE :schemaname.Enduser ADD COLUMN
+    recentList UUID REFERENCES :schemaname.List(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
 CREATE TABLE IF NOT EXISTS :schemaname.Item (
     id UUID PRIMARY KEY,
     position INTEGER,

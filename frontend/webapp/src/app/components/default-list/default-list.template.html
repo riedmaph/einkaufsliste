@@ -1,0 +1,8 @@
+<div *ngIf="!list">
+  <h3 class="error">Apologies, we could not locate your most recently viewed list.</h3>
+  <h4>Please select your list</h4>
+  <sl-list-overview></sl-list-overview>
+</div>
+<div *ngIf="list">
+  <sl-list-view list="list"></sl-list-view>
+</div>
