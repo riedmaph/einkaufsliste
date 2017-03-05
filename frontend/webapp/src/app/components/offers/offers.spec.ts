@@ -50,6 +50,11 @@ describe('NavigationComponent', () => {
           name: 'Product',
           price: 1.23,
           title: 'Product',
+          isOptimum: false,
+          marketInfo: {
+            name: 'TestMarket',
+            street: 'TestStreet',
+          },
         },
         {
           brand: 'Brand2',
@@ -59,6 +64,11 @@ describe('NavigationComponent', () => {
           name: 'Product2 Query',
           price: 4.56,
           title: 'Product2 Query',
+          isOptimum: true,
+          marketInfo: {
+            name: 'TestMarket2',
+            street: 'TestStreet2',
+          },
         },
        ];
 
@@ -75,6 +85,11 @@ describe('NavigationComponent', () => {
           name: 'Product2 Query',
           price: 4.56,
           title: 'Product2 Query',
+          isOptimum: true,
+          marketInfo: {
+            name: 'TestMarket2',
+            street: 'TestStreet2',
+          },
         },
        ];
 
