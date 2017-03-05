@@ -1,15 +1,15 @@
 import * as _ from 'lodash';
 
 export class Offer {
-  id: number;
-  title: string;
-  name: string;
-  brand: string;
-  market: number;
-  price: number;
-  discount: number;
-  isOptimum?: boolean;
-  marketInfo?: { name: string, street: string };
+  public id: number;
+  public title: string;
+  public name: string;
+  public brand: string;
+  public market: number;
+  public price: number;
+  public discount: string;
+  public isOptimum: boolean;
+  public marketInfo: { name: string, street: string };
 
   /**
    * Parses an offer from an offer API representation.

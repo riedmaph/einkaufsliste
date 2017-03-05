@@ -16,6 +16,11 @@ describe('Offer model', () => {
           name: 'something',
           brand: 'some brand',
         },
+        isOptimum: false,
+        marketInfo: {
+          name: 'TestMarket',
+          street: 'TestStreet',
+        },
       };
 
       const EXPECTATION = new Offer({
@@ -26,6 +31,11 @@ describe('Offer model', () => {
         market: 12345,
         price: 123.45,
         discount: '10%',
+        isOptimum: false,
+        marketInfo: {
+          name: 'TestMarket',
+          street: 'TestStreet',
+        },
       });
 
       expect(Offer.fromApi(API_REP)).toEqual(EXPECTATION);
@@ -45,6 +55,11 @@ describe('Offer model', () => {
           name: 'something',
           brand: 'some brand',
         },
+        isOptimum: false,
+        marketInfo: {
+          name: 'TestMarket',
+          street: 'TestStreet',
+        },
         otherValue: 'abc',
         another: { value: 'def' },
       };
@@ -57,6 +72,11 @@ describe('Offer model', () => {
         market: 12345,
         price: 123.45,
         discount: '10%',
+        isOptimum: false,
+        marketInfo: {
+          name: 'TestMarket',
+          street: 'TestStreet',
+        },
       });
 
       expect(Offer.fromApi(BLOATED_API_REP)).toEqual(EXPECTATION);
