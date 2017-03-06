@@ -1,6 +1,3 @@
-/* Beginn Transaction to secure atomic execution*/
-BEGIN;
-
 /* select fromposition by ID*/
 WITH fromposition AS (
   SELECT Item.position
@@ -15,10 +12,3 @@ WHERE list=${listid} AND
   WHEN true THEN (position > (SELECT * FROM fromposition) AND position <= ${targetposition})
   ELSE (position >= ${targetposition} AND position < (SELECT * FROM fromposition))
 END);
-
-/*set from item's position to targetposition position*/
-UPDATE ${schemaname:raw}.Item 
-SET position=${targetposition}
-WHERE id=${id};
-/*End Transaction*/
-COMMIT;

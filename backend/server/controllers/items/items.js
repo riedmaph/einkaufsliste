@@ -13,10 +13,10 @@ var sqlGetIdItem = db.loadSql(path.join('controllers', 'items', 'getIdItem.sql')
 var sqlUpdateItem = db.loadSql(path.join('controllers', 'items', 'updateItem.sql'));
 var sqlDeleteItem = db.loadSql(path.join('controllers', 'items', 'deleteItem.sql'));
 var sqlGetPosition = db.loadSql(path.join('controllers', 'items', 'getPosition.sql'));
-var sqlMoveItemDown = db.loadSql(path.join('controllers', 'items', 'moveItemDown.sql'));
-var sqlMoveItemUp = db.loadSql(path.join('controllers', 'items', 'moveItemUp.sql'));
 
 var sqlMoveItem = db.loadSql(path.join('controllers', 'items', 'moveItem.sql'));
+var sqlMoveItem2 = db.loadSql(path.join('controllers', 'items', 'moveItem2.sql'));
+var sqlMoveItemTarget = db.loadSql(path.join('controllers', 'items', 'moveItemTarget.sql'));
 
 function getListItems(req, res, next) {
   var listId = req.params.listid;
@@ -93,12 +93,24 @@ function deleteItem(req, res, next) {
 function moveItem(req, res, next) {
   req.body.listid = req.params.listid;
   req.body.id = req.params.itemid;
-  req.body.targetposition = parseInt(req.body.targetposition);
+  req.body.targetposition = parseInt(req.body.targetposition,10)+1;
 
-
-  db.conn.none(sqlMoveItem, req.body)
-    .then(function () {
-      res.sendStatus(200);
+  db.conn.tx(t => {
+    return t.sequence((index, data, delay) => {
+      if (index==1)
+       req.body.targetposition = data.position;
+      switch (index) {
+        case 0:
+          return t.one(sqlMoveItemTarget, req.body);
+        case 1:
+          return t.any(sqlMoveItem, req.body);
+        case 2:
+          return t.any(sqlMoveItem2, req.body);
+      }
+    });
+  })
+    .then(() => {
+      res.status(200).send();
       lists.updateRecentList(req.body.listid, req.body.userid);
     })
     .catch(function (err) {
