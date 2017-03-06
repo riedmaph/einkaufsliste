@@ -45,6 +45,7 @@
     <input
       [autoCompletion]="autoCompletionFn"
       (onSelect)="addItem($event)"
+      (onSelectionEnter)="isInAutoComplete($event)"
       (onValueChange)="updateValue($event)"
       type="text"
       placeholder="Apples"

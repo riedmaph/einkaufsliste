@@ -43,6 +43,9 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   public onValueChange: EventEmitter<Product> = new EventEmitter<Product>();
 
   @Output()
+  public onSelectionEnter: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output()
   public onOpen: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
@@ -135,6 +138,7 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
   @HostListener('keydown', [ '$event', '$event.keyCode' ])
   public onKeyDown (event: KeyboardEvent, keyCode: number): void {
     if (keyCode === 9) {
+      this.onSelectionEnter.emit(false);
       // Tab
       if (this.autoCompletionComponent.instance.value) {
         event.preventDefault();
@@ -171,17 +175,21 @@ export class AutoCompletionDirective implements AfterContentInit, OnDestroy {
             this.autoCompletionComponent.instance.value,
           );
         }
+        this.onSelectionEnter.emit(false);
         break;
       case 38:
         // Up
         this.autoCompletionComponent.instance.selectPrev();
+        this.onSelectionEnter.emit(true);
         break;
       case 40:
         // Down
         this.autoCompletionComponent.instance.open();
         this.autoCompletionComponent.instance.selectNext();
+        this.onSelectionEnter.emit(true);
         break;
       default:
+        this.onSelectionEnter.emit(false);
         if (this.element.nativeElement.value.length >= this.minChars) {
           window.clearTimeout(this.closeTimeout);
           this.openTimeout = window.setTimeout(() => {
