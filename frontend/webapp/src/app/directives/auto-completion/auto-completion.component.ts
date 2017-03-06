@@ -82,6 +82,7 @@ export class AutoCompletionComponent {
 
   public close (): void {
     this.isOpenFlag = false;
+    this.selectedIndex = -1;
     this.onClose.emit();
   }
 
