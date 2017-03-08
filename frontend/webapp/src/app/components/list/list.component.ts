@@ -24,6 +24,10 @@ export class ListComponent {
   @Input()
   public items: ListItem[] = [ ];
 
+  // drag and drop should only by possible within an <sl-list> and not between
+  @Input()
+  public dragModelName: string;
+
   @Output()
   public onRemove: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
@@ -34,7 +38,6 @@ export class ListComponent {
   public onReorder: EventEmitter<any> = new EventEmitter<any>();
 
   public itemMenuIndex: number = -1;
-
   private editableFlag: boolean = false;
   private deleteableFlag: boolean = false;
   private sortableFlag: boolean = false;
